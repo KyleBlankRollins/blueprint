@@ -13,6 +13,7 @@
     "build": "tsc -p tsconfig.build.json && vite build",
     "preview": "vite preview",
     "scaffold": "tsc source/scripts/scaffoldComponent.ts --module es2020 --moduleResolution bundler --outDir .scripts && node .scripts/scaffoldComponent.js",
+    "validate": "tsc source/scripts/validateComponent.ts --module es2020 --moduleResolution bundler --outDir .scripts && node .scripts/validateComponent.js",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:run": "vitest run",

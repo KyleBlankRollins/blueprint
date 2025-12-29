@@ -162,10 +162,30 @@ export const buttonStyles = css`
 
 **Fill in the scaffolded test file with comprehensive tests:**
 
-- Minimum 10 tests covering registration, properties, events, accessibility
-- Test all variants, sizes, and states
-- Test keyboard navigation and ARIA attributes
-- Test slot content rendering
+**Required for all components:**
+
+- Registration test (component in `HTMLElementTagNameMap`)
+- Rendering test (renders without errors)
+- Property tests (each `@property()` works and triggers updates)
+- Default value tests (all properties have correct defaults)
+
+**Add tests for applicable features:**
+
+- Attributes (if properties use `reflect: true`)
+- Events (if component emits custom events)
+- Slots (if component uses `<slot>`)
+- CSS Parts (if component exposes `part` attributes)
+- Variants (if component has primary/secondary/outline variants)
+- Sizes (if component has small/medium/large)
+- Interactions (clicks, keyboard navigation, form submission)
+- Accessibility (ARIA attributes, focus management, keyboard support)
+
+**For complex components, add:**
+
+- Lifecycle tests (connected/disconnected callbacks if component has cleanup)
+- Edge case tests (invalid inputs, boundary conditions)
+- Computed value tests (derived properties calculate correctly)
+- State management tests (internal state changes trigger updates)
 
 **Fill in the scaffolded stories file:**
 
@@ -232,7 +252,7 @@ export class BpButton extends LitElement {
 - Write descriptive variable names (no `v`, `s`, `h` abbreviations)
 - Implement all 5 scaffolded files completely
 - Run `npm run format` and `npm test` before finishing
-- Include 10+ tests covering accessibility (ARIA, keyboard navigation)
+- Include tests for all relevant categories (registration, rendering, properties, defaults, plus applicable features like events, variants, accessibility)
 - Follow the code patterns from scaffolded stubs
 
 **⚠️ Ask first:**

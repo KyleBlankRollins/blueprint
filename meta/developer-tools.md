@@ -23,10 +23,31 @@ This document describes the developer tools that support the `@component-creator
 
 - All 5 required files exist (`.ts`, `.test.ts`, `.stories.ts`, `.style.ts`, `README.md`)
 - Component is exported in `source/components/index.ts`
-- Minimum 10 tests exist in test file
+- Test coverage includes all relevant categories (see Test Categories below)
 - All tests pass (`npm test` on component)
 - Files are formatted (`npm run format:check`)
 - No linting errors (`npm run lint`)
+
+**Test Categories:**
+
+The validator checks that tests cover all relevant categories for the component:
+
+**Required for all components:**
+
+1. **Registration** - Component is registered in `HTMLElementTagNameMap`
+2. **Rendering** - Component renders without errors (smoke test)
+3. **Properties** - Each `@property()` reactive property accepts values and triggers updates
+4. **Default Values** - All properties have correct defaults
+
+**Required when applicable:** 5. **Attributes** - Attribute reflection works (if properties use `reflect: true`) 6. **Events** - Each custom event fires with correct detail payload (if component emits events) 7. **Slots** - Slotted content renders correctly (if component uses `<slot>`) 8. **CSS Parts** - Parts are exposed and targetable (if component exposes `part` attributes) 9. **Variants** - Each variant/state combination renders (if component has variants like primary/secondary) 10. **Sizes** - Each size option works (if component has small/medium/large) 11. **Interactions** - User interactions work (clicks, keyboard navigation, form submission) 12. **Accessibility** - ARIA attributes, focus management, keyboard support, semantic HTML
+
+**Complex components may need:** 13. **Lifecycle** - Connected/disconnected callbacks work (if component has cleanup logic) 14. **Edge Cases** - Invalid inputs handled gracefully, boundary conditions tested 15. **Computed Values** - Derived/computed properties calculate correctly 16. **State Management** - Internal state changes trigger correct updates
+
+**Examples:**
+
+- Simple divider: Categories 1-2 only (~2 tests)
+- Button component: Categories 1-4, 6, 9-12 (~8-10 tests)
+- Complex form input: Categories 1-12, 14-15 (~15-20 tests)
 
 **AI Workflow Integration:**
 
@@ -42,10 +63,19 @@ This document describes the developer tools that support the `@component-creator
 
 Files:
   ✅ button.ts exists
-  ✅ button.test.ts exists (12 tests found)
+  ✅ button.test.ts exists
   ✅ button.stories.ts exists
   ✅ button.style.ts exists
   ✅ README.md exists
+
+Test Coverage (12 tests found):
+  ✅ Registration (1 test)
+  ✅ Rendering (1 test)
+  ✅ Properties (3 tests)
+  ✅ Default Values (1 test)
+  ✅ Events (2 tests)
+  ✅ Variants (2 tests)
+  ✅ Accessibility (2 tests)
 
 Integration:
   ✅ Exported in source/components/index.ts
@@ -65,10 +95,19 @@ Component is ready for production! 🎉
 
 Files:
   ✅ button.ts exists
-  ❌ button.test.ts only has 7 tests (minimum: 10)
+  ✅ button.test.ts exists
   ✅ button.stories.ts exists
   ✅ button.style.ts exists
   ❌ README.md missing API documentation section
+
+Test Coverage (7 tests found):
+  ✅ Registration (1 test)
+  ✅ Rendering (1 test)
+  ✅ Properties (3 tests)
+  ✅ Default Values (1 test)
+  ❌ Events - Missing tests for custom events
+  ✅ Variants (1 test)
+  ❌ Accessibility - Missing keyboard navigation and ARIA tests
 
 Integration:
   ❌ Not exported in source/components/index.ts
@@ -360,11 +399,11 @@ Agent:
 1. npm run scaffold button
 2. [Implements files]
 3. npm run validate button
-   → ❌ Only 7 tests (need 10)
+   → ❌ Missing test categories: Events, Accessibility
    → ❌ Hardcoded color in styles
    → ❌ Not exported in index.ts
 
-4. [Adds 3 more tests]
+4. [Adds event tests and accessibility tests]
 5. npm run check-tokens button
    → Shows specific violations
 
