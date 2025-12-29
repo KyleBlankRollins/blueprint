@@ -1,0 +1,81 @@
+:root {
+  /* Colors */
+  --bp-color-primary: #3b82f6;
+  --bp-color-primary-hover: #2563eb;
+  --bp-color-primary-active: #1d4ed8;
+
+  --bp-color-neutral-50: #f9fafb;
+  --bp-color-neutral-100: #f3f4f6;
+  --bp-color-neutral-200: #e5e7eb;
+  --bp-color-neutral-300: #d1d5db;
+  --bp-color-neutral-400: #9ca3af;
+  --bp-color-neutral-500: #6b7280;
+  --bp-color-neutral-600: #4b5563;
+  --bp-color-neutral-700: #374151;
+  --bp-color-neutral-800: #1f2937;
+  --bp-color-neutral-900: #111827;
+
+  --bp-color-success: #10b981;
+  --bp-color-warning: #f59e0b;
+  --bp-color-danger: #ef4444;
+
+  /* Spacing */
+  --bp-spacing-xs: 0.25rem; /* 4px */
+  --bp-spacing-sm: 0.5rem; /* 8px */
+  --bp-spacing-md: 0.75rem; /* 12px */
+  --bp-spacing-lg: 1rem; /* 16px */
+  --bp-spacing-xl: 1.25rem; /* 20px */
+  --bp-spacing-2xl: 1.5rem; /* 24px */
+  --bp-spacing-3xl: 2rem; /* 32px */
+
+  /* Typography */
+  --bp-font-family-sans:
+    system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --bp-font-family-mono:
+    'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+
+  --bp-font-size-xs: 0.75rem; /* 12px */
+  --bp-font-size-sm: 0.875rem; /* 14px */
+  --bp-font-size-base: 1rem; /* 16px */
+  --bp-font-size-lg: 1.125rem; /* 18px */
+  --bp-font-size-xl: 1.25rem; /* 20px */
+  --bp-font-size-2xl: 1.5rem; /* 24px */
+
+  --bp-font-weight-normal: 400;
+  --bp-font-weight-medium: 500;
+  --bp-font-weight-semibold: 600;
+  --bp-font-weight-bold: 700;
+
+  --bp-line-height-tight: 1.25;
+  --bp-line-height-normal: 1.5;
+  --bp-line-height-loose: 1.75;
+
+  /* Borders */
+  --bp-border-width: 1px;
+  --bp-border-width-2: 2px;
+  --bp-border-radius-none: 0px;
+  --bp-border-radius-sm: 0.125rem; /* 2px */
+  --bp-border-radius-md: 0.25rem; /* 4px */
+  --bp-border-radius-lg: 0.5rem; /* 8px */
+  --bp-border-radius-xl: 0.75rem; /* 12px */
+  --bp-border-radius-full: 9999px;
+
+  /* Shadows */
+  --bp-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --bp-shadow-md:
+    0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --bp-shadow-lg:
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --bp-shadow-xl:
+    0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  /* Transitions */
+  --bp-transition-fast: 150ms ease;
+  --bp-transition-normal: 300ms ease;
+  --bp-transition-slow: 500ms ease;
+
+  /* Z-index */
+  --bp-z-dropdown: 1000;
+  --bp-z-modal: 1050;
+  --bp-z-tooltip: 1100;
+}
