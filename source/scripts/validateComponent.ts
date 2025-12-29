@@ -152,7 +152,7 @@ function checkExportedInIndex(componentName: string): boolean {
 
   const content = readFileSync(indexPath, 'utf-8');
   const exportPattern = new RegExp(
-    `export.*from.*['"]\./${componentName}/${componentName}\.js['"]`
+    `export.*from.*['"]./${componentName}/${componentName}.js['"]`
   );
   return exportPattern.test(content);
 }
@@ -220,7 +220,6 @@ function detectCategoryTests(
   testContent: string,
   categoryName: string
 ): number {
-  const lowerContent = testContent.toLowerCase();
   const lowerCategory = categoryName.toLowerCase();
 
   // Create search patterns for each category

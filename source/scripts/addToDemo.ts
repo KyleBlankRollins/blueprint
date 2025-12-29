@@ -247,10 +247,6 @@ function addToDemo(componentName: string): DemoResult {
   // Check if component already exists in demo
   if (demoContent.includes(`id="component-${componentName}"`)) {
     // Replace existing section - match from opening div to its closing div
-    const escapedName = componentName.replace(
-      /[-[\]{}()*+?.,\\^$|#\s]/g,
-      '\\$&'
-    );
     const sectionStart = demoContent.indexOf(`id="component-${componentName}"`);
     if (sectionStart !== -1) {
       // Find the opening <div> tag
