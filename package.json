@@ -17,6 +17,7 @@
     "validate:tokens": "tsc source/scripts/validateTokens.ts --module es2020 --moduleResolution bundler --outDir .scripts && node .scripts/validateTokens.js",
     "extract-api": "tsc source/scripts/extractAPI.ts --module es2020 --moduleResolution bundler --outDir .scripts && node .scripts/extractAPI.js",
     "add-to-demo": "tsc source/scripts/addToDemo.ts --module es2020 --moduleResolution bundler --outDir .scripts && node .scripts/addToDemo.js",
+    "generate-stories": "tsc source/scripts/generateStories.ts --module es2020 --moduleResolution bundler --outDir .scripts && node .scripts/generateStories.js",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:run": "vitest run",

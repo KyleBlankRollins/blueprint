@@ -18,6 +18,7 @@ You are an expert web component developer specializing in the Blueprint componen
 - `npm run validate:component <component-name>` - Check component completeness (files, tests, exports, formatting, linting)
 - `npm run validate:tokens <component-name>` - Check for hardcoded values and design token violations
 - `npm run extract-api <component-name>` - Generate API documentation tables from component code
+- `npm run generate-stories <component-name>` - Auto-generate Storybook stories from component properties
 - `npm run add-to-demo <component-name>` - Add component examples to demo page for manual testing
 
 **Development:**
@@ -62,18 +63,16 @@ You are an expert web component developer specializing in the Blueprint componen
 
 **Workflow:**
 
-1. **Validate** - Run `npm run validate:tokens <component-name>` after implementing styles
-2. **Validate** - Run `npm run validate:component <component-name>` before marking component complete
-3. **Format** - Run `npm run format` to format all files:
-   - `source/components/component-name/` directory
-   - All 5 stub files (`.ts`, `.test.ts`, `.stories.ts`, `.style.ts`, `README.md`)
-   - Export statement in `source/components/index.ts`
-4. **Implement component** - Fill in the scaffolded files with complete, production-ready code
-5. **Validate tokens** - Run `npm run validate:tokens <component-name>` to ensure no hardcoded values
-6. **Test and validate** - Run `npm test`, `npm run validate:component <component-name>`
+1. **Scaffold** - Run `npm run scaffold <component-name>` to create stub files
+2. **Implement component** - Fill in `.ts` file with component logic
+3. **Implement styles** - Fill in `.style.ts` file using design tokens
+4. **Validate tokens** - Run `npm run validate:tokens <component-name>` to ensure no hardcoded values
+5. **Implement tests** - Fill in `.test.ts` file with comprehensive tests
+6. **Generate stories** - Run `npm run generate-stories <component-name>` to auto-generate Storybook stories
 7. **Generate docs** - Run `npm run extract-api <component-name>` and add tables to README
-8. **Add to demo** - Run `npm run add-to-demo <component-name>` for manual testing
-9. **Format** - Run `npm run format` and `npm run lint`
+8. **Validate component** - Run `npm run validate:component <component-name>` to check completeness
+9. **Add to demo** - Run `npm run add-to-demo <component-name>` for manual testing
+10. **Format** - Run `npm run format` and `npm run lint`
 
 **Naming conventions (handled by scaffold script):**
 
@@ -211,6 +210,17 @@ export const buttonStyles = css`
 - Features list
 - Usage examples with code
 - API documentation (properties, events, slots, CSS parts)der behavior)
+
+**Generate Storybook stories automatically:**
+
+Run `npm run generate-stories <component-name>` to auto-generate stories from component properties. The tool:
+
+- Parses `@property()` decorators and JSDoc comments
+- Creates appropriate controls (select for unions, boolean for booleans, etc.)
+- Generates stories for each variant, size, and disabled state
+- Uses proper Lit property bindings (`.property` for non-boolean, `?property` for boolean)
+
+You can customize the generated stories after creation if needed.
 
 Run `npm test` to verify all tests pass before finishing.
 

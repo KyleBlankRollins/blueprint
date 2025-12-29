@@ -15,251 +15,9 @@ This document describes the developer tools that support the `@component-creator
 
 ## Core Tools
 
-### 1. Component Validator (`npm run validate:component <component-name>`)
+All implemented!
 
-**Purpose:** Verifies a component is complete and ready for production.
-
-**What it checks:**
-
-- All 5 required files exist (`.ts`, `.test.ts`, `.stories.ts`, `.style.ts`, `README.md`)
-- Component is exported in `source/components/index.ts`
-- Test coverage includes all relevant categories (see Test Categories below)
-- All tests pass (`npm test` on component)
-- Files are formatted (`npm run format:check`)
-- No linting errors (`npm run lint`)
-
-**Test Categories:**
-
-The validator checks that tests cover all relevant categories for the component:
-
-**Required for all components:**
-
-1. **Registration** - Component is registered in `HTMLElementTagNameMap`
-2. **Rendering** - Component renders without errors (smoke test)
-3. **Properties** - Each `@property()` reactive property accepts values and triggers updates
-4. **Default Values** - All properties have correct defaults
-
-**Required when applicable:** 5. **Attributes** - Attribute reflection works (if properties use `reflect: true`) 6. **Events** - Each custom event fires with correct detail payload (if component emits events) 7. **Slots** - Slotted content renders correctly (if component uses `<slot>`) 8. **CSS Parts** - Parts are exposed and targetable (if component exposes `part` attributes) 9. **Variants** - Each variant/state combination renders (if component has variants like primary/secondary) 10. **Sizes** - Each size option works (if component has small/medium/large) 11. **Interactions** - User interactions work (clicks, keyboard navigation, form submission) 12. **Accessibility** - ARIA attributes, focus management, keyboard support, semantic HTML
-
-**Complex components may need:** 13. **Lifecycle** - Connected/disconnected callbacks work (if component has cleanup logic) 14. **Edge Cases** - Invalid inputs handled gracefully, boundary conditions tested 15. **Computed Values** - Derived/computed properties calculate correctly 16. **State Management** - Internal state changes trigger correct updates
-
-**Examples:**
-
-- Simple divider: Categories 1-2 only (~2 tests)
-- Button component: Categories 1-4, 6, 9-12 (~8-10 tests)
-- Complex form input: Categories 1-12, 14-15 (~15-20 tests)
-
-**AI Workflow Integration:**
-
-- Agent runs `npm run validate:component button` before marking component complete
-- Tool provides specific error messages the agent can act on
-- Eliminates need for agent to remember all checklist items
-- Prevents incomplete components from being committed
-
-**Example Output:**
-
-```
-✅ Component validation: bp-button
-
-Files:
-  ✅ button.ts exists
-  ✅ button.test.ts exists
-  ✅ button.stories.ts exists
-  ✅ button.style.ts exists
-  ✅ README.md exists
-
-Test Coverage (12 tests found):
-  ✅ Registration (1 test)
-  ✅ Rendering (1 test)
-  ✅ Properties (3 tests)
-  ✅ Default Values (1 test)
-  ✅ Events (2 tests)
-  ✅ Variants (2 tests)
-  ✅ Accessibility (2 tests)
-
-Integration:
-  ✅ Exported in source/components/index.ts
-
-Quality:
-  ✅ All tests pass
-  ✅ Code is formatted
-  ✅ No lint errors
-
-Component is ready for production! 🎉
-```
-
-**Error Example:**
-
-```
-❌ Component validation: bp-button
-
-Files:
-  ✅ button.ts exists
-  ✅ button.test.ts exists
-  ✅ button.stories.ts exists
-  ✅ button.style.ts exists
-  ❌ README.md missing API documentation section
-
-Test Coverage (7 tests found):
-  ✅ Registration (1 test)
-  ✅ Rendering (1 test)
-  ✅ Properties (3 tests)
-  ✅ Default Values (1 test)
-  ❌ Events - Missing tests for custom events
-  ✅ Variants (1 test)
-  ❌ Accessibility - Missing keyboard navigation and ARIA tests
-
-Integration:
-  ❌ Not exported in source/components/index.ts
-
-Quality:
-  ❌ 2 tests failing
-  ✅ Code is formatted
-  ❌ 3 lint errors
-
-Fix these issues before completing the component.
-```
-
----
-
-### 2. Token Usage Analyzer (`npm run validate:tokens <component-name>`)
-
-**Purpose:** Enforces the critical "no hardcoded values" rule by scanning for design token violations.
-
-**What it detects:**
-
-- Hardcoded colors (hex, rgb, hsl)
-- Hardcoded spacing values (px, rem, em)
-- Hardcoded border values
-- Hardcoded font sizes
-- CSS `var()` with fallback values
-- Any literal design values instead of tokens
-
-**AI Workflow Integration:**
-
-- Agent runs this after implementing styles
-- Tool provides specific line numbers and violations
-- Agent can fix violations immediately
-- Critical for maintaining design system consistency
-
-**Example Output:**
-
-```
-✅ Token usage check: bp-button
-
-Design tokens found:
-  - --bp-color-primary (3 uses)
-  - --bp-spacing-md (2 uses)
-  - --bp-border-radius-md (1 use)
-  - --bp-font-size-base (1 use)
-  - --bp-transition-fast (1 use)
-
-No violations found! All design values use tokens.
-```
-
-**Error Example:**
-
-```
-❌ Token usage violations: bp-button
-
-button.style.ts:
-  Line 12: Hardcoded color #3b82f6
-    > background-color: #3b82f6;
-    Fix: Use var(--bp-color-primary)
-
-  Line 18: Hardcoded spacing 12px
-    > padding: 12px 16px;
-    Fix: Use var(--bp-spacing-md) var(--bp-spacing-lg)
-
-  Line 25: CSS var with fallback
-    > color: var(--bp-color-primary, #3b82f6);
-    Fix: Remove fallback value
-
-3 violations found. Fix these to maintain design system consistency.
-```
-
----
-
-### 3. Property Extractor (`npm run extract-api <component-name>`)
-
-**Purpose:** Auto-generates API documentation tables from component TypeScript code.
-
-**What it extracts:**
-
-- `@property()` decorators → Properties table
-- `@event()` decorators or `dispatchEvent()` calls → Events table
-- JSDoc comments → Descriptions
-- TypeScript types → Type column
-- Default values → Default column
-
-**AI Workflow Integration:**
-
-- Agent implements component with good JSDoc comments
-- Tool generates API tables automatically
-- Agent inserts tables into README
-- Reduces manual documentation work
-- Ensures API docs match actual code
-
-**Example Output:**
-
-```
-Generated API documentation for bp-button:
-
-### Properties
-
-| Property   | Type                         | Default     | Description                    |
-|------------|------------------------------|-------------|--------------------------------|
-| `variant`  | `'primary' \| 'secondary'`   | `'primary'` | Visual style of the button     |
-| `size`     | `'small' \| 'medium' \| 'large'` | `'medium'` | Size of the button         |
-| `disabled` | `boolean`                    | `false`     | Whether button is disabled     |
-
-### Events
-
-| Event       | Detail                    | Description                         |
-|-------------|---------------------------|-------------------------------------|
-| `bp-click`  | `{ originalEvent: Event }` | Fired when button is clicked       |
-
-Copy this to README.md or run with --insert to add automatically.
-```
-
----
-
-### 4. Demo Page Updater (`npm run add-to-demo <component-name>`)
-
-**Purpose:** Automatically adds component examples to the demo page for manual testing.
-
-**What it does:**
-
-- Parses component properties and variants
-- Generates HTML examples showing all variants
-- Inserts examples into `demo/index.html`
-- Creates a section with interactive examples
-
-**AI Workflow Integration:**
-
-- Agent runs after component is complete
-- Enables manual testing without writing demo code
-- Shows component in action immediately
-- Useful for visual QA
-
-**Example Output:**
-
-```
-Added bp-button to demo/index.html
-
-Examples created:
-  - Default (primary variant)
-  - Secondary variant
-  - Small size
-  - Large size
-  - Disabled state
-
-View at http://localhost:5173/demo/ (run npm run dev)
-```
-
----
-
-## Secondary Tools (Future Enhancements)
+## Secondary Tools
 
 ### 5. Accessibility Checker
 
@@ -279,20 +37,39 @@ View at http://localhost:5173/demo/ (run npm run dev)
 
 ---
 
-### 6. Story Generator
+## Implemented Tools
+
+### 6. Story Generator ✅
 
 **Purpose:** Auto-generate Storybook stories from component properties.
 
-**Potential features:**
+**Features:**
 
-- Parse component TypeScript
-- Generate story for each variant/size combination
-- Add controls for all properties
-- Create args tables
+- Parses component TypeScript with @property decorators
+- Generates story for each variant/size combination
+- Adds appropriate controls for all properties (select, boolean, text, number)
+- Creates default args based on property types and defaults
+- Automatically generates variant and size stories
+- Includes disabled state story when applicable
+
+**Usage:**
+
+```bash
+npm run generate-stories <component-name>
+```
+
+**Example:**
+
+```bash
+npm run generate-stories button
+# ✅ Story Generator: button
+# Stories generated:
+#   - source/components/button/button.stories.ts
+```
 
 **Complexity:** Medium - requires TypeScript AST parsing.
 
-**Value:** Medium - reduces boilerplate but Storybook stories often need customization.
+**Value:** High - significantly reduces boilerplate and ensures consistent story structure across all components.
 
 ---
 
@@ -373,7 +150,8 @@ Agent:
 
 5. [Implements tests in button.test.ts]
 
-6. [Implements stories in button.stories.ts]
+6. npm run generate-stories button
+   → Auto-generates button.stories.ts with all variants
 
 7. npm run extract-api button
    → Generates API tables
