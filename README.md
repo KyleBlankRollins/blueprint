@@ -77,7 +77,7 @@ The only real downsides are introducing a dependency and complicating build tool
 
 ```
 blueprint/
-├── src/
+├── source/
 │   ├── components/          # Individual components (Button, Input, etc.)
 │   ├── themes/
 │   │   ├── light.css       # Design tokens and CSS variables
@@ -129,7 +129,7 @@ A well-structured token system typically includes:
 | Shadows     | `--bp-shadow-sm`, `--bp-shadow-md`, `--bp-shadow-lg`                       |
 | Transitions | `--bp-transition-fast`, `--bp-transition-slow`                             |
 
-All design tokens are defined in [`src/themes/light.css`](src/themes/light.css) and follow the `--bp-*` naming convention.
+All design tokens are defined in [`source/themes/light.css`](source/themes/light.css) and follow the `--bp-*` naming convention.
 
 ## Planned Components
 
@@ -221,10 +221,10 @@ These are excellent resources for API design, accessibility patterns, and compon
 Ready to start building? Here's the recommended path:
 
 1. **Build the Button component** - Start with the most fundamental component from Phase 1
-   - Create `src/components/bp-button/` folder
+   - Create `source/components/bp-button/` folder
    - Implement component logic, styles, and TypeScript types
    - Add examples to the demo page
-   - Export from `src/components/index.ts`
+   - Export from `source/components/index.ts`
 
 2. **Establish patterns** - Use Button as the reference for:
    - Component structure and file organization
@@ -242,9 +242,9 @@ Ready to start building? Here's the recommended path:
 
 ### Creating a Component
 
-1. Create a new folder in `src/components/[component-name]/`
+1. Create a new folder in `source/components/[component-name]/`
 2. Add the component implementation with proper TypeScript types
-3. Export the component from `src/components/index.ts`
+3. Export the component from `source/components/index.ts`
 4. Add examples to the demo page
 5. Ensure accessibility and responsive design
 

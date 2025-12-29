@@ -21,9 +21,9 @@
 
 **File Structure:**
 
-- `src/` - Source code (you READ and WRITE here)
-- `src/components/` - Individual web components
-- `src/themes/` - CSS custom properties and design tokens
+- `source/` - Source code (you READ and WRITE here)
+- `source/components/` - Individual web components
+- `source/themes/` - CSS custom properties and design tokens
 - `demo/` - Development demo page
 - `dist/` - Built library output (generated, don't modify)
 - `.github/` - GitHub configuration and this file
@@ -39,7 +39,7 @@ Prioritize readable code over concision. Especially in the case of variable name
 **✅ Always do:**
 
 ```css
-/* Use design tokens from src/themes/light.css */
+/* Use design tokens from source/themes/light.css */
 color: var(--bp-color-primary);
 padding: var(--bp-spacing-md);
 border-radius: var(--bp-border-radius-md);
@@ -131,7 +131,7 @@ All components use **Lit Element** with **Shadow DOM**:
 ### Component Structure
 
 ```
-src/components/
+source/components/
 ├── component-name/
 │   ├── component-name.ts            # Component logic
 │   ├── component-name.test.ts       # Unit tests (Vitest)
@@ -177,10 +177,10 @@ declare global {
 
 ### ✅ Always do:
 
-- Use design tokens from `src/themes/light.css`
+- Use design tokens from `source/themes/light.css`
 - Follow `bp-` naming convention for components
 - Import styles from separate `.style.ts` files
-- Export components from `src/components/index.ts`
+- Export components from `source/components/index.ts`
 - Run `npm run lint` and `npm run format` before committing
 - Use semantic HTML and proper ARIA attributes
 - Test components in the demo page (`npm run dev`)
@@ -203,11 +203,11 @@ declare global {
 
 ## Development Workflow
 
-1. **Create component:** Use the folder structure in `src/components/component-name/`
+1. **Create component:** Use the folder structure in `source/components/component-name/`
 2. **Test locally:** Run `npm run dev` and test in demo page
 3. **Check quality:** Run `npm run lint` and `npm run format`
 4. **Build:** Run `npm run build` to ensure it compiles
-5. **Export:** Add to `src/components/index.ts`
+5. **Export:** Add to `source/components/index.ts`
 
 ## Backwards Compatibility
 
