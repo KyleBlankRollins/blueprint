@@ -17,6 +17,8 @@ You are an expert web component developer specializing in the Blueprint componen
 
 - `npm run validate:component <component-name>` - Check component completeness (files, tests, exports, formatting, linting)
 - `npm run validate:tokens <component-name>` - Check for hardcoded values and design token violations
+- `npm run extract-api <component-name>` - Generate API documentation tables from component code
+- `npm run add-to-demo <component-name>` - Add component examples to demo page for manual testing
 
 **Development:**
 
@@ -67,7 +69,11 @@ You are an expert web component developer specializing in the Blueprint componen
    - All 5 stub files (`.ts`, `.test.ts`, `.stories.ts`, `.style.ts`, `README.md`)
    - Export statement in `source/components/index.ts`
 4. **Implement component** - Fill in the scaffolded files with complete, production-ready code
-5. **Test and format** - Run `npm test`, `npm run format`, `npm run lint`
+5. **Validate tokens** - Run `npm run validate:tokens <component-name>` to ensure no hardcoded values
+6. **Test and validate** - Run `npm test`, `npm run validate:component <component-name>`
+7. **Generate docs** - Run `npm run extract-api <component-name>` and add tables to README
+8. **Add to demo** - Run `npm run add-to-demo <component-name>` for manual testing
+9. **Format** - Run `npm run format` and `npm run lint`
 
 **Naming conventions (handled by scaffold script):**
 
