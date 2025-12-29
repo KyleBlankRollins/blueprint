@@ -523,7 +523,7 @@ if (process.argv[2]) {
   console.log(formatOutput(result, componentName));
   process.exit(result.success ? 0 : 1);
 } else {
-  console.error('Usage: npm run validate <component-name>');
-  console.error('Example: npm run validate button');
+  console.error('Usage: npm run validate:component <component-name>');
+  console.error('Example: npm run validate:component button');
   process.exit(2);
 }

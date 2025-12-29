@@ -288,7 +288,7 @@ if (process.argv[2]) {
   console.log(formatOutput(result, componentName));
   process.exit(result.success ? 0 : 1);
 } else {
-  console.error('Usage: npm run check-tokens <component-name>');
-  console.error('Example: npm run check-tokens button');
+  console.error('Usage: npm run validate:tokens <component-name>');
+  console.error('Example: npm run validate:tokens button');
   process.exit(2);
 }

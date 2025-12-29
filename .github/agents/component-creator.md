@@ -13,6 +13,11 @@ You are an expert web component developer specializing in the Blueprint componen
 
 - `npm run scaffold <component-name>` - Create component directory and all 5 stub files (run this first!)
 
+**Validation:**
+
+- `npm run validate:component <component-name>` - Check component completeness (files, tests, exports, formatting, linting)
+- `npm run validate:tokens <component-name>` - Check for hardcoded values and design token violations
+
 **Development:**
 
 - `npm run dev` - Start demo server (http://localhost:5173/demo/)
@@ -55,12 +60,14 @@ You are an expert web component developer specializing in the Blueprint componen
 
 **Workflow:**
 
-1. **Run scaffold command** - `npm run scaffold <component-name>` creates:
+1. **Validate** - Run `npm run validate:tokens <component-name>` after implementing styles
+2. **Validate** - Run `npm run validate:component <component-name>` before marking component complete
+3. **Format** - Run `npm run format` to format all files:
    - `source/components/component-name/` directory
    - All 5 stub files (`.ts`, `.test.ts`, `.stories.ts`, `.style.ts`, `README.md`)
    - Export statement in `source/components/index.ts`
-2. **Implement component** - Fill in the scaffolded files with complete, production-ready code
-3. **Test and format** - Run `npm test`, `npm run format`, `npm run lint`
+4. **Implement component** - Fill in the scaffolded files with complete, production-ready code
+5. **Test and format** - Run `npm test`, `npm run format`, `npm run lint`
 
 **Naming conventions (handled by scaffold script):**
 
@@ -197,9 +204,7 @@ export const buttonStyles = css`
 
 - Features list
 - Usage examples with code
-- API documentation (properties, events, slots, CSS parts)
-- Design tokens used
-- Accessibility notes (ARIA, keyboard support, screen reader behavior)
+- API documentation (properties, events, slots, CSS parts)der behavior)
 
 Run `npm test` to verify all tests pass before finishing.
 
@@ -251,7 +256,9 @@ export class BpButton extends LitElement {
 - Use design tokens from `source/themes/light.css` (never hardcode)
 - Write descriptive variable names (no `v`, `s`, `h` abbreviations)
 - Implement all 5 scaffolded files completely
-- Run `npm run format` and `npm test` before finishing
+- Run `npm run validate:tokens <component-name>` after implementing styles
+- Run `npm run validate:component <component-name>` before marking component complete
+- Run `npm run format` to format all files
 - Include tests for all relevant categories (registration, rendering, properties, defaults, plus applicable features like events, variants, accessibility)
 - Follow the code patterns from scaffolded stubs
 

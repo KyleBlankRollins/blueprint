@@ -15,7 +15,7 @@ This document describes the developer tools that support the `@component-creator
 
 ## Core Tools
 
-### 1. Component Validator (`npm run validate <component-name>`)
+### 1. Component Validator (`npm run validate:component <component-name>`)
 
 **Purpose:** Verifies a component is complete and ready for production.
 
@@ -51,7 +51,7 @@ The validator checks that tests cover all relevant categories for the component:
 
 **AI Workflow Integration:**
 
-- Agent runs `npm run validate button` before marking component complete
+- Agent runs `npm run validate:component button` before marking component complete
 - Tool provides specific error messages the agent can act on
 - Eliminates need for agent to remember all checklist items
 - Prevents incomplete components from being committed
@@ -122,7 +122,7 @@ Fix these issues before completing the component.
 
 ---
 
-### 2. Token Usage Analyzer (`npm run check-tokens <component-name>`)
+### 2. Token Usage Analyzer (`npm run validate:tokens <component-name>`)
 
 **Purpose:** Enforces the critical "no hardcoded values" rule by scanning for design token violations.
 
@@ -343,8 +343,8 @@ if (process.argv[2]) {
 ```json
 {
   "scripts": {
-    "validate": "tsc source/scripts/validateComponent.ts --module es2020 --moduleResolution bundler --outDir .scripts && node .scripts/validateComponent.js",
-    "check-tokens": "tsc source/scripts/checkTokens.ts --module es2020 --moduleResolution bundler --outDir .scripts && node .scripts/checkTokens.js",
+    "validate:component": "tsc source/scripts/validateComponent.ts --module es2020 --moduleResolution bundler --outDir .scripts && node .scripts/validateComponent.js",
+    "validate:tokens": "tsc source/scripts/validateTokens.ts --module es2020 --moduleResolution bundler --outDir .scripts && node .scripts/validateTokens.js",
     "extract-api": "tsc source/scripts/extractAPI.ts --module es2020 --moduleResolution bundler --outDir .scripts && node .scripts/extractAPI.js",
     "add-to-demo": "tsc source/scripts/addToDemo.ts --module es2020 --moduleResolution bundler --outDir .scripts && node .scripts/addToDemo.js"
   }
@@ -368,7 +368,7 @@ Agent:
 
 3. [Implements styles in button.style.ts]
 
-4. npm run check-tokens button
+4. npm run validate:tokens button
    → ✅ No violations
 
 5. [Implements tests in button.test.ts]
@@ -380,7 +380,7 @@ Agent:
 
 8. [Adds API tables to README.md]
 
-9. npm run validate button
+9. npm run validate:component button
    → ✅ All checks pass
 
 10. npm run add-to-demo button
@@ -398,18 +398,18 @@ Component complete and ready for production!
 Agent:
 1. npm run scaffold button
 2. [Implements files]
-3. npm run validate button
+3. npm run validate:component button
    → ❌ Missing test categories: Events, Accessibility
    → ❌ Hardcoded color in styles
    → ❌ Not exported in index.ts
 
 4. [Adds event tests and accessibility tests]
-5. npm run check-tokens button
+5. npm run validate:tokens button
    → Shows specific violations
 
 6. [Fixes color to use var(--bp-color-primary)]
 7. [Adds export to index.ts]
-8. npm run validate button
+8. npm run validate:component button
    → ✅ All checks pass
 
 Component fixed and ready!
