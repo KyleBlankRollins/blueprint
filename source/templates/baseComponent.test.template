@@ -1,0 +1,33 @@
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import './{{COMPONENT_NAME}}.js';
+import type { {{CLASS_NAME}} } from './{{COMPONENT_NAME}}.js';
+
+describe('{{TAG_NAME}}', () => {
+  let element: {{CLASS_NAME}};
+
+  beforeEach(() => {
+    element = document.createElement('{{TAG_NAME}}');
+    document.body.appendChild(element);
+  });
+
+  afterEach(() => {
+    element.remove();
+  });
+
+  it('should be registered as a custom element', () => {
+    const constructor = customElements.get('{{TAG_NAME}}');
+    expect(constructor).toBeDefined();
+  });
+
+  it('should render with default properties', async () => {
+    await element.updateComplete;
+    expect(element.shadowRoot).toBeTruthy();
+  });
+
+  it('should have a shadow root', async () => {
+    await element.updateComplete;
+    expect(element.shadowRoot).not.toBeNull();
+  });
+
+  // Add more tests here
+});

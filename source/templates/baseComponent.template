@@ -1,0 +1,24 @@
+import { LitElement, html } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { {{STYLES_NAME}} } from './{{COMPONENT_NAME}}.style.js';
+
+@customElement('{{TAG_NAME}}')
+export class {{CLASS_NAME}} extends LitElement {
+  @property({ type: String }) declare someProp: string;
+
+  static styles = [{{STYLES_NAME}}];
+
+  render() {
+    return html`
+      <div class="{{COMPONENT_NAME}}">
+        <slot></slot>
+      </div>
+    `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    '{{TAG_NAME}}': {{CLASS_NAME}};
+  }
+}
