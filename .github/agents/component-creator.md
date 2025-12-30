@@ -11,15 +11,15 @@ You are an expert web component developer specializing in the Blueprint componen
 
 **Scaffolding:**
 
-- `npm run scaffold <component-name>` - Create component directory and all 5 stub files (run this first!)
+- `bp scaffold <component-name>` - Create component directory and all 5 stub files (run this first!)
 
 **Validation:**
 
-- `npm run validate:component <component-name>` - Check component completeness (files, tests, exports, formatting, linting)
-- `npm run validate:tokens <component-name>` - Check for hardcoded values and design token violations
-- `npm run extract-api <component-name>` - Generate API documentation tables from component code
-- `npm run generate-stories <component-name>` - Auto-generate Storybook stories from component properties
-- `npm run add-to-demo <component-name>` - Add component examples to demo page for manual testing
+- `bp validate component <component-name>` - Check component completeness (files, tests, exports, formatting, linting)
+- `bp validate tokens <component-name>` - Check for hardcoded values and design token violations
+- `bp generate api <component-name>` - Generate API documentation tables from component code
+- `bp generate stories <component-name>` - Auto-generate Storybook stories from component properties
+- `bp demo add <component-name>` - Add component examples to demo page for manual testing
 
 **Development:**
 
@@ -57,24 +57,24 @@ You are an expert web component developer specializing in the Blueprint componen
 - `source/` - All source code (you READ and WRITE here)
 - `source/components/` - Individual web components (you CREATE components here)
 - `source/themes/light.css` - CSS design tokens (you READ from here, never hardcode values)
-- `source/scripts/scaffoldComponent.ts` - Scaffolding script (generates stub files)
+- `source/cli/` - CLI tool for scaffolding, validation, and code generation
 - `demo/` - Development demo page for manual testing
 - `dist/` - Built library output (never modify)
 
 **Workflow:**
 
-1. **Scaffold** - Run `npm run scaffold <component-name>` to create stub files
+1. **Scaffold** - Run `bp scaffold <component-name>` to create stub files
 2. **Implement component** - Fill in `.ts` file with component logic
 3. **Implement styles** - Fill in `.style.ts` file using design tokens
-4. **Validate tokens** - Run `npm run validate:tokens <component-name>` to ensure no hardcoded values
+4. **Validate tokens** - Run `bp validate tokens <component-name>` to ensure no hardcoded values
 5. **Implement tests** - Fill in `.test.ts` file with comprehensive tests
-6. **Generate stories** - Run `npm run generate-stories <component-name>` to auto-generate Storybook stories
-7. **Generate docs** - Run `npm run extract-api <component-name>` and add tables to README
-8. **Validate component** - Run `npm run validate:component <component-name>` to check completeness
-9. **Add to demo** - Run `npm run add-to-demo <component-name>` for manual testing
+6. **Generate stories** - Run `bp generate stories <component-name>` to auto-generate Storybook stories
+7. **Generate docs** - Run `bp generate api <component-name>` and add tables to README
+8. **Validate component** - Run `bp validate component <component-name>` to check completeness
+9. **Add to demo** - Run `bp demo add <component-name>` for manual testing
 10. **Format** - Run `npm run format` and `npm run lint`
 
-**Naming conventions (handled by scaffold script):**
+**Naming conventions (handled by CLI):**
 
 - Element: `bp-component-name` (kebab-case, `bp-` prefix)
 - Class: `BpComponentName` (PascalCase with `Bp` prefix)
@@ -213,7 +213,7 @@ export const buttonStyles = css`
 
 **Generate Storybook stories automatically:**
 
-Run `npm run generate-stories <component-name>` to auto-generate stories from component properties. The tool:
+Run `bp generate stories <component-name>` to auto-generate stories from component properties. The tool:
 
 - Parses `@property()` decorators and JSDoc comments
 - Creates appropriate controls (select for unions, boolean for booleans, etc.)
@@ -268,12 +268,12 @@ export class BpButton extends LitElement {
 
 **✅ Always do:**
 
-- Run `npm run scaffold <component-name>` first to create stub files
+- Run `bp scaffold <component-name>` first to create stub files
 - Use design tokens from `source/themes/light.css` (never hardcode)
 - Write descriptive variable names (no `v`, `s`, `h` abbreviations)
 - Implement all 5 scaffolded files completely
-- Run `npm run validate:tokens <component-name>` after implementing styles
-- Run `npm run validate:component <component-name>` before marking component complete
+- Run `bp validate tokens <component-name>` after implementing styles
+- Run `bp validate component <component-name>` before marking component complete
 - Run `npm run format` to format all files
 - Include tests for all relevant categories (registration, rendering, properties, defaults, plus applicable features like events, variants, accessibility)
 - Follow the code patterns from scaffolded stubs
@@ -291,4 +291,4 @@ export class BpButton extends LitElement {
 - Leave scaffolded stub files incomplete
 - Modify `dist/` or `node_modules/`
 - Skip accessibility features
-- Create files manually (use `npm run scaffold` instead)
+- Create files manually (use `bp scaffold` instead)
