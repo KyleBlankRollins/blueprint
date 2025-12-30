@@ -1128,7 +1128,7 @@ export default defineConfig({
 1. ✅ Build `bp theme preview` CLI command for ongoing visual feedback
 2. ✅ Build visual feedback system (button-demo.html)
 3. ✅ Update button component (all 6 variants + 3 sizes + states)
-4. ⏸️ Create input component (validation states) - NEXT
+4. ✅ Create input component (validation states)
 5. ✅ Verify semantic tokens work (button uses all semantic tokens correctly)
 6. ⏸️ Update remaining components - PENDING
 
@@ -1149,16 +1149,62 @@ export default defineConfig({
 - ✅ Proper event handling with `bp-click` custom event
 - ✅ Comprehensive accessibility (ARIA, keyboard support, semantic HTML)
 - ✅ All styles use semantic design tokens (no primitives)
-- ✅ 16 comprehensive tests (all passing)
+- ✅ 17 comprehensive tests (all passing)
+- ✅ 15 comprehensive Storybook stories
 - ✅ Interactive demo page at `/demo/button-demo.html`
 - ✅ Complete API documentation in README
+- ✅ Implemented complete `bp-input` component with 5 variants, 3 sizes, 7 input types
+- ✅ Added validation states (error messages, helper text, required indicator)
+- ✅ 45 comprehensive tests (all passing)
+- ✅ 18 comprehensive Storybook stories (all input types, forms, patterns, character limits)
+- ✅ TypeScript type safety (AutocompleteType, InputModeType)
+- ✅ Lit directives (`live()`, `ifDefined()`, `nothing`)
+- ✅ All component code reviews completed
 
-### Phase 4: CLI Tooling (Week 2)
+### ✅ Phase 4: CLI Tooling (COMPLETED)
 
-1. `bp theme generate` (polish existing script)
-2. `bp theme validate` (contrast checking)
-3. `bp theme create` (interactive)
-4. High-contrast theme generation
+1. ✅ `bp theme generate` - Polished CLI command with validation options
+2. ✅ `bp theme validate` - Comprehensive contrast checking with categorized violations
+3. ✅ `bp theme create` - Interactive theme creator with contrast preview
+4. ✅ High-contrast theme generation via `@media (prefers-contrast: more)`
+5. ✅ All 14 contrast violations fixed in default theme
+
+**Completed Work:**
+
+- ✅ **`bp theme generate`** command
+  - Generates all theme CSS files (primitives, utilities, light, dark, index)
+  - Optional WCAG contrast validation (use `--no-validate` to skip)
+  - Custom output directory support (`-o, --output <dir>`)
+  - Shows file sizes and total theme size
+  - Error handling with clear messages
+- ✅ **`bp theme validate`** command
+  - Validates all text/background contrast ratios
+  - Categorizes violations (Text Contrast vs UI Component Contrast)
+  - Shows actual vs required contrast ratios
+  - Displays foreground/background color values
+  - Exit code 1 on failures for CI integration
+  - Skips interactive state checks (hover vs primary) - validated through UI
+- ✅ **`bp theme create`** command
+  - Interactive prompts for theme name, colors, and options
+  - Three creation methods: brand color, copy existing, manual OKLCH
+  - Real-time contrast preview against light/dark backgrounds
+  - Helpful tips for failed contrast checks
+  - Generates complete TypeScript config code
+  - Generates example semantic token mappings
+  - Supports command-line options for non-interactive use
+  - Options: `--name`, `--color`, `--from`
+- ✅ **High-contrast theme generation**
+  - Automatically generated in `utilities.css`
+  - Uses `@media (prefers-contrast: more)` media query
+  - Increases border width (2px) and focus width (3px)
+  - Pure black/white text for maximum contrast
+  - Controlled by `accessibility.highContrast` config option
+- ✅ **Contrast violation fixes**
+  - Fixed all 14 original violations in default theme
+  - Updated light theme: `textMuted` to gray700, primary colors to 700/800/900
+  - Updated dark theme: primary/success/error to brighter values (accent200/green100/red100)
+  - Improved validation logic to skip impractical hover-state checks
+  - All themes now pass WCAG AA requirements
 
 ### Phase 5: Documentation & QA (Week 2-3)
 
