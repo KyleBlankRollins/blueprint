@@ -6,6 +6,8 @@ process.env.BP_CLI = '1';
 import { Command } from 'commander';
 import { scaffoldCommand } from './commands/scaffold.js';
 import { validateCommand } from './commands/validate.js';
+import { generateCommand } from './commands/generate.js';
+import { demoCommand } from './commands/demo.js';
 
 const program = new Command();
 
@@ -17,5 +19,7 @@ program
 // Register commands
 scaffoldCommand(program);
 validateCommand(program);
+generateCommand(program);
+demoCommand(program);
 
 program.parse();

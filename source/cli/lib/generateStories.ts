@@ -1,22 +1,115 @@
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { join } from 'path';
 
-interface PropertyInfo {
+// Constants for JSDoc extraction
+const JSDOC_SEARCH_LINES = 10;
+const JSDOC_START_SEARCH_LINES = 20;
+
+/**
+ * Information about a component property extracted from source code.
+ */
+export interface PropertyInfo {
   name: string;
   type: string;
   defaultValue: string;
   description: string;
 }
 
+/**
+ * Result of story generation operation.
+ */
+export interface StoryGenerationResult {
+  success: boolean;
+  storiesGenerated: string[];
+  errors: string[];
+  warnings: string[];
+}
+
+/**
+ * Validates component name format (kebab-case).
+ * @param name - Component name to validate
+ * @returns True if valid kebab-case format
+ */
+export function isValidComponentName(name: string): boolean {
+  return /^[a-z]+(-[a-z]+)*$/.test(name);
+}
+
+/**
+ * Converts kebab-case string to PascalCase.
+ * @param str - Kebab-case string to convert
+ * @returns PascalCase version of the string
+ */
+export function toPascalCase(str: string): string {
+  return str
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join('');
+}
+
+/**
+ * Extracts JSDoc comment before a given line.
+ * @param lines - All file lines
+ * @param startLine - Line to search backwards from
+ * @returns Extracted description or empty string
+ */
+function extractJSDoc(lines: string[], startLine: number): string {
+  for (
+    let lineIndex = startLine - 1;
+    lineIndex >= Math.max(0, startLine - JSDOC_SEARCH_LINES);
+    lineIndex--
+  ) {
+    const line = lines[lineIndex]?.trim();
+    if (line?.includes('*/')) {
+      let jsDocStart = -1;
+      for (
+        let searchIndex = lineIndex;
+        searchIndex >= Math.max(0, lineIndex - JSDOC_START_SEARCH_LINES);
+        searchIndex--
+      ) {
+        if (lines[searchIndex]?.trim().includes('/**')) {
+          jsDocStart = searchIndex;
+          break;
+        }
+      }
+
+      if (jsDocStart !== -1) {
+        const jsDoc = lines.slice(jsDocStart, lineIndex + 1).join('\n');
+        const descMatch = jsDoc.match(/\/\*\*\s*([\s\S]*?)\*\*/);
+        if (descMatch) {
+          const jsDocContent = descMatch[1];
+          return jsDocContent
+            .split('\n')
+            .map((line) => line.replace(/^\s*\*\s?/, '').trim())
+            .filter((line) => line && !line.startsWith('@'))
+            .join(' ');
+        }
+      }
+      break;
+    }
+  }
+  return '';
+}
+
+/**
+ * Loads a template file and replaces placeholders with values.
+ * @param templateName - Name of the template file
+ * @param replacements - Key-value pairs for placeholder replacement
+ * @returns Processed template content
+ */
 function loadTemplate(
   templateName: string,
   replacements: Record<string, string>
 ): string {
   const templatePath = join(process.cwd(), 'source', 'templates', templateName);
+
+  if (!existsSync(templatePath)) {
+    throw new Error(`Template file not found: ${templatePath}`);
+  }
+
   let content = readFileSync(templatePath, 'utf-8');
 
-  // Replace all placeholders
   Object.entries(replacements).forEach(([key, value]) => {
+    // Replace {{PLACEHOLDER}} with actual values
     const regex = new RegExp(`{{${key}}}`, 'g');
     content = content.replace(regex, value);
   });
@@ -24,27 +117,13 @@ function loadTemplate(
   return content;
 }
 
-interface StoryGenerationResult {
-  success: boolean;
-  storiesGenerated: string[];
-  errors: string[];
-  warnings: string[];
-}
-
-function isValidComponentName(name: string): boolean {
-  return /^[a-z]+(-[a-z]+)*$/.test(name);
-}
-
-function toPascalCase(str: string): string {
-  return str
-    .split('-')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join('');
-}
-
+/**
+ * Extracts property information from component source code.
+ * @param content - Component file content
+ * @returns Array of property information objects
+ */
 function extractProperties(content: string): PropertyInfo[] {
   const properties: PropertyInfo[] = [];
-
   const lines = content.split('\n');
 
   for (
@@ -58,66 +137,25 @@ function extractProperties(content: string): PropertyInfo[] {
       continue;
     }
 
-    // Extract JSDoc from previous lines
-    let description = '';
-    let jsDocStart = -1;
+    // Extract JSDoc description
+    const description = extractJSDoc(lines, currentLineIndex);
 
-    for (
-      let prevLineIndex = currentLineIndex - 1;
-      prevLineIndex >= Math.max(0, currentLineIndex - 10);
-      prevLineIndex--
-    ) {
-      const previousLineContent = lines[prevLineIndex]?.trim();
-      if (previousLineContent?.includes('*/')) {
-        for (
-          let searchIndex = prevLineIndex;
-          searchIndex >= Math.max(0, currentLineIndex - 20);
-          searchIndex--
-        ) {
-          if (lines[searchIndex]?.trim().includes('/**')) {
-            jsDocStart = searchIndex;
-            break;
-          }
-        }
-        if (jsDocStart !== -1) {
-          const jsDoc = lines.slice(jsDocStart, prevLineIndex + 1).join('\n');
-          const descMatch = jsDoc.match(/\/\*\*\s*([\s\S]*?)\*\//);
-          if (descMatch) {
-            const jsDocContent = descMatch[1];
-            const descriptionLines = jsDocContent
-              .split('\n')
-              .map((docLine) => docLine.replace(/^\s*\*\s?/, '').trim())
-              .filter((docLine) => docLine && !docLine.startsWith('@'));
-            description = descriptionLines.join(' ');
-          }
-        }
-        break;
-      }
-    }
-
-    // Extract property details from current and next line
     const propertyMatch = line.match(/@property\s*\(\s*\{([^}]*)\}\s*\)/);
     if (!propertyMatch) {
       continue;
     }
 
-    // Look for property declaration on same line or next line
     let declarationLine = line;
+    // Check if property declaration is on same line or next line
     if (!line.match(/\)\s+(?:declare\s+)?(\w+)\s*:/)) {
       declarationLine = lines[currentLineIndex + 1] || '';
     }
 
-    // Match both patterns:
-    // @property({ type: String }) declare name: type = value;
-    // @property({ type: String }) name: type = value;
+    // Match pattern: ) propertyName: type [= defaultValue];
     const declMatch = declarationLine.match(
       /\)\s+(?:declare\s+)?(\w+)\s*:\s*([^;=]+)(?:\s*=\s*([^;]+))?;/
     );
-    if (!declMatch) {
-      continue;
-    }
-
-    if (!declMatch[1]) {
+    if (!declMatch?.[1]) {
       continue;
     }
 
@@ -125,7 +163,6 @@ function extractProperties(content: string): PropertyInfo[] {
     const type = declMatch[2]?.trim() || 'unknown';
     let defaultValue = declMatch[3]?.trim() || '';
 
-    // Clean up default value
     if (defaultValue) {
       defaultValue = defaultValue.replace(/^['"`]|['"`]$/g, '');
     }
@@ -141,8 +178,13 @@ function extractProperties(content: string): PropertyInfo[] {
   return properties;
 }
 
+/**
+ * Parses a TypeScript union type string into individual values.
+ * @param typeString - Type string like "'small' | 'medium' | 'large'"
+ * @returns Array of union values or null if not a valid union type
+ */
 function parseUnionType(typeString: string): string[] | null {
-  // Match union types like 'primary' | 'secondary' | 'tertiary'
+  // Match pattern: 'value1' | 'value2' | 'value3'
   const unionMatch = typeString.match(
     /^(['"][\w-]+['"](\s*\|\s*['"][\w-]+['"])+)$/
   );
@@ -157,6 +199,11 @@ function parseUnionType(typeString: string): string[] | null {
   return values;
 }
 
+/**
+ * Generates Storybook argTypes configuration from properties.
+ * @param properties - Array of component properties
+ * @returns Formatted argTypes string for Storybook
+ */
 function generateArgTypes(properties: PropertyInfo[]): string {
   if (properties.length === 0) {
     return '    // No properties to configure';
@@ -167,26 +214,22 @@ function generateArgTypes(properties: PropertyInfo[]): string {
       const unionValues = parseUnionType(prop.type);
 
       if (unionValues) {
-        // Union type - use select control
         return `    ${prop.name}: { 
       control: 'select',
-      options: [${unionValues.map((v) => `'${v}'`).join(', ')}],
+      options: [${unionValues.map((value) => `'${value}'`).join(', ')}],
       description: '${prop.description || prop.name}',
     }`;
       } else if (prop.type === 'boolean' || prop.type === 'Boolean') {
-        // Boolean - use boolean control
         return `    ${prop.name}: { 
       control: 'boolean',
       description: '${prop.description || prop.name}',
     }`;
       } else if (prop.type === 'number' || prop.type === 'Number') {
-        // Number - use number control
         return `    ${prop.name}: { 
       control: 'number',
       description: '${prop.description || prop.name}',
     }`;
       } else {
-        // Default to text control
         return `    ${prop.name}: { 
       control: 'text',
       description: '${prop.description || prop.name}',
@@ -198,6 +241,11 @@ function generateArgTypes(properties: PropertyInfo[]): string {
   return argTypes;
 }
 
+/**
+ * Generates default args object for Storybook stories.
+ * @param properties - Array of component properties
+ * @returns Formatted args string with default values
+ */
 function generateDefaultArgs(properties: PropertyInfo[]): string {
   if (properties.length === 0) {
     return '';
@@ -208,7 +256,6 @@ function generateDefaultArgs(properties: PropertyInfo[]): string {
       let value = prop.defaultValue;
 
       if (!value) {
-        // Infer default based on type
         if (prop.type === 'boolean' || prop.type === 'Boolean') {
           value = 'false';
         } else if (prop.type === 'number' || prop.type === 'Number') {
@@ -222,7 +269,6 @@ function generateDefaultArgs(properties: PropertyInfo[]): string {
           }
         }
       } else {
-        // Add quotes for string values if needed
         if (
           prop.type.includes("'") ||
           prop.type.includes('"') ||
@@ -242,6 +288,11 @@ function generateDefaultArgs(properties: PropertyInfo[]): string {
   return args;
 }
 
+/**
+ * Generates property binding syntax for Lit templates.
+ * @param properties - Array of component properties
+ * @returns String of property bindings (e.g., ".prop=${args.prop}")
+ */
 function generatePropertyBindings(properties: PropertyInfo[]): string {
   if (properties.length === 0) {
     return '';
@@ -258,28 +309,31 @@ function generatePropertyBindings(properties: PropertyInfo[]): string {
     .join(' ');
 }
 
+/**
+ * Generates additional story variants based on component properties.
+ * Creates stories for variants, sizes, and disabled states.
+ * @param properties - Array of component properties
+ * @returns String containing additional story exports
+ */
 function generateVariantStories(properties: PropertyInfo[]): string {
   const stories: string[] = [];
 
-  // Find variant and size properties
   const variantProp = properties.find(
-    (p) =>
-      p.name === 'variant' &&
-      parseUnionType(p.type) &&
-      parseUnionType(p.type)!.length > 1
+    (prop) =>
+      prop.name === 'variant' &&
+      parseUnionType(prop.type) &&
+      parseUnionType(prop.type)!.length > 1
   );
   const sizeProp = properties.find(
-    (p) =>
-      p.name === 'size' &&
-      parseUnionType(p.type) &&
-      parseUnionType(p.type)!.length > 1
+    (prop) =>
+      prop.name === 'size' &&
+      parseUnionType(prop.type) &&
+      parseUnionType(prop.type)!.length > 1
   );
 
   if (variantProp) {
     const variants = parseUnionType(variantProp.type);
-    if (!variants) {
-      // Skip if we can't parse the union type
-    } else {
+    if (variants) {
       variants.forEach((variant) => {
         const storyName = toPascalCase(variant);
         stories.push(`
@@ -296,9 +350,7 @@ export const ${storyName}: Story = {
 
   if (sizeProp) {
     const sizes = parseUnionType(sizeProp.type);
-    if (!sizes) {
-      // Skip if we can't parse the union type
-    } else {
+    if (sizes) {
       sizes.forEach((size) => {
         const storyName = toPascalCase(size);
         stories.push(`
@@ -313,10 +365,10 @@ export const ${storyName}: Story = {
     }
   }
 
-  // Generate disabled state if there's a disabled property
   const disabledProp = properties.find(
-    (p) =>
-      p.name === 'disabled' && (p.type === 'boolean' || p.type === 'Boolean')
+    (prop) =>
+      prop.name === 'disabled' &&
+      (prop.type === 'boolean' || prop.type === 'Boolean')
   );
   if (disabledProp) {
     stories.push(`
@@ -332,6 +384,12 @@ export const Disabled: Story = {
   return stories.join('');
 }
 
+/**
+ * Generates complete Storybook stories file content.
+ * @param componentName - Name of the component (kebab-case)
+ * @param properties - Array of component properties
+ * @returns Complete stories file content
+ */
 function generateStoriesFile(
   componentName: string,
   properties: PropertyInfo[]
@@ -344,14 +402,12 @@ function generateStoriesFile(
   const propertyBindings = generatePropertyBindings(properties);
   const variantStories = generateVariantStories(properties);
 
-  // Load template
   let storiesContent = loadTemplate('baseComponent.stories.template', {
     COMPONENT_NAME: componentName,
     TITLE_NAME: titleName,
     TAG_NAME: tagName,
   });
 
-  // Replace argTypes section
   storiesContent = storiesContent.replace(
     /argTypes:\s*\{[\s\S]*?\n {2}\}/,
     `argTypes: {
@@ -359,7 +415,6 @@ ${argTypes}
   }`
   );
 
-  // Replace args section
   storiesContent = storiesContent.replace(
     /args:\s*\{[\s\S]*?\n {2}\}/,
     `args: {
@@ -367,16 +422,13 @@ ${defaultArgs}
   }`
   );
 
-  // Replace property bindings in render function
   storiesContent = storiesContent.replace(
     /\.someProp=\$\{args\.someProp\}/,
     propertyBindings
   );
 
-  // Replace slot content
   storiesContent = storiesContent.replace(/Default content/, 'Button Content');
 
-  // Append variant stories
   if (variantStories) {
     storiesContent += variantStories;
   }
@@ -384,12 +436,16 @@ ${defaultArgs}
   return storiesContent;
 }
 
+/**
+ * Generates Storybook stories for a component.
+ * @param componentName - Name of the component (kebab-case)
+ * @returns Result object with success status, generated files, errors, and warnings
+ */
 export function generateStories(componentName: string): StoryGenerationResult {
   const errors: string[] = [];
   const warnings: string[] = [];
   const storiesGenerated: string[] = [];
 
-  // Validate component name
   if (!isValidComponentName(componentName)) {
     return {
       success: false,
@@ -401,7 +457,6 @@ export function generateStories(componentName: string): StoryGenerationResult {
     };
   }
 
-  // Check if component exists
   const componentDir = join(
     process.cwd(),
     'source',
@@ -419,10 +474,7 @@ export function generateStories(componentName: string): StoryGenerationResult {
     };
   }
 
-  // Read component file
   const componentContent = readFileSync(componentFile, 'utf-8');
-
-  // Extract properties
   const properties = extractProperties(componentContent);
 
   if (properties.length === 0) {
@@ -431,18 +483,27 @@ export function generateStories(componentName: string): StoryGenerationResult {
     );
   }
 
-  // Generate stories file
-  const storiesContent = generateStoriesFile(componentName, properties);
+  let storiesContent: string;
+  try {
+    storiesContent = generateStoriesFile(componentName, properties);
+  } catch (error) {
+    errors.push(`Failed to generate stories content: ${error}`);
+    return {
+      success: false,
+      storiesGenerated: [],
+      errors,
+      warnings,
+    };
+  }
+
   const storiesFile = join(componentDir, `${componentName}.stories.ts`);
 
-  // Check if stories file already exists
   if (existsSync(storiesFile)) {
     warnings.push(
       `Stories file already exists at ${storiesFile}. It will be overwritten.`
     );
   }
 
-  // Write stories file
   try {
     writeFileSync(storiesFile, storiesContent, 'utf-8');
     storiesGenerated.push(storiesFile);
@@ -462,34 +523,4 @@ export function generateStories(componentName: string): StoryGenerationResult {
     errors,
     warnings,
   };
-}
-
-// CLI interface
-if (process.argv[2]) {
-  const componentName = process.argv[2];
-  const result = generateStories(componentName);
-
-  if (result.success) {
-    console.log(`✅ Story Generator: ${componentName}`);
-    console.log(`\nStories generated:`);
-    result.storiesGenerated.forEach((file) => console.log(`  - ${file}`));
-
-    if (result.warnings.length > 0) {
-      console.log(`\n⚠️  Warnings:`);
-      result.warnings.forEach((warning) => console.log(`  - ${warning}`));
-    }
-
-    process.exit(0);
-  } else {
-    console.log(`❌ Story Generator: ${componentName}`);
-    if (result.errors.length > 0) {
-      console.log(`\nErrors:`);
-      result.errors.forEach((error) => console.log(`  - ${error}`));
-    }
-    if (result.warnings.length > 0) {
-      console.log(`\nWarnings:`);
-      result.warnings.forEach((warning) => console.log(`  - ${warning}`));
-    }
-    process.exit(1);
-  }
 }
