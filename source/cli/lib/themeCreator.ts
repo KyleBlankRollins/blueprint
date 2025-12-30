@@ -5,7 +5,7 @@
 
 import { input, select, confirm } from '@inquirer/prompts';
 import { parse, oklch, formatHex } from 'culori';
-import { getContrastRatio } from '../../themes/builder/colorUtils.js';
+import { getContrastRatio } from '../../themes/color/colorUtils.js';
 
 export interface ThemeCreatorOptions {
   from?: string;

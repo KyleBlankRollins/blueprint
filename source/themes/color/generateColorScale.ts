@@ -7,7 +7,7 @@ import type {
   OKLCHColor,
   GeneratedColorStep,
   DarkModeAdjustments,
-} from './types.js';
+} from '../core/types.js';
 import { convertOKLCHtoHex, isValidOKLCH } from './colorUtils.js';
 
 /**

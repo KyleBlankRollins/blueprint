@@ -17,6 +17,17 @@ export type ColorStep =
   | 900
   | 950;
 
+/**
+ * Opaque type for color references
+ * Provides type safety when referencing colors in theme variants
+ * Uses branded type pattern for runtime compatibility
+ */
+export type ColorRef = {
+  readonly __colorRef: symbol;
+  readonly colorName: string;
+  readonly step: number;
+};
+
 /** Standard theme variant names */
 export type ThemeVariant = 'light' | 'dark';
 
@@ -27,6 +38,175 @@ export interface OKLCHColor {
   c: number;
   /** Hue (0-360) */
   h: number;
+}
+
+/**
+ * Color definition for theme plugins
+ */
+export interface ColorDefinition {
+  /** Source OKLCH color (typically the 500 step) */
+  source: OKLCHColor;
+  /** Scale steps to generate (e.g., [50, 100, 200, ..., 950]) */
+  scale: readonly number[];
+  /** Optional metadata about the color */
+  metadata?: {
+    name?: string;
+    description?: string;
+    tags?: string[];
+  };
+}
+
+/**
+ * Semantic tokens for theme variants
+ * Generic over color reference type for flexibility
+ */
+export interface SemanticTokens<TColorRef = ColorRef | string> {
+  // Backgrounds
+  background: TColorRef;
+  surface: TColorRef;
+  surfaceElevated: TColorRef;
+  surfaceSubdued: TColorRef;
+
+  // Text
+  text: TColorRef;
+  textMuted: TColorRef;
+  textInverse: TColorRef;
+
+  // Primary brand
+  primary: TColorRef;
+  primaryHover: TColorRef;
+  primaryActive: TColorRef;
+
+  // Semantic states
+  success: TColorRef;
+  warning: TColorRef;
+  error: TColorRef;
+  info: TColorRef;
+
+  // UI elements
+  border: TColorRef;
+  borderStrong: TColorRef;
+  focus: TColorRef;
+}
+
+/**
+ * Plugin dependency specification
+ */
+export interface PluginDependency {
+  /** Plugin ID */
+  id: string;
+  /** Semver version range (optional) */
+  version?: string;
+  /** Whether this dependency is optional */
+  optional?: boolean;
+}
+
+/**
+ * Validation error from theme validation
+ */
+export interface ValidationError {
+  /** Plugin that generated the error (if applicable) */
+  plugin?: string;
+  /** Type of validation error */
+  type:
+    | 'missing_color'
+    | 'invalid_ref'
+    | 'contrast_violation'
+    | 'duplicate_id'
+    | 'dependency_missing';
+  /** Human-readable error message */
+  message: string;
+  /** Additional context about the error */
+  context?: Record<string, unknown>;
+}
+
+/**
+ * Validation warning from theme validation
+ */
+export interface ValidationWarning {
+  /** Plugin that generated the warning (if applicable) */
+  plugin?: string;
+  /** Type of validation warning */
+  type: 'low_contrast' | 'similar_colors' | 'deprecated_api';
+  /** Human-readable warning message */
+  message: string;
+  /** Suggested fix */
+  suggestion?: string;
+}
+
+/**
+ * Result of theme validation
+ */
+export interface ValidationResult {
+  /** Whether the theme is valid */
+  valid: boolean;
+  /** Validation errors (prevent build) */
+  errors: ValidationError[];
+  /** Validation warnings (allow build but may cause issues) */
+  warnings: ValidationWarning[];
+}
+
+/**
+ * Theme builder interface for plugin registration
+ * This is the API that plugins interact with during registration
+ */
+export interface ThemeBuilderInterface {
+  readonly colors: Record<string, ColorRef>;
+  addColor(name: string, config: ColorDefinition): ThemeBuilderInterface;
+  getColor(name: string): ColorDefinition | undefined;
+  hasColor(name: string): boolean;
+  addThemeVariant(
+    name: string,
+    tokens: SemanticTokens<ColorRef>
+  ): ThemeBuilderInterface;
+  getThemeVariant(name: string): SemanticTokens<ColorRef> | undefined;
+  extendThemeVariant(
+    baseName: string,
+    newName: string,
+    overrides: Partial<SemanticTokens<ColorRef>>
+  ): ThemeBuilderInterface;
+}
+
+/**
+ * Theme plugin interface
+ * All theme plugins must implement this interface
+ */
+export interface ThemePlugin {
+  // Required metadata
+  /** Unique plugin identifier */
+  id: string;
+  /** Semantic version */
+  version: string;
+
+  // Optional metadata
+  /** Display name */
+  name?: string;
+  /** Plugin description */
+  description?: string;
+  /** Author name or email */
+  author?: string;
+  /** License identifier */
+  license?: string;
+  /** Plugin homepage URL */
+  homepage?: string;
+  /** Tags for categorization */
+  tags?: string[];
+
+  // Dependencies
+  /** Required plugin dependencies */
+  dependencies?: PluginDependency[];
+  /** Plugins this works well with */
+  peerPlugins?: string[];
+
+  // Lifecycle hooks
+  /** Register colors, themes, and other config with the builder */
+  register(builder: ThemeBuilderInterface): void | Promise<void>;
+  /** Run before theme is built */
+  beforeBuild?(config: Partial<ThemeConfig>): void;
+  /** Run after theme is built */
+  afterBuild?(config: ThemeConfig): void;
+  /** Custom validation logic */
+  validate?(config: ThemeConfig): ValidationError[];
 }
 
 export interface ColorScale {

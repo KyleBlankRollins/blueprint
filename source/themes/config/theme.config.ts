@@ -4,7 +4,7 @@
  */
 
 import { defineTheme } from '../builder/defineTheme.js';
-import { createColorRefs } from '../builder/colorRefs.js';
+import { createColorRefs } from '../color/colorRefs.js';
 
 const themeColors = {
   sulphurYellow: { l: 0.941, c: 0.0554, h: 91.42 },

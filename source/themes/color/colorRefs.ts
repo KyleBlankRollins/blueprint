@@ -3,7 +3,7 @@
  * Provides IDE autocomplete and type safety for color references
  */
 
-import type { ColorStep } from './types.js';
+import type { ColorStep } from '../core/types.js';
 
 /** A color reference string like 'blue.500' or special values 'white'/'black' */
 export type ColorReference = string;

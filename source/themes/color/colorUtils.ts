@@ -4,7 +4,7 @@
  */
 
 import { formatHex, wcagContrast, oklch } from 'culori';
-import type { OKLCHColor } from './types.js';
+import type { OKLCHColor } from '../core/types.js';
 
 // Constants for OKLCH color space constraints
 const MAX_CHROMA = 0.4;

@@ -4,5 +4,3 @@
 - create foundational components.
 
 Implement suggestions from the review, but do so carefully so you don't break the file.
-
-- Make theme configs pluggable in themeConfig.ts. Should support defining themes elsewhere and importing them.

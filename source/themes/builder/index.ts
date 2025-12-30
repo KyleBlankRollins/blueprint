@@ -1,9 +1,49 @@
 /**
- * Main theme builder - orchestrates color generation and CSS output
+ * Theme builder module
+ * Provides ThemeBuilder API, validation, and defaults
  */
 
-import type { ThemeConfig } from './types.js';
-import { generateAllColorScales } from './generateColorScale.js';
+// Export ThemeBuilder and plugin system
+export { ThemeBuilder } from './ThemeBuilder.js';
+export { ThemeValidator } from './ThemeValidator.js';
+export { defineTheme } from './defineTheme.js';
+
+// Export default theme values
+export {
+  DEFAULT_SPACING,
+  DEFAULT_RADIUS,
+  DEFAULT_MOTION,
+  DEFAULT_TYPOGRAPHY,
+  DEFAULT_FOCUS,
+  DEFAULT_Z_INDEX,
+  DEFAULT_OPACITY,
+  DEFAULT_BREAKPOINTS,
+  DEFAULT_ACCESSIBILITY,
+  createDefaultThemeConfig,
+} from './defaults.js';
+
+// Re-export types from core
+export type {
+  ThemePlugin,
+  ThemeBuilderInterface,
+  ColorDefinition,
+  SemanticTokens,
+  ValidationResult,
+  ValidationError,
+  ValidationWarning,
+  PluginDependency,
+  ColorRef,
+  ThemeConfig,
+  ContrastViolation,
+} from '../core/types.js';
+
+// Re-export utilities from color module
+export { generateAllColorScales } from '../color/generateColorScale.js';
+export { validateThemeContrast } from '../color/validateContrast.js';
+
+// Legacy buildTheme function for backward compatibility
+import type { ThemeConfig } from '../core/types.js';
+import { generateAllColorScales } from '../color/generateColorScale.js';
 import {
   generatePrimitivesCSS,
   generateThemeCSS,
@@ -15,7 +55,7 @@ import {
   generateReducedMotionCSS,
   generateHighContrastCSS,
   generateIndexCSS,
-} from './generateCSS.js';
+} from '../generator/generateCSS.js';
 
 export interface GeneratedFiles {
   readonly 'primitives.css': string;
@@ -98,11 +138,3 @@ export function buildTheme(config: ThemeConfig): GeneratedFiles {
     throw new Error(`Failed to build theme: ${message}`);
   }
 }
-
-/**
- * Export builder utilities
- */
-export { generateAllColorScales } from './generateColorScale.js';
-export { validateThemeContrast } from './validateContrast.js';
-export * from './types.js';
-export * from './colorUtils.js';

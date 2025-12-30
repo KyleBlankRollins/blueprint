@@ -6,7 +6,7 @@ import type {
   ThemeConfig,
   ContrastViolation,
   GeneratedColorStep,
-} from './types.js';
+} from '../core/types.js';
 import { getContrastRatio } from './colorUtils.js';
 
 /**

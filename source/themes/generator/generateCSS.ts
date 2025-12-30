@@ -3,8 +3,8 @@
  * Generates CSS custom properties from theme configuration
  */
 
-import type { GeneratedColorStep, ThemeConfig } from './types.js';
-import { formatOKLCHforCSS } from './colorUtils.js';
+import type { GeneratedColorStep, ThemeConfig } from '../core/types.js';
+import { formatOKLCHforCSS } from '../color/colorUtils.js';
 
 // Token prefix constants
 const TOKEN_PREFIX = 'bp';
