@@ -24,6 +24,16 @@ export function validateCommand(program: Command): void {
         error(
           'Invalid component name. Must be kebab-case (e.g., "button", "icon-button")'
         );
+        console.log(`
+Valid examples:
+  ✓ button
+  ✓ icon-button
+  ✓ data-table
+
+Invalid examples:
+  ✗ Button (use: button)
+  ✗ iconButton (use: icon-button)
+  ✗ Icon_Button (use: icon-button)`);
         process.exit(1);
       }
 
@@ -71,9 +81,9 @@ export function validateCommand(program: Command): void {
     .action((name: string) => {
       // Validate name
       if (!isValidComponentNameTokens(name)) {
-        error(
-          'Invalid component name. Must be kebab-case (e.g., "button", "icon-button")'
-        );
+        error('Invalid component name. Must be kebab-case.');
+        console.log('\n  Valid:   button, icon-button, avatar');
+        console.log('  Invalid: Button, iconButton, Icon_Button\n');
         process.exit(1);
       }
 
@@ -100,7 +110,7 @@ export function validateCommand(program: Command): void {
         if (result.violations[0]?.type === 'File not found') {
           console.log(`❌ ${result.violations[0].suggestion}`);
         } else {
-          console.log(`${name}.style.ts:`);
+          console.log(`${name}.style.ts:\n`);
           for (const violation of result.violations) {
             console.log(`  Line ${violation.line}: ${violation.type}`);
             console.log(`    > ${violation.code}`);
@@ -108,6 +118,12 @@ export function validateCommand(program: Command): void {
           }
           console.log(
             `${result.violations.length} violation${result.violations.length !== 1 ? 's' : ''} found.`
+          );
+          console.log('\nCommon issues:');
+          console.log('  • Hardcoded colors - Use var(--bp-color-*)');
+          console.log('  • Fixed spacing - Use var(--bp-spacing-*)');
+          console.log(
+            '  • Magic numbers - Use design tokens from themes/light.css'
           );
         }
       } else {

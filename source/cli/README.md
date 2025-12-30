@@ -198,18 +198,82 @@ bp demo add button
 
 Generates HTML example based on component properties and inserts it into the demo page.
 
+### Workflow Commands
+
+**`bp create <component-name>`**
+
+Creates a complete component with one command. This runs the full workflow: scaffold → generate stories → generate API docs → add to demo.
+
+```bash
+bp create my-button
+```
+
+This is equivalent to running:
+
+```bash
+bp scaffold my-button
+bp generate stories my-button
+bp generate api my-button
+bp demo add my-button
+```
+
+Options:
+
+- `--skip-demo` - Skip adding the component to the demo page
+
+**`bp check <component-name>`**
+
+Runs all validation checks on a component. This validates both component structure and design token usage.
+
+```bash
+bp check button
+```
+
+This is equivalent to running:
+
+```bash
+bp validate component button
+bp validate tokens button
+```
+
+### Utility Commands
+
+**`bp list`**
+
+Lists all components in the Blueprint library.
+
+```bash
+bp list
+```
+
+Options:
+
+- `--detailed` - Show detailed information including file completeness for each component
+
+```bash
+bp list --detailed
+```
+
 ## Command Reference
 
-| Command                        | Description                         |
-| ------------------------------ | ----------------------------------- |
-| `bp scaffold <name>`           | Create new component with all files |
-| `bp validate component <name>` | Validate component completeness     |
-| `bp validate tokens <name>`    | Check for hardcoded values          |
-| `bp generate api <name>`       | Generate API documentation          |
-| `bp generate stories <name>`   | Generate Storybook stories          |
-| `bp demo add <name>`           | Add component to demo page          |
-| `bp --help`                    | Show help information               |
-| `bp <command> --help`          | Show command-specific help          |
+| Command                        | Description                                                     |
+| ------------------------------ | --------------------------------------------------------------- |
+| **Core Commands**              |                                                                 |
+| `bp scaffold <name>`           | Create new component with all files                             |
+| `bp validate component <name>` | Validate component completeness                                 |
+| `bp validate tokens <name>`    | Check for hardcoded values                                      |
+| `bp generate api <name>`       | Generate API documentation                                      |
+| `bp generate stories <name>`   | Generate Storybook stories                                      |
+| `bp demo add <name>`           | Add component to demo page                                      |
+| **Workflow Commands**          |                                                                 |
+| `bp create <name>`             | Create complete component (scaffold + stories + API + demo)     |
+| `bp check <name>`              | Run all validation checks (component structure + design tokens) |
+| **Utility Commands**           |                                                                 |
+| `bp list`                      | List all components                                             |
+| `bp list --detailed`           | List components with detailed info                              |
+| **Help**                       |                                                                 |
+| `bp --help`                    | Show help information                                           |
+| `bp <command> --help`          | Show command-specific help                                      |
 
 ## Component Naming
 
@@ -224,9 +288,58 @@ Component names are used to generate:
 - File names: `<component-name>.ts`, `<component-name>.style.ts`, etc.
 - Class name: `Bp<ComponentName>` (PascalCase)
 
+## Dry Run Mode
+
+Many commands support a `--dry-run` flag that shows what would happen without actually making changes. This is useful for previewing operations before executing them.
+
+**Commands with --dry-run support:**
+
+- `bp scaffold <name> --dry-run` - Preview files that would be created
+- `bp create <name> --dry-run` - Preview the full component creation workflow
+- `bp generate api <name> --dry-run` - Preview API documentation changes
+- `bp generate stories <name> --dry-run` - Preview story file changes
+- `bp demo add <name> --dry-run` - Preview demo page additions
+
+**Example:**
+
+```bash
+# Preview what files will be created
+bp scaffold my-button --dry-run
+
+# Output:
+# [DRY RUN] Would create the following files:
+#   ✓ source/components/my-button/my-button.ts
+#   ✓ source/components/my-button/my-button.style.ts
+#   ✓ source/components/my-button/my-button.test.ts
+#   ✓ source/components/my-button/my-button.stories.ts
+#   ✓ source/components/my-button/README.md
+#
+# Run without --dry-run to create these files.
+
+# Actually create the files
+bp scaffold my-button
+```
+
 ## Common Workflows
 
-### Creating a New Component
+### Creating a New Component (Quick)
+
+The fastest way to create a new component:
+
+```bash
+# Create complete component with one command
+bp create my-button
+
+# Implement the component logic, styles, and tests
+# ... edit files ...
+
+# Verify everything is correct
+bp check my-button
+```
+
+### Creating a New Component (Step-by-step)
+
+For more control over each step:
 
 ```bash
 # 1. Scaffold the component
@@ -245,8 +358,18 @@ bp generate stories my-button
 bp demo add my-button
 
 # 6. Validate everything is complete
-bp validate component my-button
-bp validate tokens my-button
+bp check my-button
+```
+
+### Validating a Component
+
+```bash
+# Quick check (runs all validations)
+bp check button
+
+# Or run individual validations
+bp validate component button
+bp validate tokens button
 ```
 
 ### Updating Component Documentation
@@ -255,6 +378,16 @@ bp validate tokens my-button
 # After adding/changing properties or events
 bp generate api button
 bp generate stories button
+```
+
+### Listing All Components
+
+```bash
+# Simple list
+bp list
+
+# Detailed view with file completeness
+bp list --detailed
 ```
 
 ## Architecture

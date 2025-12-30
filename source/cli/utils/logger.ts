@@ -14,6 +14,8 @@ export function warning(message: string): void {
   console.warn(`⚠️  ${message}`);
 }
 
+export const warn = warning; // Alias for convenience
+
 export function info(message: string): void {
   console.log(`ℹ️  ${message}`);
 }

@@ -19,7 +19,8 @@ export function generateCommand(program: Command): void {
   generate
     .command('api <name>')
     .description('Extract and generate API documentation from component')
-    .action((name: string) => {
+    .option('--dry-run', 'Show what would be generated without modifying files')
+    .action((name: string, options: { dryRun?: boolean }) => {
       if (!isValidComponentName(name)) {
         error(
           'Invalid component name. Must be kebab-case (e.g., "button", "icon-button")'
@@ -31,7 +32,18 @@ export function generateCommand(program: Command): void {
 
       if (!result.success) {
         error(result.errors.join('\n'));
+        console.log(`
+Common issues:
+  - Component file not found
+  - Missing @property decorators
+  - Invalid component structure`);
         process.exit(1);
+      }
+
+      if (options.dryRun) {
+        console.log('');
+        console.log('ℹ️  DRY RUN: No files will be modified');
+        console.log('');
       }
 
       const icon = '📄';
@@ -68,10 +80,18 @@ export function generateCommand(program: Command): void {
 
       if (result.properties.length === 0 && result.events.length === 0) {
         console.log('No properties or events found in component.');
-      } else {
+        console.log('');
         console.log(
-          'Copy this to README.md or enhance with additional details.'
+          'Tip: Add @property decorators to your component properties'
         );
+      } else {
+        if (options.dryRun) {
+          console.log('This would be added to the README.md file.');
+        } else {
+          console.log(
+            'Copy this to README.md or enhance with additional details.'
+          );
+        }
       }
 
       process.exit(0);
@@ -81,12 +101,29 @@ export function generateCommand(program: Command): void {
   generate
     .command('stories <name>')
     .description('Auto-generate Storybook stories from component properties')
-    .action((name: string) => {
+    .option('--dry-run', 'Show what would be generated without creating files')
+    .action((name: string, options: { dryRun?: boolean }) => {
       if (!isValidComponentNameStories(name)) {
         error(
           'Invalid component name. Must be kebab-case (e.g., "button", "icon-button")'
         );
         process.exit(1);
+      }
+
+      if (options.dryRun) {
+        console.log(`
+ℹ️  DRY RUN: No files will be created
+
+Would generate: source/components/${name}/${name}.stories.ts
+
+Stories would include:
+  - Default story
+  - Variant stories (if variant property exists)
+  - Size stories (if size property exists)
+  - Disabled state (if disabled property exists)
+
+To generate the file, run without --dry-run flag`);
+        return;
       }
 
       const result = generateStories(name);
@@ -97,6 +134,11 @@ export function generateCommand(program: Command): void {
           console.log('\nErrors:');
           result.errors.forEach((err: string) => console.log(`  ❌ ${err}`));
         }
+        console.log(`
+Common issues:
+  - Component file not found
+  - Template files missing
+  - Invalid property definitions`);
         process.exit(1);
       }
 

@@ -8,7 +8,8 @@ export function demoCommand(program: Command): void {
   demo
     .command('add <name>')
     .description('Add component examples to the demo page')
-    .action((name: string) => {
+    .option('--dry-run', 'Show what would be added without modifying demo page')
+    .action((name: string, options: { dryRun?: boolean }) => {
       if (!isValidComponentName(name)) {
         error(
           'Invalid component name. Must be kebab-case (e.g., "button", "icon-button")'
@@ -16,11 +17,31 @@ export function demoCommand(program: Command): void {
         process.exit(1);
       }
 
+      if (options.dryRun) {
+        console.log(`
+ℹ️  DRY RUN: demo/index.html will not be modified
+
+Would add component examples for: bp-${name}
+
+Examples that would be generated:
+  - Default example with component properties
+  - Variants (if applicable)
+  - Inserted into demo/index.html
+
+To add to demo, run without --dry-run flag`);
+        return;
+      }
+
       const result = addToDemo(name);
 
       if (!result.success) {
         error(`Failed to add bp-${name} to demo`);
         result.errors.forEach((err) => console.log(`  ❌ ${err}`));
+        console.log(`
+Common issues:
+  - demo/index.html not found
+  - Component file not found
+  - Invalid component structure`);
         process.exit(1);
       }
 

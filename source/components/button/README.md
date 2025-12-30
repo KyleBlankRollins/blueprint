@@ -7,7 +7,9 @@
 ## Usage
 
 ```html
-<bp-button> Content goes here </bp-button>
+<bp-button>
+  Content goes here
+</bp-button>
 ```
 
 ## API

@@ -6,13 +6,42 @@ export function scaffoldCommand(program: Command): void {
   program
     .command('scaffold <name>')
     .description('Create a new component with all required files')
-    .action((name: string) => {
+    .option(
+      '--dry-run',
+      'Show what would be created without actually creating files'
+    )
+    .action((name: string, options: { dryRun?: boolean }) => {
       // Validate name format
       if (!validateComponentName(name)) {
         error(
           `Invalid component name: "${name}". Must be kebab-case (e.g., "my-component")`
         );
+        info('Valid examples:');
+        console.log(`  - button
+  - icon-button
+  - data-table
+`);
+        info('Invalid examples:');
+        console.log(`  - Button (use: button)
+  - iconButton (use: icon-button)
+  - Icon_Button (use: icon-button)`);
         process.exit(1);
+      }
+
+      if (options.dryRun) {
+        info('DRY RUN: No files will be created');
+        info(`Would create component: bp-${name}`);
+        info('Files that would be created:');
+        console.log(`  - source/components/${name}/
+  - source/components/${name}/${name}.ts
+  - source/components/${name}/${name}.style.ts
+  - source/components/${name}/${name}.test.ts
+  - source/components/${name}/${name}.stories.ts
+  - source/components/${name}/README.md
+  - Update: source/components/index.ts
+`);
+        info('To create these files, run without --dry-run flag');
+        return;
       }
 
       // Run scaffolding
@@ -20,6 +49,10 @@ export function scaffoldCommand(program: Command): void {
 
       if (!result.success) {
         error(result.error || 'Failed to scaffold component');
+        info('Common issues:');
+        console.log(`  - Component already exists
+  - Permission denied
+  - Invalid directory structure`);
         process.exit(1);
       }
 
@@ -32,10 +65,10 @@ export function scaffoldCommand(program: Command): void {
       });
       console.log('');
       info('Next steps:');
-      console.log('  1. Implement component logic');
-      console.log('  2. Write tests (minimum 10)');
-      console.log('  3. Create Storybook stories');
-      console.log('  4. Complete README documentation');
-      console.log('  5. Run format and lint checks');
+      console.log(`  1. Implement component logic
+  2. Write tests (minimum 10)
+  3. Run: bp generate stories ${name}
+  4. Run: bp generate api ${name}
+  5. Run: bp check ${name}`);
     });
 }

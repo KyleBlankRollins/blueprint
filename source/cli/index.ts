@@ -8,6 +8,9 @@ import { scaffoldCommand } from './commands/scaffold.js';
 import { validateCommand } from './commands/validate.js';
 import { generateCommand } from './commands/generate.js';
 import { demoCommand } from './commands/demo.js';
+import { createCommand } from './commands/create.js';
+import { checkCommand } from './commands/check.js';
+import { listCommand } from './commands/list.js';
 
 const program = new Command();
 
@@ -16,10 +19,17 @@ program
   .description('Blueprint component development toolkit')
   .version('0.1.0');
 
-// Register commands
+// Register core commands
 scaffoldCommand(program);
 validateCommand(program);
 generateCommand(program);
 demoCommand(program);
+
+// Register workflow commands
+createCommand(program);
+checkCommand(program);
+
+// Register utility commands
+listCommand(program);
 
 program.parse();
