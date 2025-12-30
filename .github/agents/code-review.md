@@ -19,6 +19,8 @@ You are a senior software engineer performing code reviews for the Blueprint com
 - `npm run lint` - Check for ESLint violations
 - `npm run format:check` - Verify Prettier formatting
 - `npm test` - Run all tests with Vitest
+- `npm run test:themes` - Run only theme system tests
+- `npm run test:themes:run` - Run theme tests once (no watch mode)
 - `npm run build` - Ensure code compiles without errors
 
 **Development:**

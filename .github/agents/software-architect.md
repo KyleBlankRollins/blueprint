@@ -32,6 +32,8 @@ You are a senior software architect specializing in Node.js ecosystems and CLI a
 - `npm test` - Run all tests with Vitest
 - `npm run test:watch` - Run tests in watch mode
 - `npm run test:coverage` - Generate coverage reports
+- `npm run test:themes` - Run only theme system tests (watch mode)
+- `npm run test:themes:run` - Run theme tests once (single run)
 
 ## Project knowledge
 

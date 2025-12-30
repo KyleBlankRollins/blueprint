@@ -41,6 +41,19 @@ export type {
 export { generateAllColorScales } from '../color/generateColorScale.js';
 export { validateThemeContrast } from '../color/validateContrast.js';
 
+// Export plugin utilities
+export {
+  createPlugin,
+  validatePlugin,
+  createColorRef,
+  resolveColorRef,
+  serializeColorRef,
+  checkPluginDependencies,
+  generateColorTypes,
+  generateColorRegistryTypes,
+  sortPluginsByDependencies,
+} from './pluginUtils.js';
+
 // Legacy buildTheme function for backward compatibility
 import type { ThemeConfig } from '../core/types.js';
 import { generateAllColorScales } from '../color/generateColorScale.js';
