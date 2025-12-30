@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blueprint Button Component Demo</title>
+    <link rel="stylesheet" href="../source/themes/generated/index.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--bp-font-family-sans);
+        background: var(--bp-color-background);
+        color: var(--bp-color-text);
+        padding: var(--bp-spacing-lg);
+        line-height: var(--bp-line-height-normal);
+      }
+
+      .header {
+        margin-bottom: var(--bp-spacing-lg);
+        padding-bottom: var(--bp-spacing-md);
+        border-bottom: 1px solid var(--bp-color-border);
+      }
+
+      .header h1 {
+        font-size: var(--bp-font-size-3xl);
+        font-weight: var(--bp-font-weight-bold);
+        margin-bottom: var(--bp-spacing-xs);
+      }
+
+      .theme-toggle {
+        margin-top: var(--bp-spacing-md);
+      }
+
+      .section {
+        margin-bottom: var(--bp-spacing-xl);
+      }
+
+      .section h2 {
+        font-size: var(--bp-font-size-2xl);
+        font-weight: var(--bp-font-weight-semibold);
+        margin-bottom: var(--bp-spacing-md);
+        color: var(--bp-color-text);
+      }
+
+      .section h3 {
+        font-size: var(--bp-font-size-lg);
+        font-weight: var(--bp-font-weight-medium);
+        margin-bottom: var(--bp-spacing-sm);
+        margin-top: var(--bp-spacing-md);
+        color: var(--bp-color-text-muted);
+      }
+
+      .button-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--bp-spacing-md);
+        align-items: center;
+      }
+
+      .event-log {
+        margin-top: var(--bp-spacing-md);
+        padding: var(--bp-spacing-md);
+        background: var(--bp-color-surface);
+        border: 1px solid var(--bp-color-border);
+        border-radius: var(--bp-border-radius-md);
+        max-height: 200px;
+        overflow-y: auto;
+      }
+
+      .event-log h3 {
+        margin-top: 0;
+        margin-bottom: var(--bp-spacing-sm);
+      }
+
+      .event-item {
+        font-family: var(--bp-font-family-mono);
+        font-size: var(--bp-font-size-sm);
+        color: var(--bp-color-text-muted);
+        padding: var(--bp-spacing-xs) 0;
+      }
+
+      .empty-state {
+        color: var(--bp-color-text-muted);
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Blueprint Button Component</h1>
+      <p>Testing all variants, sizes, and states with the theme system</p>
+      <div class="theme-toggle">
+        <label>
+          <input type="checkbox" id="themeToggle" />
+          Dark Mode
+        </label>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Variants</h2>
+      <div class="button-grid">
+        <bp-button variant="primary">Primary</bp-button>
+        <bp-button variant="success">Success</bp-button>
+        <bp-button variant="error">Error</bp-button>
+        <bp-button variant="warning">Warning</bp-button>
+        <bp-button variant="info">Info</bp-button>
+        <bp-button variant="secondary">Secondary</bp-button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Sizes</h2>
+
+      <h3>Small</h3>
+      <div class="button-grid">
+        <bp-button variant="primary" size="sm">Primary</bp-button>
+        <bp-button variant="success" size="sm">Success</bp-button>
+        <bp-button variant="error" size="sm">Error</bp-button>
+        <bp-button variant="warning" size="sm">Warning</bp-button>
+        <bp-button variant="info" size="sm">Info</bp-button>
+        <bp-button variant="secondary" size="sm">Secondary</bp-button>
+      </div>
+
+      <h3>Medium (Default)</h3>
+      <div class="button-grid">
+        <bp-button variant="primary" size="md">Primary</bp-button>
+        <bp-button variant="success" size="md">Success</bp-button>
+        <bp-button variant="error" size="md">Error</bp-button>
+        <bp-button variant="warning" size="md">Warning</bp-button>
+        <bp-button variant="info" size="md">Info</bp-button>
+        <bp-button variant="secondary" size="md">Secondary</bp-button>
+      </div>
+
+      <h3>Large</h3>
+      <div class="button-grid">
+        <bp-button variant="primary" size="lg">Primary</bp-button>
+        <bp-button variant="success" size="lg">Success</bp-button>
+        <bp-button variant="error" size="lg">Error</bp-button>
+        <bp-button variant="warning" size="lg">Warning</bp-button>
+        <bp-button variant="info" size="lg">Info</bp-button>
+        <bp-button variant="secondary" size="lg">Secondary</bp-button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>States</h2>
+
+      <h3>Disabled</h3>
+      <div class="button-grid">
+        <bp-button variant="primary" disabled>Primary</bp-button>
+        <bp-button variant="success" disabled>Success</bp-button>
+        <bp-button variant="error" disabled>Error</bp-button>
+        <bp-button variant="warning" disabled>Warning</bp-button>
+        <bp-button variant="info" disabled>Info</bp-button>
+        <bp-button variant="secondary" disabled>Secondary</bp-button>
+      </div>
+
+      <h3>Interactive (hover and click these)</h3>
+      <div class="button-grid">
+        <bp-button variant="primary" id="interactive1">Hover me</bp-button>
+        <bp-button variant="success" id="interactive2">Click me</bp-button>
+        <bp-button variant="error" id="interactive3">Focus me</bp-button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Event Testing</h2>
+      <div class="button-grid">
+        <bp-button variant="primary" id="eventTest"
+          >Click to test event</bp-button
+        >
+        <bp-button variant="primary" id="disabledEventTest" disabled>
+          Disabled (no event)
+        </bp-button>
+      </div>
+
+      <div class="event-log">
+        <h3>Event Log</h3>
+        <div id="eventList" class="empty-state">
+          No events yet. Click a button above.
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      import '../source/components/button/button.js';
+
+      // Theme toggle
+      const themeToggle = document.getElementById('themeToggle');
+      const html = document.documentElement;
+
+      themeToggle.addEventListener('change', (e) => {
+        html.setAttribute('data-theme', e.target.checked ? 'dark' : 'light');
+      });
+
+      // Event logging
+      const eventList = document.getElementById('eventList');
+      const events = [];
+
+      function logEvent(detail) {
+        const timestamp = new Date().toLocaleTimeString();
+        events.unshift({ timestamp, detail });
+
+        // Keep only last 10 events
+        if (events.length > 10) events.pop();
+
+        renderEvents();
+      }
+
+      function renderEvents() {
+        if (events.length === 0) {
+          eventList.innerHTML =
+            '<div class="empty-state">No events yet. Click a button above.</div>';
+          return;
+        }
+
+        eventList.innerHTML = events
+          .map(
+            (event) =>
+              `<div class="event-item">[${event.timestamp}] bp-click event</div>`
+          )
+          .join('');
+      }
+
+      // Attach event listeners
+      document.getElementById('eventTest').addEventListener('bp-click', (e) => {
+        logEvent(e.detail);
+      });
+
+      document
+        .getElementById('disabledEventTest')
+        .addEventListener('bp-click', (e) => {
+          logEvent('This should never fire!');
+        });
+
+      // Also log all bp-click events globally
+      document.addEventListener('bp-click', (e) => {
+        console.log('Global bp-click event:', e.detail);
+      });
+    </script>
+  </body>
+</html>

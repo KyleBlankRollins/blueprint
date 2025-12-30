@@ -48,6 +48,27 @@ h3 {
   margin: var(--bp-spacing-4) 0 var(--bp-spacing-2);
 }
 
+/* Component Demo Section */
+.component-demo {
+  background: var(--bp-color-surface);
+  border: 1px solid var(--bp-color-border);
+  border-radius: var(--bp-border-radius-lg);
+  padding: var(--bp-spacing-6);
+  margin-bottom: var(--bp-spacing-4);
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bp-spacing-md);
+  margin-bottom: var(--bp-spacing-md);
+  align-items: center;
+}
+
+.button-row:last-child {
+  margin-bottom: 0;
+}
+
 .section-description {
   color: var(--bp-color-text-muted);
   margin-bottom: var(--bp-spacing-4);

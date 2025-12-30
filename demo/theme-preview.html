@@ -64,6 +64,33 @@
       </section>
 
       <section>
+        <h2>Component Examples</h2>
+        <p class="section-description">
+          Real Blueprint components using semantic design tokens
+        </p>
+
+        <h3>Button Component</h3>
+        <div class="component-demo">
+          <div class="button-row">
+            <bp-button variant="primary">Primary</bp-button>
+            <bp-button variant="success">Success</bp-button>
+            <bp-button variant="error">Error</bp-button>
+            <bp-button variant="warning">Warning</bp-button>
+            <bp-button variant="info">Info</bp-button>
+            <bp-button variant="secondary">Secondary</bp-button>
+          </div>
+          <div class="button-row">
+            <bp-button variant="primary" size="sm">Small</bp-button>
+            <bp-button variant="primary" size="md">Medium</bp-button>
+            <bp-button variant="primary" size="lg">Large</bp-button>
+          </div>
+          <div class="button-row">
+            <bp-button variant="primary" disabled>Disabled</bp-button>
+          </div>
+        </div>
+      </section>
+
+      <section>
         <h2>Light vs Dark Comparison</h2>
         <p class="section-description">
           Side-by-side comparison of light and dark themes
@@ -84,6 +111,17 @@
     </div>
 
     <script type="module">
+      // Import button component
+      import '../source/components/button/button.js';
+
+      // Parse URL query parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const initialTheme = urlParams.get('theme') || 'light';
+      const showAll = urlParams.get('all') === 'true';
+
+      // Set initial theme
+      document.documentElement.setAttribute('data-theme', initialTheme);
+
       const scales = [
         'gray',
         'blue',

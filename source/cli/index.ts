@@ -11,6 +11,7 @@ import { demoCommand } from './commands/demo.js';
 import { createCommand } from './commands/create.js';
 import { checkCommand } from './commands/check.js';
 import { listCommand } from './commands/list.js';
+import { themeCommand } from './commands/theme.js';
 
 const program = new Command();
 
@@ -24,6 +25,9 @@ scaffoldCommand(program);
 validateCommand(program);
 generateCommand(program);
 demoCommand(program);
+
+// Register theme commands
+themeCommand(program);
 
 // Register workflow commands
 createCommand(program);

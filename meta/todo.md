@@ -2,3 +2,5 @@
 - make the component creator agent aware of the theme system.
 - define initial themes based on Wada Sanzo colors.
 - create foundational components.
+
+Implement suggestions from the review, but do so carefully so you don't break the file.

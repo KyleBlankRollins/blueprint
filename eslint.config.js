@@ -21,6 +21,10 @@ export default [
         document: 'readonly',
         window: 'readonly',
         URL: 'readonly',
+        Event: 'readonly',
+        MouseEvent: 'readonly',
+        CustomEvent: 'readonly',
+        HTMLElement: 'readonly',
       },
     },
     plugins: {
@@ -46,6 +50,13 @@ export default [
       globals: {
         console: 'readonly',
         process: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        Buffer: 'readonly',
+        URL: 'readonly',
+        URLSearchParams: 'readonly',
       },
     },
     plugins: {
