@@ -14,12 +14,12 @@ describe('bp-button', () => {
     element.remove();
   });
 
-  it('should be registered as a custom element', () => {
+  it('should be registered in HTMLElementTagNameMap', () => {
     const constructor = customElements.get('bp-button');
     expect(constructor).toBeDefined();
   });
 
-  it('should render with default properties', async () => {
+  it('should render button to DOM', async () => {
     await element.updateComplete;
     expect(element.shadowRoot).toBeTruthy();
   });
@@ -46,8 +46,8 @@ describe('bp-button', () => {
     expect(element.type).toBe('button');
   });
 
-  // Property reactivity
-  it('should update variant property', async () => {
+  // Properties
+  it('should set property: variant', async () => {
     element.variant = 'success';
     await element.updateComplete;
     expect(element.variant).toBe('success');
@@ -56,7 +56,7 @@ describe('bp-button', () => {
     expect(button?.className).toContain('button--success');
   });
 
-  it('should update size property', async () => {
+  it('should set property: size', async () => {
     element.size = 'lg';
     await element.updateComplete;
     expect(element.size).toBe('lg');
@@ -65,7 +65,7 @@ describe('bp-button', () => {
     expect(button?.className).toContain('button--lg');
   });
 
-  it('should update disabled property', async () => {
+  it('should set property: disabled', async () => {
     element.disabled = true;
     await element.updateComplete;
     expect(element.disabled).toBe(true);
@@ -77,11 +77,11 @@ describe('bp-button', () => {
   // Event handling
   it('should emit bp-click event when clicked', async () => {
     let eventFired = false;
-    let eventDetail: any = null;
+    let eventDetail: { originalEvent: MouseEvent } | null = null;
 
     element.addEventListener('bp-click', (e: Event) => {
       eventFired = true;
-      eventDetail = (e as CustomEvent).detail;
+      eventDetail = (e as CustomEvent<{ originalEvent: MouseEvent }>).detail;
     });
 
     await element.updateComplete;
@@ -90,7 +90,7 @@ describe('bp-button', () => {
 
     expect(eventFired).toBe(true);
     expect(eventDetail).toBeDefined();
-    expect(eventDetail.originalEvent).toBeInstanceOf(MouseEvent);
+    expect(eventDetail!.originalEvent).toBeInstanceOf(MouseEvent);
   });
 
   it('should not emit bp-click event when disabled', async () => {
@@ -120,6 +120,13 @@ describe('bp-button', () => {
   it('should expose button part', () => {
     const button = element.shadowRoot?.querySelector('[part="button"]');
     expect(button).toBeTruthy();
+  });
+
+  it('should render slotted content', async () => {
+    element.textContent = 'Click me';
+    await element.updateComplete;
+    const slot = element.shadowRoot?.querySelector('slot');
+    expect(slot).toBeTruthy();
   });
 
   // All variants

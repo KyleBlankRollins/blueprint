@@ -100,7 +100,13 @@ function loadTemplate(
   templateName: string,
   replacements: Record<string, string>
 ): string {
-  const templatePath = join(process.cwd(), 'source', 'templates', templateName);
+  const templatePath = join(
+    process.cwd(),
+    'source',
+    'cli',
+    'templates',
+    templateName
+  );
 
   if (!existsSync(templatePath)) {
     throw new Error(`Template file not found: ${templatePath}`);

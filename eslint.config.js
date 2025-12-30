@@ -25,6 +25,10 @@ export default [
         MouseEvent: 'readonly',
         CustomEvent: 'readonly',
         HTMLElement: 'readonly',
+        HTMLInputElement: 'readonly',
+        FocusEvent: 'readonly',
+        InputEvent: 'readonly',
+        customElements: 'readonly',
       },
     },
     plugins: {

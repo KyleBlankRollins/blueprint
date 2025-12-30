@@ -199,6 +199,88 @@ export const buttonStyles = css`
 - Computed value tests (derived properties calculate correctly)
 - State management tests (internal state changes trigger updates)
 
+### Test Naming Requirements
+
+**CRITICAL:** The validator uses keyword matching on test descriptions (the string in `it('...')`) to categorize tests. Comments don't matter - only the test description text is analyzed.
+
+**Required test description patterns:**
+
+| Category           | Validator Patterns                                                          | Example Test Descriptions                                   |
+| ------------------ | --------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| **Registration**   | `htmlelementtagnamemap`, `custom.*element.*registered`                      | `it('should be registered in HTMLElementTagNameMap', ...)`  |
+| **Rendering**      | `renders`, `mount`, `\bdom\b`                                               | `it('should render input element to DOM', ...)`             |
+| **Properties**     | `@property`, `\.property`, `set.*property`                                  | `it('should set property: disabled', ...)`                  |
+| **Default Values** | `default`, `initial.*value`                                                 | `it('should have correct default property values', ...)`    |
+| **Attributes**     | `attribute`, `reflect`, `getattribute`, `setattribute`                      | `it('should reflect attribute when property changes', ...)` |
+| **Events**         | `event`, `dispatch`, `emit`, `fire`                                         | `it('should emit bp-click event when clicked', ...)`        |
+| **Slots**          | `slot`, `slotted`                                                           | `it('should render slotted content', ...)`                  |
+| **CSS Parts**      | `part`, `::part`                                                            | `it('should expose input part', ...)`                       |
+| **Variants**       | `variant`, `primary`, `secondary`                                           | `it('should apply error variant styles', ...)`              |
+| **Sizes**          | `size`, `small`, `medium`, `large`                                          | `it('should apply large size styles', ...)`                 |
+| **Interactions**   | `click`, `keyboard`, `press`, `submit`, `interact`                          | `it('should submit form on enter key press', ...)`          |
+| **Accessibility**  | `aria`, `a11y`, `accessibility`, `screen.*reader`, `keyboard.*nav`, `focus` | `it('should have aria-label attribute', ...)`               |
+
+**Important notes:**
+
+1. **First match wins** - If a test description matches multiple patterns, only the first category match counts. For example, "should update variant property" matches `variant` (Variants) before `property` (Properties).
+
+2. **Avoid keyword conflicts** - For property tests, use "set property:" pattern to avoid matching variant/size keywords:
+
+   ```typescript
+   // ✅ Good - matches Properties category
+   it('should set property: disabled', async () => { ... });
+
+   // ❌ Bad - matches Variants category first
+   it('should update variant property', async () => { ... });
+   ```
+
+3. **Be specific** - Use exact keywords from the patterns table:
+
+   ```typescript
+   // ✅ Good - includes "HTMLElementTagNameMap"
+   it('should be registered in HTMLElementTagNameMap', () => { ... });
+
+   // ❌ Bad - no keyword match
+   it('should be a custom element', () => { ... });
+   ```
+
+4. **Validator runs after tests pass** - Make sure all tests pass first with `npm run test:run`, then run `bp validate component <name>` to check categorization.
+
+**Example test file structure:**
+
+```typescript
+describe('bp-input', () => {
+  // Registration (required)
+  it('should be registered in HTMLElementTagNameMap', () => { ... });
+
+  // Rendering (required)
+  it('should render input element to DOM', async () => { ... });
+
+  // Default Values (required)
+  it('should have correct default property values', () => { ... });
+
+  // Properties (required) - use "set property:" pattern
+  it('should set property: disabled', async () => { ... });
+  it('should set property: value', async () => { ... });
+
+  // Events (if applicable)
+  it('should emit bp-change event on change', async () => { ... });
+
+  // Attributes (if using reflect: true)
+  it('should reflect disabled attribute to DOM', async () => { ... });
+
+  // CSS Parts (if exposing parts)
+  it('should expose button part for styling', () => { ... });
+
+  // Variants (if component has variants)
+  it('should apply primary variant styles', async () => { ... });
+
+  // Accessibility (if applicable)
+  it('should have aria-disabled when disabled', async () => { ... });
+  it('should support keyboard navigation with arrow keys', async () => { ... });
+});
+```
+
 **Fill in the scaffolded stories file:**
 
 - Default story showing basic usage
@@ -209,7 +291,7 @@ export const buttonStyles = css`
 
 - Features list
 - Usage examples with code
-- API documentation (properties, events, slots, CSS parts)der behavior)
+- API documentation (properties, events, slots, CSS parts)
 
 **Generate Storybook stories automatically:**
 
@@ -221,6 +303,13 @@ Run `bp generate stories <component-name>` to auto-generate stories from compone
 - Uses proper Lit property bindings (`.property` for non-boolean, `?property` for boolean)
 
 You can customize the generated stories after creation if needed.
+
+**Validate before finishing:**
+
+1. `npm run test:run` - Verify all tests pass
+2. `bp validate tokens <component-name>` - Check for hardcoded values
+3. `bp validate component <component-name>` - Verify test categorization and completeness
+4. Fix any issues and re-run validation until all checks pass
 
 Run `npm test` to verify all tests pass before finishing.
 
