@@ -4,12 +4,24 @@
  */
 
 import { defineTheme } from '../builder/defineTheme.js';
+import { createColorRefs } from '../builder/colorRefs.js';
 
 const themeColors = {
   sulphurYellow: { l: 0.941, c: 0.0554, h: 91.42 },
   yellowOrange: { l: 0.7777, c: 0.1684, h: 64.45 },
   vandarPoelBlue: { l: 0.4025, c: 0.0836, h: 233.38 },
 };
+
+// Typed color references for IDE autocomplete
+const colors = createColorRefs([
+  'gray',
+  'blue',
+  'green',
+  'red',
+  'yellow',
+  'accent',
+  'secondaryAccent',
+] as const);
 
 export const blueprintTheme = defineTheme({
   // Color definitions with OKLCH source colors
@@ -179,59 +191,59 @@ export const blueprintTheme = defineTheme({
   themes: {
     light: {
       // Backgrounds
-      background: 'secondaryAccent.50',
-      surface: 'secondaryAccent.100',
-      surfaceElevated: 'white',
-      surfaceSubdued: 'secondaryAccent.200',
+      background: colors.secondaryAccent50,
+      surface: colors.secondaryAccent100,
+      surfaceElevated: colors.secondaryAccent200,
+      surfaceSubdued: colors.secondaryAccent300,
 
       // Text
-      text: 'gray.900',
-      textMuted: 'gray.600',
-      textInverse: 'white',
+      text: colors.gray900,
+      textMuted: colors.gray600,
+      textInverse: colors.secondaryAccent50,
 
       // Primary
-      primary: 'blue.500',
-      primaryHover: 'blue.600',
-      primaryActive: 'blue.700',
+      primary: colors.blue500,
+      primaryHover: colors.blue600,
+      primaryActive: colors.blue700,
 
       // Semantic
-      success: 'green.500',
-      warning: 'yellow.600', // Darker for better contrast
-      error: 'red.500',
-      info: 'blue.500',
+      success: colors.green500,
+      warning: colors.yellow600, // Darker for better contrast
+      error: colors.red500,
+      info: colors.accent500,
 
       // UI Elements
-      border: 'gray.200',
-      borderStrong: 'gray.300',
-      focus: 'blue.500',
+      border: colors.gray200,
+      borderStrong: colors.gray300,
+      focus: colors.blue500,
     },
     dark: {
       // Backgrounds
-      background: 'gray.950',
-      surface: 'gray.900',
-      surfaceElevated: 'gray.800',
-      surfaceSubdued: 'black',
+      background: colors.gray950,
+      surface: colors.gray900,
+      surfaceElevated: colors.gray800,
+      surfaceSubdued: colors.black,
 
       // Text
-      text: 'gray.50',
-      textMuted: 'gray.400',
-      textInverse: 'gray.900',
+      text: colors.secondaryAccent50,
+      textMuted: colors.secondaryAccent200,
+      textInverse: colors.gray900,
 
       // Primary (uses dark mode chroma adjustments)
-      primary: 'blue.400',
-      primaryHover: 'blue.300',
-      primaryActive: 'blue.200',
+      primary: colors.blue500,
+      primaryHover: colors.blue300,
+      primaryActive: colors.blue200,
 
       // Semantic
-      success: 'green.400',
-      warning: 'yellow.400',
-      error: 'red.400',
-      info: 'blue.400',
+      success: colors.green300,
+      warning: colors.yellow200,
+      error: colors.red300,
+      info: colors.accent300,
 
       // UI Elements
-      border: 'gray.800',
-      borderStrong: 'gray.700',
-      focus: 'blue.400',
+      border: colors.gray800,
+      borderStrong: colors.gray700,
+      focus: colors.blue400,
     },
   },
 

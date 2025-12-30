@@ -29,6 +29,15 @@ const HIGH_CONTRAST_BORDER_WIDTH = '2px';
 const HIGH_CONTRAST_FOCUS_WIDTH = '3px';
 
 /**
+ * Convert camelCase to kebab-case for CSS custom properties
+ * @param str - String in camelCase
+ * @returns String in kebab-case
+ */
+function toKebabCase(str: string): string {
+  return str.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
+}
+
+/**
  * Get the CSS selector for a theme variant
  * @param themeName - Name of the theme variant
  * @returns CSS selector string
@@ -117,7 +126,8 @@ export function generateThemeCSS(
 
   for (const [semanticToken, primitiveRef] of Object.entries(mappings)) {
     const colorValue = resolveColorReference(primitiveRef);
-    css += `  --${COLOR_PREFIX}-${semanticToken}: ${colorValue};\n`;
+    const tokenName = toKebabCase(semanticToken);
+    css += `  --${COLOR_PREFIX}-${tokenName}: ${colorValue};\n`;
   }
 
   css += '}\n';

@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blueprint Theme Preview - Visual QA</title>
+    <link rel="stylesheet" href="../source/themes/generated/index.css" />
+    <link rel="stylesheet" href="theme-preview.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Blueprint Theme System - Visual QA</h1>
+        <p class="section-description">
+          Review all color scales, semantic tokens, and theme variants
+        </p>
+        <div class="theme-controls">
+          <button class="theme-toggle" id="themeToggle">Toggle Theme</button>
+          <span class="current-theme" aria-live="polite" aria-atomic="true">
+            Current: <strong id="currentTheme">light</strong>
+          </span>
+        </div>
+      </header>
+
+      <section>
+        <h2>Primitive Color Scales</h2>
+        <p class="section-description">
+          11-step color scales (50-950) generated from OKLCH source colors
+        </p>
+
+        <h3>Gray</h3>
+        <div class="color-scale" id="gray-scale"></div>
+
+        <h3>Blue (Primary)</h3>
+        <div class="color-scale" id="blue-scale"></div>
+
+        <h3>Green (Success)</h3>
+        <div class="color-scale" id="green-scale"></div>
+
+        <h3>Red (Error)</h3>
+        <div class="color-scale" id="red-scale"></div>
+
+        <h3>Yellow (Warning)</h3>
+        <div class="color-scale" id="yellow-scale"></div>
+
+        <h3>Accent</h3>
+        <div class="color-scale" id="accent-scale"></div>
+
+        <h3>Secondary Accent</h3>
+        <div class="color-scale" id="secondaryAccent-scale"></div>
+      </section>
+
+      <section>
+        <h2>Semantic Tokens</h2>
+        <p class="section-description">
+          Semantic color tokens that map to primitives
+        </p>
+
+        <h3>
+          Current Theme:
+          <span id="semanticThemeName" aria-live="polite">Light</span>
+        </h3>
+        <div class="semantic-tokens" id="semantic-tokens"></div>
+      </section>
+
+      <section>
+        <h2>Light vs Dark Comparison</h2>
+        <p class="section-description">
+          Side-by-side comparison of light and dark themes
+        </p>
+
+        <div class="comparison-grid">
+          <div class="theme-preview" data-theme="light">
+            <div class="theme-header">Light Theme</div>
+            <div class="theme-content" id="light-preview"></div>
+          </div>
+
+          <div class="theme-preview" data-theme="dark">
+            <div class="theme-header">Dark Theme</div>
+            <div class="theme-content" id="dark-preview"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script type="module">
+      const scales = [
+        'gray',
+        'blue',
+        'green',
+        'red',
+        'yellow',
+        'accent',
+        'secondaryAccent',
+      ];
+      const steps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+
+      const semanticTokens = [
+        'background',
+        'surface',
+        'surface-elevated',
+        'surface-subdued',
+        'text',
+        'text-muted',
+        'text-inverse',
+        'primary',
+        'primary-hover',
+        'primary-active',
+        'success',
+        'warning',
+        'error',
+        'info',
+        'border',
+        'border-strong',
+        'focus',
+      ];
+
+      // Cache DOM references
+      const elements = {
+        html: document.documentElement,
+        themeToggle: document.getElementById('themeToggle'),
+        currentThemeSpan: document.getElementById('currentTheme'),
+        semanticThemeName: document.getElementById('semanticThemeName'),
+        lightPreview: document.getElementById('light-preview'),
+        darkPreview: document.getElementById('dark-preview'),
+      };
+
+      // Render primitive color scales
+      scales.forEach((scale) => {
+        const container = document.getElementById(`${scale}-scale`);
+        if (!container) {
+          console.warn(`Container not found for scale: ${scale}`);
+          return;
+        }
+
+        steps.forEach((step) => {
+          const swatch = document.createElement('div');
+          swatch.className = 'color-swatch';
+          swatch.style.backgroundColor = `var(--bp-${scale}-${step})`;
+
+          const info = document.createElement('div');
+          info.className = 'color-info';
+
+          const label = document.createElement('span');
+          label.className = 'color-label';
+          label.textContent = `${scale}-${step}`;
+
+          const tokenName = document.createElement('div');
+          tokenName.textContent = `--bp-${scale}-${step}`;
+
+          info.appendChild(label);
+          info.appendChild(tokenName);
+          swatch.appendChild(info);
+          container.appendChild(swatch);
+        });
+      });
+
+      // Render semantic tokens
+      function renderSemanticTokens() {
+        const container = document.getElementById('semantic-tokens');
+        if (!container) {
+          console.error('Semantic tokens container not found');
+          return;
+        }
+
+        container.innerHTML = '';
+
+        semanticTokens.forEach((token) => {
+          const card = document.createElement('div');
+          card.className = 'token-card';
+
+          const swatch = document.createElement('div');
+          swatch.className = 'token-swatch';
+          swatch.style.backgroundColor = `var(--bp-color-${token})`;
+
+          const name = document.createElement('div');
+          name.className = 'token-name';
+          name.textContent = token;
+
+          const value = document.createElement('div');
+          value.className = 'token-value';
+          value.textContent = `var(--bp-color-${token})`;
+
+          card.appendChild(swatch);
+          card.appendChild(name);
+          card.appendChild(value);
+          container.appendChild(card);
+        });
+      }
+
+      // Render theme comparison
+      function renderThemeComparison() {
+        if (!elements.lightPreview || !elements.darkPreview) {
+          console.error('Theme preview containers not found');
+          return;
+        }
+
+        function createComparisonContent() {
+          const container = document.createElement('div');
+
+          // Typography section
+          const exampleText = document.createElement('div');
+          exampleText.className = 'example-text';
+
+          const h4 = document.createElement('h4');
+          h4.className = 'example-heading';
+          h4.textContent = 'Typography Example';
+
+          const normalText = document.createElement('p');
+          normalText.className = 'example-paragraph';
+          normalText.textContent = 'Normal text on background';
+
+          const mutedText = document.createElement('p');
+          mutedText.className = 'example-paragraph-muted';
+          mutedText.textContent = 'Muted text for secondary information';
+
+          exampleText.appendChild(h4);
+          exampleText.appendChild(normalText);
+          exampleText.appendChild(mutedText);
+
+          // Buttons section
+          const buttonsContainer = document.createElement('div');
+          buttonsContainer.className = 'example-buttons';
+
+          const buttons = [
+            { text: 'Primary Button', className: 'button-primary' },
+            { text: 'Success', className: 'button-success' },
+            { text: 'Error', className: 'button-error' },
+            { text: 'Warning', className: 'button-warning' },
+            { text: 'Info', className: 'button-info' },
+          ];
+
+          buttons.forEach(({ text, className }) => {
+            const button = document.createElement('button');
+            button.className = `example-button ${className}`;
+            button.textContent = text;
+            buttonsContainer.appendChild(button);
+          });
+
+          // Surface examples
+          const surfaceExample = document.createElement('div');
+          surfaceExample.className = 'example-surface';
+
+          const surfaceText = document.createElement('p');
+          surfaceText.className = 'example-paragraph';
+          surfaceText.textContent = 'Surface with border';
+
+          const surfaceCode = document.createElement('code');
+          surfaceCode.textContent = '--bp-color-surface';
+
+          surfaceExample.appendChild(surfaceText);
+          surfaceExample.appendChild(surfaceCode);
+
+          const elevatedExample = document.createElement('div');
+          elevatedExample.className = 'example-surface-elevated';
+
+          const elevatedText = document.createElement('p');
+          elevatedText.className = 'example-paragraph';
+          elevatedText.textContent = 'Elevated surface';
+
+          const elevatedCode = document.createElement('code');
+          elevatedCode.textContent = '--bp-color-surface-elevated';
+
+          elevatedExample.appendChild(elevatedText);
+          elevatedExample.appendChild(elevatedCode);
+
+          // Assemble all sections
+          container.appendChild(exampleText);
+          container.appendChild(buttonsContainer);
+          container.appendChild(surfaceExample);
+          container.appendChild(elevatedExample);
+
+          return container;
+        }
+
+        elements.lightPreview.innerHTML = '';
+        elements.darkPreview.innerHTML = '';
+        elements.lightPreview.appendChild(createComparisonContent());
+        elements.darkPreview.appendChild(createComparisonContent());
+      }
+
+      // Theme toggle
+      function toggleTheme() {
+        if (
+          !elements.html ||
+          !elements.currentThemeSpan ||
+          !elements.semanticThemeName
+        ) {
+          console.error('Required theme toggle elements not found');
+          return;
+        }
+
+        const currentTheme = elements.html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+        elements.html.setAttribute('data-theme', newTheme);
+        elements.currentThemeSpan.textContent = newTheme;
+        elements.semanticThemeName.textContent =
+          newTheme.charAt(0).toUpperCase() + newTheme.slice(1);
+        renderSemanticTokens();
+      }
+
+      if (elements.themeToggle) {
+        elements.themeToggle.addEventListener('click', toggleTheme);
+      } else {
+        console.error('Theme toggle button not found');
+      }
+
+      // Initial render
+      renderSemanticTokens();
+      renderThemeComparison();
+    </script>
+  </body>
+</html>
