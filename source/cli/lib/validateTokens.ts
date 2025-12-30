@@ -1,7 +1,7 @@
 import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
 
-interface TokenCheckResult {
+export interface TokenCheckResult {
   success: boolean;
   violations: Violation[];
   tokensUsed: Map<string, number>;
@@ -111,7 +111,7 @@ const VIOLATION_PATTERNS: ViolationPattern[] = [
   },
 ];
 
-function isValidComponentName(name: string): boolean {
+export function isValidComponentName(name: string): boolean {
   return /^[a-z]+(-[a-z]+)*$/.test(name);
 }
 
@@ -149,7 +149,7 @@ function isInsideFunctionCall(
   return closingIndex !== -1 && matchIndex < closingIndex;
 }
 
-function checkTokenUsage(componentName: string): TokenCheckResult {
+export function checkTokenUsage(componentName: string): TokenCheckResult {
   const root = process.cwd();
   const stylePath = join(
     root,
@@ -233,62 +233,4 @@ function checkTokenUsage(componentName: string): TokenCheckResult {
     violations,
     tokensUsed,
   };
-}
-
-function formatOutput(result: TokenCheckResult, componentName: string): string {
-  const icon = result.success ? '✅' : '❌';
-  let output = `${icon} Token usage check: bp-${componentName}\n\n`;
-
-  // Show tokens used
-  if (result.tokensUsed.size > 0) {
-    output += 'Design tokens found:\n';
-    const sortedTokens = Array.from(result.tokensUsed.entries()).sort((a, b) =>
-      a[0].localeCompare(b[0])
-    );
-    for (const [token, count] of sortedTokens) {
-      output += `  - ${token} (${count} use${count !== 1 ? 's' : ''})\n`;
-    }
-    output += '\n';
-  }
-
-  // Show violations
-  if (result.violations.length > 0) {
-    if (result.violations[0]?.type === 'File not found') {
-      output += `❌ ${result.violations[0].suggestion}\n`;
-    } else {
-      output += `${componentName}.style.ts:\n`;
-
-      for (const violation of result.violations) {
-        output += `  Line ${violation.line}: ${violation.type}\n`;
-        output += `    > ${violation.code}\n`;
-        output += `    Fix: ${violation.suggestion}\n\n`;
-      }
-
-      output += `${result.violations.length} violation${result.violations.length !== 1 ? 's' : ''} found. Fix these to maintain design system consistency.\n`;
-    }
-  } else {
-    output += 'No violations found! All design values use tokens.\n';
-  }
-
-  return output;
-}
-
-// CLI interface
-if (process.argv[2]) {
-  const componentName = process.argv[2];
-
-  if (!isValidComponentName(componentName)) {
-    console.error(
-      '❌ Invalid component name. Must be kebab-case (e.g., "button", "icon-button")'
-    );
-    process.exit(2);
-  }
-
-  const result = checkTokenUsage(componentName);
-  console.log(formatOutput(result, componentName));
-  process.exit(result.success ? 0 : 1);
-} else {
-  console.error('Usage: npm run validate:tokens <component-name>');
-  console.error('Example: npm run validate:tokens button');
-  process.exit(2);
 }

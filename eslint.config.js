@@ -35,8 +35,8 @@ export default [
     },
   },
   {
-    // Node.js scripts configuration
-    files: ['source/scripts/**/*.ts'],
+    // Node.js scripts and CLI configuration
+    files: ['source/scripts/**/*.ts', 'source/cli/**/*.ts'],
     languageOptions: {
       parser: tsparser,
       parserOptions: {

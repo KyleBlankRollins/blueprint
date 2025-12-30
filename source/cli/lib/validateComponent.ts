@@ -2,7 +2,7 @@ import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
 import { execSync } from 'child_process';
 
-interface ValidationResult {
+export interface ValidationResult {
   success: boolean;
   errors: string[];
   warnings: string[];
@@ -107,7 +107,7 @@ const TEST_CATEGORIES: TestCategory[] = [
   },
 ];
 
-function isValidComponentName(name: string): boolean {
+export function isValidComponentName(name: string): boolean {
   // Must be kebab-case
   return /^[a-z]+(-[a-z]+)*$/.test(name);
 }
@@ -470,59 +470,4 @@ export function validateComponent(componentName: string): ValidationResult {
     warnings,
     info,
   };
-}
-
-function formatOutput(result: ValidationResult, componentName: string): string {
-  const icon = result.success ? '✅' : '❌';
-  let output = `${icon} Component validation: bp-${componentName}\n\n`;
-
-  if (result.info.length > 0) {
-    for (const item of result.info) {
-      if (item.startsWith('✓')) {
-        output += `  ✅ ${item.substring(2)}\n`;
-      } else if (
-        item.startsWith('Files found:') ||
-        item.startsWith('Test file contains')
-      ) {
-        output += `\n${item}\n`;
-      } else if (item.includes('Running') || item.includes('Checking')) {
-        // Skip progress messages in final output
-      } else {
-        output += `  ✅ ${item}\n`;
-      }
-    }
-  }
-
-  if (result.errors.length > 0) {
-    output += '\nIssues found:\n';
-    for (const error of result.errors) {
-      output += `  ❌ ${error}\n`;
-    }
-    output += '\nFix these issues before completing the component.\n';
-  }
-
-  if (result.warnings.length > 0) {
-    output += '\nWarnings:\n';
-    for (const warning of result.warnings) {
-      output += `  ⚠️  ${warning}\n`;
-    }
-  }
-
-  if (result.success) {
-    output += '\nComponent is ready for production! 🎉\n';
-  }
-
-  return output;
-}
-
-// CLI interface
-if (process.argv[2]) {
-  const componentName = process.argv[2];
-  const result = validateComponent(componentName);
-  console.log(formatOutput(result, componentName));
-  process.exit(result.success ? 0 : 1);
-} else {
-  console.error('Usage: npm run validate:component <component-name>');
-  console.error('Example: npm run validate:component button');
-  process.exit(2);
 }

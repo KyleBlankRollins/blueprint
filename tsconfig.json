@@ -20,7 +20,10 @@
     "noFallthroughCasesInSwitch": true,
     /* Decorators */
     "experimentalDecorators": true,
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "types": [
+      "node"
+    ]
   },
   "include": [
     "source/**/*"

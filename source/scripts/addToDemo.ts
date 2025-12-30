@@ -77,10 +77,7 @@ function parseEnumType(type: string): string[] {
   );
 }
 
-function generateExamples(
-  componentName: string,
-  properties: PropertyInfo[]
-): string[] {
+function generateExamples(properties: PropertyInfo[]): string[] {
   const examples: string[] = [];
 
   // Find variant and size properties
@@ -239,7 +236,7 @@ function addToDemo(componentName: string): DemoResult {
 
   // Generate HTML
   const componentHTML = generateHTML(componentName, properties);
-  const examples = generateExamples(componentName, properties);
+  const examples = generateExamples(properties);
 
   // Read demo file
   let demoContent = readFileSync(demoPath, 'utf-8');
