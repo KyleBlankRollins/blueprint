@@ -21,6 +21,17 @@ const DEFAULT_MINIMUM_CONTRAST = {
 } as const;
 
 /**
+ * WCAG AAA minimum contrast ratios (stricter)
+ */
+const STRICT_MINIMUM_CONTRAST = {
+  text: 7.0, // Normal text (WCAG AAA)
+  textLarge: 4.5, // Large text 18px+ (WCAG AAA)
+  ui: 3.0, // UI components (same as AA)
+  interactive: 3.0, // Interactive states (same as AA)
+  focus: 3.0, // Focus indicators (same as AA)
+} as const;
+
+/**
  * Check contrast for an array of foreground/background pairs
  */
 function checkContrastPairs(
@@ -69,16 +80,20 @@ function checkContrastPairs(
  *
  * @param primitives - Generated color scales with hex and OKLCH values
  * @param config - Theme configuration with accessibility requirements
+ * @param standard - WCAG standard to validate against ('AA' or 'AAA'), defaults to 'AA'
  * @returns Array of contrast violations (empty if all checks pass)
  */
 export function validateThemeContrast(
   primitives: Record<string, Record<number, GeneratedColorStep>>,
-  config: ThemeConfig
+  config: ThemeConfig,
+  standard: 'AA' | 'AAA' = 'AA'
 ): ContrastViolation[] {
   const violations: ContrastViolation[] = [];
 
-  const contrast =
-    config.accessibility?.minimumContrast ?? DEFAULT_MINIMUM_CONTRAST;
+  // Use stricter contrast ratios for AAA standard
+  const baseContrast =
+    standard === 'AAA' ? STRICT_MINIMUM_CONTRAST : DEFAULT_MINIMUM_CONTRAST;
+  const contrast = config.accessibility?.minimumContrast ?? baseContrast;
 
   // Helper to resolve color from primitive reference
   const resolveColor = (ref: string): string => {

@@ -21,6 +21,11 @@ const colors = createColorRefs([
   'yellow',
   'accent',
   'secondaryAccent',
+
+  'refactoredPrimary',
+  'refactoredSuccess',
+  'refactoredError',
+  'refactoredWarning',
 ] as const);
 
 export const blueprintTheme = defineTheme({
@@ -64,7 +69,24 @@ export const blueprintTheme = defineTheme({
       source: themeColors.sulphurYellow,
       scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
     },
-  },
+
+    // refactored theme colors
+    refactoredPrimary: {
+      source: { l: 0.6056, c: 0.2189, h: 292.72 },
+      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
+    },
+    refactoredSuccess: {
+      source: { l: 0.5500, c: 0.1905, h: 145.00 },
+      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
+    },
+    refactoredError: {
+      source: { l: 0.5500, c: 0.2189, h: 25.00 },
+      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
+    },
+    refactoredWarning: {
+      source: { l: 0.6500, c: 0.1905, h: 85.00 },
+      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
+    },  },
 
   // Dark mode adjustments
   darkMode: {
@@ -244,6 +266,34 @@ export const blueprintTheme = defineTheme({
       border: colors.gray800,
       borderStrong: colors.gray700,
       focus: colors.blue400,
+    },
+    refactored: {
+      // Backgrounds
+      background: colors.gray50,
+      surface: colors.gray100,
+      surfaceElevated: colors.white,
+      surfaceSubdued: colors.gray200,
+
+      // Text
+      text: colors.gray900,
+      textMuted: colors.gray700,
+      textInverse: colors.white,
+
+      // Primary
+      primary: colors.refactoredPrimary700,
+      primaryHover: colors.refactoredPrimary800,
+      primaryActive: colors.refactoredPrimary900,
+
+      // Semantic
+      success: colors.refactoredSuccess700,
+      warning: colors.refactoredWarning700,
+      error: colors.refactoredError700,
+      info: colors.accent500,
+
+      // UI Elements
+      border: colors.gray200,
+      borderStrong: colors.gray300,
+      focus: colors.refactoredPrimary700,
     },
   },
 

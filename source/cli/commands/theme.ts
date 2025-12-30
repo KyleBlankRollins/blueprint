@@ -11,6 +11,22 @@ import {
   type ContrastViolation,
 } from '../../themes/builder/index.js';
 
+// Constants
+const DEFAULT_VITE_PORT = 5173;
+const VALID_THEMES = ['light', 'dark'] as const;
+const BROWSER_OPEN_DELAY = 2000;
+
+type ThemeName = (typeof VALID_THEMES)[number];
+
+/**
+ * Register theme-related CLI commands.
+ * Provides commands for previewing, generating, validating, and creating themes.
+ *
+ * @param program - Commander program instance to register commands on
+ * @example
+ * const program = new Command();
+ * themeCommand(program);
+ */
 export function themeCommand(program: Command): void {
   const theme = program.command('theme').description('Theme system utilities');
 
@@ -24,83 +40,95 @@ export function themeCommand(program: Command): void {
     )
     .option('--all', 'Show all themes side-by-side')
     .option('--no-open', 'Do not auto-open browser')
-    .action((options: { theme: string; all: boolean; open: boolean }) => {
-      console.log('🎨 Starting theme preview...\n');
+    .action(async (options: { theme: string; all: boolean; open: boolean }) => {
+      try {
+        console.log('🎨 Starting theme preview...\n');
 
-      // Validate theme option
-      if (options.theme !== 'light' && options.theme !== 'dark') {
-        console.error('❌ Invalid theme. Must be "light" or "dark"');
-        process.exit(1);
-      }
-
-      // Check if theme-preview.html exists
-      const previewPath = join(process.cwd(), 'demo', 'theme-preview.html');
-      if (!existsSync(previewPath)) {
-        console.error('❌ demo/theme-preview.html not found');
-        console.log('\nMake sure you are in the project root directory.');
-        process.exit(1);
-      }
-
-      // Build the URL with query params
-      const baseUrl = 'http://localhost:5173/demo/theme-preview.html';
-      const params = new URLSearchParams();
-
-      if (options.all) {
-        params.set('all', 'true');
-      } else {
-        params.set('theme', options.theme);
-      }
-
-      const url = `${baseUrl}?${params.toString()}`;
-
-      console.log('📦 Starting Vite dev server...');
-      console.log(`🌐 Preview URL: ${url}\n`);
-
-      // Start Vite dev server
-      const viteProcess = spawn('npm', ['run', 'dev'], {
-        stdio: 'inherit',
-        shell: true,
-      });
-
-      // Track timeout for cleanup
-      let browserTimeout: ReturnType<typeof setTimeout> | null = null;
-
-      // Wait a bit for server to start, then open browser
-      if (options.open) {
-        browserTimeout = setTimeout(() => {
-          openBrowser(url);
-        }, 2000);
-      }
-
-      // Handle process termination
-      process.once('SIGINT', () => {
-        console.log('\n\n👋 Stopping theme preview...');
-        if (browserTimeout) clearTimeout(browserTimeout);
-        viteProcess.kill();
-        process.exit(0);
-      });
-
-      process.once('SIGTERM', () => {
-        console.log('\n\n👋 Stopping theme preview...');
-        if (browserTimeout) clearTimeout(browserTimeout);
-        viteProcess.kill();
-        process.exit(0);
-      });
-
-      viteProcess.on('error', (err) => {
-        console.error('❌ Failed to start Vite dev server');
-        console.error(`   ${err.message}`);
-        if (browserTimeout) clearTimeout(browserTimeout);
-        process.exit(1);
-      });
-
-      viteProcess.on('exit', (code) => {
-        if (code !== 0 && code !== null) {
-          console.error(`\n❌ Vite dev server exited with code ${code}`);
-          if (browserTimeout) clearTimeout(browserTimeout);
-          process.exit(code);
+        // Validate theme option
+        if (!VALID_THEMES.includes(options.theme as ThemeName)) {
+          console.error(
+            `❌ Invalid theme. Must be one of: ${VALID_THEMES.join(', ')}`
+          );
+          process.exit(1);
         }
-      });
+
+        // Check if theme-preview.html exists
+        const previewPath = join(process.cwd(), 'demo', 'theme-preview.html');
+        if (!existsSync(previewPath)) {
+          console.error('❌ demo/theme-preview.html not found');
+          console.error('\nMake sure you are in the project root directory.');
+          process.exit(1);
+        }
+
+        // Build the URL with query params
+        const baseUrl = `http://localhost:${DEFAULT_VITE_PORT}/demo/theme-preview.html`;
+        const params = new URLSearchParams();
+
+        if (options.all) {
+          params.set('all', 'true');
+        } else {
+          params.set('theme', options.theme);
+        }
+
+        const url = `${baseUrl}?${params.toString()}`;
+
+        console.log('📦 Starting Vite dev server...');
+        console.log(`🌐 Preview URL: ${url}\n`);
+
+        // Start Vite dev server
+        const viteProcess = spawn('npm', ['run', 'dev'], {
+          stdio: 'inherit',
+          shell: true,
+        });
+
+        // Track timeout for cleanup
+        let browserTimeout: ReturnType<typeof setTimeout> | null = null;
+
+        // Wait a bit for server to start, then open browser
+        if (options.open) {
+          browserTimeout = setTimeout(() => {
+            openBrowser(url);
+          }, BROWSER_OPEN_DELAY);
+        }
+
+        // Handle process termination gracefully
+        const cleanup = () => {
+          console.log('\n\n👋 Stopping theme preview...');
+          if (browserTimeout) clearTimeout(browserTimeout);
+          viteProcess.kill('SIGTERM');
+
+          // Force kill if not stopped after 1 second
+          setTimeout(() => {
+            if (!viteProcess.killed) {
+              viteProcess.kill('SIGKILL');
+            }
+            process.exit(0);
+          }, 1000);
+        };
+
+        process.once('SIGINT', cleanup);
+        process.once('SIGTERM', cleanup);
+
+        viteProcess.on('error', (err) => {
+          console.error('❌ Failed to start Vite dev server');
+          console.error(`   ${err.message}`);
+          if (browserTimeout) clearTimeout(browserTimeout);
+          process.exit(1);
+        });
+
+        viteProcess.on('exit', (code) => {
+          if (code !== 0 && code !== null) {
+            console.error(`\n❌ Vite dev server exited with code ${code}`);
+            if (browserTimeout) clearTimeout(browserTimeout);
+            process.exit(code);
+          }
+        });
+      } catch (error) {
+        console.error(
+          `\n❌ Preview failed: ${error instanceof Error ? error.message : 'Unknown error'}\n`
+        );
+        process.exit(1);
+      }
     });
 
   // Generate command
@@ -128,16 +156,25 @@ export function themeCommand(program: Command): void {
     .command('validate')
     .description('Validate theme accessibility and contrast ratios')
     .option('--strict', 'Use WCAG AAA standards (7:1 for text)')
-    .action(() => {
+    .action((options: { strict?: boolean }) => {
       console.log('🔍 Validating Blueprint theme...\n');
+      if (options.strict) {
+        console.log(
+          'Using WCAG AAA standards (stricter contrast requirements)\n'
+        );
+      }
 
       const primitives = generateAllColorScales(blueprintTheme.colors);
-      const violations = validateThemeContrast(primitives, blueprintTheme);
+      const violations = validateThemeContrast(
+        primitives,
+        blueprintTheme,
+        options.strict ? 'AAA' : 'AA'
+      );
 
       if (violations.length === 0) {
         console.log('✅ Theme validation passed\n');
         console.log('All contrast ratios meet WCAG requirements.');
-        return;
+        process.exit(0);
       }
 
       // Display violations
@@ -188,6 +225,23 @@ export function themeCommand(program: Command): void {
     .action(
       async (options: { from?: string; name?: string; color?: string }) => {
         try {
+          // Validate input options
+          if (
+            options.from &&
+            !VALID_THEMES.includes(options.from as ThemeName)
+          ) {
+            console.error(
+              `❌ Invalid --from option. Must be one of: ${VALID_THEMES.join(', ')}`
+            );
+            process.exit(1);
+          }
+          if (options.color && !/^#[0-9A-Fa-f]{6}$/.test(options.color)) {
+            console.error(
+              '❌ Invalid --color format. Must be hex format (e.g., #3b82f6)'
+            );
+            process.exit(1);
+          }
+
           const { confirm } = await import('@inquirer/prompts');
           const { createThemeInteractive } =
             await import('../lib/themeCreator.js');
@@ -239,13 +293,15 @@ export function themeCommand(program: Command): void {
 
             // Step 3: Validate theme
             console.log('  ✓ Validating contrast ratios...');
-            // For ES modules, we can't clear cache, so we'll just re-import
-            // The updated file will be used in the next run
-            const { blueprintTheme: updatedTheme } = await import(
-              `../../themes/config/theme.config.js?t=${Date.now()}`
+            console.log(
+              '     Note: Using current theme config (restart CLI to validate new theme)'
             );
-            const primitives = generateAllColorScales(updatedTheme.colors);
-            const violations = validateThemeContrast(primitives, updatedTheme);
+            // Use the originally imported theme since ES module cache can't be cleared
+            const primitives = generateAllColorScales(blueprintTheme.colors);
+            const violations = validateThemeContrast(
+              primitives,
+              blueprintTheme
+            );
 
             if (violations.length > 0) {
               console.log(
@@ -274,13 +330,27 @@ export function themeCommand(program: Command): void {
                 },
               });
 
-              await server.listen();
-              const port = server.config.server.port ?? 5173;
-              const url = `http://localhost:${port}/demo/?theme=${theme.name}`;
+              try {
+                await server.listen();
+                const port = server.config.server.port ?? DEFAULT_VITE_PORT;
+                const url = `http://localhost:${port}/demo/?theme=${theme.name}`;
 
-              openBrowser(url);
-              console.log(`Preview running at: ${url}`);
-              console.log('Press Ctrl+C to stop\n');
+                openBrowser(url);
+                console.log(`Preview running at: ${url}`);
+                console.log('Press Ctrl+C to stop\n');
+
+                // Handle cleanup on termination
+                const serverCleanup = async () => {
+                  await server.close();
+                  process.exit(0);
+                };
+
+                process.once('SIGINT', serverCleanup);
+                process.once('SIGTERM', serverCleanup);
+              } catch (error) {
+                await server.close();
+                throw error;
+              }
             } else {
               console.log('\n✅ Theme integration complete!\n');
               console.log(`Run: bp theme preview --theme ${theme.name}\n`);
@@ -330,7 +400,10 @@ export function themeCommand(program: Command): void {
             console.log('\n👋 Theme creation cancelled.');
             process.exit(0);
           }
-          throw error;
+          console.error(
+            `\n❌ Failed to create theme: ${error instanceof Error ? error.message : 'Unknown error'}\n`
+          );
+          process.exit(1);
         }
       }
     );

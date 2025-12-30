@@ -4,9 +4,8 @@
  */
 
 import { input, select, confirm } from '@inquirer/prompts';
-import { parse, oklch } from 'culori';
+import { parse, oklch, formatHex } from 'culori';
 import { getContrastRatio } from '../../themes/builder/colorUtils.js';
-import { generateColorScale } from '../../themes/builder/generateColorScale.js';
 
 export interface ThemeCreatorOptions {
   from?: string;
@@ -17,14 +16,25 @@ export interface ThemeCreatorOptions {
 export interface ThemeColors {
   name: string;
   primary: { l: number; c: number; h: number };
-  neutral: { l: number; c: number; h: number };
   success?: { l: number; c: number; h: number };
   error?: { l: number; c: number; h: number };
   warning?: { l: number; c: number; h: number };
 }
 
 /**
- * Convert hex color to OKLCH
+ * Default semantic color values
+ * These provide accessible, distinguishable colors for common UI states
+ */
+const SEMANTIC_DEFAULTS = {
+  success: { l: 0.55, c: 0.13, h: 145 }, // Green, medium lightness for good contrast
+  error: { l: 0.55, c: 0.15, h: 25 }, // Red, slightly higher chroma for urgency
+  warning: { l: 0.65, c: 0.13, h: 85 }, // Yellow, lighter for visibility on dark/light
+} as const;
+
+/**
+ * Convert hex color to OKLCH color space
+ * @param hex - Hex color string (e.g., "#3b82f6")
+ * @returns OKLCH color object or null if conversion fails
  */
 function hexToOKLCH(hex: string): { l: number; c: number; h: number } | null {
   const color = parse(hex);
@@ -41,7 +51,9 @@ function hexToOKLCH(hex: string): { l: number; c: number; h: number } | null {
 }
 
 /**
- * Format OKLCH for display
+ * Format OKLCH color for display
+ * @param color - OKLCH color object
+ * @returns Formatted OKLCH string
  */
 function formatOKLCH(color: { l: number; c: number; h: number }): string {
   return `oklch(${color.l.toFixed(2)} ${color.c.toFixed(2)} ${color.h.toFixed(0)})`;
@@ -49,6 +61,9 @@ function formatOKLCH(color: { l: number; c: number; h: number }): string {
 
 /**
  * Preview contrast ratios for a color against common backgrounds
+ * @param colorHex - Hex color to check
+ * @param label - Label for display
+ * @returns Object with contrast ratios and adjustment needs
  */
 function previewContrast(
   colorHex: string,
@@ -88,6 +103,8 @@ function previewContrast(
 
 /**
  * Validate hex color input
+ * @param hex - Hex color string to validate
+ * @returns True if valid hex color, false otherwise
  */
 function isValidHex(hex: string): boolean {
   const color = parse(hex);
@@ -130,11 +147,6 @@ export async function createThemeInteractive(
         });
 
   let primaryColor: { l: number; c: number; h: number };
-  let neutralColor: { l: number; c: number; h: number } = {
-    l: 0.55,
-    c: 0.02,
-    h: 240,
-  };
 
   // Step 3: Get primary color based on method
   if (method === 'color') {
@@ -148,7 +160,9 @@ export async function createThemeInteractive(
 
     const oklchColor = hexToOKLCH(hexColor);
     if (!oklchColor) {
-      throw new Error('Failed to convert color to OKLCH');
+      throw new Error(
+        `Failed to convert color "${hexColor}" to OKLCH. Please check the hex format (e.g., #3b82f6).`
+      );
     }
 
     primaryColor = oklchColor;
@@ -233,23 +247,23 @@ export async function createThemeInteractive(
   if (addSemanticColors) {
     console.log('\n🎨 Generating semantic colors from primary...');
 
-    // Generate semantic colors by rotating hue
+    // Generate semantic colors using defaults but matching primary's general lightness/chroma feel
     success = {
-      l: 0.55,
-      c: 0.13,
-      h: 145, // Green
+      l: SEMANTIC_DEFAULTS.success.l,
+      c: primaryColor.c * 0.87, // Similar saturation to primary
+      h: SEMANTIC_DEFAULTS.success.h,
     };
 
     error = {
-      l: 0.55,
-      c: 0.15,
-      h: 25, // Red
+      l: SEMANTIC_DEFAULTS.error.l,
+      c: primaryColor.c, // Match primary chroma for consistency
+      h: SEMANTIC_DEFAULTS.error.h,
     };
 
     warning = {
-      l: 0.65,
-      c: 0.13,
-      h: 85, // Yellow
+      l: SEMANTIC_DEFAULTS.warning.l,
+      c: primaryColor.c * 0.87,
+      h: SEMANTIC_DEFAULTS.warning.h,
     };
 
     console.log(`  Success: ${formatOKLCH(success)}`);
@@ -260,16 +274,16 @@ export async function createThemeInteractive(
   // Step 5: Generate preview
   console.log('\n📊 Generating color scale preview...\n');
 
-  const scale = generateColorScale(primaryColor, [500]);
-  const hex500 = scale[500].hex;
+  // Convert OKLCH to hex for preview
+  const primaryOklch = { ...primaryColor, mode: 'oklch' as const };
+  const primaryHex = formatHex(primaryOklch);
 
-  console.log(`Primary (500): ${hex500}`);
-  previewContrast(hex500, 'Primary color');
+  console.log(`Primary (500): ${primaryHex}`);
+  previewContrast(primaryHex, 'Primary color');
 
   return {
     name: themeName,
     primary: primaryColor,
-    neutral: neutralColor,
     success,
     error,
     warning,
@@ -277,52 +291,45 @@ export async function createThemeInteractive(
 }
 
 /**
- * Generate TypeScript config code for the theme
+ * Helper function to add a color scale definition
  */
-export function generateThemeConfig(theme: ThemeColors): string {
-  const colors: string[] = [];
-
-  colors.push(`    // ${theme.name} theme`);
-  colors.push(`    ${theme.name}Primary: {`);
+function addColorScale(
+  colors: string[],
+  themeName: string,
+  colorType: string,
+  colorValue: { l: number; c: number; h: number }
+): void {
+  colors.push(`    ${themeName}${colorType}: {`);
   colors.push(
-    `      source: { l: ${theme.primary.l.toFixed(4)}, c: ${theme.primary.c.toFixed(4)}, h: ${theme.primary.h.toFixed(2)} },`
+    `      source: { l: ${colorValue.l.toFixed(4)}, c: ${colorValue.c.toFixed(4)}, h: ${colorValue.h.toFixed(2)} },`
   );
   colors.push(
     `      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],`
   );
   colors.push(`    },`);
+}
+
+/**
+ * Generate TypeScript config code for the theme
+ * @param theme - Theme color definitions
+ * @returns TypeScript code string for theme.config.ts
+ */
+export function generateThemeConfig(theme: ThemeColors): string {
+  const colors: string[] = [];
+
+  colors.push(`    // ${theme.name} theme`);
+  addColorScale(colors, theme.name, 'Primary', theme.primary);
 
   if (theme.success) {
-    colors.push(`    ${theme.name}Success: {`);
-    colors.push(
-      `      source: { l: ${theme.success.l.toFixed(4)}, c: ${theme.success.c.toFixed(4)}, h: ${theme.success.h.toFixed(2)} },`
-    );
-    colors.push(
-      `      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],`
-    );
-    colors.push(`    },`);
+    addColorScale(colors, theme.name, 'Success', theme.success);
   }
 
   if (theme.error) {
-    colors.push(`    ${theme.name}Error: {`);
-    colors.push(
-      `      source: { l: ${theme.error.l.toFixed(4)}, c: ${theme.error.c.toFixed(4)}, h: ${theme.error.h.toFixed(2)} },`
-    );
-    colors.push(
-      `      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],`
-    );
-    colors.push(`    },`);
+    addColorScale(colors, theme.name, 'Error', theme.error);
   }
 
   if (theme.warning) {
-    colors.push(`    ${theme.name}Warning: {`);
-    colors.push(
-      `      source: { l: ${theme.warning.l.toFixed(4)}, c: ${theme.warning.c.toFixed(4)}, h: ${theme.warning.h.toFixed(2)} },`
-    );
-    colors.push(
-      `      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],`
-    );
-    colors.push(`    },`);
+    addColorScale(colors, theme.name, 'Warning', theme.warning);
   }
 
   return colors.join('\n');
@@ -330,6 +337,8 @@ export function generateThemeConfig(theme: ThemeColors): string {
 
 /**
  * Generate example semantic token mappings for the theme
+ * @param theme - Theme color definitions
+ * @returns TypeScript code string for theme mappings
  */
 export function generateSemanticExample(theme: ThemeColors): string {
   const example: string[] = [];

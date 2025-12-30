@@ -4,3 +4,7 @@
 - create foundational components.
 
 Implement suggestions from the review, but do so carefully so you don't break the file.
+
+Need to run bp theme generate and bp theme preview after adding new theme to config
+
+- Make theme configs pluggable in themeConfig.ts. Should support defining themes elsewhere and importing them.

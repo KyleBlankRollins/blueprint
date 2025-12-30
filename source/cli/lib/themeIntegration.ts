@@ -7,102 +7,132 @@ import { join } from 'path';
 import type { ThemeColors } from './themeCreator.js';
 
 const CONFIG_PATH = 'source/themes/config/theme.config.ts';
+const DEFAULT_COLOR_SCALE = [
+  50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950,
+] as const;
+
+// Regex patterns for finding sections in theme.config.ts
+const COLORS_SECTION_END =
+  /(\n {2}},\n\n {2}\/\/ Dark mode adjustments|secondaryAccent:\s*{[^}]+},\n)/;
+const COLOR_REFS_CALL =
+  /const colors = createColorRefs\(\[([\s\S]*?)\] as const\);/;
+const THEMES_SECTION_END =
+  /(\n {2}},\n\n {2}\/\/ Accessibility validation rules)/;
 
 /**
- * Update theme.config.ts with new theme colors
+ * Escape special regex characters in a string
+ */
+function escapeRegex(str: string): string {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/**
+ * Build color definition block for a single color
+ */
+function buildColorDefinition(
+  name: string,
+  color: { l: number; c: number; h: number }
+): string[] {
+  return [
+    `    ${name}: {`,
+    `      source: { l: ${color.l.toFixed(4)}, c: ${color.c.toFixed(4)}, h: ${color.h.toFixed(2)} },`,
+    `      scale: [${DEFAULT_COLOR_SCALE.join(', ')}],`,
+    `    },`,
+  ];
+}
+
+/**
+ * Integrates a new theme into the theme configuration file.
+ * Updates color definitions, color refs, and theme mappings.
+ *
+ * @param theme - The theme colors to integrate
+ * @throws {Error} If theme validation fails
+ * @throws {Error} If the config file cannot be read/written
+ * @throws {Error} If required patterns are not found in the config file
+ * @example
+ * await integrateTheme({
+ *   name: 'Ocean',
+ *   primary: { l: 0.5, c: 0.15, h: 220 }
+ * });
  */
 export async function integrateTheme(theme: ThemeColors): Promise<void> {
+  // Input validation
+  if (!theme?.name) {
+    throw new Error('Theme name is required');
+  }
+  if (!theme?.primary) {
+    throw new Error('Theme must have a primary color');
+  }
+
   const configPath = join(process.cwd(), CONFIG_PATH);
-  let content = await readFile(configPath, 'utf-8');
 
-  // 1. Add color definitions
-  content = addColorDefinitions(content, theme);
+  try {
+    let content = await readFile(configPath, 'utf-8');
 
-  // 2. Update createColorRefs call
-  content = updateColorRefs(content, theme);
+    // 1. Add color definitions
+    content = addColorDefinitions(content, theme);
 
-  // 3. Add theme mappings
-  content = addThemeMappings(content, theme);
+    // 2. Update createColorRefs call
+    content = updateColorRefs(content, theme);
 
-  // Write back to file
-  await writeFile(configPath, content, 'utf-8');
+    // 3. Add theme mappings
+    content = addThemeMappings(content, theme);
+
+    // Write back to file
+    await writeFile(configPath, content, 'utf-8');
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(
+        `Failed to integrate theme "${theme.name}": ${error.message}`
+      );
+    }
+    throw error;
+  }
 }
 
 /**
  * Add color definitions to the colors section
  */
 function addColorDefinitions(content: string, theme: ThemeColors): string {
-  const colorNames: string[] = [];
-
-  // Build list of color names to add
-  colorNames.push(`${theme.name}Primary`);
-  if (theme.success) colorNames.push(`${theme.name}Success`);
-  if (theme.error) colorNames.push(`${theme.name}Error`);
-  if (theme.warning) colorNames.push(`${theme.name}Warning`);
-
-  // Build the color definitions
+  // Build the color definitions using helper function
   const definitions: string[] = [];
   definitions.push(`\n    // ${theme.name} theme colors`);
 
-  definitions.push(`    ${theme.name}Primary: {`);
   definitions.push(
-    `      source: { l: ${theme.primary.l.toFixed(4)}, c: ${theme.primary.c.toFixed(4)}, h: ${theme.primary.h.toFixed(2)} },`
+    ...buildColorDefinition(`${theme.name}Primary`, theme.primary)
   );
-  definitions.push(
-    `      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],`
-  );
-  definitions.push(`    },`);
 
   if (theme.success) {
-    definitions.push(`    ${theme.name}Success: {`);
     definitions.push(
-      `      source: { l: ${theme.success.l.toFixed(4)}, c: ${theme.success.c.toFixed(4)}, h: ${theme.success.h.toFixed(2)} },`
+      ...buildColorDefinition(`${theme.name}Success`, theme.success)
     );
-    definitions.push(
-      `      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],`
-    );
-    definitions.push(`    },`);
   }
 
   if (theme.error) {
-    definitions.push(`    ${theme.name}Error: {`);
     definitions.push(
-      `      source: { l: ${theme.error.l.toFixed(4)}, c: ${theme.error.c.toFixed(4)}, h: ${theme.error.h.toFixed(2)} },`
+      ...buildColorDefinition(`${theme.name}Error`, theme.error)
     );
-    definitions.push(
-      `      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],`
-    );
-    definitions.push(`    },`);
   }
 
   if (theme.warning) {
-    definitions.push(`    ${theme.name}Warning: {`);
     definitions.push(
-      `      source: { l: ${theme.warning.l.toFixed(4)}, c: ${theme.warning.c.toFixed(4)}, h: ${theme.warning.h.toFixed(2)} },`
+      ...buildColorDefinition(`${theme.name}Warning`, theme.warning)
     );
-    definitions.push(
-      `      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],`
-    );
-    definitions.push(`    },`);
   }
 
   // Find the closing brace of the colors section
-  // Look for the pattern: "  },\n\n  // Dark mode adjustments" or similar
-  const colorsEndPattern =
-    /(\n {2}},\n\n {2}\/\/ Dark mode adjustments|secondaryAccent:\s*{[^}]+},\n)/;
-  const match = content.match(colorsEndPattern);
+  const match = content.match(COLORS_SECTION_END);
 
-  if (match && match.index !== undefined) {
-    const insertPos = match.index + match[0].length;
-    content =
-      content.slice(0, insertPos) +
-      definitions.join('\n') +
-      content.slice(insertPos);
-  } else {
+  if (!match || match.index === undefined) {
     throw new Error('Could not find colors section in theme.config.ts');
   }
 
-  return content;
+  const insertPos = match.index + match[0].length;
+  return (
+    content.slice(0, insertPos) +
+    definitions.join('\n') +
+    content.slice(insertPos)
+  );
 }
 
 /**
@@ -117,10 +147,9 @@ function updateColorRefs(content: string, theme: ThemeColors): string {
   if (theme.warning) colorNames.push(`${theme.name}Warning`);
 
   // Find the createColorRefs call
-  const pattern = /const colors = createColorRefs\(\[([\s\S]*?)\] as const\);/;
-  const match = content.match(pattern);
+  const match = content.match(COLOR_REFS_CALL);
 
-  if (!match) {
+  if (!match || !match[1]) {
     throw new Error('Could not find createColorRefs call in theme.config.ts');
   }
 
@@ -129,12 +158,10 @@ function updateColorRefs(content: string, theme: ThemeColors): string {
   // Add new color names (with proper indentation)
   const newColors = colorNames.map((name) => `  '${name}',`).join('\n');
 
-  const updated = content.replace(
-    pattern,
+  return content.replace(
+    COLOR_REFS_CALL,
     `const colors = createColorRefs([${existingColors}\n${newColors}\n] as const);`
   );
-
-  return updated;
 }
 
 /**
@@ -189,32 +216,54 @@ function addThemeMappings(content: string, theme: ThemeColors): string {
   mappings.push(`    },`);
 
   // Find the closing brace of the themes section
-  const themesEndPattern =
-    /(\n {2}},\n\n {2}\/\/ Accessibility validation rules)/;
-  const match = content.match(themesEndPattern);
+  const match = content.match(THEMES_SECTION_END);
 
-  if (match && match.index !== undefined) {
-    const insertPos = match.index;
-    content =
-      content.slice(0, insertPos) +
-      '\n' +
-      mappings.join('\n') +
-      content.slice(insertPos);
-  } else {
+  if (!match || match.index === undefined) {
     throw new Error('Could not find themes section in theme.config.ts');
   }
 
-  return content;
+  const insertPos = match.index;
+  return (
+    content.slice(0, insertPos) +
+    '\n' +
+    mappings.join('\n') +
+    content.slice(insertPos)
+  );
 }
 
 /**
- * Check if a theme name already exists in the config
+ * Check if a theme name already exists in the config.
+ *
+ * @param themeName - The name of the theme to check
+ * @returns True if the theme exists, false otherwise
+ * @throws {Error} If the config file cannot be read
+ * @example
+ * const exists = await themeExists('Ocean');
+ * if (exists) {
+ *   console.log('Theme already exists');
+ * }
  */
 export async function themeExists(themeName: string): Promise<boolean> {
-  const configPath = join(process.cwd(), CONFIG_PATH);
-  const content = await readFile(configPath, 'utf-8');
+  if (!themeName) {
+    throw new Error('Theme name is required');
+  }
 
-  // Check if theme exists in themes section
-  const themePattern = new RegExp(`\\s+${themeName}: {2}{`, 'g');
-  return themePattern.test(content);
+  const configPath = join(process.cwd(), CONFIG_PATH);
+
+  try {
+    const content = await readFile(configPath, 'utf-8');
+
+    // Check if theme exists in themes section
+    // Escape regex special characters in theme name
+    const escapedName = escapeRegex(themeName);
+    const themePattern = new RegExp(`^\\s+${escapedName}:\\s*{`, 'm');
+    return themePattern.test(content);
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(
+        `Failed to check if theme "${themeName}" exists: ${error.message}`
+      );
+    }
+    throw error;
+  }
 }
