@@ -333,7 +333,7 @@ export function themeCommand(program: Command): void {
               try {
                 await server.listen();
                 const port = server.config.server.port ?? DEFAULT_VITE_PORT;
-                const url = `http://localhost:${port}/demo/?theme=${theme.name}`;
+                const url = `http://localhost:${port}/demo/theme-preview.html?theme=${theme.name}`;
 
                 openBrowser(url);
                 console.log(`Preview running at: ${url}`);
