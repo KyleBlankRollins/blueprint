@@ -1007,41 +1007,53 @@ export default defineConfig({
 - Hardcoded color values
 - No build-time validation
 
-### Phase 1: Setup Infrastructure (Week 1)
+### Phase 1: Core Infrastructure (Week 1)
 
-1. ✅ Create theme builder TypeScript API
-2. ✅ Implement OKLCH color utilities (using `culori` or `colorjs.io`)
-3. ✅ Create theme config schema and types
-4. ✅ Implement CSS generation
+1. Theme builder TypeScript API
+2. OKLCH color utilities
+3. Theme config schema + types
+4. CSS generation functions
+5. TypeScript type generation
+6. Basic generation script (for Phase 2 testing)
 
-### Phase 2: CLI Commands (Week 1-2)
+### Phase 2: Theme Generation & Visual QA (Week 1)
 
-1. ✅ `bp theme generate` - Basic generation
-2. ✅ `bp theme validate` - Contrast validation
-3. ✅ `bp theme create` - Interactive theme creator
-4. ✅ `bp theme preview` - Browser preview
+1. Convert light.css → theme.config.ts
+2. Generate primitives.css from config
+3. Visual QA: Review all color scales in browser
+4. Adjust OKLCH curves based on visual review
+5. Generate dark.css theme
+6. Visual QA: Compare light/dark side-by-side
 
-### Phase 3: Initial Theme (Week 2)
+### Phase 3: Component Validation (Week 1-2)
 
-1. ✅ Convert existing `light.css` to theme config
-2. ✅ Generate primitives from config
-3. ✅ Create dark theme
-4. ✅ Update component library to use generated tokens
+1. Build `bp theme preview` for ongoing visual feedback
+2. Update button component (all variants + states)
+3. Update input component (validation states)
+4. Verify all semantic tokens work as expected
+5. Update remaining components
 
-### Phase 4: Documentation & DX (Week 3)
+### Phase 4: CLI Tooling (Week 2)
 
-1. ✅ Document theme customization
-2. ✅ Create theme examples
-3. ✅ Add theme switcher to demo
-4. ✅ TypeScript types for theme tokens
+1. `bp theme generate` (polish existing script)
+2. `bp theme validate` (contrast checking)
+3. `bp theme create` (interactive)
+4. High-contrast theme generation
 
-### Phase 5: Advanced Features (Week 4+)
+### Phase 5: Documentation & QA (Week 2-3)
 
-1. ⏳ High-contrast theme
-2. ⏳ Component-level tokens
-3. ⏳ Theme interpolation (blend two themes)
-4. ⏳ P3 gamut support
-5. ⏳ CSS `light-dark()` function support
+1. Document theme customization
+2. Generate token usage guidelines
+3. Add theme switcher to demo
+4. Accessibility audit (screen readers, colorblind sim)
+5. Create theme examples
+
+### Phase 6: Advanced Features (Week 4+)
+
+1. Component-level tokens
+2. Theme interpolation
+3. P3 gamut support
+4. CSS `light-dark()` function
 
 ---
 
