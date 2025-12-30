@@ -153,11 +153,85 @@ source/themes/
 
 ## TypeScript API Design
 
+### Typed Color References (✅ Phase 2 Implementation)
+
+**Problem:** String-based color references (`'gray.500'`) have no IDE autocomplete.
+
+**Solution:** TypeScript-powered color reference system with full autocomplete:
+
+```typescript
+// source/themes/builder/colorRefs.ts
+import type { ColorReference, SpecialColor } from '../types.js';
+
+/**
+ * Flattened color reference type (e.g., colors.gray500)
+ */
+type FlattenedColorRefs<T extends readonly string[]> = {
+  [K in T[number] as `${K}${50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950}`]: ColorReference;
+} & {
+  white: SpecialColor;
+  black: SpecialColor;
+};
+
+/**
+ * Creates typed color reference object with IDE autocomplete
+ * @example
+ * const colors = createColorRefs(['gray', 'blue'] as const);
+ * colors.gray500  // ✅ TypeScript autocomplete
+ * colors.blue400  // ✅ Returns 'blue.400' string
+ */
+export function createColorRefs<T extends readonly string[]>(
+  colorNames: T
+): FlattenedColorRefs<T> {
+  const refs: Record<string, ColorReference | SpecialColor> = {
+    white: 'white' as SpecialColor,
+    black: 'black' as SpecialColor,
+  };
+
+  const steps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const;
+
+  for (const color of colorNames) {
+    for (const step of steps) {
+      const key = `${color}${step}`;
+      refs[key] = `${color}.${step}` as ColorReference;
+    }
+  }
+
+  return refs as FlattenedColorRefs<T>;
+}
+```
+
+**Usage:**
+
+```typescript
+const colors = createColorRefs(['gray', 'blue', 'green'] as const);
+
+// ✅ Full TypeScript autocomplete
+colors.gray500; // Returns 'gray.500'
+colors.blue400; // Returns 'blue.400'
+colors.white; // Returns 'white'
+
+// ❌ TypeScript error for invalid colors
+colors.purple500; // Type error: Property 'purple500' does not exist
+```
+
 ### Theme Configuration Format
 
 ```typescript
 // source/themes/config/theme.config.ts
 import { defineTheme } from '../builder/defineTheme.js';
+import { createColorRefs } from '../builder/colorRefs.js'; // ✅ Import typed colors
+
+// ✅ Create typed color reference object
+const colors = createColorRefs([
+  'gray',
+  'blue',
+  'green',
+  'red',
+  'yellow',
+  'accent',
+  'secondaryAccent',
+] as const);
 
 export const blueprintTheme = defineTheme({
   // Source colors (OKLCH)
@@ -313,41 +387,41 @@ export const blueprintTheme = defineTheme({
     '2xl': '1536px',
   },
 
-  // Theme variants
+  // Theme variants (✅ Updated: Now uses typed color references)
   themes: {
     light: {
       // Backgrounds
-      background: 'white',
-      surface: 'gray.50',
-      surfaceElevated: 'white',
-      surfaceSubdued: 'gray.100',
+      background: colors.white,
+      surface: colors.gray50,
+      surfaceElevated: colors.gray50, // ✅ Changed from white to gray.50 for softer appearance
+      surfaceSubdued: colors.gray100,
 
       // Text
-      text: 'gray.900',
-      textMuted: 'gray.600',
-      textInverse: 'white',
+      text: colors.gray900,
+      textMuted: colors.gray600,
+      textInverse: colors.gray50, // ✅ Changed from white to gray.50 for softer appearance
 
       // Primary
-      primary: 'blue.500',
-      primaryHover: 'blue.600',
-      primaryActive: 'blue.700',
+      primary: colors.blue500,
+      primaryHover: colors.blue600,
+      primaryActive: colors.blue700,
 
       // Semantic
-      success: 'green.500',
-      warning: 'yellow.600', // Darker for better contrast
-      error: 'red.500',
-      info: 'blue.500',
+      success: colors.green500,
+      warning: colors.yellow600, // Darker for better contrast
+      error: colors.red500,
+      info: colors.accent500, // ✅ Changed from blue to accent (yellowOrange) for distinction
 
       // UI Elements
-      border: 'gray.200',
-      borderStrong: 'gray.300',
-      focus: 'blue.500',
+      border: colors.gray200,
+      borderStrong: colors.gray300,
+      focus: colors.blue500,
     },
     dark: {
       // Backgrounds
-      background: 'gray.950',
-      surface: 'gray.900',
-      surfaceElevated: 'gray.800',
+      background: colors.gray950,
+      surface: colors.gray900,
+      surfaceElevated: colors.gray800,
       surfaceSubdued: 'black',
 
       // Text
@@ -682,6 +756,15 @@ export function generatePrimitivesCSS(
   return css;
 }
 
+/**
+ * Convert camelCase to kebab-case for CSS custom properties
+ * ✅ Phase 2 Implementation - Ensures CSS standard naming
+ * @example toKebabCase('surfaceElevated') → 'surface-elevated'
+ */
+function toKebabCase(str: string): string {
+  return str.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
+}
+
 export function generateThemeCSS(
   themeName: string,
   mappings: Record<string, string>,
@@ -695,14 +778,17 @@ export function generateThemeCSS(
   let css = `/* ${themeName} theme */\n${selector} {\n`;
 
   for (const [semanticToken, primitiveRef] of Object.entries(mappings)) {
+    // ✅ Convert camelCase to kebab-case for CSS (e.g., surfaceElevated → surface-elevated)
+    const tokenName = toKebabCase(semanticToken);
+
     // Parse primitive reference (e.g., "blue.500" → "--bp-blue-500")
     const [colorName, step] = primitiveRef.split('.');
 
     if (colorName === 'white' || colorName === 'black') {
-      css += `  --bp-color-${semanticToken}: ${colorName};\n`;
+      css += `  --bp-color-${tokenName}: ${colorName};\n`;
     } else {
       // Reference primitive token (hex fallback + OKLCH in @supports already handled)
-      css += `  --bp-color-${semanticToken}: var(--bp-${colorName}-${step});\n`;
+      css += `  --bp-color-${tokenName}: var(--bp-${colorName}-${step});\n`;
     }
   }
 
@@ -1007,23 +1093,35 @@ export default defineConfig({
 - Hardcoded color values
 - No build-time validation
 
-### Phase 1: Core Infrastructure (Week 1)
+### ✅ Phase 1: Core Infrastructure (COMPLETED)
 
-1. Theme builder TypeScript API
-2. OKLCH color utilities
-3. Theme config schema + types
-4. CSS generation functions
-5. TypeScript type generation
-6. Basic generation script (for Phase 2 testing)
+1. ✅ Theme builder TypeScript API
+2. ✅ OKLCH color utilities (culori integration)
+3. ✅ Theme config schema + types
+4. ✅ CSS generation functions (with kebab-case conversion)
+5. ✅ TypeScript type generation (typed color references)
+6. ✅ Basic generation script (`npm run theme:generate`)
 
-### Phase 2: Theme Generation & Visual QA (Week 1)
+### ✅ Phase 2: Theme Generation & Visual QA (COMPLETED)
 
-1. Convert light.css → theme.config.ts
-2. Generate primitives.css from config
-3. Visual QA: Review all color scales in browser
-4. Adjust OKLCH curves based on visual review
-5. Generate dark.css theme
-6. Visual QA: Compare light/dark side-by-side
+1. ✅ Convert light.css → theme.config.ts
+2. ✅ Generate primitives.css from config (11.55 KB output)
+3. ✅ Visual QA: Review all color scales in browser (theme-preview.html)
+4. ✅ Adjust OKLCH curves based on visual review
+5. ✅ Generate dark.css theme
+6. ✅ Visual QA: Compare light/dark side-by-side
+
+**Additional Improvements Made:**
+
+- ✅ Typed color reference system with IDE autocomplete (`createColorRefs()`)
+- ✅ Flattened namespace (e.g., `colors.gray500` instead of `colors.gray[500]`)
+- ✅ kebab-case CSS custom property generation (`--bp-color-surface-elevated`)
+- ✅ Changed `surfaceElevated` and `textInverse` from pure white to `gray.50` for softer appearance
+- ✅ Changed `info` token from blue to accent (yellowOrange) for better distinction
+- ✅ Fixed light/dark comparison to use primitive tokens for theme-specific display
+- ✅ Added info button to component examples
+- ✅ Enforced semantic token architecture (components use semantics, not primitives)
+- ✅ Comprehensive code quality improvements (no XSS, extracted inline styles, motion tokens)
 
 ### Phase 3: Component Validation (Week 1-2)
 
@@ -1101,9 +1199,11 @@ export default defineConfig({
 
 ---
 
-## Design System Improvements (Addressed)
+## Design System Improvements
 
-This plan has been updated to address critical design system quality issues:
+This section tracks design system quality improvements across all phases:
+
+### ✅ Phase 1 & 2 Implementations
 
 ### ✅ **OKLCH Storage Format**
 
@@ -1170,6 +1270,35 @@ This plan has been updated to address critical design system quality issues:
 - `generateUtilityCSS()` for focus, z-index, opacity tokens
 - `generateReducedMotionCSS()` for animation preferences
 - `generateHighContrastCSS()` for high contrast mode
+
+### ✅ **Typed Color Reference System (Phase 2)**
+
+- Created `createColorRefs<T>()` generic utility function
+- Flattened namespace: `colors.gray500` returns `'gray.500'` string
+- Full TypeScript autocomplete for all colors and steps
+- Template literal types for compile-time validation
+- Includes special colors: `colors.white`, `colors.black`
+
+### ✅ **CSS Naming Conventions (Phase 2)**
+
+- Added `toKebabCase()` utility for camelCase → kebab-case conversion
+- Generated CSS uses standard kebab-case: `--bp-color-surface-elevated`
+- Theme config uses camelCase for TypeScript ergonomics
+- Build-time conversion ensures CSS standard compliance
+
+### ✅ **Visual Refinements (Phase 2)**
+
+- Changed `surfaceElevated` from pure white to `gray.50` (softer)
+- Changed `textInverse` from pure white to `gray.50` (less harsh)
+- Changed `info` token from blue to accent (yellowOrange) for visual distinction
+- All changes validated in theme preview page
+
+### ✅ **Design Token Architecture Enforcement (Phase 2)**
+
+- Components must use semantic tokens, not primitives
+- Theme-specific display elements use primitives with `[data-theme]` selectors
+- Example: Buttons use `--bp-color-text-inverse`, not `--bp-gray-50`
+- Enforces proper three-layer hierarchy: Components → Semantics → Primitives
 
 ---
 
