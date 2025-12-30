@@ -58,24 +58,29 @@ source/themes/
 
 - **Primitive colors:** 11-step scales (50-950) per color
 - **Generated from source:** Define one base color, generate full scale
-- **OKLCH values:** Stored as space-separated values for modern browsers
-- **Hex fallbacks:** Converted for legacy browser support
+- **OKLCH values:** Complete color values with `@supports` for progressive enhancement
+- **Hex fallbacks:** Base declaration for legacy browser support
 
 **Example primitive generation:**
 
-```typescript
-// Input: Single source color
-const blue = oklch(0.55, 0.15, 250);
+```css
+/* Hex fallbacks for all browsers */
+:root {
+  --bp-blue-50: #eff6ff;
+  --bp-blue-100: #dbeafe;
+  --bp-blue-500: #3b82f6;
+  --bp-blue-950: #1e3a8a;
+}
 
-// Output: Full scale
---bp-blue-50: 0.95 0.02 250;
---bp-blue-100: 0.90 0.04 250;
-// ... through
---bp-blue-950: 0.15 0.06 250;
-
-// With fallbacks
---bp-blue-50-fallback: #eff6ff;
---bp-blue-100-fallback: #dbeafe;
+/* OKLCH for modern browsers */
+@supports (color: oklch(0 0 0)) {
+  :root {
+    --bp-blue-50: oklch(0.95 0.02 250);
+    --bp-blue-100: oklch(0.9 0.04 250);
+    --bp-blue-500: oklch(0.55 0.15 250);
+    --bp-blue-950: oklch(0.15 0.06 250);
+  }
+}
 ```
 
 ### 1.3 Semantic Tokens
@@ -85,24 +90,62 @@ const blue = oklch(0.55, 0.15, 250);
 ```css
 /* Light theme */
 [data-theme='light'] {
+  /* Backgrounds */
   --bp-color-background: var(--bp-white);
   --bp-color-surface: var(--bp-gray-50);
+  --bp-color-surface-elevated: var(--bp-white);
+  --bp-color-surface-subdued: var(--bp-gray-100);
+
+  /* Text */
   --bp-color-text: var(--bp-gray-900);
   --bp-color-text-muted: var(--bp-gray-600);
+  --bp-color-text-inverse: var(--bp-white);
+
+  /* Primary */
   --bp-color-primary: var(--bp-blue-500);
   --bp-color-primary-hover: var(--bp-blue-600);
+  --bp-color-primary-active: var(--bp-blue-700);
+
+  /* Semantic */
+  --bp-color-success: var(--bp-green-500);
+  --bp-color-warning: var(--bp-yellow-600);
+  --bp-color-error: var(--bp-red-500);
+  --bp-color-info: var(--bp-blue-500);
+
+  /* UI Elements */
   --bp-color-border: var(--bp-gray-200);
+  --bp-color-border-strong: var(--bp-gray-300);
+  --bp-color-focus: var(--bp-blue-500);
 }
 
 /* Dark theme */
 [data-theme='dark'] {
+  /* Backgrounds */
   --bp-color-background: var(--bp-gray-950);
   --bp-color-surface: var(--bp-gray-900);
+  --bp-color-surface-elevated: var(--bp-gray-800);
+  --bp-color-surface-subdued: var(--bp-black);
+
+  /* Text */
   --bp-color-text: var(--bp-gray-50);
   --bp-color-text-muted: var(--bp-gray-400);
+  --bp-color-text-inverse: var(--bp-gray-900);
+
+  /* Primary (reduced chroma for dark backgrounds) */
   --bp-color-primary: var(--bp-blue-400);
   --bp-color-primary-hover: var(--bp-blue-300);
+  --bp-color-primary-active: var(--bp-blue-200);
+
+  /* Semantic */
+  --bp-color-success: var(--bp-green-400);
+  --bp-color-warning: var(--bp-yellow-400);
+  --bp-color-error: var(--bp-red-400);
+  --bp-color-info: var(--bp-blue-400);
+
+  /* UI Elements */
   --bp-color-border: var(--bp-gray-800);
+  --bp-color-border-strong: var(--bp-gray-700);
+  --bp-color-focus: var(--bp-blue-400);
 }
 ```
 
@@ -131,21 +174,27 @@ export const blueprintTheme = defineTheme({
       scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
     },
 
-    // Semantic colors (optional - can be auto-generated)
-    success: {
-      source: { l: 0.55, c: 0.15, h: 145 },
+    // Semantic colors
+    green: {
+      source: { l: 0.55, c: 0.13, h: 145 },
       scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
     },
 
-    error: {
-      source: { l: 0.55, c: 0.19, h: 25 },
+    red: {
+      source: { l: 0.55, c: 0.15, h: 25 },
       scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
     },
 
-    warning: {
-      source: { l: 0.65, c: 0.17, h: 85 },
+    yellow: {
+      source: { l: 0.65, c: 0.13, h: 85 },
       scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
     },
+  },
+
+  // Dark mode adjustments
+  darkMode: {
+    chromaMultiplier: 0.85, // Reduce saturation by 15% for dark backgrounds
+    contrastBoost: 1.1, // Slightly increase contrast for better readability
   },
 
   // Spacing scale
@@ -161,14 +210,15 @@ export const blueprintTheme = defineTheme({
     },
   },
 
-  // Border radius
+  // Border radius (consistent progression)
   radius: {
     none: 0,
-    sm: 2,
-    md: 6,
-    lg: 8,
-    xl: 12,
-    '2xl': 16,
+    sm: 2, // 2px
+    md: 4, // 4px (2x)
+    lg: 8, // 8px (2x)
+    xl: 12, // 12px (1.5x)
+    '2xl': 16, // 16px (1.33x)
+    '3xl': 24, // 24px (1.5x) - for large cards/modals
     full: 9999,
   },
 
@@ -176,10 +226,9 @@ export const blueprintTheme = defineTheme({
   motion: {
     durations: {
       instant: 0,
-      fast: 100,
-      normal: 200,
-      slow: 300,
-      slower: 500,
+      fast: 150, // Hover states, tooltips
+      normal: 300, // Modals, dropdowns
+      slow: 500, // Page transitions, complex animations
     },
     easings: {
       linear: 'linear',
@@ -187,6 +236,13 @@ export const blueprintTheme = defineTheme({
       out: 'cubic-bezier(0, 0, 0.2, 1)',
       inOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
       bounce: 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+    },
+    // Combined presets
+    transitions: {
+      fast: '150ms cubic-bezier(0, 0, 0.2, 1)',
+      base: '300ms cubic-bezier(0.4, 0, 0.2, 1)',
+      slow: '500ms cubic-bezier(0.4, 0, 0.2, 1)',
+      bounce: '500ms cubic-bezier(0.68, -0.55, 0.265, 1.55)',
     },
   },
 
@@ -207,33 +263,113 @@ export const blueprintTheme = defineTheme({
       '4xl': 36,
     },
     lineHeights: {
-      tight: 1.2,
+      none: 1,
+      tight: 1.25,
+      snug: 1.375,
       normal: 1.5,
-      relaxed: 1.75,
+      relaxed: 1.625,
+      loose: 2,
     },
+    fontWeights: {
+      normal: 400,
+      medium: 500,
+      semibold: 600,
+      bold: 700,
+    },
+  },
+
+  // Focus rings (accessibility-critical)
+  focus: {
+    width: 2, // px
+    offset: 2, // px
+    style: 'solid',
+  },
+
+  // Z-index scale (for layering)
+  zIndex: {
+    base: 0,
+    dropdown: 1000,
+    sticky: 1020,
+    overlay: 1030,
+    modal: 1040,
+    popover: 1060,
+    tooltip: 1080,
+  },
+
+  // Opacity scale
+  opacity: {
+    disabled: 0.5,
+    hover: 0.8,
+    overlay: 0.6,
+    subtle: 0.4,
+  },
+
+  // Breakpoints (for responsive design)
+  breakpoints: {
+    sm: '640px',
+    md: '768px',
+    lg: '1024px',
+    xl: '1280px',
+    '2xl': '1536px',
   },
 
   // Theme variants
   themes: {
     light: {
+      // Backgrounds
       background: 'white',
       surface: 'gray.50',
+      surfaceElevated: 'white',
+      surfaceSubdued: 'gray.100',
+
+      // Text
       text: 'gray.900',
       textMuted: 'gray.600',
+      textInverse: 'white',
+
+      // Primary
       primary: 'blue.500',
       primaryHover: 'blue.600',
+      primaryActive: 'blue.700',
+
+      // Semantic
+      success: 'green.500',
+      warning: 'yellow.600', // Darker for better contrast
+      error: 'red.500',
+      info: 'blue.500',
+
+      // UI Elements
       border: 'gray.200',
-      // ... more semantic mappings
+      borderStrong: 'gray.300',
+      focus: 'blue.500',
     },
     dark: {
+      // Backgrounds
       background: 'gray.950',
       surface: 'gray.900',
+      surfaceElevated: 'gray.800',
+      surfaceSubdued: 'black',
+
+      // Text
       text: 'gray.50',
       textMuted: 'gray.400',
+      textInverse: 'gray.900',
+
+      // Primary (uses dark mode chroma adjustments)
       primary: 'blue.400',
       primaryHover: 'blue.300',
+      primaryActive: 'blue.200',
+
+      // Semantic
+      success: 'green.400',
+      warning: 'yellow.400',
+      error: 'red.400',
+      info: 'blue.400',
+
+      // UI Elements
       border: 'gray.800',
-      // ... more semantic mappings
+      borderStrong: 'gray.700',
+      focus: 'blue.400',
     },
   },
 
@@ -241,9 +377,15 @@ export const blueprintTheme = defineTheme({
   accessibility: {
     enforceWCAG: true,
     minimumContrast: {
-      normal: 4.5, // WCAG AA
-      large: 3.0, // WCAG AA for large text
+      text: 4.5, // WCAG AA for normal text
+      textLarge: 3.0, // WCAG AA for large text (18px+)
+      ui: 3.0, // WCAG AA for UI components (borders, icons)
+      interactive: 3.0, // For hover/active states
+      focus: 3.0, // Focus indicators must contrast with both bg and element
     },
+    colorBlindSafe: true, // Ensure sufficient hue separation
+    minHueDifference: 60, // Minimum degrees between semantic colors
+    highContrast: true, // Support prefers-contrast: more
   },
 });
 ```
@@ -265,6 +407,10 @@ export interface ColorScale {
 
 export interface ThemeConfig {
   colors: Record<string, ColorScale>;
+  darkMode?: {
+    chromaMultiplier?: number;
+    contrastBoost?: number;
+  };
   spacing: {
     base: number;
     scale: number[];
@@ -274,19 +420,35 @@ export interface ThemeConfig {
   motion: {
     durations: Record<string, number>;
     easings: Record<string, string>;
+    transitions?: Record<string, string>;
   };
   typography: {
     fontFamilies: Record<string, string>;
     fontSizes: Record<string, number>;
     lineHeights: Record<string, number>;
+    fontWeights?: Record<string, number>;
   };
+  focus?: {
+    width: number;
+    offset: number;
+    style: string;
+  };
+  zIndex?: Record<string, number>;
+  opacity?: Record<string, number>;
+  breakpoints?: Record<string, string>;
   themes: Record<string, Record<string, string>>;
   accessibility?: {
     enforceWCAG?: boolean;
     minimumContrast?: {
-      normal: number;
-      large: number;
+      text: number;
+      textLarge: number;
+      ui: number;
+      interactive: number;
+      focus: number;
     };
+    colorBlindSafe?: boolean;
+    minHueDifference?: number;
+    highContrast?: boolean;
   };
 }
 ```
@@ -299,10 +461,14 @@ import { convertOKLCHtoHex, interpolateOKLCH } from './colorUtils.js';
 
 /**
  * Generate an 11-step color scale (50-950) from a source OKLCH color
+ * @param source - Base OKLCH color (typically the 500 step)
+ * @param steps - Scale steps to generate
+ * @param darkModeAdjustments - Optional chroma/contrast adjustments for dark mode
  */
 export function generateColorScale(
   source: OKLCHColor,
-  steps: number[] = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
+  steps: number[] = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
+  darkModeAdjustments?: { chromaMultiplier?: number; contrastBoost?: number }
 ): Record<number, { oklch: OKLCHColor; hex: string }> {
   const scale: Record<number, { oklch: OKLCHColor; hex: string }> = {};
 
@@ -375,41 +541,106 @@ export function validateThemeContrast(
   config: ThemeConfig
 ): ContrastViolation[] {
   const violations: ContrastViolation[] = [];
-  const minContrast = config.accessibility?.minimumContrast?.normal ?? 4.5;
+  const contrast = config.accessibility?.minimumContrast ?? {
+    text: 4.5,
+    textLarge: 3.0,
+    ui: 3.0,
+    interactive: 3.0,
+    focus: 3.0,
+  };
 
-  // Check text on background
-  const textBgRatio = getContrastRatio(
-    theme.semanticTokens['--bp-color-text'],
-    theme.semanticTokens['--bp-color-background']
-  );
+  // Text contrast checks
+  const textPairs: [string, string, number][] = [
+    ['text', 'background', contrast.text],
+    ['textMuted', 'background', contrast.text],
+    ['text', 'surface', contrast.text],
+    ['textMuted', 'surface', contrast.text],
+    ['textInverse', 'primary', contrast.text],
+  ];
 
-  if (textBgRatio < minContrast) {
-    violations.push({
-      token: '--bp-color-text',
-      foreground: theme.semanticTokens['--bp-color-text'],
-      background: theme.semanticTokens['--bp-color-background'],
-      ratio: textBgRatio,
-      required: minContrast,
-    });
+  for (const [fg, bg, required] of textPairs) {
+    const ratio = getContrastRatio(
+      theme.semanticTokens[`--bp-color-${fg}`],
+      theme.semanticTokens[`--bp-color-${bg}`]
+    );
+    if (ratio < required) {
+      violations.push({
+        token: `--bp-color-${fg}`,
+        foreground: theme.semanticTokens[`--bp-color-${fg}`],
+        background: theme.semanticTokens[`--bp-color-${bg}`],
+        ratio,
+        required,
+      });
+    }
   }
 
-  // Check primary text on primary background
-  const primaryRatio = getContrastRatio(
-    theme.semanticTokens['--bp-color-primary'],
-    theme.semanticTokens['--bp-color-background']
-  );
+  // UI component contrast checks (borders, icons, etc.)
+  const uiPairs: [string, string, number][] = [
+    ['border', 'background', contrast.ui],
+    ['borderStrong', 'background', contrast.ui],
+    ['primary', 'background', contrast.ui],
+    ['success', 'background', contrast.ui],
+    ['error', 'background', contrast.ui],
+    ['warning', 'background', contrast.ui],
+  ];
 
-  if (primaryRatio < minContrast) {
-    violations.push({
-      token: '--bp-color-primary',
-      foreground: theme.semanticTokens['--bp-color-primary'],
-      background: theme.semanticTokens['--bp-color-background'],
-      ratio: primaryRatio,
-      required: minContrast,
-    });
+  for (const [fg, bg, required] of uiPairs) {
+    const ratio = getContrastRatio(
+      theme.semanticTokens[`--bp-color-${fg}`],
+      theme.semanticTokens[`--bp-color-${bg}`]
+    );
+    if (ratio < required) {
+      violations.push({
+        token: `--bp-color-${fg}`,
+        foreground: theme.semanticTokens[`--bp-color-${fg}`],
+        background: theme.semanticTokens[`--bp-color-${bg}`],
+        ratio,
+        required,
+      });
+    }
   }
 
-  // ... check other combinations
+  // Interactive state contrast (hover/active states)
+  const interactivePairs: [string, string, number][] = [
+    ['primaryHover', 'primary', contrast.interactive],
+    ['primaryActive', 'primaryHover', contrast.interactive],
+  ];
+
+  for (const [fg, bg, required] of interactivePairs) {
+    const ratio = getContrastRatio(
+      theme.semanticTokens[`--bp-color-${fg}`],
+      theme.semanticTokens[`--bp-color-${bg}`]
+    );
+    if (ratio < required) {
+      violations.push({
+        token: `--bp-color-${fg}`,
+        foreground: theme.semanticTokens[`--bp-color-${fg}`],
+        background: theme.semanticTokens[`--bp-color-${bg}`],
+        ratio,
+        required,
+      });
+    }
+  }
+
+  // Focus indicator contrast (must contrast with both background AND element)
+  const focusBgRatio = getContrastRatio(
+    theme.semanticTokens['--bp-color-focus'],
+    theme.semanticTokens['--bp-color-background']
+  );
+  const focusPrimaryRatio = getContrastRatio(
+    theme.semanticTokens['--bp-color-focus'],
+    theme.semanticTokens['--bp-color-primary']
+  );
+
+  if (focusBgRatio < contrast.focus || focusPrimaryRatio < contrast.focus) {
+    violations.push({
+      token: '--bp-color-focus',
+      foreground: theme.semanticTokens['--bp-color-focus'],
+      background: `background (${focusBgRatio.toFixed(2)}:1) or primary (${focusPrimaryRatio.toFixed(2)}:1)`,
+      ratio: Math.min(focusBgRatio, focusPrimaryRatio),
+      required: contrast.focus,
+    });
+  }
 
   return violations;
 }
@@ -425,19 +656,29 @@ export function generatePrimitivesCSS(
 ): string {
   let css = '/* Generated primitive color tokens */\n:root {\n';
 
+  // Hex fallbacks first
   for (const [colorName, scale] of Object.entries(colors)) {
     css += `\n  /* ${colorName} scale */\n`;
 
-    for (const [step, { oklch, hex }] of Object.entries(scale)) {
-      // Hex fallback
-      css += `  --bp-${colorName}-${step}-fallback: ${hex};\n`;
-
-      // OKLCH value (space-separated for use with oklch())
-      css += `  --bp-${colorName}-${step}: ${oklch.l.toFixed(2)} ${oklch.c.toFixed(2)} ${oklch.h.toFixed(0)};\n`;
+    for (const [step, { hex }] of Object.entries(scale)) {
+      css += `  --bp-${colorName}-${step}: ${hex};\n`;
     }
   }
 
-  css += '}\n';
+  css += '}\n\n';
+
+  // OKLCH values for modern browsers
+  css += '@supports (color: oklch(0 0 0)) {\n  :root {\n';
+
+  for (const [colorName, scale] of Object.entries(colors)) {
+    css += `\n    /* ${colorName} scale */\n`;
+
+    for (const [step, { oklch }] of Object.entries(scale)) {
+      css += `    --bp-${colorName}-${step}: oklch(${oklch.l.toFixed(2)} ${oklch.c.toFixed(2)} ${oklch.h.toFixed(0)});\n`;
+    }
+  }
+
+  css += '  }\n}\n';
   return css;
 }
 
@@ -460,26 +701,96 @@ export function generateThemeCSS(
     if (colorName === 'white' || colorName === 'black') {
       css += `  --bp-color-${semanticToken}: ${colorName};\n`;
     } else {
-      // With fallback support
-      css += `  --bp-color-${semanticToken}: var(--bp-${colorName}-${step}-fallback);\n`;
+      // Reference primitive token (hex fallback + OKLCH in @supports already handled)
+      css += `  --bp-color-${semanticToken}: var(--bp-${colorName}-${step});\n`;
     }
   }
 
-  // OKLCH values for modern browsers
-  css += '}\n\n';
-  css += `@supports (color: oklch(0 0 0)) {\n  ${selector} {\n`;
-
-  for (const [semanticToken, primitiveRef] of Object.entries(mappings)) {
-    const [colorName, step] = primitiveRef.split('.');
-
-    if (colorName !== 'white' && colorName !== 'black') {
-      css += `    --bp-color-${semanticToken}: var(--bp-${colorName}-${step});\n`;
-    }
-  }
-
-  css += '  }\n}\n';
-
+  css += '}\n';
   return css;
+}
+
+/**
+ * Generate additional utility tokens (focus, opacity, z-index, etc.)
+ */
+export function generateUtilityCSS(config: ThemeConfig): string {
+  let css = '/* Utility tokens */\n:root {\n';
+
+  // Focus ring
+  if (config.focus) {
+    css += `\n  /* Focus indicators */\n`;
+    css += `  --bp-focus-width: ${config.focus.width}px;\n`;
+    css += `  --bp-focus-offset: ${config.focus.offset}px;\n`;
+    css += `  --bp-focus-style: ${config.focus.style};\n`;
+    css += `  --bp-focus-ring: var(--bp-focus-width) var(--bp-focus-style) var(--bp-color-focus);\n`;
+  }
+
+  // Z-index
+  if (config.zIndex) {
+    css += `\n  /* Z-index scale */\n`;
+    for (const [name, value] of Object.entries(config.zIndex)) {
+      css += `  --bp-z-${name}: ${value};\n`;
+    }
+  }
+
+  // Opacity
+  if (config.opacity) {
+    css += `\n  /* Opacity scale */\n`;
+    for (const [name, value] of Object.entries(config.opacity)) {
+      css += `  --bp-opacity-${name}: ${value};\n`;
+    }
+  }
+
+  css += '}\n';
+  return css;
+}
+
+/**
+ * Generate media query for reduced motion
+ */
+export function generateReducedMotionCSS(config: ThemeConfig): string {
+  return `
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --bp-transition-fast: 0ms;
+    --bp-transition-base: 0ms;
+    --bp-transition-slow: 0ms;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+`;
+}
+
+/**
+ * Generate high contrast mode support
+ */
+export function generateHighContrastCSS(config: ThemeConfig): string {
+  if (!config.accessibility?.highContrast) return '';
+
+  return `
+/* High contrast mode support */
+@media (prefers-contrast: more) {
+  :root {
+    --bp-color-text: black;
+    --bp-color-background: white;
+    --bp-border-width: 2px;
+    --bp-focus-width: 3px;
+  }
+  
+  [data-theme="dark"] {
+    --bp-color-text: white;
+    --bp-color-background: black;
+  }
+}
+`;
 }
 ```
 
@@ -770,11 +1081,83 @@ export default defineConfig({
 
 ## Open Questions
 
-1. **Color space fallback strategy?** Use `@supports` or provide both values always?
-2. **Component tokens in v1?** Or defer to Phase 5?
-3. **Theme variants?** Support more than just light/dark (e.g., high-contrast, colorblind-friendly)?
-4. **CSS Layers?** Use `@layer` for primitive/semantic/component separation?
-5. **Export formats?** Generate TypeScript types? JSON for docs? Figma tokens?
+1. **Component tokens in v1?** Include basic component tokens or defer to Phase 5?
+2. **Theme variants?** Support more than just light/dark (e.g., colorblind-friendly modes)?
+3. **CSS Layers?** Use `@layer` for primitive/semantic/component separation?
+4. **Export formats?** Generate TypeScript types? JSON for docs? Figma tokens?
+5. **Color interpolation?** Support theme blending/transitions?
+
+---
+
+## Design System Improvements (Addressed)
+
+This plan has been updated to address critical design system quality issues:
+
+### ✅ **OKLCH Storage Format**
+
+- Changed from space-separated values to complete color values
+- Uses `@supports` for progressive enhancement
+- Hex fallback in base declaration, OKLCH in modern browsers
+
+### ✅ **Dark Mode Color Science**
+
+- Added `darkMode.chromaMultiplier` (0.85) to reduce saturation on dark backgrounds
+- Added `darkMode.contrastBoost` (1.1) for better readability
+- Dark theme uses lighter color steps (400 instead of 500)
+
+### ✅ **Complete Semantic Color Set**
+
+- Added: `surfaceElevated`, `surfaceSubdued`, `textInverse`
+- Added: `primaryActive`, `borderStrong`, `focus`
+- Added: `info` color for informational UI
+- All semantic colors mapped in both light and dark themes
+
+### ✅ **Consistent Border Radius Scale**
+
+- Fixed progression: 0, 2, 4, 8, 12, 16, 24, 9999
+- Now follows 2x pattern similar to spacing scale
+- Added `3xl` (24px) for large cards/modals
+
+### ✅ **Motion Token Improvements**
+
+- Updated durations: 150ms (fast), 300ms (normal), 500ms (slow)
+- Added combined `transitions` presets with duration + easing
+- Added `@media (prefers-reduced-motion)` support
+
+### ✅ **Focus Ring Tokens**
+
+- Added dedicated `focus` config with width, offset, style
+- CSS custom properties for `--bp-focus-ring`
+- Accessibility-critical for keyboard navigation
+
+### ✅ **Expanded Contrast Validation**
+
+- Text contrast (4.5:1 AA)
+- UI component contrast (3.0:1 for borders, icons)
+- Interactive state contrast (hover/active transitions)
+- Focus indicator contrast (against both background AND element)
+- Validates all foreground/background combinations
+
+### ✅ **Additional Token Categories**
+
+- **Z-index scale**: dropdown, sticky, overlay, modal, popover, tooltip
+- **Opacity scale**: disabled, hover, overlay, subtle
+- **Breakpoints**: sm, md, lg, xl, 2xl (640px - 1536px)
+- **Typography weights**: normal, medium, semibold, bold
+- **Line heights**: Expanded from 3 to 6 values (none, tight, snug, normal, relaxed, loose)
+
+### ✅ **Accessibility Features**
+
+- `colorBlindSafe` flag with `minHueDifference` (60°)
+- `highContrast` support via `@media (prefers-contrast: more)`
+- Comprehensive WCAG contrast validation
+- Focus indicator requirements
+
+### ✅ **Build-time Utilities**
+
+- `generateUtilityCSS()` for focus, z-index, opacity tokens
+- `generateReducedMotionCSS()` for animation preferences
+- `generateHighContrastCSS()` for high contrast mode
 
 ---
 
