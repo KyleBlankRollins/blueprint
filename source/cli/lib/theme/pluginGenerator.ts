@@ -42,7 +42,7 @@ export interface PluginGeneratorResult {
   readmeFile: string;
   /** Plugin directory */
   directory: string;
-  /** Import statement to add to theme.config.ts */
+  /** Import statement to add to ThemeBuilder.ts */
   importStatement: string;
   /** Builder registration code */
   registrationCode: string;
@@ -165,7 +165,7 @@ export async function generateThemePlugin(
 }
 
 /**
- * Add plugin to theme.config.ts
+ * Add plugin to ThemeBuilder.withDefaults()
  */
 export async function addPluginToConfig(
   pluginId: string,
@@ -174,14 +174,14 @@ export async function addPluginToConfig(
 ): Promise<void> {
   const configPath = join(
     process.cwd(),
-    'source/themes/config/theme.config.ts'
+    'source/themes/builder/ThemeBuilder.ts'
   );
 
   try {
     await access(configPath);
   } catch {
     throw new Error(
-      `theme.config.ts not found at ${configPath}\nMake sure you are in the project root directory.`
+      `ThemeBuilder.ts not found at ${configPath}\nMake sure you are in the project root directory.`
     );
   }
 
@@ -190,7 +190,7 @@ export async function addPluginToConfig(
   // Check if plugin is already registered
   if (content.includes(`'${pluginId}'`) || content.includes(`"${pluginId}"`)) {
     throw new Error(
-      `Plugin "${pluginId}" appears to already be registered in theme.config.ts`
+      `Plugin "${pluginId}" appears to already be registered in ThemeBuilder.withDefaults()`
     );
   }
 
@@ -206,7 +206,7 @@ export async function addPluginToConfig(
 
   if (lastImportIndex === -1) {
     throw new Error(
-      'Could not find import statements in theme.config.ts\nPlease add the plugin import manually.'
+      'Could not find import statements in ThemeBuilder.ts\nPlease add the plugin import manually.'
     );
   }
 
@@ -224,7 +224,7 @@ export async function addPluginToConfig(
 
   if (builderIndex === -1) {
     throw new Error(
-      'Could not find ThemeBuilder in theme.config.ts\nPlease add the plugin registration manually:\n' +
+      'Could not find withDefaults() method in ThemeBuilder.ts\nPlease add the plugin registration manually:\n' +
         registrationCode
     );
   }

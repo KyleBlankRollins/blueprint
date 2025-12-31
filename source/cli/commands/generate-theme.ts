@@ -7,8 +7,8 @@ import { writeFileSync, mkdirSync } from 'node:fs';
 import { Buffer } from 'node:buffer';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { blueprintTheme } from '../../themes/config/theme.config.js';
 import {
+  ThemeBuilder,
   buildTheme,
   validateThemeContrast,
   generateAllColorScales,
@@ -40,6 +40,9 @@ export async function generateTheme(
   } = options;
 
   console.log('🎨 Generating Blueprint theme...\n');
+
+  // Build theme from default plugins
+  const blueprintTheme = ThemeBuilder.withDefaults().build();
 
   // Validate contrast if both validation is enabled and WCAG enforcement is configured
   if (validate && blueprintTheme.accessibility?.enforceWCAG) {

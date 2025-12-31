@@ -32,6 +32,8 @@ import {
   writeTypeFile,
   type TypeGenerationConfig,
 } from './typeGenerator.js';
+import { blueprintCoreTheme } from '../plugins/blueprint-core/index.js';
+import { wadaSanzoTheme } from '../plugins/wada-sanzo/index.js';
 
 /**
  * Internal color registry entry
@@ -62,6 +64,30 @@ export class ThemeBuilder implements ThemeBuilderInterface {
   private currentPluginId?: string; // Track current plugin during registration
   private designTokens: DesignTokens | null = null; // Merged design tokens from ThemeBase plugins
   private disposables: Array<() => void> = []; // Cleanup functions for resource management
+
+  /**
+   * Create a ThemeBuilder pre-loaded with Blueprint's default themes
+   *
+   * Includes:
+   * - blueprint-core: Core color palette with light/dark variants
+   * - wada-sanzo: Japanese traditional color palette with wada-light/wada-dark variants
+   *
+   * @returns ThemeBuilder instance with default plugins loaded
+   *
+   * @example
+   * ```typescript
+   * // Build theme with defaults
+   * const theme = ThemeBuilder.withDefaults().build();
+   *
+   * // Or add more plugins
+   * const theme = ThemeBuilder.withDefaults()
+   *   .use(myCustomPlugin)
+   *   .build();
+   * ```
+   */
+  static withDefaults(): ThemeBuilder {
+    return new ThemeBuilder().use(blueprintCoreTheme).use(wadaSanzoTheme);
+  }
 
   /**
    * Constructor - automatically registers primitive colors (white, black)

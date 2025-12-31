@@ -6,9 +6,9 @@
 import { join } from 'path';
 import { readFile, writeFile } from 'fs/promises';
 import { existsSync } from 'fs';
-import { THEME_CONFIG_FILE } from '../constants.js';
+import { THEME_BUILDER_FILE } from '../constants.js';
 
-const CONFIG_PATH = THEME_CONFIG_FILE;
+const CONFIG_PATH = THEME_BUILDER_FILE;
 
 /**
  * Escape special regex characters in a string
@@ -18,7 +18,7 @@ function escapeRegex(str: string): string {
 }
 
 /**
- * Register a theme plugin in theme.config.ts
+ * Register a theme plugin in ThemeBuilder.withDefaults()
  */
 export async function registerPlugin(
   pluginId: string,
@@ -31,7 +31,7 @@ export async function registerPlugin(
 
   if (!existsSync(configPath)) {
     throw new Error(
-      `theme.config.ts not found at ${configPath}\nMake sure you are in the project root directory.`
+      `ThemeBuilder.ts not found at ${configPath}\nMake sure you are in the project root directory.`
     );
   }
 
@@ -49,7 +49,7 @@ export async function registerPlugin(
   // Check if already registered
   if (content.includes(`'${pluginId}'`) || content.includes(`"${pluginId}"`)) {
     throw new Error(
-      `Plugin "${pluginId}" appears to already be registered in theme.config.ts`
+      `Plugin "${pluginId}" appears to already be registered in ThemeBuilder.withDefaults()`
     );
   }
 
@@ -64,7 +64,7 @@ export async function registerPlugin(
   }
 
   if (lastImportIndex === -1) {
-    throw new Error('Could not find import statements in theme.config.ts');
+    throw new Error('Could not find import statements in ThemeBuilder.ts');
   }
 
   // Add import
@@ -81,7 +81,7 @@ export async function registerPlugin(
   }
 
   if (builderIndex === -1) {
-    throw new Error('Could not find ThemeBuilder in theme.config.ts');
+    throw new Error('Could not find withDefaults() method in ThemeBuilder.ts');
   }
 
   // Find last .use() call
@@ -131,13 +131,13 @@ export async function themeExists(themeName: string): Promise<boolean> {
 }
 
 /**
- * Unregister a plugin from theme.config.ts
+ * Unregister a plugin from ThemeBuilder.withDefaults()
  */
 export async function unregisterPlugin(pluginId: string): Promise<void> {
   const configPath = join(process.cwd(), CONFIG_PATH);
 
   if (!existsSync(configPath)) {
-    throw new Error(`theme.config.ts not found at ${configPath}`);
+    throw new Error(`ThemeBuilder.ts not found at ${configPath}`);
   }
 
   let content = await readFile(configPath, 'utf-8');

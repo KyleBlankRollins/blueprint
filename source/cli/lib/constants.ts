@@ -10,7 +10,7 @@ export const BROWSER_OPEN_DELAY_MS = 2000;
 // Directory Paths (relative to project root)
 export const GENERATED_THEMES_DIR = 'source/themes/generated';
 export const PLUGINS_DIR = 'source/themes/plugins';
-export const THEME_CONFIG_FILE = 'source/themes/config/theme.config.ts';
+export const THEME_BUILDER_FILE = 'source/themes/builder/ThemeBuilder.ts';
 export const DEMO_DIR = 'demo';
 
 // File Names

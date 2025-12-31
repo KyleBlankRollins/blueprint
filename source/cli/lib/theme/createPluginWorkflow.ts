@@ -4,7 +4,7 @@
  */
 
 import { input, confirm } from '@inquirer/prompts';
-import { generateThemePlugin, addPluginToConfig } from './pluginGenerator.js';
+import { generateThemePlugin } from './pluginGenerator.js';
 import { generateTheme } from '../../commands/generate-theme.js';
 import { startPreviewServerWithCleanup } from './previewServer.js';
 import { GENERATED_THEMES_DIR, PLUGIN_ID_REGEX } from '../constants.js';
@@ -138,59 +138,51 @@ export async function createPluginWorkflow(
   console.log(`   • ${result.pluginFile}`);
   console.log(`   • ${result.readmeFile}\n`);
 
-  // Determine if we should register
-  const shouldRegister =
-    workflowOptions.autoRegister !== undefined
-      ? workflowOptions.autoRegister
+  // Provide manual integration instructions
+  console.log('📋 To use your new plugin:\n');
+  console.log(
+    '  1. Update ThemeBuilder.withDefaults() in source/themes/builder/ThemeBuilder.ts'
+  );
+  console.log(
+    `     Add: ${result.importStatement.replace('../plugins', '../../plugins')}`
+  );
+  console.log(
+    `     Then add .use(${config.id
+      .split('-')
+      .map((w: string) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join('')}Theme) to the builder chain\n`
+  );
+  console.log('  2. Generate CSS: npm run theme:generate\n');
+
+  // Determine if we should generate CSS
+  const shouldGenerate =
+    workflowOptions.autoGenerate !== undefined
+      ? workflowOptions.autoGenerate
       : await confirm({
-          message: 'Add plugin to theme.config.ts?',
+          message: 'Generate CSS files now?',
           default: true,
         });
 
-  if (shouldRegister) {
-    await addPluginToConfig(
-      config.id,
-      result.importStatement,
-      result.registrationCode
-    );
-    console.log('✅ Added to theme.config.ts\n');
+  if (shouldGenerate) {
+    await generateTheme({ validate: false });
+    console.log('\n✅ Plugin registered and CSS generated!\n');
 
-    // Determine if we should generate CSS
-    const shouldGenerate =
-      workflowOptions.autoGenerate !== undefined
-        ? workflowOptions.autoGenerate
+    // Determine if we should preview
+    const shouldPreview =
+      workflowOptions.autoPreview !== undefined
+        ? workflowOptions.autoPreview
         : await confirm({
-            message: 'Generate CSS files?',
+            message: 'Preview in browser?',
             default: true,
           });
 
-    if (shouldGenerate) {
-      await generateTheme({ validate: false });
-      console.log('\n✅ Plugin ready to use!\n');
-
-      // Determine if we should preview
-      const shouldPreview =
-        workflowOptions.autoPreview !== undefined
-          ? workflowOptions.autoPreview
-          : await confirm({
-              message: 'Preview in browser?',
-              default: true,
-            });
-
-      if (shouldPreview) {
-        await startPreviewServerWithCleanup({
-          theme: `${config.id}-light`,
-          openBrowser: true,
-          generatedDir: GENERATED_THEMES_DIR,
-        });
-      }
+    if (shouldPreview) {
+      await startPreviewServerWithCleanup({
+        theme: `${config.id}-light`,
+        openBrowser: true,
+        generatedDir: GENERATED_THEMES_DIR,
+      });
     }
-  } else {
-    console.log('\nManual registration:');
-    console.log(`  1. Add to theme.config.ts:`);
-    console.log(`     ${result.importStatement}`);
-    console.log(`     ${result.registrationCode}`);
-    console.log(`  2. Generate: npm run theme:generate\n`);
   }
 }
 

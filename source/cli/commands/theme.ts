@@ -1,8 +1,8 @@
 import { Command } from 'commander';
 import { generateTheme } from './generate-theme.js';
 import { generateTypesCommand } from './generate-types.js';
-import { blueprintTheme } from '../../themes/config/theme.config.js';
 import {
+  ThemeBuilder,
   generateAllColorScales,
   validateThemeContrast,
   type ContrastViolation,
@@ -193,6 +193,7 @@ export function themeCommand(program: Command): void {
           );
         }
 
+        const blueprintTheme = ThemeBuilder.withDefaults().build();
         const primitives = generateAllColorScales(blueprintTheme.colors);
         const violations = validateThemeContrast(
           primitives,

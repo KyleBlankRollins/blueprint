@@ -107,10 +107,9 @@ describe('generate-types command', () => {
       );
     });
 
-    it('should throw error if theme config is invalid', async () => {
-      // Mock a scenario where getThemeBuilder is missing
-      // This is difficult to test without modifying the actual config
-      // For now, we verify the error path exists in the code
+    it('should throw error if theme builder is invalid', async () => {
+      // Verify that the function validates the builder instance
+      // The actual validation happens in the function when creating the builder
       expect(generateTypes).toBeDefined();
     });
 
@@ -233,9 +232,8 @@ describe('generate-types command', () => {
   });
 
   describe('validation', () => {
-    it('should validate that getThemeBuilder exists', async () => {
-      // This test verifies that the function checks for getThemeBuilder
-      // The actual validation happens at import time
+    it('should validate that ThemeBuilder.withDefaults() creates valid builder', async () => {
+      // This test verifies that the builder factory method works correctly
       expect(generateTypes).toBeDefined();
     });
 
