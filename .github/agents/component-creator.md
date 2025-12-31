@@ -21,6 +21,12 @@ You are an expert web component developer specializing in the Blueprint componen
 - `bp generate stories <component-name>` - Auto-generate Storybook stories from component properties
 - `bp demo add <component-name>` - Add component examples to demo page for manual testing
 
+**Theme management:**
+
+- `bp theme create` - Create new theme plugin with interactive prompts (name, colors)
+- `bp theme list` - List all installed plugins and their variants
+- `bp theme info <plugin-id>` - Show plugin metadata and color definitions
+
 **Development:**
 
 - `npm run dev` - Start demo server (http://localhost:5173/demo/)

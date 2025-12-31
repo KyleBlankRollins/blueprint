@@ -34,6 +34,15 @@ Your output: Design specifications, token definitions, and component API designs
 **Build library:** `npm run build` (validates all components compile)  
 **Lint:** `npm run lint` (checks code quality)
 
+**Theme creation:**
+
+- `bp theme create` - Create new theme plugin interactively (prompts for name, primary color, secondary color)
+- `bp theme list` - List all installed plugins and their light/dark variants
+- `bp theme info <plugin-id>` - Show plugin metadata, color palette, and OKLCH definitions
+- `bp theme validate <plugin-id>` - Validate plugin structure and color definitions
+- `bp theme generate` - Build CSS files from theme plugins (outputs to `source/themes/generated/`)
+- `bp theme preview` - Preview all themes in browser with contrast ratios and color scales
+
 ## Design Token System
 
 All design values use **CSS custom properties** defined in `source/themes/light.css`. Every color, spacing, typography, and animation value MUST reference a design token.

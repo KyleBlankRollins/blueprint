@@ -1,0 +1,135 @@
+/**
+ * {{PLUGIN_NAME}} Theme Plugin
+ * {{DESCRIPTION}}
+ *
+ * Provides:
+ * - Custom color palette
+ * - Light and/or dark theme variants
+ *
+ * @module {{PLUGIN_ID}}
+ * @version {{VERSION}}
+ * @author {{AUTHOR}}
+ */
+
+import type { ThemePlugin } from '../../core/types.js';
+
+export const {{PLUGIN_CONST_NAME}}: ThemePlugin = {
+  id: '{{PLUGIN_ID}}',
+  version: '{{VERSION}}',
+  name: '{{PLUGIN_NAME}}',
+  description: '{{DESCRIPTION}}',
+  author: '{{AUTHOR}}',
+  license: '{{LICENSE}}',
+  tags: [{{TAGS}}],
+  homepage: '{{HOMEPAGE}}',
+
+  // Dependencies - plugins that must be loaded before this one
+  dependencies: [{ id: 'primitives' }],
+
+  register(builder) {
+    // ========================================
+    // Color Definitions
+    // ========================================
+    // Add your custom colors here. Each color automatically generates
+    // a full scale of 11 steps (50, 100, 200, ..., 950).
+    //
+    // Colors are available via builder.colors with full type safety:
+    // - builder.colors.{{EXAMPLE_COLOR}}50
+    // - builder.colors.{{EXAMPLE_COLOR}}100
+    // - ...
+    // - builder.colors.{{EXAMPLE_COLOR}}950
+
+    builder.addColor('{{EXAMPLE_COLOR}}', {
+      // Source color in OKLCH color space
+      // l: lightness (0-1, typically 0.4-0.7 for middle tones)
+      // c: chroma/saturation (0-0.4, higher = more saturated)
+      // h: hue (0-360 degrees)
+      source: { l: {{LIGHTNESS}}, c: {{CHROMA}}, h: {{HUE}} },
+      
+      // Scale steps to generate (standard: 50-950)
+      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
+      
+      // Optional metadata for documentation
+      metadata: {
+        name: '{{EXAMPLE_COLOR_DISPLAY}}',
+        description: 'Primary theme color',
+        tags: ['brand', 'primary'],
+      },
+    });
+
+    // Example: Add more colors as needed
+    // builder.addColor('secondaryColor', {
+    //   source: { l: 0.5, c: 0.1, h: 180 },
+    //   scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
+    // });
+
+    // ========================================
+    // Theme Variants
+    // ========================================
+    // Define semantic tokens for each theme variant.
+    // Use builder.colors.colorName[step] for type-safe color references.
+
+    // Light theme variant
+    builder.addThemeVariant('{{PLUGIN_ID}}-light', {
+      // Backgrounds
+      background: builder.colors.gray50,           // Main background
+      surface: builder.colors.gray100,             // Card/panel background
+      surfaceElevated: builder.colors.white500,    // Elevated elements (modals, popovers)
+      surfaceSubdued: builder.colors.gray200,      // Subdued backgrounds
+
+      // Text
+      text: builder.colors.gray900,                // Primary text
+      textMuted: builder.colors.gray600,           // Secondary/muted text
+      textInverse: builder.colors.white500,        // Text on dark backgrounds
+
+      // Primary brand color
+      primary: builder.colors.{{EXAMPLE_COLOR}}600,
+      primaryHover: builder.colors.{{EXAMPLE_COLOR}}700,
+      primaryActive: builder.colors.{{EXAMPLE_COLOR}}800,
+
+      // Semantic state colors
+      success: builder.colors.green600,
+      warning: builder.colors.yellow600,
+      error: builder.colors.red600,
+      info: builder.colors.blue500,
+
+      // UI elements
+      border: builder.colors.gray200,              // Default borders
+      borderStrong: builder.colors.gray300,        // Emphasized borders
+      focus: builder.colors.{{EXAMPLE_COLOR}}500,  // Focus rings
+    });
+
+    // Dark theme variant (optional)
+    builder.addThemeVariant('{{PLUGIN_ID}}-dark', {
+      // Backgrounds (inverted)
+      background: builder.colors.gray950,
+      surface: builder.colors.gray900,
+      surfaceElevated: builder.colors.gray800,
+      surfaceSubdued: builder.colors.gray900,
+
+      // Text (inverted)
+      text: builder.colors.gray50,
+      textMuted: builder.colors.gray400,
+      textInverse: builder.colors.gray900,
+
+      // Primary (lighter for dark background)
+      primary: builder.colors.{{EXAMPLE_COLOR}}400,
+      primaryHover: builder.colors.{{EXAMPLE_COLOR}}300,
+      primaryActive: builder.colors.{{EXAMPLE_COLOR}}200,
+
+      // Semantic states (adjusted for dark mode)
+      success: builder.colors.green400,
+      warning: builder.colors.yellow400,
+      error: builder.colors.red400,
+      info: builder.colors.blue400,
+
+      // UI elements
+      border: builder.colors.gray800,
+      borderStrong: builder.colors.gray700,
+      focus: builder.colors.{{EXAMPLE_COLOR}}500,
+    });
+  },
+};
+
+// Default export for convenience
+export default {{PLUGIN_CONST_NAME}};

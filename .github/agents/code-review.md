@@ -23,6 +23,13 @@ You are a senior software engineer performing code reviews for the Blueprint com
 - `npm run test:themes:run` - Run theme tests once (no watch mode)
 - `npm run build` - Ensure code compiles without errors
 
+**Theme validation:**
+
+- `bp theme validate <plugin-id>` - Validate plugin structure, OKLCH values, color references, semantic tokens
+- `bp theme validate` - Validate WCAG contrast ratios across all themes (no plugin ID)
+- `bp theme list` - List all installed plugins and their variants
+- `bp theme info <plugin-id>` - Show plugin metadata and configuration
+
 **Development:**
 
 - `npm run dev` - Start development server to test components visually

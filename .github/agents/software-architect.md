@@ -35,6 +35,15 @@ You are a senior software architect specializing in Node.js ecosystems and CLI a
 - `npm run test:themes` - Run only theme system tests (watch mode)
 - `npm run test:themes:run` - Run theme tests once (single run)
 
+**Theme CLI:**
+
+- `bp theme create` - Create new theme plugin with interactive prompts
+- `bp theme list` - List all installed plugins and their variants
+- `bp theme info <plugin-id>` - Show plugin metadata and color definitions
+- `bp theme validate [plugin-id]` - Validate plugin structure OR WCAG contrast (dual-purpose)
+- `bp theme generate` - Build CSS files from theme plugins
+- `bp theme preview` - Preview all themes in browser
+
 ## Project knowledge
 
 **Tech Stack:** Lit 3.3, TypeScript 5.9, Vite 7.3, ESLint 9.39, Prettier 3.7, Vitest
