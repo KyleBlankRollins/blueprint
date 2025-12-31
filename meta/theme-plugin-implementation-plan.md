@@ -440,13 +440,13 @@ interface ValidationWarning {
 #### Tasks
 
 1. **Type generation**
-   - [ ] Generate TypeScript declarations for registered colors
-   - [ ] Generate ColorScale types with valid step numbers
-   - [ ] Auto-complete for available colors via builder.colors
-   - [ ] Validation in IDE for invalid color refs and steps
-   - [ ] Type-safe plugin builder API
-   - [ ] Export generated types for external use
-   - [ ] Watch mode for type regeneration during development
+   - [x] Generate TypeScript declarations for registered colors
+   - [x] Generate ColorScale types with valid step numbers
+   - [x] Auto-complete for available colors via builder.colors
+   - [x] Validation in IDE for invalid color refs and steps
+   - [x] Type-safe plugin builder API
+   - [x] Export generated types for external use
+   - [x] Watch mode for type regeneration during development
 
 2. **Documentation**
    - [ ] Plugin authoring guide

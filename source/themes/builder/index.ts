@@ -8,6 +8,17 @@ export { ThemeBuilder } from './ThemeBuilder.js';
 export { ThemeValidator } from './ThemeValidator.js';
 export { defineTheme } from './defineTheme.js';
 
+// Export type generation utilities
+export {
+  generateColorTypes,
+  generateColorScaleType,
+  generateColorRegistryType,
+  generateThemeVariantTypes,
+  generateCompleteTypes,
+  writeTypeFile,
+  type TypeGenerationConfig,
+} from './typeGenerator.js';
+
 // Export default theme values
 export {
   DEFAULT_SPACING,
@@ -49,8 +60,6 @@ export {
   resolveColorRef,
   serializeColorRef,
   checkPluginDependencies,
-  generateColorTypes,
-  generateColorRegistryTypes,
   sortPluginsByDependencies,
 } from './pluginUtils.js';
 

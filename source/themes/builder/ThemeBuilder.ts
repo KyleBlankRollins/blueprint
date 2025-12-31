@@ -26,6 +26,11 @@ import type {
 import { createColorRef, serializeColorRef } from '../color/colorRefUtils.js';
 import { ThemeValidator } from './ThemeValidator.js';
 import { createDefaultThemeConfig } from './defaults.js';
+import {
+  generateCompleteTypes,
+  writeTypeFile,
+  type TypeGenerationConfig,
+} from './typeGenerator.js';
 
 /**
  * Internal color registry entry
@@ -516,5 +521,75 @@ export class ThemeBuilder implements ThemeBuilderInterface {
     };
 
     return config;
+  }
+
+  /**
+   * Generate TypeScript declaration file for registered colors and theme variants
+   *
+   * This creates a .d.ts file with:
+   * - ColorName union type
+   * - Individual color scale interfaces (e.g., GrayColorScale)
+   * - Complete ColorRegistry interface
+   * - ThemeVariantName union type
+   * - Module augmentation for type-safe builder.colors access
+   *
+   * @param config - Type generation configuration
+   * @returns Promise that resolves when types are written
+   *
+   * @example
+   * ```typescript
+   * const builder = new ThemeBuilder()
+   *   .use(primitivesPlugin)
+   *   .use(blueprintCorePlugin);
+   *
+   * // Generate types file
+   * await builder.generateTypes({
+   *   outputPath: 'source/themes/generated/theme.d.ts',
+   *   includeJSDoc: true
+   * });
+   * ```
+   */
+  async generateTypes(config: TypeGenerationConfig): Promise<void> {
+    const themeVariantNames = Array.from(this.themeVariants.keys());
+
+    // Convert Map to the format expected by generateCompleteTypes
+    const colorsMap = new Map<string, ColorDefinition>();
+    for (const [name, entry] of this.colorRegistry) {
+      colorsMap.set(name, entry.definition);
+    }
+
+    const content = generateCompleteTypes(colorsMap, themeVariantNames, config);
+
+    await writeTypeFile(content, config.outputPath);
+  }
+
+  /**
+   * Generate TypeScript types as a string without writing to file
+   *
+   * @param config - Type generation configuration (outputPath not required)
+   * @returns Generated TypeScript declaration content
+   *
+   * @example
+   * ```typescript
+   * const builder = new ThemeBuilder().use(primitivesPlugin);
+   * const types = builder.generateTypesString({ includeJSDoc: true });
+   * console.log(types);
+   * ```
+   */
+  generateTypesString(
+    config: Omit<TypeGenerationConfig, 'outputPath'> = { includeJSDoc: true }
+  ): string {
+    const themeVariantNames = Array.from(this.themeVariants.keys());
+
+    // Convert Map to the format expected by generateCompleteTypes
+    const colorsMap = new Map<string, ColorDefinition>();
+    for (const [name, entry] of this.colorRegistry) {
+      colorsMap.set(name, entry.definition);
+    }
+
+    return generateCompleteTypes(colorsMap, themeVariantNames, {
+      ...config,
+      outputPath: '',
+    });
   }
 }

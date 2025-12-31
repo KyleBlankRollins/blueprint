@@ -1,5 +1,6 @@
 import { Command } from 'commander';
 import { generateTheme } from './generate-theme.js';
+import { generateTypesCommand } from './generate-types.js';
 import { blueprintTheme } from '../../themes/config/theme.config.js';
 import {
   generateAllColorScales,
@@ -67,6 +68,35 @@ export function themeCommand(program: Command): void {
         process.exit(1);
       }
     });
+
+  // Generate types command
+  theme
+    .command('generate-types')
+    .alias('types')
+    .description('Generate TypeScript declaration files for theme colors')
+    .option(
+      '-o, --output <path>',
+      'Output file path',
+      'source/themes/generated/theme.d.ts'
+    )
+    .option('--no-jsdoc', 'Exclude JSDoc comments from generated types')
+    .option('-m, --module <name>', 'Module name for imports')
+    .option('-w, --watch', 'Watch for changes and regenerate types')
+    .action(
+      async (options: {
+        output: string;
+        jsdoc: boolean;
+        module?: string;
+        watch: boolean;
+      }) => {
+        await generateTypesCommand({
+          outputPath: options.output,
+          includeJSDoc: options.jsdoc,
+          moduleName: options.module,
+          watch: options.watch,
+        });
+      }
+    );
 
   // Validate command - validates plugin structure OR WCAG contrast
   theme

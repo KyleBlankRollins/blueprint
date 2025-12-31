@@ -23,6 +23,19 @@ const builder = new ThemeBuilder()
   .use(forestPlugin)
   .use(benzolPlugin); // Load Wada Sanzo accents + wada-light/wada-dark
 
+/**
+ * Get a fresh ThemeBuilder instance with all plugins loaded
+ * Used by CLI commands for type generation
+ */
+export function getThemeBuilder(): ThemeBuilder {
+  return new ThemeBuilder()
+    .use(primitivesPlugin)
+    .use(blueprintCorePlugin)
+    .use(wadaSanzoPlugin)
+    .use(forestPlugin)
+    .use(benzolPlugin);
+}
+
 // Validate before building
 const validation = builder.validate();
 if (!validation.valid) {
