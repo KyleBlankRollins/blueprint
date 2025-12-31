@@ -1,8 +1,4 @@
 # Generated theme files - DO NOT COMMIT
 # Run `npm run theme:generate` to regenerate
 
-primitives.css
-utilities.css
-light.css
-dark.css
-index.css
+*

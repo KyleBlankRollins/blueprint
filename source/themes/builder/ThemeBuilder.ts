@@ -41,6 +41,7 @@ interface ColorRegistryEntry {
 interface ThemeVariantEntry {
   tokens: SemanticTokens<ColorRef>;
   baseVariant?: string;
+  pluginId?: string; // Track which plugin owns this variant
 }
 
 /**
@@ -51,6 +52,7 @@ export class ThemeBuilder implements ThemeBuilderInterface {
   private colorRegistry: Map<string, ColorRegistryEntry> = new Map();
   private themeVariants: Map<string, ThemeVariantEntry> = new Map();
   private _colors: Record<string, ColorRef> = {};
+  private currentPluginId?: string; // Track current plugin during registration
 
   /**
    * Typed color registry - access like builder.colors.gray50, builder.colors.blue500
@@ -93,8 +95,14 @@ export class ThemeBuilder implements ThemeBuilderInterface {
 
     this.plugins.push(plugin);
 
+    // Set current plugin context
+    this.currentPluginId = plugin.id;
+
     // Execute plugin's register function
     const result = plugin.register(this);
+
+    // Clear plugin context
+    this.currentPluginId = undefined;
 
     // Handle async registration
     if (result instanceof Promise) {
@@ -262,8 +270,11 @@ export class ThemeBuilder implements ThemeBuilderInterface {
     // Validate that all tokens are provided
     this.validateSemanticTokens(tokens);
 
-    // Store the theme variant
-    this.themeVariants.set(name, { tokens });
+    // Store the theme variant with plugin ownership
+    this.themeVariants.set(name, {
+      tokens,
+      pluginId: this.currentPluginId,
+    });
 
     return this;
   }
@@ -406,6 +417,25 @@ export class ThemeBuilder implements ThemeBuilderInterface {
   }
 
   /**
+   * Get theme variants grouped by plugin
+   *
+   * @returns Map of plugin IDs to their theme variant names
+   */
+  getThemeVariantsByPlugin(): Map<string, string[]> {
+    const byPlugin = new Map<string, string[]>();
+
+    for (const [variantName, variant] of this.themeVariants) {
+      const pluginId = variant.pluginId || 'core';
+      if (!byPlugin.has(pluginId)) {
+        byPlugin.set(pluginId, []);
+      }
+      byPlugin.get(pluginId)!.push(variantName);
+    }
+
+    return byPlugin;
+  }
+
+  /**
    * Resolve a color ref to its serialized string format
    * @private
    */
@@ -453,12 +483,15 @@ export class ThemeBuilder implements ThemeBuilderInterface {
 
     // Convert theme variants to use string color refs
     const themes: Record<string, Record<string, string>> = {};
+    const themeMetadata: Record<string, { pluginId?: string }> = {};
+
     for (const [variantName, variant] of this.themeVariants) {
       const serializedTokens: Record<string, string> = {};
       for (const [tokenName, colorRef] of Object.entries(variant.tokens)) {
         serializedTokens[tokenName] = serializeColorRef(colorRef);
       }
       themes[variantName] = serializedTokens;
+      themeMetadata[variantName] = { pluginId: variant.pluginId };
     }
 
     // Ensure we have at least light and dark themes
@@ -478,6 +511,7 @@ export class ThemeBuilder implements ThemeBuilderInterface {
       colors,
       themes: themes as Record<ThemeVariant, Record<string, string>> &
         Record<string, Record<string, string>>,
+      themeMetadata,
       ...createDefaultThemeConfig(),
     };
 

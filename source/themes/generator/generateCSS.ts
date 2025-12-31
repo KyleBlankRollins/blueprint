@@ -373,10 +373,13 @@ export function generateHighContrastCSS(config: ThemeConfig): string {
 /**
  * Generate main index CSS that imports all theme files
  *
+ * @param themesByPlugin - Map of plugin IDs to their theme variant names
  * @returns CSS string with import statements for all theme files
  */
-export function generateIndexCSS(): string {
-  return `/**
+export function generateIndexCSS(
+  themesByPlugin?: Map<string, string[]>
+): string {
+  let imports = `/**
  * Blueprint Theme System
  * Auto-generated theme files - DO NOT EDIT MANUALLY
  * 
@@ -389,10 +392,33 @@ export function generateIndexCSS(): string {
 /* Utility tokens (spacing, radius, motion, typography, etc.) */
 @import './utilities.css';
 
-/* Light theme (default) */
+`;
+
+  // If no plugin map provided, use legacy imports
+  if (!themesByPlugin) {
+    imports += `/* Light theme (default) */
 @import './light.css';
 
 /* Dark theme */
 @import './dark.css';
 `;
+    return imports;
+  }
+
+  // Generate imports organized by plugin
+  for (const [pluginId, variantNames] of themesByPlugin) {
+    imports += `/* ${pluginId} themes */\n`;
+    for (const variantName of variantNames) {
+      const comment =
+        variantName === 'light'
+          ? ' (default)'
+          : variantName === 'dark'
+            ? ''
+            : '';
+      imports += `@import './${pluginId}/${variantName}.css'; /* ${variantName}${comment} */\n`;
+    }
+    imports += '\n';
+  }
+
+  return imports;
 }

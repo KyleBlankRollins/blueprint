@@ -43,7 +43,7 @@ const VIOLATION_PATTERNS: ViolationPattern[] = [
       ) {
         return 'Use var(--bp-color-primary)';
       }
-      return 'Use a color token from --bp-color-* (check source/themes/light.css)';
+      return 'Use a color token from --bp-color-* (check source/themes/generated/)';
     },
   },
   // RGB/RGBA colors
@@ -51,14 +51,14 @@ const VIOLATION_PATTERNS: ViolationPattern[] = [
     name: 'Hardcoded color',
     pattern: /rgba?\s*\(\s*\d+\s*,\s*\d+\s*,\s*\d+/gi,
     getSuggestion: () =>
-      'Use a color token from --bp-color-* (check source/themes/light.css)',
+      'Use a color token from --bp-color-* (check source/themes/generated/)',
   },
   // HSL/HSLA colors
   {
     name: 'Hardcoded color',
     pattern: /hsla?\s*\(\s*\d+/gi,
     getSuggestion: () =>
-      'Use a color token from --bp-color-* (check source/themes/light.css)',
+      'Use a color token from --bp-color-* (check source/themes/generated/)',
   },
   // Hardcoded pixel spacing (but not 0px)
   {
@@ -71,7 +71,7 @@ const VIOLATION_PATTERNS: ViolationPattern[] = [
       if (value <= 16) return 'Use var(--bp-spacing-md)';
       if (value <= 24) return 'Use var(--bp-spacing-lg)';
       if (value <= 32) return 'Use var(--bp-spacing-xl)';
-      return 'Use a spacing token from --bp-spacing-* (check source/themes/light.css)';
+      return 'Use a spacing token from --bp-spacing-* (check source/themes/generated/utilities.css)';
     },
   },
   // Hardcoded rem spacing
@@ -79,28 +79,28 @@ const VIOLATION_PATTERNS: ViolationPattern[] = [
     name: 'Hardcoded spacing',
     pattern: /\b(?!0)(\d+(\.\d+)?)rem\b/g,
     getSuggestion: () =>
-      'Use a spacing token from --bp-spacing-* (check source/themes/light.css)',
+      'Use a spacing token from --bp-spacing-* (check source/themes/generated/utilities.css)',
   },
   // Hardcoded em spacing
   {
     name: 'Hardcoded spacing',
     pattern: /\b(?!0)(\d+(\.\d+)?)em\b/g,
     getSuggestion: () =>
-      'Use a spacing token from --bp-spacing-* (check source/themes/light.css)',
+      'Use a spacing token from --bp-spacing-* (check source/themes/generated/utilities.css)',
   },
   // Hardcoded font sizes
   {
     name: 'Hardcoded font size',
     pattern: /font-size\s*:\s*(?!var\()[\d.]+(?:px|rem|em)/gi,
     getSuggestion: () =>
-      'Use a font-size token from --bp-font-size-* (check source/themes/light.css)',
+      'Use a font-size token from --bp-font-size-* (check source/themes/generated/utilities.css)',
   },
   // Hardcoded border radius
   {
     name: 'Hardcoded border radius',
     pattern: /border-radius\s*:\s*(?!var\()[\d.]+(?:px|rem|em)/gi,
     getSuggestion: () =>
-      'Use a border-radius token from --bp-border-radius-* (check source/themes/light.css)',
+      'Use a border-radius token from --bp-border-radius-* (check source/themes/generated/utilities.css)',
   },
   // Hardcoded border width
   {

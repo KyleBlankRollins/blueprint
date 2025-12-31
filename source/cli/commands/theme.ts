@@ -10,13 +10,16 @@ import {
   validateThemeContrast,
   type ContrastViolation,
 } from '../../themes/builder/index.js';
+import {
+  discoverThemes,
+  getThemeNames,
+  themeExists,
+} from '../lib/discoverThemes.js';
 
 // Constants
 const DEFAULT_VITE_PORT = 5173;
-const VALID_THEMES = ['light', 'dark'] as const;
 const BROWSER_OPEN_DELAY = 2000;
-
-type ThemeName = (typeof VALID_THEMES)[number];
+const GENERATED_THEMES_DIR = 'source/themes/generated';
 
 /**
  * Register theme-related CLI commands.
@@ -44,11 +47,15 @@ export function themeCommand(program: Command): void {
       try {
         console.log('🎨 Starting theme preview...\n');
 
+        // Discover available themes
+        const availableThemes = getThemeNames(GENERATED_THEMES_DIR);
+
         // Validate theme option
-        if (!VALID_THEMES.includes(options.theme as ThemeName)) {
+        if (!themeExists(GENERATED_THEMES_DIR, options.theme)) {
           console.error(
-            `❌ Invalid theme. Must be one of: ${VALID_THEMES.join(', ')}`
+            `❌ Invalid theme '${options.theme}'. Available themes: ${availableThemes.join(', ')}`
           );
+          console.error('\nRun "npm run theme:generate" to generate themes.\n');
           process.exit(1);
         }
 
@@ -215,6 +222,48 @@ export function themeCommand(program: Command): void {
       process.exit(1);
     });
 
+  // List command
+  theme
+    .command('list')
+    .description('List all available theme variants')
+    .option('--json', 'Output as JSON')
+    .action((options: { json?: boolean }) => {
+      const themes = discoverThemes(GENERATED_THEMES_DIR);
+
+      if (themes.length === 0) {
+        console.warn('⚠️  No themes found.');
+        console.log('\nRun "npm run theme:generate" to generate themes.\n');
+        return;
+      }
+
+      if (options.json) {
+        console.log(JSON.stringify(themes, null, 2));
+        return;
+      }
+
+      console.log('🎨 Available Theme Variants:\n');
+
+      // Group by plugin
+      const byPlugin = new Map<string, typeof themes>();
+      themes.forEach((theme) => {
+        if (!byPlugin.has(theme.pluginId)) {
+          byPlugin.set(theme.pluginId, []);
+        }
+        byPlugin.get(theme.pluginId)!.push(theme);
+      });
+
+      for (const [pluginId, pluginThemes] of byPlugin) {
+        console.log(`📦 ${pluginId}:`);
+        pluginThemes.forEach((theme) => {
+          console.log(`   • ${theme.name}`);
+          console.log(`     Path: ${theme.path}`);
+        });
+        console.log('');
+      }
+
+      console.log(`Total: ${themes.length} theme variant(s)\n`);
+    });
+
   // Create command
   theme
     .command('create')
@@ -225,13 +274,13 @@ export function themeCommand(program: Command): void {
     .action(
       async (options: { from?: string; name?: string; color?: string }) => {
         try {
+          // Discover available themes
+          const availableThemeNames = getThemeNames(GENERATED_THEMES_DIR);
+
           // Validate input options
-          if (
-            options.from &&
-            !VALID_THEMES.includes(options.from as ThemeName)
-          ) {
+          if (options.from && !availableThemeNames.includes(options.from)) {
             console.error(
-              `❌ Invalid --from option. Must be one of: ${VALID_THEMES.join(', ')}`
+              `❌ Invalid --from option. Available themes: ${availableThemeNames.join(', ')}`
             );
             process.exit(1);
           }
@@ -245,76 +294,27 @@ export function themeCommand(program: Command): void {
           const { confirm } = await import('@inquirer/prompts');
           const { createThemeInteractive } =
             await import('../lib/themeCreator.js');
-          const { integrateTheme, themeExists } =
-            await import('../lib/themeIntegration.js');
+          const { registerPlugin } = await import('../lib/registerPlugin.js');
           const { generateTheme } = await import('./generate-theme.js');
-          const { validateThemeContrast } =
-            await import('../../themes/builder/index.js');
-          const { generateAllColorScales } =
-            await import('../../themes/builder/index.js');
 
-          const theme = await createThemeInteractive(options);
+          const result = await createThemeInteractive(options);
 
-          console.log('\n✅ Theme created successfully!\n');
+          // Automatically register and generate
+          console.log('🔧 Setting up your theme...\n');
 
-          // Check if theme already exists
-          if (await themeExists(theme.name)) {
-            console.log(
-              `⚠️  A theme named "${theme.name}" already exists in theme.config.ts`
-            );
-            const overwrite = await confirm({
-              message: 'Do you want to overwrite it?',
-              default: false,
-            });
+          try {
+            // Step 1: Register plugin in theme.config.ts
+            await registerPlugin(result.pluginId);
 
-            if (!overwrite) {
-              console.log('\n👋 Theme creation cancelled.\n');
-              process.exit(0);
-            }
-          }
-
-          // Ask if user wants automatic integration
-          const automate = await confirm({
-            message:
-              'Would you like me to automatically update theme.config.ts and generate the theme?',
-            default: true,
-          });
-
-          if (automate) {
-            console.log('\n🔧 Integrating theme...\n');
-
-            // Step 1: Update theme.config.ts
-            console.log('  ✓ Updating theme.config.ts...');
-            await integrateTheme(theme);
-
-            // Step 2: Generate theme CSS
-            console.log('  ✓ Generating theme CSS...');
+            // Step 2: Generate CSS
+            console.log('   🎨 Generating theme CSS...');
             await generateTheme({ validate: false });
 
-            // Step 3: Validate theme
-            console.log('  ✓ Validating contrast ratios...');
-            console.log(
-              '     Note: Using current theme config (restart CLI to validate new theme)'
-            );
-            // Use the originally imported theme since ES module cache can't be cleared
-            const primitives = generateAllColorScales(blueprintTheme.colors);
-            const violations = validateThemeContrast(
-              primitives,
-              blueprintTheme
-            );
+            console.log('\n✅ Theme is ready to use!\n');
 
-            if (violations.length > 0) {
-              console.log(
-                `\n  ⚠️  Found ${violations.length} contrast violations`
-              );
-              console.log('     Run: bp theme validate (for details)\n');
-            } else {
-              console.log('  ✓ All contrast checks passed!\n');
-            }
-
-            // Step 4: Offer to preview
+            // Step 3: Offer to preview
             const shouldPreview = await confirm({
-              message: `Preview the "${theme.name}" theme in your browser?`,
+              message: 'Preview themes in your browser?',
               default: true,
             });
 
@@ -325,72 +325,46 @@ export function themeCommand(program: Command): void {
               const vite = await import('vite');
               const server = await vite.createServer({
                 configFile: 'vite.config.ts',
-                server: {
-                  open: false,
-                },
+                server: { open: false },
               });
 
               try {
                 await server.listen();
                 const port = server.config.server.port ?? DEFAULT_VITE_PORT;
-                const url = `http://localhost:${port}/demo/theme-preview.html?theme=${theme.name}`;
+                // Navigate to the newly created theme variant (default to light)
+                const themeVariant = `${result.pluginId}-light`;
+                const url = `http://localhost:${port}/demo/theme-preview.html?theme=${themeVariant}`;
 
                 openBrowser(url);
                 console.log(`Preview running at: ${url}`);
                 console.log('Press Ctrl+C to stop\n');
 
                 // Handle cleanup on termination
-                const serverCleanup = async () => {
+                const cleanup = async () => {
                   await server.close();
                   process.exit(0);
                 };
 
-                process.once('SIGINT', serverCleanup);
-                process.once('SIGTERM', serverCleanup);
+                process.once('SIGINT', cleanup);
+                process.once('SIGTERM', cleanup);
               } catch (error) {
                 await server.close();
                 throw error;
               }
             } else {
-              console.log('\n✅ Theme integration complete!\n');
-              console.log(`Run: bp theme preview --theme ${theme.name}\n`);
+              console.log('Run `npm run dev` to preview your themes.\n');
             }
-          } else {
-            // Manual mode - show code snippets
-            const { generateThemeConfig, generateSemanticExample } =
-              await import('../lib/themeCreator.js');
-
-            console.log(
-              '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n'
+          } catch (setupError) {
+            console.error(
+              `\n⚠️  Theme created but setup failed: ${setupError instanceof Error ? setupError.message : 'Unknown error'}`
             );
+            console.log('\nManual steps:');
             console.log(
-              '📝 Step 1: Add color definitions to theme.config.ts\n'
+              `  1. Import: import ${result.pluginId}Plugin from '../plugins/${result.pluginId}/index.js';`
             );
-            console.log('In the `colors` section, add:');
-            console.log('```typescript');
-            console.log(generateThemeConfig(theme));
-            console.log('```\n');
-            console.log(
-              '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n'
-            );
-            console.log('📝 Step 2: Add semantic mappings (example)\n');
-            console.log('In the `themes` section, add:');
-            console.log('```typescript');
-            console.log(generateSemanticExample(theme));
-            console.log('```\n');
-            console.log(
-              '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n'
-            );
-            console.log('🚀 Manual steps:');
-            console.log(
-              '  1. Update source/themes/config/theme.config.ts with the code above'
-            );
-            console.log(`  2. Add to color refs: '${theme.name}Primary', etc.`);
-            console.log('  3. Run: bp theme generate');
-            console.log('  4. Run: bp theme validate');
-            console.log(
-              `  5. Preview: bp theme preview --theme ${theme.name}\n`
-            );
+            console.log(`  2. Register: .use(${result.pluginId}Plugin)`);
+            console.log(`  3. Generate: npm run theme:generate`);
+            console.log(`  4. Preview: npm run dev\n`);
           }
         } catch (error: unknown) {
           if (

@@ -20,6 +20,7 @@
     "test:ui": "vitest --ui",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
+    "test:cli": "vitest source/cli",
     "test:themes": "vitest source/themes",
     "test:themes:run": "vitest run source/themes",
     "lint": "eslint source --ext .ts,.tsx",

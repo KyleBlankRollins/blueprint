@@ -15,7 +15,10 @@
           Review all color scales, semantic tokens, and theme variants
         </p>
         <div class="theme-controls">
-          <button class="theme-toggle" id="themeToggle">Toggle Theme</button>
+          <label for="themeSelect">Theme:</label>
+          <select class="theme-select" id="themeSelect">
+            <!-- Options populated dynamically -->
+          </select>
           <span class="current-theme" aria-live="polite" aria-atomic="true">
             Current: <strong id="currentTheme">light</strong>
           </span>
@@ -156,12 +159,97 @@
       // Cache DOM references
       const elements = {
         html: document.documentElement,
-        themeToggle: document.getElementById('themeToggle'),
+        themeSelect: document.getElementById('themeSelect'),
         currentThemeSpan: document.getElementById('currentTheme'),
         semanticThemeName: document.getElementById('semanticThemeName'),
         lightPreview: document.getElementById('light-preview'),
         darkPreview: document.getElementById('dark-preview'),
       };
+
+      // Load available themes from manifest
+      let availableThemes = [];
+
+      async function loadThemes() {
+        try {
+          const response = await fetch(
+            '../source/themes/generated/themes.json'
+          );
+          if (!response.ok) {
+            throw new Error(
+              `Failed to load themes manifest: ${response.status}`
+            );
+          }
+          const manifest = await response.json();
+          availableThemes = manifest.themes || [];
+        } catch (error) {
+          console.warn(
+            'Could not load themes manifest, using defaults:',
+            error
+          );
+          // Fallback to hardcoded themes
+          availableThemes = [
+            {
+              value: 'light',
+              label: 'Light (Blueprint Core)',
+              pluginId: 'blueprint-core',
+            },
+            {
+              value: 'dark',
+              label: 'Dark (Blueprint Core)',
+              pluginId: 'blueprint-core',
+            },
+            {
+              value: 'wada-light',
+              label: 'Wada Light (Wada Sanzo)',
+              pluginId: 'wada-sanzo',
+            },
+            {
+              value: 'wada-dark',
+              label: 'Wada Dark (Wada Sanzo)',
+              pluginId: 'wada-sanzo',
+            },
+          ];
+        }
+
+        populateThemeSelector();
+      }
+
+      // Populate theme selector
+      function populateThemeSelector() {
+        if (!elements.themeSelect) return;
+        availableThemes.forEach((theme) => {
+          const option = document.createElement('option');
+          option.value = theme.value;
+          option.textContent = theme.label;
+          if (theme.value === initialTheme) {
+            option.selected = true;
+          }
+          elements.themeSelect.appendChild(option);
+        });
+
+        elements.themeSelect.addEventListener('change', (e) => {
+          const newTheme = e.target.value;
+          changeTheme(newTheme);
+        });
+      }
+
+      function changeTheme(themeName) {
+        if (
+          !elements.html ||
+          !elements.currentThemeSpan ||
+          !elements.semanticThemeName
+        ) {
+          console.error('Required theme elements not found');
+          return;
+        }
+
+        elements.html.setAttribute('data-theme', themeName);
+        elements.currentThemeSpan.textContent = themeName;
+        elements.semanticThemeName.textContent =
+          themeName.charAt(0).toUpperCase() +
+          themeName.slice(1).replace('-', ' ');
+        renderSemanticTokens();
+      }
 
       // Render primitive color scales
       scales.forEach((scale) => {
@@ -317,36 +405,11 @@
         elements.darkPreview.appendChild(createComparisonContent());
       }
 
-      // Theme toggle
-      function toggleTheme() {
-        if (
-          !elements.html ||
-          !elements.currentThemeSpan ||
-          !elements.semanticThemeName
-        ) {
-          console.error('Required theme toggle elements not found');
-          return;
-        }
-
-        const currentTheme = elements.html.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-
-        elements.html.setAttribute('data-theme', newTheme);
-        elements.currentThemeSpan.textContent = newTheme;
-        elements.semanticThemeName.textContent =
-          newTheme.charAt(0).toUpperCase() + newTheme.slice(1);
+      // Initial render (wait for themes to load)
+      loadThemes().then(() => {
         renderSemanticTokens();
-      }
-
-      if (elements.themeToggle) {
-        elements.themeToggle.addEventListener('click', toggleTheme);
-      } else {
-        console.error('Theme toggle button not found');
-      }
-
-      // Initial render
-      renderSemanticTokens();
-      renderThemeComparison();
+        renderThemeComparison();
+      });
     </script>
   </body>
 </html>

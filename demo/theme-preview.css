@@ -78,25 +78,34 @@ h3 {
   display: flex;
   gap: var(--bp-spacing-4);
   align-items: center;
+  margin-top: var(--bp-spacing-4);
 }
 
-.theme-toggle {
+.theme-select {
   padding: var(--bp-spacing-2) var(--bp-spacing-4);
-  background: var(--bp-color-primary);
-  border: none;
+  background: var(--bp-color-surface);
+  color: var(--bp-color-text);
+  border: 1px solid var(--bp-color-border);
   border-radius: var(--bp-border-radius-md);
   cursor: pointer;
   font-size: var(--bp-font-size-sm);
   font-weight: var(--bp-font-weight-medium);
-  transition: background-color var(--bp-duration-fast);
+  transition: border-color var(--bp-duration-fast);
 }
 
-[data-theme='light'] .theme-toggle {
-  color: var(--bp-color-text-inverse);
+.theme-select:hover {
+  border-color: var(--bp-color-primary);
 }
 
-[data-theme='dark'] .theme-toggle {
-  color: var(--bp-color-text);
+.theme-select:focus {
+  outline: none;
+  border-color: var(--bp-color-focus);
+  box-shadow: 0 0 0 2px var(--bp-color-focus);
+}
+
+.theme-controls label {
+  font-weight: var(--bp-font-weight-medium);
+  font-size: var(--bp-font-size-sm);
 }
 
 .theme-toggle:hover {

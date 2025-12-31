@@ -71,11 +71,11 @@ import {
 } from '../generator/generateCSS.js';
 
 export interface GeneratedFiles {
-  readonly 'primitives.css': string;
-  readonly 'utilities.css': string;
-  readonly 'light.css': string;
-  readonly 'dark.css': string;
-  readonly 'index.css': string;
+  'primitives.css': string;
+  'utilities.css': string;
+  'index.css': string;
+  // Allow dynamic theme files from plugins (e.g., 'blueprint-core/light.css')
+  [key: string]: string;
 }
 
 /**
@@ -135,15 +135,36 @@ export function buildTheme(config: ThemeConfig): GeneratedFiles {
       // Utilities (spacing, radius, motion, typography, etc.)
       'utilities.css': generateUtilitiesFile(config),
 
-      // Light theme (maps semantic tokens to primitives)
-      'light.css': generateThemeCSS('light', config.themes.light),
-
-      // Dark theme (maps semantic tokens to primitives)
-      'dark.css': generateThemeCSS('dark', config.themes.dark),
-
-      // Index file (imports all theme CSS)
-      'index.css': generateIndexCSS(),
+      // Index file will be added at the end
+      'index.css': '',
     };
+
+    // Group theme variants by plugin
+    const themesByPlugin = new Map<string, string[]>();
+
+    for (const [variantName] of Object.entries(config.themes)) {
+      const pluginId =
+        config.themeMetadata?.[variantName]?.pluginId || 'blueprint-core';
+
+      if (!themesByPlugin.has(pluginId)) {
+        themesByPlugin.set(pluginId, []);
+      }
+      themesByPlugin.get(pluginId)!.push(variantName);
+    }
+
+    // Generate CSS files for each plugin's themes
+    for (const [pluginId, variantNames] of themesByPlugin) {
+      for (const variantName of variantNames) {
+        const themeTokens = config.themes[variantName];
+        const cssContent = generateThemeCSS(variantName, themeTokens);
+
+        // Store in plugin directory: plugin-id/variant-name.css
+        files[`${pluginId}/${variantName}.css`] = cssContent;
+      }
+    }
+
+    // Generate index file that imports all themes
+    files['index.css'] = generateIndexCSS(themesByPlugin);
 
     return files;
   } catch (error) {

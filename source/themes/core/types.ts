@@ -309,6 +309,8 @@ export interface ThemeConfig {
   /** Theme variant definitions (must include light and dark) */
   readonly themes: Record<ThemeVariant, Record<string, string>> &
     Record<string, Record<string, string>>;
+  /** Theme metadata - maps variant names to their plugin IDs */
+  readonly themeMetadata?: Record<string, { pluginId?: string }>;
   /** Accessibility validation rules */
   readonly accessibility?: AccessibilityConfig;
 }

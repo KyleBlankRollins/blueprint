@@ -76,11 +76,38 @@ export async function generateTheme(
       string,
     ][]) {
       const filePath = join(outputDir, filename);
+
+      // Create subdirectories if filename contains path separators
+      const fileDir = dirname(filePath);
+      if (fileDir !== outputDir) {
+        mkdirSync(fileDir, { recursive: true });
+      }
+
       writeFileSync(filePath, content, 'utf-8');
       const size = Buffer.byteLength(content, 'utf-8');
       totalSize += size;
       console.log(`  ✓ ${filename} (${(size / BYTES_PER_KB).toFixed(2)} KB)`);
     }
+
+    // Generate themes manifest for demo page
+    const { discoverThemes } = await import('../lib/discoverThemes.js');
+    const themes = discoverThemes(outputDir, false); // Don't use cache
+
+    const manifest = {
+      themes: themes.map((theme) => ({
+        value: theme.name,
+        label: `${theme.name
+          .split('-')
+          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(' ')} (${theme.pluginId})`,
+        pluginId: theme.pluginId,
+      })),
+      generatedAt: new Date().toISOString(),
+    };
+
+    const manifestPath = join(outputDir, 'themes.json');
+    writeFileSync(manifestPath, JSON.stringify(manifest, null, 2), 'utf-8');
+    console.log(`  ✓ themes.json (manifest)`);
 
     console.log(`\n✅ Theme generated successfully!`);
     console.log(`   Total size: ${(totalSize / BYTES_PER_KB).toFixed(2)} KB`);

@@ -123,7 +123,7 @@ Invalid examples:
           console.log('  • Hardcoded colors - Use var(--bp-color-*)');
           console.log('  • Fixed spacing - Use var(--bp-spacing-*)');
           console.log(
-            '  • Magic numbers - Use design tokens from themes/light.css'
+            '  • Magic numbers - Use design tokens from themes/generated/'
           );
         }
       } else {

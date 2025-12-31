@@ -1,70 +1,51 @@
 /**
  * Blueprint Theme Configuration
  * Source of truth for all design tokens
+ *
+ * PHASE 2: Now using plugin-based architecture!
+ * - Themes are defined as modular plugins
+ * - Colors and variants are composed via ThemeBuilder
+ * - Type-safe color references throughout
  */
 
-import { defineTheme } from '../builder/defineTheme.js';
-import { createColorRefs } from '../color/colorRefs.js';
+import { ThemeBuilder } from '../builder/ThemeBuilder.js';
+import { primitivesPlugin } from '../plugins/primitives/index.js';
+import { blueprintCorePlugin } from '../plugins/blueprint-core/index.js';
+import { wadaSanzoPlugin } from '../plugins/wada-sanzo/index.js';
+import forestPlugin from '../plugins/forest/index.js';
+import benzolPlugin from '../plugins/benzol/index.js';
 
-const themeColors = {
-  sulphurYellow: { l: 0.941, c: 0.0554, h: 91.42 },
-  yellowOrange: { l: 0.7777, c: 0.1684, h: 64.45 },
-  vandarPoelBlue: { l: 0.4025, c: 0.0836, h: 233.38 },
-};
+// Build theme from plugins
+const builder = new ThemeBuilder()
+  .use(primitivesPlugin) // Load primitives first (white, black)
+  .use(blueprintCorePlugin) // Load core theme (gray, blue, green, red, yellow + light/dark)
+  .use(wadaSanzoPlugin)
+  .use(forestPlugin)
+  .use(benzolPlugin); // Load Wada Sanzo accents + wada-light/wada-dark
 
-// Typed color references for IDE autocomplete
-const colors = createColorRefs([
-  'gray',
-  'blue',
-  'green',
-  'red',
-  'yellow',
-  'accent',
-  'secondaryAccent',
-] as const);
+// Validate before building
+const validation = builder.validate();
+if (!validation.valid) {
+  console.error('❌ Theme validation failed:');
+  validation.errors.forEach((error) => {
+    console.error(`  - [${error.plugin}] ${error.message}`);
+  });
+  throw new Error('Theme validation failed');
+}
 
-export const blueprintTheme = defineTheme({
-  // Color definitions with OKLCH source colors
-  colors: {
-    // Neutral scale (gray)
-    gray: {
-      source: { l: 0.55, c: 0.02, h: 240 },
-      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
-    },
+if (validation.warnings.length > 0) {
+  console.warn('⚠️ Theme validation warnings:');
+  validation.warnings.forEach((warning) => {
+    console.warn(`  - [${warning.plugin}] ${warning.message}`);
+  });
+}
 
-    // Brand colors
-    blue: {
-      source: themeColors.vandarPoelBlue,
-      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
-    },
+// Build the final theme configuration
+const themeConfig = builder.build();
 
-    // Semantic colors
-    green: {
-      source: { l: 0.55, c: 0.13, h: 145 },
-      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
-    },
-
-    red: {
-      source: { l: 0.55, c: 0.15, h: 25 },
-      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
-    },
-
-    yellow: {
-      source: { l: 0.65, c: 0.13, h: 85 },
-      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
-    },
-
-    // Accent colors
-    accent: {
-      source: themeColors.yellowOrange,
-      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
-    },
-
-    secondaryAccent: {
-      source: themeColors.sulphurYellow,
-      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
-    },
-  },
+// Add non-color tokens to the theme configuration
+export const blueprintTheme = {
+  ...themeConfig,
 
   // Dark mode adjustments
   darkMode: {
@@ -156,7 +137,7 @@ export const blueprintTheme = defineTheme({
   focus: {
     width: 2,
     offset: 2,
-    style: 'solid',
+    style: 'solid' as const,
   },
 
   // Z-index scale
@@ -187,66 +168,6 @@ export const blueprintTheme = defineTheme({
     '2xl': '1536px',
   },
 
-  // Theme variants
-  themes: {
-    light: {
-      // Backgrounds
-      background: colors.secondaryAccent50,
-      surface: colors.secondaryAccent100,
-      surfaceElevated: colors.secondaryAccent200,
-      surfaceSubdued: colors.secondaryAccent300,
-
-      // Text
-      text: colors.gray900,
-      textMuted: colors.gray600,
-      textInverse: colors.secondaryAccent50,
-
-      // Primary
-      primary: colors.blue500,
-      primaryHover: colors.blue600,
-      primaryActive: colors.blue700,
-
-      // Semantic
-      success: colors.green500,
-      warning: colors.yellow600, // Darker for better contrast
-      error: colors.red500,
-      info: colors.accent500,
-
-      // UI Elements
-      border: colors.gray200,
-      borderStrong: colors.gray300,
-      focus: colors.blue500,
-    },
-    dark: {
-      // Backgrounds
-      background: colors.gray950,
-      surface: colors.gray900,
-      surfaceElevated: colors.gray800,
-      surfaceSubdued: colors.black,
-
-      // Text
-      text: colors.secondaryAccent50,
-      textMuted: colors.secondaryAccent200,
-      textInverse: colors.gray900,
-
-      // Primary (uses dark mode chroma adjustments)
-      primary: colors.blue500,
-      primaryHover: colors.blue300,
-      primaryActive: colors.blue200,
-
-      // Semantic
-      success: colors.green300,
-      warning: colors.yellow200,
-      error: colors.red300,
-      info: colors.accent300,
-
-      // UI Elements
-      border: colors.gray800,
-      borderStrong: colors.gray700,
-      focus: colors.blue400,
-    },
-  },
-
   // Accessibility validation rules
   accessibility: {
     enforceWCAG: false, // Temporarily disabled for Phase 1
@@ -261,4 +182,4 @@ export const blueprintTheme = defineTheme({
     minHueDifference: 60, // Minimum degrees between semantic colors
     highContrast: true, // Support prefers-contrast: more
   },
-});
+};

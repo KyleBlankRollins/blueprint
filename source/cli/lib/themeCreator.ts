@@ -1,35 +1,26 @@
 /**
  * Interactive theme creator
- * Generates a new theme configuration through CLI prompts
+ * Generates a new theme plugin through CLI prompts
  */
 
-import { input, select, confirm } from '@inquirer/prompts';
-import { parse, oklch, formatHex } from 'culori';
+import { input, confirm } from '@inquirer/prompts';
+import { parse, oklch } from 'culori';
+import { writeFileSync, mkdirSync } from 'node:fs';
+import { join } from 'node:path';
 import { getContrastRatio } from '../../themes/color/colorUtils.js';
 
 export interface ThemeCreatorOptions {
-  from?: string;
   name?: string;
   color?: string;
+  author?: string;
 }
 
-export interface ThemeColors {
-  name: string;
+export interface ThemePluginResult {
+  pluginId: string;
+  pluginDir: string;
+  themeName: string;
   primary: { l: number; c: number; h: number };
-  success?: { l: number; c: number; h: number };
-  error?: { l: number; c: number; h: number };
-  warning?: { l: number; c: number; h: number };
 }
-
-/**
- * Default semantic color values
- * These provide accessible, distinguishable colors for common UI states
- */
-const SEMANTIC_DEFAULTS = {
-  success: { l: 0.55, c: 0.13, h: 145 }, // Green, medium lightness for good contrast
-  error: { l: 0.55, c: 0.15, h: 25 }, // Red, slightly higher chroma for urgency
-  warning: { l: 0.65, c: 0.13, h: 85 }, // Yellow, lighter for visibility on dark/light
-} as const;
 
 /**
  * Convert hex color to OKLCH color space
@@ -112,287 +103,327 @@ function isValidHex(hex: string): boolean {
 }
 
 /**
- * Interactive theme creation workflow
+ * Interactive theme plugin creation workflow
+ * Creates a complete plugin with light and dark variants
  */
 export async function createThemeInteractive(
   options: ThemeCreatorOptions
-): Promise<ThemeColors> {
-  console.log('🎨 Blueprint Theme Creator\n');
+): Promise<ThemePluginResult> {
+  console.log('🎨 Blueprint Theme Plugin Creator\n');
+  console.log(
+    'This will create a new theme plugin with light and dark variants.\n'
+  );
 
-  // Step 1: Theme name
-  const themeName =
+  // Step 1: Plugin ID (used for directory and plugin identifier)
+  const pluginId =
     options.name ||
     (await input({
-      message: 'Theme name:',
+      message: 'Plugin ID (e.g., ocean, forest):',
       default: 'custom',
       validate: (value) =>
         /^[a-z][a-z0-9-]*$/.test(value) ||
-        'Theme name must start with lowercase letter and contain only lowercase letters, numbers, and hyphens',
+        'Must start with lowercase letter and contain only lowercase letters, numbers, and hyphens',
     }));
 
-  console.log(`\n✨ Creating "${themeName}" theme...\n`);
+  // Step 2: Primary brand color
+  const hexColor =
+    options.color ||
+    (await input({
+      message: 'Primary brand color (hex):',
+      default: '#3b82f6',
+      validate: (value) =>
+        isValidHex(value) || 'Invalid hex color (e.g., #3b82f6)',
+    }));
 
-  // Step 2: Choose creation method
-  const method = options.color
-    ? 'color'
-    : options.from
-      ? 'copy'
-      : await select({
-          message: 'How would you like to create the theme?',
-          choices: [
-            { name: 'From brand color (recommended)', value: 'color' },
-            { name: 'From existing theme', value: 'copy' },
-            { name: 'Manual OKLCH values (advanced)', value: 'manual' },
-          ],
-        });
+  const primaryColor = hexToOKLCH(hexColor);
+  if (!primaryColor) {
+    throw new Error(
+      `Failed to convert "${hexColor}" to OKLCH. Use format: #3b82f6`
+    );
+  }
 
-  let primaryColor: { l: number; c: number; h: number };
+  console.log(`\n✨ Creating "${pluginId}" plugin...`);
+  console.log(`   Primary: ${formatOKLCH(primaryColor)}`);
 
-  // Step 3: Get primary color based on method
-  if (method === 'color') {
-    const hexColor =
-      options.color ||
-      (await input({
-        message: 'Primary brand color (hex):',
-        default: '#3b82f6',
-        validate: (value) => isValidHex(value) || 'Invalid hex color',
-      }));
+  // Preview contrast
+  const { needsAdjustment } = previewContrast(hexColor, 'Primary color');
 
-    const oklchColor = hexToOKLCH(hexColor);
-    if (!oklchColor) {
-      throw new Error(
-        `Failed to convert color "${hexColor}" to OKLCH. Please check the hex format (e.g., #3b82f6).`
-      );
-    }
+  // Step 3: Optional author name (skip if running non-interactively)
+  let author = options.author || '';
 
-    primaryColor = oklchColor;
-    console.log(`\nConverted to OKLCH: ${formatOKLCH(primaryColor)}`);
+  // Only prompt if both name and color were NOT provided via options (interactive mode)
+  if (!options.name || !options.color) {
+    author = await input({
+      message: 'Author name (optional):',
+      default: '',
+    });
+  }
 
-    // Preview contrast
-    previewContrast(hexColor, 'Primary color');
-  } else if (method === 'copy') {
-    const baseTheme =
-      options.from ||
-      (await select({
-        message: 'Base theme to copy from:',
-        choices: [
-          { name: 'Light theme', value: 'light' },
-          { name: 'Dark theme', value: 'dark' },
-        ],
-      }));
+  // Step 4: Create both variants by default (skip prompt if non-interactive)
+  let createBothVariants = true;
+  if (!options.name || !options.color) {
+    createBothVariants = await confirm({
+      message: 'Create both light and dark variants?',
+      default: true,
+    });
+  }
 
-    // Use Blueprint blue as default
-    primaryColor =
-      baseTheme === 'light'
-        ? { l: 0.4025, c: 0.0836, h: 233.38 }
-        : { l: 0.4025, c: 0.0836, h: 233.38 };
-
+  if (needsAdjustment) {
     console.log(
-      `\n📋 Copying from ${baseTheme} theme (you can modify colors next)`
+      '\n⚠️  Note: Primary color may need adjustment for accessibility.'
     );
-  } else {
-    // Manual OKLCH input
-    console.log('\nEnter OKLCH values for primary color:');
-    console.log('  Lightness (0-1): How light/dark');
-    console.log('  Chroma (0-0.4): How saturated');
-    console.log('  Hue (0-360): Color angle\n');
-
-    const l = parseFloat(
-      await input({
-        message: 'Lightness (0-1):',
-        default: '0.55',
-        validate: (v) =>
-          (!isNaN(parseFloat(v)) && parseFloat(v) >= 0 && parseFloat(v) <= 1) ||
-          'Must be between 0 and 1',
-      })
-    );
-
-    const c = parseFloat(
-      await input({
-        message: 'Chroma (0-0.4):',
-        default: '0.15',
-        validate: (v) =>
-          (!isNaN(parseFloat(v)) &&
-            parseFloat(v) >= 0 &&
-            parseFloat(v) <= 0.4) ||
-          'Must be between 0 and 0.4',
-      })
-    );
-
-    const h = parseFloat(
-      await input({
-        message: 'Hue (0-360):',
-        default: '250',
-        validate: (v) =>
-          (!isNaN(parseFloat(v)) &&
-            parseFloat(v) >= 0 &&
-            parseFloat(v) <= 360) ||
-          'Must be between 0 and 360',
-      })
-    );
-
-    primaryColor = { l, c, h };
+    console.log('   You can fine-tune colors after plugin creation.\n');
   }
 
-  // Step 4: Ask about semantic colors
-  const addSemanticColors = await confirm({
-    message: 'Add semantic colors (success, error, warning)?',
-    default: true,
-  });
+  // Generate the plugin files
+  const pluginDir = join(
+    process.cwd(),
+    'source',
+    'themes',
+    'plugins',
+    pluginId
+  );
+  const themeName = pluginId.charAt(0).toUpperCase() + pluginId.slice(1);
 
-  let success: { l: number; c: number; h: number } | undefined;
-  let error: { l: number; c: number; h: number } | undefined;
-  let warning: { l: number; c: number; h: number } | undefined;
+  console.log('\n📦 Creating plugin files...');
 
-  if (addSemanticColors) {
-    console.log('\n🎨 Generating semantic colors from primary...');
+  try {
+    // Create plugin directory
+    mkdirSync(pluginDir, { recursive: true });
 
-    // Generate semantic colors using defaults but matching primary's general lightness/chroma feel
-    success = {
-      l: SEMANTIC_DEFAULTS.success.l,
-      c: primaryColor.c * 0.87, // Similar saturation to primary
-      h: SEMANTIC_DEFAULTS.success.h,
+    // Generate plugin code
+    const pluginCode = generatePluginCode(
+      pluginId,
+      themeName,
+      primaryColor,
+      author || 'Unknown',
+      createBothVariants
+    );
+
+    // Write plugin file
+    const pluginFile = join(pluginDir, 'index.ts');
+    writeFileSync(pluginFile, pluginCode, 'utf-8');
+    console.log(`   ✓ Created ${pluginId}/index.ts`);
+
+    // Generate README
+    const readmeContent = generatePluginReadme(
+      pluginId,
+      themeName,
+      hexColor,
+      primaryColor,
+      createBothVariants
+    );
+
+    const readmeFile = join(pluginDir, 'README.md');
+    writeFileSync(readmeFile, readmeContent, 'utf-8');
+    console.log(`   ✓ Created ${pluginId}/README.md`);
+
+    console.log('\n✅ Plugin created successfully!\n');
+
+    return {
+      pluginId,
+      pluginDir,
+      themeName,
+      primary: primaryColor,
     };
-
-    error = {
-      l: SEMANTIC_DEFAULTS.error.l,
-      c: primaryColor.c, // Match primary chroma for consistency
-      h: SEMANTIC_DEFAULTS.error.h,
-    };
-
-    warning = {
-      l: SEMANTIC_DEFAULTS.warning.l,
-      c: primaryColor.c * 0.87,
-      h: SEMANTIC_DEFAULTS.warning.h,
-    };
-
-    console.log(`  Success: ${formatOKLCH(success)}`);
-    console.log(`  Error:   ${formatOKLCH(error)}`);
-    console.log(`  Warning: ${formatOKLCH(warning)}`);
+  } catch (error) {
+    throw new Error(
+      `Failed to create plugin: ${error instanceof Error ? error.message : 'Unknown error'}`
+    );
   }
-
-  // Step 5: Generate preview
-  console.log('\n📊 Generating color scale preview...\n');
-
-  // Convert OKLCH to hex for preview
-  const primaryOklch = { ...primaryColor, mode: 'oklch' as const };
-  const primaryHex = formatHex(primaryOklch);
-
-  console.log(`Primary (500): ${primaryHex}`);
-  previewContrast(primaryHex, 'Primary color');
-
-  return {
-    name: themeName,
-    primary: primaryColor,
-    success,
-    error,
-    warning,
-  };
 }
 
 /**
- * Helper function to add a color scale definition
+ * Generate plugin TypeScript code
  */
-function addColorScale(
-  colors: string[],
+function generatePluginCode(
+  pluginId: string,
   themeName: string,
-  colorType: string,
-  colorValue: { l: number; c: number; h: number }
-): void {
-  colors.push(`    ${themeName}${colorType}: {`);
-  colors.push(
-    `      source: { l: ${colorValue.l.toFixed(4)}, c: ${colorValue.c.toFixed(4)}, h: ${colorValue.h.toFixed(2)} },`
-  );
-  colors.push(
-    `      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],`
-  );
-  colors.push(`    },`);
+  primary: { l: number; c: number; h: number },
+  author: string,
+  createBothVariants: boolean
+): string {
+  const colorName = `${pluginId}Primary`;
+
+  return `/**
+ * ${themeName} Theme Plugin
+ * Auto-generated theme plugin
+ */
+
+import type { ThemePlugin } from '../../core/types.js';
+
+export const ${pluginId}Plugin: ThemePlugin = {
+  id: '${pluginId}',
+  version: '1.0.0',
+  name: '${themeName} Theme',
+  description: 'Custom theme with ${pluginId} primary color',
+  author: '${author}',
+  license: 'MIT',
+  tags: ['custom', '${pluginId}'],
+
+  dependencies: [{ id: 'primitives' }, { id: 'blueprint-core' }],
+
+  register(builder) {
+    // Define primary color
+    builder.addColor('${colorName}', {
+      source: { l: ${primary.l.toFixed(4)}, c: ${primary.c.toFixed(4)}, h: ${primary.h.toFixed(2)} },
+      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
+      metadata: {
+        name: '${themeName} Primary',
+        description: 'Primary brand color for ${pluginId} theme',
+        tags: ['brand', 'primary'],
+      },
+    });
+
+    // ${themeName} Light variant
+    builder.addThemeVariant('${pluginId}-light', {
+      // Backgrounds
+      background: builder.colors.gray50,
+      surface: builder.colors.gray100,
+      surfaceElevated: builder.colors.white500,
+      surfaceSubdued: builder.colors.gray200,
+
+      // Text
+      text: builder.colors.gray900,
+      textMuted: builder.colors.gray600,
+      textInverse: builder.colors.white500,
+
+      // Primary - using custom color
+      primary: builder.colors.${colorName}600,
+      primaryHover: builder.colors.${colorName}700,
+      primaryActive: builder.colors.${colorName}800,
+
+      // Semantic - using Blueprint core colors
+      success: builder.colors.green500,
+      warning: builder.colors.yellow600,
+      error: builder.colors.red500,
+      info: builder.colors.blue500,
+
+      // UI Elements
+      border: builder.colors.gray200,
+      borderStrong: builder.colors.gray300,
+      focus: builder.colors.${colorName}500,
+    });${
+      createBothVariants
+        ? `
+
+    // ${themeName} Dark variant
+    builder.addThemeVariant('${pluginId}-dark', {
+      // Backgrounds
+      background: builder.colors.gray950,
+      surface: builder.colors.gray900,
+      surfaceElevated: builder.colors.gray800,
+      surfaceSubdued: builder.colors.black500,
+
+      // Text
+      text: builder.colors.gray50,
+      textMuted: builder.colors.gray400,
+      textInverse: builder.colors.gray900,
+
+      // Primary - lighter shades for dark backgrounds
+      primary: builder.colors.${colorName}400,
+      primaryHover: builder.colors.${colorName}300,
+      primaryActive: builder.colors.${colorName}200,
+
+      // Semantic - lighter shades
+      success: builder.colors.green400,
+      warning: builder.colors.yellow400,
+      error: builder.colors.red400,
+      info: builder.colors.blue400,
+
+      // UI Elements
+      border: builder.colors.gray800,
+      borderStrong: builder.colors.gray700,
+      focus: builder.colors.${colorName}400,
+    });`
+        : ''
+    }
+  },
+};
+
+export default ${pluginId}Plugin;
+`;
 }
 
 /**
- * Generate TypeScript config code for the theme
- * @param theme - Theme color definitions
- * @returns TypeScript code string for theme.config.ts
+ * Generate plugin README
  */
-export function generateThemeConfig(theme: ThemeColors): string {
-  const colors: string[] = [];
+function generatePluginReadme(
+  pluginId: string,
+  themeName: string,
+  hexColor: string,
+  primary: { l: number; c: number; h: number },
+  createBothVariants: boolean
+): string {
+  return `# ${themeName} Theme Plugin
 
-  colors.push(`    // ${theme.name} theme`);
-  addColorScale(colors, theme.name, 'Primary', theme.primary);
+Custom theme plugin for Blueprint.
 
-  if (theme.success) {
-    addColorScale(colors, theme.name, 'Success', theme.success);
-  }
+## Overview
 
-  if (theme.error) {
-    addColorScale(colors, theme.name, 'Error', theme.error);
-  }
+This plugin provides ${createBothVariants ? 'light and dark' : 'a'} theme variant${createBothVariants ? 's' : ''} with a custom primary color.
 
-  if (theme.warning) {
-    addColorScale(colors, theme.name, 'Warning', theme.warning);
-  }
+## Primary Color
 
-  return colors.join('\n');
+- **Hex:** ${hexColor}
+- **OKLCH:** oklch(${primary.l.toFixed(2)} ${primary.c.toFixed(2)} ${primary.h.toFixed(0)})
+
+## Theme Variants
+
+${
+  createBothVariants
+    ? `### ${pluginId}-light
+
+Light theme variant optimized for daylight viewing.
+
+### ${pluginId}-dark
+
+Dark theme variant optimized for low-light viewing.`
+    : `### ${pluginId}-light
+
+Light theme variant with custom primary color.`
 }
 
-/**
- * Generate example semantic token mappings for the theme
- * @param theme - Theme color definitions
- * @returns TypeScript code string for theme mappings
- */
-export function generateSemanticExample(theme: ThemeColors): string {
-  const example: string[] = [];
+## Usage
 
-  example.push(`  themes: {`);
-  example.push(`    ${theme.name}: {`);
-  example.push(`      // Backgrounds`);
-  example.push(`      background: colors.gray50,`);
-  example.push(`      surface: colors.gray100,`);
-  example.push(`      surfaceElevated: colors.white,`);
-  example.push(`      surfaceSubdued: colors.gray200,`);
-  example.push(``);
-  example.push(`      // Text`);
-  example.push(`      text: colors.gray900,`);
-  example.push(`      textMuted: colors.gray700,`);
-  example.push(`      textInverse: colors.white,`);
-  example.push(``);
-  example.push(`      // Primary`);
-  example.push(`      primary: colors.${theme.name}Primary700,`);
-  example.push(`      primaryHover: colors.${theme.name}Primary800,`);
-  example.push(`      primaryActive: colors.${theme.name}Primary900,`);
+\`\`\`typescript
+import { ThemeBuilder } from '@blueprint/themes';
+import primitivesPlugin from '@blueprint/themes/plugins/primitives';
+import blueprintCorePlugin from '@blueprint/themes/plugins/blueprint-core';
+import ${pluginId}Plugin from '@blueprint/themes/plugins/${pluginId}';
 
-  if (theme.success || theme.error || theme.warning) {
-    example.push(``);
-    example.push(`      // Semantic`);
+const builder = new ThemeBuilder()
+  .use(primitivesPlugin)
+  .use(blueprintCorePlugin)
+  .use(${pluginId}Plugin);
 
-    if (theme.success) {
-      example.push(`      success: colors.${theme.name}Success700,`);
-    } else {
-      example.push(`      success: colors.green700,`);
-    }
+const theme = builder.build();
+\`\`\`
 
-    if (theme.warning) {
-      example.push(`      warning: colors.${theme.name}Warning700,`);
-    } else {
-      example.push(`      warning: colors.yellow700,`);
-    }
+## Generated Files
 
-    if (theme.error) {
-      example.push(`      error: colors.${theme.name}Error700,`);
-    } else {
-      example.push(`      error: colors.red700,`);
-    }
+After running \`npm run theme:generate\`, the following CSS files will be created:
 
-    example.push(`      info: colors.accent500,`);
-  }
+${
+  createBothVariants
+    ? `- \`source/themes/generated/${pluginId}/${pluginId}-light.css\`
+- \`source/themes/generated/${pluginId}/${pluginId}-dark.css\``
+    : `- \`source/themes/generated/${pluginId}/${pluginId}-light.css\``
+}
 
-  example.push(``);
-  example.push(`      // UI Elements`);
-  example.push(`      border: colors.gray200,`);
-  example.push(`      borderStrong: colors.gray300,`);
-  example.push(`      focus: colors.${theme.name}Primary700,`);
-  example.push(`    },`);
-  example.push(`  },`);
+## Metadata
 
-  return example.join('\n');
+- **Plugin ID:** ${pluginId}
+- **Version:** 1.0.0
+- **Dependencies:** primitives, blueprint-core
+
+## Customization
+
+You can customize this theme by editing \`index.ts\`:
+
+1. Adjust the primary color's OKLCH values
+2. Add additional colors with \`builder.addColor()\`
+3. Modify semantic token mappings
+4. Create additional theme variants
+`;
 }
