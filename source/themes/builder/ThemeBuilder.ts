@@ -60,11 +60,47 @@ export class ThemeBuilder implements ThemeBuilderInterface {
   private currentPluginId?: string; // Track current plugin during registration
 
   /**
+   * Constructor - automatically registers primitive colors (white, black)
+   */
+  constructor() {
+    this.registerPrimitives();
+  }
+
+  /**
    * Typed color registry - access like builder.colors.gray50, builder.colors.blue500
    * Updated dynamically as colors are registered via plugins
    */
   get colors(): Record<string, ColorRef> {
     return this._colors;
+  }
+
+  /**
+   * Register primitive colors (white, black) that are universal across all themes
+   * @private
+   */
+  private registerPrimitives(): void {
+    // Pure white - Used for high contrast elements, inverted text, and clean backgrounds
+    this.addColor('white', {
+      source: { l: 1.0, c: 0, h: 0 },
+      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
+      metadata: {
+        name: 'Pure White',
+        description:
+          'Achromatic white used for maximum contrast and clean surfaces',
+        tags: ['primitive', 'achromatic'],
+      },
+    });
+
+    // Pure black - Used for text, shadows, and maximum contrast
+    this.addColor('black', {
+      source: { l: 0.0, c: 0, h: 0 },
+      scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
+      metadata: {
+        name: 'Pure Black',
+        description: 'Achromatic black used for text and maximum contrast',
+        tags: ['primitive', 'achromatic'],
+      },
+    });
   }
 
   /**

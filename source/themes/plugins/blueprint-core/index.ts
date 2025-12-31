@@ -13,21 +13,20 @@
  * @version 1.0.0
  */
 
-import type { ThemePlugin } from '../../core/types.js';
+import { ThemeBase } from '../../builder/ThemeBase.js';
+import type { ThemeBuilderInterface, ThemeConfig } from '../../core/types.js';
 
-export const blueprintCorePlugin: ThemePlugin = {
-  id: 'blueprint-core',
-  version: '1.0.0',
-  name: 'Blueprint Core Theme',
-  description: 'Default Blueprint theme with light and dark variants',
-  author: 'Blueprint Team',
-  license: 'MIT',
-  tags: ['core', 'theme', 'light', 'dark'],
-  homepage: 'https://github.com/blueprint/blueprint',
+export class BlueprintCoreTheme extends ThemeBase {
+  readonly id = 'blueprint-core';
+  readonly version = '1.0.0';
+  readonly name = 'Blueprint Core Theme';
+  readonly description = 'Default Blueprint theme with light and dark variants';
+  readonly author = 'Blueprint Team';
+  readonly license = 'MIT';
+  readonly tags = ['core', 'theme', 'light', 'dark'];
+  readonly homepage = 'https://github.com/blueprint/blueprint';
 
-  dependencies: [{ id: 'primitives' }],
-
-  register(builder) {
+  register(builder: ThemeBuilderInterface): void {
     // Neutral scale (gray)
     builder.addColor('gray', {
       source: { l: 0.55, c: 0.02, h: 240 },
@@ -142,10 +141,10 @@ export const blueprintCorePlugin: ThemePlugin = {
       borderStrong: builder.colors.gray700,
       focus: builder.colors.blue400,
     });
-  },
+  }
 
   // Validation rules for Blueprint core
-  validate(config) {
+  validate(config: ThemeConfig) {
     const errors = [];
 
     // Ensure all required colors exist
@@ -175,7 +174,8 @@ export const blueprintCorePlugin: ThemePlugin = {
     }
 
     return errors;
-  },
-};
+  }
+}
 
-export default blueprintCorePlugin;
+export const blueprintCoreTheme = new BlueprintCoreTheme();
+export default blueprintCoreTheme;

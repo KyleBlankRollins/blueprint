@@ -9,31 +9,21 @@
  */
 
 import { ThemeBuilder } from '../builder/ThemeBuilder.js';
-import { primitivesPlugin } from '../plugins/primitives/index.js';
-import { blueprintCorePlugin } from '../plugins/blueprint-core/index.js';
-import { wadaSanzoPlugin } from '../plugins/wada-sanzo/index.js';
-import forestPlugin from '../plugins/forest/index.js';
-import benzolPlugin from '../plugins/benzol/index.js';
+import { blueprintCoreTheme } from '../plugins/blueprint-core/index.js';
+import { wadaSanzoTheme } from '../plugins/wada-sanzo/index.js';
 
 // Build theme from plugins
+// Note: Primitives (white, black) are automatically registered by ThemeBuilder
 const builder = new ThemeBuilder()
-  .use(primitivesPlugin) // Load primitives first (white, black)
-  .use(blueprintCorePlugin) // Load core theme (gray, blue, green, red, yellow + light/dark)
-  .use(wadaSanzoPlugin)
-  .use(forestPlugin)
-  .use(benzolPlugin); // Load Wada Sanzo accents + wada-light/wada-dark
+  .use(blueprintCoreTheme) // Load core theme (gray, blue, green, red, yellow + light/dark)
+  .use(wadaSanzoTheme); // Load Wada Sanzo accents + wada-light/wada-dark
 
 /**
  * Get a fresh ThemeBuilder instance with all plugins loaded
  * Used by CLI commands for type generation
  */
 export function getThemeBuilder(): ThemeBuilder {
-  return new ThemeBuilder()
-    .use(primitivesPlugin)
-    .use(blueprintCorePlugin)
-    .use(wadaSanzoPlugin)
-    .use(forestPlugin)
-    .use(benzolPlugin);
+  return new ThemeBuilder().use(blueprintCoreTheme).use(wadaSanzoTheme);
 }
 
 // Validate before building

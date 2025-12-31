@@ -7,6 +7,8 @@
 export { ThemeBuilder } from './ThemeBuilder.js';
 export { ThemeValidator } from './ThemeValidator.js';
 export { defineTheme } from './defineTheme.js';
+export { ThemeBase, type DesignTokens } from './ThemeBase.js';
+export { deepMerge, deepMergeTokens } from './deepMerge.js';
 
 // Export type generation utilities
 export {

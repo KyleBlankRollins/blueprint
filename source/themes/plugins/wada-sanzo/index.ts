@@ -18,22 +18,21 @@
  * @version 1.0.0
  */
 
-import type { ThemePlugin } from '../../core/types.js';
+import { ThemeBase } from '../../builder/ThemeBase.js';
+import type { ThemeBuilderInterface, ThemeConfig } from '../../core/types.js';
 
-export const wadaSanzoPlugin: ThemePlugin = {
-  id: 'wada-sanzo',
-  version: '1.0.0',
-  name: 'Wada Sanzo Color Palette',
-  description:
-    "Accent colors from Wada Sanzo's Dictionary of Color Combinations (1930s)",
-  author: 'Blueprint Team',
-  license: 'MIT',
-  tags: ['accent', 'historical', 'wada-sanzo', 'japanese'],
-  homepage: 'https://github.com/blueprint/blueprint',
+export class WadaSanzoTheme extends ThemeBase {
+  readonly id = 'wada-sanzo';
+  readonly version = '1.0.0';
+  readonly name = 'Wada Sanzo Color Palette';
+  readonly description =
+    "Accent colors from Wada Sanzo's Dictionary of Color Combinations (1930s)";
+  readonly author = 'Blueprint Team';
+  readonly license = 'MIT';
+  readonly tags = ['accent', 'historical', 'wada-sanzo', 'japanese'];
+  readonly homepage = 'https://github.com/blueprint/blueprint';
 
-  dependencies: [{ id: 'primitives' }, { id: 'blueprint-core' }],
-
-  register(builder) {
+  register(builder: ThemeBuilderInterface): void {
     // Sulphur Yellow - A soft, muted yellow
     // Original: From Wada Sanzo's palette
     builder.addColor('sulphurYellow', {
@@ -129,10 +128,10 @@ export const wadaSanzoPlugin: ThemePlugin = {
       borderStrong: builder.colors.gray700,
       focus: builder.colors.vandarPoelBlue400,
     });
-  },
+  }
 
   // Validation rules for Wada Sanzo
-  validate(config) {
+  validate(config: ThemeConfig) {
     const errors = [];
 
     // Ensure all Wada Sanzo colors exist
@@ -162,7 +161,8 @@ export const wadaSanzoPlugin: ThemePlugin = {
     }
 
     return errors;
-  },
-};
+  }
+}
 
-export default wadaSanzoPlugin;
+export const wadaSanzoTheme = new WadaSanzoTheme();
+export default wadaSanzoTheme;
