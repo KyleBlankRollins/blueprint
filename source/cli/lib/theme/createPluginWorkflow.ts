@@ -5,9 +5,9 @@
 
 import { input, confirm } from '@inquirer/prompts';
 import { generateThemePlugin, addPluginToConfig } from './pluginGenerator.js';
-import { generateTheme } from '../commands/generate-theme.js';
+import { generateTheme } from '../../commands/generate-theme.js';
 import { startPreviewServerWithCleanup } from './previewServer.js';
-import { GENERATED_THEMES_DIR, PLUGIN_ID_REGEX } from './constants.js';
+import { GENERATED_THEMES_DIR, PLUGIN_ID_REGEX } from '../constants.js';
 
 export interface PluginConfig {
   /** Plugin ID (kebab-case) */

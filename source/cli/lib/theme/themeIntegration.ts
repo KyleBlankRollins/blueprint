@@ -6,7 +6,7 @@
 import { join } from 'path';
 import { readFile, writeFile } from 'fs/promises';
 import { existsSync } from 'fs';
-import { THEME_CONFIG_FILE } from './constants.js';
+import { THEME_CONFIG_FILE } from '../constants.js';
 
 const CONFIG_PATH = THEME_CONFIG_FILE;
 

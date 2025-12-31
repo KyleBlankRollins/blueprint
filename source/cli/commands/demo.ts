@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import { addToDemo, isValidComponentName } from '../lib/addToDemo.js';
+import { addToDemo, isValidComponentName } from '../lib/component/addToDemo.js';
 import { error } from '../utils/logger.js';
 
 export function demoCommand(program: Command): void {

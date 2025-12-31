@@ -6,8 +6,8 @@ import {
   validateThemeContrast,
   type ContrastViolation,
 } from '../../themes/builder/index.js';
-import { discoverThemes } from '../lib/discoverThemes.js';
-import { startPreviewServerWithCleanup } from '../lib/previewServer.js';
+import { discoverThemes } from '../lib/theme/discoverThemes.js';
+import { startPreviewServerWithCleanup } from '../lib/theme/previewServer.js';
 import { GENERATED_THEMES_DIR } from '../lib/constants.js';
 
 /**
@@ -83,7 +83,7 @@ export function themeCommand(program: Command): void {
       if (id) {
         try {
           const { validateThemePlugin } =
-            await import('../lib/validatePlugin.js');
+            await import('../lib/validation/plugin.js');
 
           console.log(`🔍 Validating plugin: ${id}\n`);
 
@@ -281,7 +281,7 @@ export function themeCommand(program: Command): void {
       }) => {
         try {
           const { createPluginInteractive } =
-            await import('../lib/createPluginWorkflow.js');
+            await import('../lib/theme/createPluginWorkflow.js');
 
           await createPluginInteractive({
             id: options.id,
@@ -307,7 +307,7 @@ export function themeCommand(program: Command): void {
     .action(async (id: string) => {
       try {
         const { readPluginMetadata, getPluginPath } =
-          await import('../lib/pluginMetadata.js');
+          await import('../lib/theme/pluginMetadata.js');
 
         const metadata = await readPluginMetadata(id);
         const pluginDir = getPluginPath(id);

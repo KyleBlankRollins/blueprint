@@ -4,7 +4,7 @@
 
 import { readFile, writeFile } from 'fs/promises';
 import { join } from 'path';
-import { THEME_CONFIG_FILE } from './constants.js';
+import { THEME_CONFIG_FILE } from '../constants.js';
 
 const CONFIG_PATH = THEME_CONFIG_FILE;
 

@@ -6,7 +6,7 @@
 import { spawn } from 'child_process';
 import { access } from 'fs/promises';
 import { join } from 'path';
-import { openBrowser } from '../utils/browser.js';
+import { openBrowser } from '../../utils/browser.js';
 import { getThemeNames, themeExists } from './discoverThemes.js';
 import {
   DEFAULT_VITE_PORT,
@@ -14,7 +14,7 @@ import {
   GENERATED_THEMES_DIR,
   DEMO_DIR,
   THEME_PREVIEW_HTML,
-} from './constants.js';
+} from '../constants.js';
 
 export interface PreviewServerOptions {
   /** Theme variant to display (e.g., 'ocean-light') */

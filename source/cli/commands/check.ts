@@ -2,8 +2,8 @@ import { Command } from 'commander';
 import {
   validateComponent,
   isValidComponentName as isValidComponentNameValidate,
-} from '../lib/validateComponent.js';
-import { checkTokenUsage } from '../lib/validateTokens.js';
+} from '../lib/validation/component.js';
+import { checkTokenUsage } from '../lib/validation/tokens.js';
 import { success, error, info, warn } from '../utils/logger.js';
 
 /**

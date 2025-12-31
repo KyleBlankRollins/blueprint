@@ -1,5 +1,8 @@
 import { Command } from 'commander';
-import { scaffoldComponent, validateComponentName } from '../lib/scaffold.js';
+import {
+  scaffoldComponent,
+  validateComponentName,
+} from '../lib/component/scaffold.js';
 import { success, error, info } from '../utils/logger.js';
 
 export function scaffoldCommand(program: Command): void {

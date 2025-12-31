@@ -3,11 +3,11 @@ import {
   extractAPI,
   formatMarkdownTable,
   isValidComponentName,
-} from '../lib/extractAPI.js';
+} from '../lib/component/extractAPI.js';
 import {
   generateStories,
   isValidComponentName as isValidComponentNameStories,
-} from '../lib/generateStories.js';
+} from '../lib/component/generateStories.js';
 import { error } from '../utils/logger.js';
 
 export function generateCommand(program: Command): void {

@@ -5,8 +5,8 @@
 
 import { readFile, writeFile, mkdir, access } from 'fs/promises';
 import { join } from 'path';
-import { convertHexToOKLCH } from '../../themes/color/colorUtils.js';
-import { PLUGINS_DIR, PLUGIN_ID_REGEX } from './constants.js';
+import { convertHexToOKLCH } from '../../../themes/color/colorUtils.js';
+import { PLUGINS_DIR, PLUGIN_ID_REGEX } from '../constants.js';
 
 export interface PluginGeneratorOptions {
   /** Plugin ID (kebab-case, e.g., 'ocean-theme') */

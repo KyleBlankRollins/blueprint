@@ -451,15 +451,12 @@ interface ValidationWarning {
 2. **Documentation**
    - [ ] Plugin authoring guide
    - [ ] API reference for ThemeBuilder
-   - [ ] Example plugins repository
-   - [ ] Migration guide from old system
    - [ ] Best practices guide
 
 3. **Tooling**
    - [ ] ESLint rules for plugin validation
    - [ ] Prettier config for theme files
    - [ ] VS Code snippets for common patterns
-   - [ ] GitHub template repository
 
 4. **Testing utilities**
    - [ ] `createMockBuilder()` helper

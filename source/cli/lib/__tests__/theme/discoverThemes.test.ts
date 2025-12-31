@@ -8,7 +8,7 @@ import {
   getThemesByPlugin,
   themeExists,
   clearThemeCache,
-} from '../discoverThemes.js';
+} from '../../theme/discoverThemes.js';
 
 describe('discoverThemes', () => {
   const testDir = join(process.cwd(), 'test-themes-temp');

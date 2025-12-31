@@ -90,7 +90,7 @@ export async function generateTheme(
     }
 
     // Generate themes manifest for demo page
-    const { discoverThemes } = await import('../lib/discoverThemes.js');
+    const { discoverThemes } = await import('../lib/theme/discoverThemes.js');
     const themes = discoverThemes(outputDir, false); // Don't use cache
 
     const manifest = {

@@ -9,8 +9,8 @@ import {
   parsePluginMetadata,
   getPluginPath,
   type PluginMetadata,
-} from './pluginMetadata.js';
-import { PLUGIN_ID_REGEX, SEMVER_REGEX } from './constants.js';
+} from '../theme/pluginMetadata.js';
+import { PLUGIN_ID_REGEX, SEMVER_REGEX } from '../constants.js';
 
 export interface ValidationIssue {
   type: 'error' | 'warning';

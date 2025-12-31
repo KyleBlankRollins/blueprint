@@ -2,11 +2,11 @@ import { Command } from 'commander';
 import {
   validateComponent,
   isValidComponentName as isValidComponentNameValidate,
-} from '../lib/validateComponent.js';
+} from '../lib/validation/component.js';
 import {
   checkTokenUsage,
   isValidComponentName as isValidComponentNameTokens,
-} from '../lib/validateTokens.js';
+} from '../lib/validation/tokens.js';
 import { error } from '../utils/logger.js';
 
 export function validateCommand(program: Command): void {

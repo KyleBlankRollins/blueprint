@@ -5,7 +5,7 @@
 
 import { readFile, access } from 'fs/promises';
 import { join } from 'path';
-import { PLUGINS_DIR, PLUGIN_ID_REGEX, SEMVER_REGEX } from './constants.js';
+import { PLUGINS_DIR, PLUGIN_ID_REGEX, SEMVER_REGEX } from '../constants.js';
 
 export interface PluginMetadata {
   /** Plugin ID (kebab-case) */

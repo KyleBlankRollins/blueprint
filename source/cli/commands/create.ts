@@ -1,8 +1,11 @@
 import { Command } from 'commander';
-import { scaffoldComponent, validateComponentName } from '../lib/scaffold.js';
-import { generateStories } from '../lib/generateStories.js';
-import { extractAPI } from '../lib/extractAPI.js';
-import { addToDemo } from '../lib/addToDemo.js';
+import {
+  scaffoldComponent,
+  validateComponentName,
+} from '../lib/component/scaffold.js';
+import { generateStories } from '../lib/component/generateStories.js';
+import { extractAPI } from '../lib/component/extractAPI.js';
+import { addToDemo } from '../lib/component/addToDemo.js';
 import { success, error, info, warn } from '../utils/logger.js';
 import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
