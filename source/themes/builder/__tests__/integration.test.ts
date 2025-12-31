@@ -11,6 +11,8 @@ import {
   extendVariantPlugin,
   dependentPlugin,
 } from './fixtures/mockPlugins.js';
+import { blueprintCoreTheme } from '../../plugins/blueprint-core/index.js';
+import { wadaSanzoTheme } from '../../plugins/wada-sanzo/index.js';
 
 describe('Plugin System Integration', () => {
   let builder: ThemeBuilder;
@@ -233,6 +235,77 @@ describe('Plugin System Integration', () => {
       const variants = builder.getThemeVariantNames();
       expect(variants).toContain('light');
       expect(variants).toContain('light-extended');
+    });
+
+    it('should return null from getDesignTokens() when no ThemeBase plugins registered', () => {
+      // ThemeBuilder starts with null tokens (primitives aren't a ThemeBase plugin)
+      const emptyBuilder = new ThemeBuilder();
+
+      const tokens = emptyBuilder.getDesignTokens();
+      expect(tokens).toBeNull();
+    });
+  });
+
+  describe('Design Token Merging', () => {
+    it('should return design tokens from ThemeBase plugins via getDesignTokens()', () => {
+      // BasicPlugin extends ThemeBase, so it provides design tokens
+      builder.use(basicPlugin);
+
+      const tokens = builder.getDesignTokens();
+
+      expect(tokens).not.toBeNull();
+      expect(tokens!.spacing).toBeDefined();
+      expect(tokens!.typography).toBeDefined();
+      expect(tokens!.motion).toBeDefined();
+      expect(tokens!.radius).toBeDefined();
+      expect(tokens!.focus).toBeDefined();
+      expect(tokens!.zIndex).toBeDefined();
+      expect(tokens!.opacity).toBeDefined();
+      expect(tokens!.breakpoints).toBeDefined();
+      expect(tokens!.accessibility).toBeDefined();
+    });
+
+    it('should return design tokens from real ThemeBase plugins', () => {
+      const builder = new ThemeBuilder().use(blueprintCoreTheme);
+
+      const tokens = builder.getDesignTokens();
+
+      expect(tokens).not.toBeNull();
+      expect(tokens!.spacing).toBeDefined();
+      expect(tokens!.typography).toBeDefined();
+      expect(tokens!.motion).toBeDefined();
+      expect(tokens!.radius).toBeDefined();
+      expect(tokens!.focus).toBeDefined();
+      expect(tokens!.zIndex).toBeDefined();
+      expect(tokens!.opacity).toBeDefined();
+      expect(tokens!.breakpoints).toBeDefined();
+      expect(tokens!.accessibility).toBeDefined();
+    });
+
+    it('should merge design tokens from multiple ThemeBase plugins', () => {
+      const builder = new ThemeBuilder()
+        .use(blueprintCoreTheme)
+        .use(wadaSanzoTheme);
+
+      const tokens = builder.getDesignTokens();
+
+      expect(tokens).not.toBeNull();
+      expect(tokens!.spacing.base).toBe(4);
+      expect(tokens!.typography.fontFamilies.sans).toBeDefined();
+    });
+
+    it('should allow inspecting design tokens without triggering build', () => {
+      const builder = new ThemeBuilder().use(blueprintCoreTheme);
+
+      // Can access tokens before adding required theme variants
+      const tokens = builder.getDesignTokens();
+      expect(tokens).not.toBeNull();
+
+      // Build would fail at this point (no light/dark variants)
+      // blueprintCoreTheme registers light/dark, so this actually works
+      // Change test to verify we can get tokens independently of build
+      const config = builder.build();
+      expect(config.spacing).toEqual(tokens!.spacing);
     });
   });
 });

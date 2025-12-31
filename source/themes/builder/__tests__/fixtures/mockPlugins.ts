@@ -7,122 +7,148 @@ import type {
   ThemePlugin,
   ThemeBuilderInterface,
 } from '../../../core/types.js';
+import { ThemeBase } from '../../ThemeBase.js';
 
 /**
  * Basic plugin with minimal configuration
+ * Extends ThemeBase to provide design tokens
  */
-export const basicPlugin: ThemePlugin = {
-  id: 'basic',
-  version: '1.0.0',
+export class BasicPlugin extends ThemeBase {
+  id = 'basic';
+  version = '1.0.0';
+
   register(builder: ThemeBuilderInterface) {
     builder.addColor('testBlue', {
       source: { l: 0.5, c: 0.15, h: 220 },
       scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
     });
-  },
-};
+  }
+}
+
+export const basicPlugin = new BasicPlugin();
 
 /**
  * Plugin with full metadata
  */
-export const fullMetadataPlugin: ThemePlugin = {
-  id: 'full-meta',
-  version: '2.1.3',
-  name: 'Full Metadata Plugin',
-  description: 'A plugin with all metadata fields',
-  author: 'Blueprint Team',
-  license: 'MIT',
-  homepage: 'https://example.com',
-  tags: ['test', 'mock', 'example'],
+export class FullMetadataPlugin extends ThemeBase {
+  id = 'full-meta';
+  version = '2.1.3';
+  name = 'Full Metadata Plugin';
+  description = 'A plugin with all metadata fields';
+  author = 'Blueprint Team';
+  license = 'MIT';
+  homepage = 'https://example.com';
+  tags = ['test', 'mock', 'example'];
+
   register(builder: ThemeBuilderInterface) {
     builder.addColor('metaColor', {
       source: { l: 0.6, c: 0.12, h: 180 },
       scale: [500],
     });
-  },
-};
+  }
+}
+
+export const fullMetadataPlugin = new FullMetadataPlugin();
 
 /**
  * Plugin that depends on another plugin
  */
-export const dependentPlugin: ThemePlugin = {
-  id: 'dependent',
-  version: '1.0.0',
-  dependencies: [{ id: 'basic', version: '1.0.0' }],
+export class DependentPlugin extends ThemeBase {
+  id = 'dependent';
+  version = '1.0.0';
+  dependencies = [{ id: 'basic', version: '1.0.0' }];
+
   register(builder: ThemeBuilderInterface) {
     builder.addColor('dependentRed', {
       source: { l: 0.55, c: 0.22, h: 25 },
       scale: [500, 700],
     });
-  },
-};
+  }
+}
+
+export const dependentPlugin = new DependentPlugin();
 
 /**
  * Plugin with optional dependency
  */
-export const optionalDependencyPlugin: ThemePlugin = {
-  id: 'optional-dep',
-  version: '1.0.0',
-  dependencies: [
+export class OptionalDependencyPlugin extends ThemeBase {
+  id = 'optional-dep';
+  version = '1.0.0';
+  dependencies = [
     { id: 'basic', version: '1.0.0' },
     { id: 'missing', version: '1.0.0', optional: true },
-  ],
+  ];
+
   register(builder: ThemeBuilderInterface) {
     builder.addColor('optionalGreen', {
       source: { l: 0.6, c: 0.18, h: 140 },
       scale: [500],
     });
-  },
-};
+  }
+}
+
+export const optionalDependencyPlugin = new OptionalDependencyPlugin();
 
 /**
  * Plugin with peer plugins
  */
-export const peerPlugin: ThemePlugin = {
-  id: 'peer',
-  version: '1.0.0',
-  peerPlugins: ['basic', 'full-meta'],
+export class PeerPlugin extends ThemeBase {
+  id = 'peer';
+  version = '1.0.0';
+  peerPlugins = ['basic', 'full-meta'];
+
   register(builder: ThemeBuilderInterface) {
     builder.addColor('peerYellow', {
       source: { l: 0.8, c: 0.15, h: 90 },
       scale: [500],
     });
-  },
-};
+  }
+}
+
+export const peerPlugin = new PeerPlugin();
 
 /**
  * Plugin with lifecycle hooks
  */
-export const lifecyclePlugin: ThemePlugin = {
-  id: 'lifecycle',
-  version: '1.0.0',
+export class LifecyclePlugin extends ThemeBase {
+  id = 'lifecycle';
+  version = '1.0.0';
+
   register(builder: ThemeBuilderInterface) {
     builder.addColor('lifecycleOrange', {
       source: { l: 0.65, c: 0.18, h: 50 },
       scale: [500],
     });
-  },
-  beforeBuild(config) {
+  }
+
+  override beforeBuild(
+    config: Partial<import('../../../core/types.js').ThemeConfig>
+  ) {
     // Hook that runs before build
     console.log('beforeBuild called', config);
-  },
-  afterBuild(config) {
+  }
+
+  override afterBuild(config: import('../../../core/types.js').ThemeConfig) {
     // Hook that runs after build
     console.log('afterBuild called', config);
-  },
-  validate() {
+  }
+
+  override validate() {
     // Custom validation
     return [];
-  },
-};
+  }
+}
+
+export const lifecyclePlugin = new LifecyclePlugin();
 
 /**
  * Plugin that adds a theme variant
  */
-export const themeVariantPlugin: ThemePlugin = {
-  id: 'theme-variant',
-  version: '1.0.0',
-  dependencies: [{ id: 'basic' }],
+export class ThemeVariantPlugin extends ThemeBase {
+  id = 'theme-variant';
+  version = '1.0.0';
+  dependencies = [{ id: 'basic' }];
+
   register(builder: ThemeBuilderInterface) {
     builder.addColor('gray', {
       source: { l: 0.5, c: 0.01, h: 0 },
@@ -148,30 +174,36 @@ export const themeVariantPlugin: ThemePlugin = {
       borderStrong: builder.colors.gray300,
       focus: builder.colors.testBlue500,
     });
-  },
-};
+  }
+}
+
+export const themeVariantPlugin = new ThemeVariantPlugin();
 
 /**
  * Plugin that extends a theme variant
  */
-export const extendVariantPlugin: ThemePlugin = {
-  id: 'extend-variant',
-  version: '1.0.0',
-  dependencies: [{ id: 'theme-variant' }],
+export class ExtendVariantPlugin extends ThemeBase {
+  id = 'extend-variant';
+  version = '1.0.0';
+  dependencies = [{ id: 'theme-variant' }];
+
   register(builder: ThemeBuilderInterface) {
     builder.extendThemeVariant('light', 'light-extended', {
       primary: builder.colors.testBlue700,
       primaryHover: builder.colors.testBlue800,
     });
-  },
-};
+  }
+}
+
+export const extendVariantPlugin = new ExtendVariantPlugin();
 
 /**
  * Plugin with async registration
  */
-export const asyncPlugin: ThemePlugin = {
-  id: 'async',
-  version: '1.0.0',
+export class AsyncPlugin extends ThemeBase {
+  id = 'async';
+  version = '1.0.0';
+
   async register(builder: ThemeBuilderInterface) {
     // Simulate async operation
     await new Promise((resolve) => globalThis.setTimeout(resolve, 10));
@@ -180,40 +212,48 @@ export const asyncPlugin: ThemePlugin = {
       source: { l: 0.5, c: 0.2, h: 280 },
       scale: [500],
     });
-  },
-};
+  }
+}
+
+export const asyncPlugin = new AsyncPlugin();
 
 /**
  * Plugin that causes circular dependency
  * Use with circularDepB
  */
-export const circularDepA: ThemePlugin = {
-  id: 'circular-a',
-  version: '1.0.0',
-  dependencies: [{ id: 'circular-b' }],
+export class CircularDepA extends ThemeBase {
+  id = 'circular-a';
+  version = '1.0.0';
+  dependencies = [{ id: 'circular-b' }];
+
   register(builder: ThemeBuilderInterface) {
     builder.addColor('circularA', {
       source: { l: 0.5, c: 0.1, h: 0 },
       scale: [500],
     });
-  },
-};
+  }
+}
+
+export const circularDepA = new CircularDepA();
 
 /**
  * Plugin that causes circular dependency
  * Use with circularDepA
  */
-export const circularDepB: ThemePlugin = {
-  id: 'circular-b',
-  version: '1.0.0',
-  dependencies: [{ id: 'circular-a' }],
+export class CircularDepB extends ThemeBase {
+  id = 'circular-b';
+  version = '1.0.0';
+  dependencies = [{ id: 'circular-a' }];
+
   register(builder: ThemeBuilderInterface) {
     builder.addColor('circularB', {
       source: { l: 0.5, c: 0.1, h: 0 },
       scale: [500],
     });
-  },
-};
+  }
+}
+
+export const circularDepB = new CircularDepB();
 
 /**
  * Invalid plugin - missing ID

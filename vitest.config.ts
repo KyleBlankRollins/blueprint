@@ -5,6 +5,7 @@ export default defineConfig({
     globals: true,
     environment: 'happy-dom',
     include: ['source/**/*.test.ts'],
+    watch: false, // Disable watch mode by default - run once and exit
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'lcov'],

@@ -25,7 +25,8 @@ import type {
 } from '../core/types.js';
 import { createColorRef, serializeColorRef } from '../color/colorRefUtils.js';
 import { ThemeValidator } from './ThemeValidator.js';
-import { createDefaultThemeConfig } from './defaults.js';
+import { deepMerge } from './deepMerge.js';
+import { ThemeBase, type DesignTokens } from './ThemeBase.js';
 import {
   generateCompleteTypes,
   writeTypeFile,
@@ -53,17 +54,50 @@ interface ThemeVariantEntry {
  * ThemeBuilder class for composing themes from plugins
  */
 export class ThemeBuilder implements ThemeBuilderInterface {
+  private static readonly CORE_PLUGIN_ID = 'core';
   private plugins: ThemePlugin[] = [];
   private colorRegistry: Map<string, ColorRegistryEntry> = new Map();
   private themeVariants: Map<string, ThemeVariantEntry> = new Map();
   private _colors: Record<string, ColorRef> = {};
   private currentPluginId?: string; // Track current plugin during registration
+  private designTokens: DesignTokens | null = null; // Merged design tokens from ThemeBase plugins
+  private disposables: Array<() => void> = []; // Cleanup functions for resource management
 
   /**
    * Constructor - automatically registers primitive colors (white, black)
    */
   constructor() {
     this.registerPrimitives();
+  }
+
+  /**
+   * Register a cleanup function to be called when the builder is disposed
+   * Useful for plugins that need to clean up resources
+   *
+   * @param cleanup - Function to call during disposal
+   */
+  onDispose(cleanup: () => void): void {
+    this.disposables.push(cleanup);
+  }
+
+  /**
+   * Clean up all resources and registered cleanup handlers
+   * Call this when the builder is no longer needed to prevent memory leaks
+   */
+  dispose(): void {
+    for (const cleanup of this.disposables) {
+      try {
+        cleanup();
+      } catch (error) {
+        console.error('Error during cleanup:', error);
+      }
+    }
+    this.disposables = [];
+    this.colorRegistry.clear();
+    this.themeVariants.clear();
+    this._colors = {};
+    this.plugins = [];
+    this.designTokens = null;
   }
 
   /**
@@ -76,6 +110,7 @@ export class ThemeBuilder implements ThemeBuilderInterface {
 
   /**
    * Register primitive colors (white, black) that are universal across all themes
+   * These are the foundational achromatic colors available in every theme.
    * @private
    */
   private registerPrimitives(): void {
@@ -132,25 +167,58 @@ export class ThemeBuilder implements ThemeBuilderInterface {
       );
       // Remove existing plugin
       this.plugins = this.plugins.filter((p) => p.id !== plugin.id);
+
+      // Remove theme variants owned by the old plugin
+      for (const [variantName, variant] of this.themeVariants) {
+        if (variant.pluginId === plugin.id) {
+          this.themeVariants.delete(variantName);
+        }
+      }
     }
 
     this.plugins.push(plugin);
 
+    // If plugin extends ThemeBase, merge its design tokens
+    if (plugin instanceof ThemeBase) {
+      const tokens = plugin.getDesignTokens();
+      if (this.designTokens === null) {
+        // First ThemeBase plugin - initialize with its tokens
+        this.designTokens = tokens;
+      } else {
+        // Subsequent ThemeBase plugins - deep merge (later overrides earlier)
+        // Type assertion safety: DesignTokens has a known structure of nested objects
+        // containing design token values. deepMerge handles the recursive merging correctly
+        // and we cast back to DesignTokens as the structure is preserved.
+        this.designTokens = deepMerge(
+          this.designTokens as unknown as Record<string, unknown>,
+          tokens as unknown as Record<string, unknown>
+        ) as unknown as DesignTokens;
+      }
+    }
+
     // Set current plugin context
     this.currentPluginId = plugin.id;
 
-    // Execute plugin's register function
-    const result = plugin.register(this);
+    try {
+      // Execute plugin's register function
+      const result = plugin.register(this);
+
+      // Handle async registration
+      if (result instanceof Promise) {
+        throw new Error(
+          `Plugin "${plugin.id}" uses async registration. Use useAsync() instead.`
+        );
+      }
+    } catch (error) {
+      // Clear plugin context before re-throwing
+      this.currentPluginId = undefined;
+      throw new Error(
+        `Failed to register plugin "${plugin.id}": ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
+    }
 
     // Clear plugin context
     this.currentPluginId = undefined;
-
-    // Handle async registration
-    if (result instanceof Promise) {
-      throw new Error(
-        `Plugin "${plugin.id}" uses async registration. Use registerAsync() instead.`
-      );
-    }
 
     return this;
   }
@@ -184,8 +252,36 @@ export class ThemeBuilder implements ThemeBuilderInterface {
 
     this.plugins.push(plugin);
 
-    // Execute plugin's register function (may be async)
-    await plugin.register(this);
+    // If plugin extends ThemeBase, merge its design tokens
+    if (plugin instanceof ThemeBase) {
+      const tokens = plugin.getDesignTokens();
+      if (this.designTokens === null) {
+        this.designTokens = tokens;
+      } else {
+        // Type assertion safety: Same as in use() - DesignTokens structure is preserved
+        this.designTokens = deepMerge(
+          this.designTokens as unknown as Record<string, unknown>,
+          tokens as unknown as Record<string, unknown>
+        ) as unknown as DesignTokens;
+      }
+    }
+
+    // Set current plugin context
+    this.currentPluginId = plugin.id;
+
+    try {
+      // Execute plugin's register function (may be async)
+      await plugin.register(this);
+    } catch (error) {
+      // Clear plugin context before re-throwing
+      this.currentPluginId = undefined;
+      throw new Error(
+        `Failed to register plugin "${plugin.id}": ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
+    }
+
+    // Clear plugin context
+    this.currentPluginId = undefined;
 
     return this;
   }
@@ -355,6 +451,9 @@ export class ThemeBuilder implements ThemeBuilderInterface {
       ...overrides,
     };
 
+    // Validate the merged tokens
+    this.validateSemanticTokens(mergedTokens);
+
     // Store the extended variant
     this.themeVariants.set(newName, {
       tokens: mergedTokens,
@@ -458,7 +557,32 @@ export class ThemeBuilder implements ThemeBuilderInterface {
   }
 
   /**
+   * Get the merged design tokens from all ThemeBase plugins
+   *
+   * Returns the design tokens (spacing, typography, motion, etc.) that have been
+   * collected and merged from all registered ThemeBase plugins. Later plugins
+   * override earlier ones via deep merge.
+   *
+   * @returns Merged design tokens, or null if no ThemeBase plugins registered
+   *
+   * @example
+   * ```typescript
+   * const builder = new ThemeBuilder()
+   *   .use(blueprintCoreTheme)
+   *   .use(wadaSanzoTheme);
+   *
+   * const tokens = builder.getDesignTokens();
+   * console.log(tokens.spacing.base); // 4 (or overridden value)
+   * console.log(tokens.typography.fontFamilies.sans); // Font stack
+   * ```
+   */
+  getDesignTokens(): DesignTokens | null {
+    return this.designTokens;
+  }
+
+  /**
    * Get theme variants grouped by plugin
+   * Useful for understanding which plugins contribute which theme variants
    *
    * @returns Map of plugin IDs to their theme variant names
    */
@@ -466,7 +590,7 @@ export class ThemeBuilder implements ThemeBuilderInterface {
     const byPlugin = new Map<string, string[]>();
 
     for (const [variantName, variant] of this.themeVariants) {
-      const pluginId = variant.pluginId || 'core';
+      const pluginId = variant.pluginId || ThemeBuilder.CORE_PLUGIN_ID;
       if (!byPlugin.has(pluginId)) {
         byPlugin.set(pluginId, []);
       }
@@ -478,7 +602,10 @@ export class ThemeBuilder implements ThemeBuilderInterface {
 
   /**
    * Resolve a color ref to its serialized string format
+   * Converts a ColorRef object to a string like "gray-500" for use in CSS
    * @private
+   * @param ref - Color reference to resolve
+   * @returns Serialized color ref string or null if color not found
    */
   private resolveColorRef(ref: ColorRef): string | null {
     const colorEntry = this.colorRegistry.get(ref.colorName);
@@ -494,8 +621,10 @@ export class ThemeBuilder implements ThemeBuilderInterface {
   }
 
   /**
-   * Validate semantic tokens
+   * Validate semantic tokens to ensure all required tokens are present and reference valid colors
    * @private
+   * @param tokens - Semantic tokens to validate
+   * @throws {Error} If validation fails
    */
   private validateSemanticTokens(tokens: SemanticTokens<ColorRef>): void {
     const validator = new ThemeValidator({
@@ -510,9 +639,19 @@ export class ThemeBuilder implements ThemeBuilderInterface {
 
   /**
    * Build the theme config without hooks or validation
+   * Used internally by build() and validate() to construct the configuration
    * @private
+   * @returns Partial theme configuration for validation or final build
    */
   private buildInternal(): ThemeConfig {
+    // Ensure at least one ThemeBase plugin is registered
+    if (this.designTokens === null) {
+      throw new Error(
+        'Theme configuration requires at least one plugin that extends ThemeBase to provide design tokens (spacing, typography, etc.). ' +
+          'Register a ThemeBase plugin using builder.use(myThemePlugin).'
+      );
+    }
+
     // Convert color registry to the format expected by ThemeConfig
     const colors: Record<string, ColorScale> = {};
     for (const [name, entry] of this.colorRegistry) {
@@ -547,13 +686,13 @@ export class ThemeBuilder implements ThemeBuilderInterface {
       );
     }
 
-    // Build the theme config with defaults
+    // Build the theme config with design tokens from ThemeBase plugins
     const config: ThemeConfig = {
       colors,
       themes: themes as Record<ThemeVariant, Record<string, string>> &
         Record<string, Record<string, string>>,
       themeMetadata,
-      ...createDefaultThemeConfig(),
+      ...this.designTokens,
     };
 
     return config;
