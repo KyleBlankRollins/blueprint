@@ -12,13 +12,19 @@ import {
 
 describe('discoverThemes', () => {
   const testDir = join(process.cwd(), 'test-themes-temp');
+  const testPluginsDir = join(testDir, 'plugins');
+  const testGeneratedDir = join(testDir, 'generated');
   let consoleWarnSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
-    // Clean up any existing test directory
+    // Clean up any existing test directories
     if (existsSync(testDir)) {
       rmSync(testDir, { recursive: true, force: true });
     }
+    if (existsSync(testPluginsDir)) {
+      rmSync(testPluginsDir, { recursive: true, force: true });
+    }
+
     // Clear cache before each test
     clearThemeCache();
     // Spy on console.warn to suppress expected warnings in tests
@@ -26,36 +32,78 @@ describe('discoverThemes', () => {
   });
 
   afterEach(() => {
-    // Clean up test directory after each test
+    // Clean up test directories after each test
     if (existsSync(testDir)) {
       rmSync(testDir, { recursive: true, force: true });
     }
+    if (existsSync(testPluginsDir)) {
+      rmSync(testPluginsDir, { recursive: true, force: true });
+    }
+
     // Clear cache after each test
     clearThemeCache();
     // Restore console.warn
     consoleWarnSpy.mockRestore();
   });
 
+  /**
+   * Helper to create a mock plugin with variants
+   */
+  function createMockPlugin(
+    pluginId: string,
+    variants: string[],
+    pluginsDir = testPluginsDir
+  ) {
+    const pluginDir = join(pluginsDir, pluginId);
+    mkdirSync(pluginDir, { recursive: true });
+
+    const variantCalls = variants
+      .map((v) => `  builder.addThemeVariant('${v}', {});`)
+      .join('\n');
+
+    const pluginContent = `
+import { ThemeBase } from '../../builder/ThemeBase.js';
+import type { ThemeBuilderInterface } from '../../core/types.js';
+
+export class TestTheme extends ThemeBase {
+  readonly id = '${pluginId}';
+  readonly version = '1.0.0';
+  readonly name = 'Test Theme';
+  readonly description = 'Test theme for unit tests';
+  readonly author = 'Test';
+  readonly license = 'MIT';
+  readonly tags = ['test'];
+
+  register(builder: ThemeBuilderInterface): void {
+${variantCalls}
+  }
+}
+
+export const testTheme = new TestTheme();
+export default testTheme;
+`;
+
+    writeFileSync(join(pluginDir, 'index.ts'), pluginContent);
+  }
+
   describe('discoverThemes()', () => {
-    it('should return empty array when directory does not exist', () => {
-      const themes = discoverThemes('/nonexistent/path');
+    it('should return empty array when plugins directory does not exist', () => {
+      // Use a path where plugins directory won't exist
+      const themes = discoverThemes('/nonexistent/path/generated');
       expect(themes).toEqual([]);
     });
 
-    it('should return empty array when directory is empty', () => {
-      mkdirSync(testDir, { recursive: true });
-      const themes = discoverThemes(testDir);
+    it('should return empty array when no plugins exist', () => {
+      mkdirSync(testPluginsDir, { recursive: true });
+      mkdirSync(testGeneratedDir, { recursive: true });
+      const themes = discoverThemes(testGeneratedDir);
       expect(themes).toEqual([]);
     });
 
     it('should discover themes from a single plugin', () => {
-      // Create plugin directory with themes
-      const pluginDir = join(testDir, 'test-plugin');
-      mkdirSync(pluginDir, { recursive: true });
-      writeFileSync(join(pluginDir, 'light.css'), '/* light theme */');
-      writeFileSync(join(pluginDir, 'dark.css'), '/* dark theme */');
+      createMockPlugin('test-plugin', ['light', 'dark']);
 
-      const themes = discoverThemes(testDir);
+      const themes = discoverThemes(testGeneratedDir);
 
       expect(themes).toHaveLength(2);
       expect(themes[0]).toMatchObject({
@@ -71,71 +119,65 @@ describe('discoverThemes', () => {
     });
 
     it('should discover themes from multiple plugins', () => {
-      // Create first plugin
-      const plugin1 = join(testDir, 'plugin-a');
-      mkdirSync(plugin1, { recursive: true });
-      writeFileSync(join(plugin1, 'light.css'), '/* light */');
+      createMockPlugin('plugin-a', ['light']);
+      createMockPlugin('plugin-b', ['dark']);
 
-      // Create second plugin
-      const plugin2 = join(testDir, 'plugin-b');
-      mkdirSync(plugin2, { recursive: true });
-      writeFileSync(join(plugin2, 'dark.css'), '/* dark */');
-
-      const themes = discoverThemes(testDir);
+      const themes = discoverThemes(testGeneratedDir);
 
       expect(themes).toHaveLength(2);
       expect(themes[0].pluginId).toBe('plugin-a');
       expect(themes[1].pluginId).toBe('plugin-b');
     });
 
-    it('should skip files in the root directory', () => {
-      mkdirSync(testDir, { recursive: true });
-      writeFileSync(join(testDir, 'primitives.css'), '/* primitives */');
-      writeFileSync(join(testDir, 'utilities.css'), '/* utilities */');
-      writeFileSync(join(testDir, 'index.css'), '/* index */');
+    it('should skip plugins without index.ts', () => {
+      mkdirSync(testPluginsDir, { recursive: true });
+      mkdirSync(join(testPluginsDir, 'incomplete-plugin'), { recursive: true });
 
-      const themes = discoverThemes(testDir);
-      expect(themes).toEqual([]);
-    });
+      createMockPlugin('valid-plugin', ['light']);
 
-    it('should skip invalid theme names (not starting with letter)', () => {
-      const pluginDir = join(testDir, 'test-plugin');
-      mkdirSync(pluginDir, { recursive: true });
-      writeFileSync(join(pluginDir, '123-theme.css'), '/* invalid */');
-      writeFileSync(join(pluginDir, '-invalid.css'), '/* invalid */');
-      writeFileSync(join(pluginDir, 'valid.css'), '/* valid */');
-
-      const themes = discoverThemes(testDir);
-
+      const themes = discoverThemes(testGeneratedDir);
       expect(themes).toHaveLength(1);
-      expect(themes[0].name).toBe('valid');
+      expect(themes[0].pluginId).toBe('valid-plugin');
     });
 
-    it('should accept valid theme names with hyphens and numbers', () => {
-      const pluginDir = join(testDir, 'test-plugin');
+    it('should skip plugins without plugin ID', () => {
+      mkdirSync(testPluginsDir, { recursive: true });
+      const pluginDir = join(testPluginsDir, 'no-id-plugin');
       mkdirSync(pluginDir, { recursive: true });
-      writeFileSync(join(pluginDir, 'theme-v2.css'), '/* valid */');
-      writeFileSync(join(pluginDir, 'custom-123.css'), '/* valid */');
 
-      const themes = discoverThemes(testDir);
+      // Plugin without id field
+      const pluginContent = `
+export class TestTheme {
+  register(builder) {
+    builder.addThemeVariant('light', {});
+  }
+}
+`;
+      writeFileSync(join(pluginDir, 'index.ts'), pluginContent);
 
+      createMockPlugin('valid-plugin', ['light']);
+
+      const themes = discoverThemes(testGeneratedDir);
+      expect(themes).toHaveLength(1);
+      expect(themes[0].pluginId).toBe('valid-plugin');
+    });
+
+    it('should skip plugins with no theme variants', () => {
+      createMockPlugin('plugin-with-variants', ['light', 'dark']);
+      createMockPlugin('plugin-without-variants', []);
+
+      const themes = discoverThemes(testGeneratedDir);
       expect(themes).toHaveLength(2);
-      expect(themes[0].name).toBe('custom-123');
-      expect(themes[1].name).toBe('theme-v2');
+      expect(themes.every((t) => t.pluginId === 'plugin-with-variants')).toBe(
+        true
+      );
     });
 
     it('should sort themes deterministically by plugin then name', () => {
-      const pluginA = join(testDir, 'z-plugin');
-      mkdirSync(pluginA, { recursive: true });
-      writeFileSync(join(pluginA, 'z-theme.css'), '');
-      writeFileSync(join(pluginA, 'a-theme.css'), '');
+      createMockPlugin('z-plugin', ['z-theme', 'a-theme']);
+      createMockPlugin('a-plugin', ['z-theme', 'a-theme']);
 
-      const pluginB = join(testDir, 'a-plugin');
-      mkdirSync(pluginB, { recursive: true });
-      writeFileSync(join(pluginB, 'z-theme.css'), '');
-      writeFileSync(join(pluginB, 'a-theme.css'), '');
-
-      const themes = discoverThemes(testDir);
+      const themes = discoverThemes(testGeneratedDir);
 
       expect(themes).toHaveLength(4);
       // First by plugin (a-plugin before z-plugin)
@@ -151,104 +193,94 @@ describe('discoverThemes', () => {
     });
 
     it('should use cache on subsequent calls', () => {
-      const pluginDir = join(testDir, 'test-plugin');
-      mkdirSync(pluginDir, { recursive: true });
-      writeFileSync(join(pluginDir, 'light.css'), '/* light */');
+      createMockPlugin('test-plugin', ['light']);
 
       // First call - should cache
-      const themes1 = discoverThemes(testDir);
+      const themes1 = discoverThemes(testGeneratedDir);
       expect(themes1).toHaveLength(1);
 
-      // Add another theme after first call
-      writeFileSync(join(pluginDir, 'dark.css'), '/* dark */');
+      // Add another plugin after first call
+      createMockPlugin('another-plugin', ['dark']);
 
       // Second call with cache - should return cached result
-      const themes2 = discoverThemes(testDir);
+      const themes2 = discoverThemes(testGeneratedDir);
       expect(themes2).toHaveLength(1); // Still 1 because of cache
 
-      // Third call with cache disabled - should see new theme
-      const themes3 = discoverThemes(testDir, false);
+      // Third call with cache disabled - should see new plugin
+      const themes3 = discoverThemes(testGeneratedDir, false);
       expect(themes3).toHaveLength(2);
     });
 
-    it('should handle symlinks by skipping them', () => {
-      const pluginDir = join(testDir, 'test-plugin');
-      mkdirSync(pluginDir, { recursive: true });
-      writeFileSync(join(pluginDir, 'theme.css'), '/* theme */');
+    it('should skip special directories (starting with . or _)', () => {
+      createMockPlugin('valid-plugin', ['light']);
+      createMockPlugin('.hidden-plugin', ['dark']);
+      createMockPlugin('_internal-plugin', ['custom']);
 
-      // Note: Creating symlinks on Windows requires admin privileges
-      // This test verifies the code handles them, even if we can't create one in test
-      const themes = discoverThemes(testDir);
+      const themes = discoverThemes(testGeneratedDir);
       expect(themes).toHaveLength(1);
+      expect(themes[0].pluginId).toBe('valid-plugin');
     });
 
     it('should provide correct fullPath for themes', () => {
-      const pluginDir = join(testDir, 'test-plugin');
-      mkdirSync(pluginDir, { recursive: true });
-      writeFileSync(join(pluginDir, 'light.css'), '/* light */');
+      createMockPlugin('test-plugin', ['light']);
 
-      const themes = discoverThemes(testDir);
+      const themes = discoverThemes(testGeneratedDir);
 
-      expect(themes[0].fullPath).toBe(join(pluginDir, 'light.css'));
-      expect(existsSync(themes[0].fullPath)).toBe(true);
+      expect(themes[0].fullPath).toBe(
+        join(testGeneratedDir, 'test-plugin', 'light.css')
+      );
+      expect(themes[0].path).toBe('test-plugin/light.css');
     });
   });
 
   describe('clearThemeCache()', () => {
     it('should clear the cache', () => {
-      const pluginDir = join(testDir, 'test-plugin');
-      mkdirSync(pluginDir, { recursive: true });
-      writeFileSync(join(pluginDir, 'light.css'), '/* light */');
+      createMockPlugin('test-plugin', ['light']);
 
       // First call - caches result
-      const themes1 = discoverThemes(testDir);
+      const themes1 = discoverThemes(testGeneratedDir);
       expect(themes1).toHaveLength(1);
 
-      // Add new theme
-      writeFileSync(join(pluginDir, 'dark.css'), '/* dark */');
+      // Add new plugin
+      createMockPlugin('another-plugin', ['dark']);
 
-      // Cache prevents seeing new theme
-      const themes2 = discoverThemes(testDir);
+      // Cache prevents seeing new plugin
+      const themes2 = discoverThemes(testGeneratedDir);
       expect(themes2).toHaveLength(1);
 
       // Clear cache
       clearThemeCache();
 
-      // Now should see both themes
-      const themes3 = discoverThemes(testDir);
+      // Now should see both plugins
+      const themes3 = discoverThemes(testGeneratedDir);
       expect(themes3).toHaveLength(2);
     });
   });
 
   describe('getThemeNames()', () => {
     it('should return array of theme names', () => {
-      const pluginDir = join(testDir, 'test-plugin');
-      mkdirSync(pluginDir, { recursive: true });
-      writeFileSync(join(pluginDir, 'light.css'), '');
-      writeFileSync(join(pluginDir, 'dark.css'), '');
+      createMockPlugin('test-plugin', ['light', 'dark']);
 
-      const names = getThemeNames(testDir);
+      const names = getThemeNames(testGeneratedDir);
 
       expect(names).toEqual(['dark', 'light']);
     });
 
     it('should return empty array when no themes exist', () => {
-      mkdirSync(testDir, { recursive: true });
-      const names = getThemeNames(testDir);
+      mkdirSync(testPluginsDir, { recursive: true });
+      mkdirSync(testGeneratedDir, { recursive: true });
+      const names = getThemeNames(testGeneratedDir);
       expect(names).toEqual([]);
     });
   });
 
   describe('getThemeByName()', () => {
     beforeEach(() => {
-      const pluginDir = join(testDir, 'test-plugin');
-      mkdirSync(pluginDir, { recursive: true });
-      writeFileSync(join(pluginDir, 'light.css'), '');
-      writeFileSync(join(pluginDir, 'dark.css'), '');
+      createMockPlugin('test-plugin', ['light', 'dark']);
     });
 
     it('should find theme by exact name', () => {
-      const theme = getThemeByName(testDir, 'light');
+      const theme = getThemeByName(testGeneratedDir, 'light');
 
       expect(theme).toBeDefined();
       expect(theme?.name).toBe('light');
@@ -256,30 +288,24 @@ describe('discoverThemes', () => {
     });
 
     it('should return undefined for non-existent theme', () => {
-      const theme = getThemeByName(testDir, 'nonexistent');
+      const theme = getThemeByName(testGeneratedDir, 'nonexistent');
       expect(theme).toBeUndefined();
     });
 
     it('should be case-sensitive', () => {
-      const theme = getThemeByName(testDir, 'Light');
+      const theme = getThemeByName(testGeneratedDir, 'Light');
       expect(theme).toBeUndefined();
     });
   });
 
   describe('getThemesByPlugin()', () => {
     beforeEach(() => {
-      const plugin1 = join(testDir, 'plugin-a');
-      mkdirSync(plugin1, { recursive: true });
-      writeFileSync(join(plugin1, 'light.css'), '');
-      writeFileSync(join(plugin1, 'dark.css'), '');
-
-      const plugin2 = join(testDir, 'plugin-b');
-      mkdirSync(plugin2, { recursive: true });
-      writeFileSync(join(plugin2, 'custom.css'), '');
+      createMockPlugin('plugin-a', ['light', 'dark']);
+      createMockPlugin('plugin-b', ['custom']);
     });
 
     it('should return all themes for a specific plugin', () => {
-      const themes = getThemesByPlugin(testDir, 'plugin-a');
+      const themes = getThemesByPlugin(testGeneratedDir, 'plugin-a');
 
       expect(themes).toHaveLength(2);
       expect(themes[0].name).toBe('dark');
@@ -288,13 +314,13 @@ describe('discoverThemes', () => {
     });
 
     it('should return empty array for non-existent plugin', () => {
-      const themes = getThemesByPlugin(testDir, 'nonexistent');
+      const themes = getThemesByPlugin(testGeneratedDir, 'nonexistent');
       expect(themes).toEqual([]);
     });
 
     it('should filter correctly with multiple plugins', () => {
-      const themesA = getThemesByPlugin(testDir, 'plugin-a');
-      const themesB = getThemesByPlugin(testDir, 'plugin-b');
+      const themesA = getThemesByPlugin(testGeneratedDir, 'plugin-a');
+      const themesB = getThemesByPlugin(testGeneratedDir, 'plugin-b');
 
       expect(themesA).toHaveLength(2);
       expect(themesB).toHaveLength(1);
@@ -304,23 +330,22 @@ describe('discoverThemes', () => {
 
   describe('themeExists()', () => {
     beforeEach(() => {
-      const pluginDir = join(testDir, 'test-plugin');
-      mkdirSync(pluginDir, { recursive: true });
-      writeFileSync(join(pluginDir, 'light.css'), '');
+      createMockPlugin('test-plugin', ['light']);
     });
 
     it('should return true for existing theme', () => {
-      expect(themeExists(testDir, 'light')).toBe(true);
+      expect(themeExists(testGeneratedDir, 'light')).toBe(true);
     });
 
     it('should return false for non-existent theme', () => {
-      expect(themeExists(testDir, 'dark')).toBe(false);
+      expect(themeExists(testGeneratedDir, 'dark')).toBe(false);
     });
 
-    it('should return false for empty directory', () => {
-      rmSync(testDir, { recursive: true, force: true });
-      mkdirSync(testDir, { recursive: true });
-      expect(themeExists(testDir, 'light')).toBe(false);
+    it('should return false when no plugins exist', () => {
+      rmSync(testPluginsDir, { recursive: true, force: true });
+      mkdirSync(testPluginsDir, { recursive: true });
+      clearThemeCache();
+      expect(themeExists(testGeneratedDir, 'light')).toBe(false);
     });
   });
 });

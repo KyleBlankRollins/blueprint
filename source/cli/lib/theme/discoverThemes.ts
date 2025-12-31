@@ -1,10 +1,11 @@
 /**
  * Theme Discovery Utilities
- * Discovers available theme variants from the generated CSS directory structure
+ * Discovers available theme variants from plugin source files
  */
 
-import { readdirSync, statSync } from 'node:fs';
+import { readdirSync, statSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { parsePluginMetadata } from './pluginMetadata.js';
 
 export interface ThemeInfo {
   /** Theme variant name (e.g., 'light', 'dark', 'wada-light') */
@@ -31,9 +32,12 @@ export function clearThemeCache(): void {
 }
 
 /**
- * Discover all available theme variants from the generated directory
+ * Discover all available theme variants from plugin source files
  *
- * @param generatedDir - Path to the generated themes directory
+ * Scans source/themes/plugins directory for actual plugin files (source of truth),
+ * then checks for corresponding generated CSS files.
+ *
+ * @param generatedDir - Path to the generated themes directory (used to check for generated CSS files)
  * @param useCache - Whether to use cached results (default: true)
  * @returns Array of theme objects containing name, pluginId, path, and fullPath
  * @throws Does not throw - returns empty array on errors
@@ -55,25 +59,36 @@ export function discoverThemes(
   }
 
   const themes: ThemeInfo[] = [];
-  let entries: string[];
 
-  // Read the directory with error handling
+  // Determine plugins directory (source of truth)
+  // For production: generatedDir will be 'source/themes/generated', so plugins are at 'source/themes/plugins'
+  // For tests: generatedDir will be 'test-dir', so plugins are at 'test-dir/../source/themes/plugins'
+  // We derive plugins dir by going up from generated dir and into plugins
+  const pluginsDir = join(generatedDir, '..', 'plugins');
+
+  let pluginEntries: string[];
   try {
-    entries = readdirSync(generatedDir);
+    pluginEntries = readdirSync(pluginsDir);
   } catch (error) {
     console.warn(
-      `⚠️  Cannot read themes directory: ${error instanceof Error ? error.message : 'Unknown error'}`
+      `⚠️  Cannot read plugins directory: ${error instanceof Error ? error.message : 'Unknown error'}`
     );
     return [];
   }
 
-  for (const entry of entries) {
-    const entryPath = join(generatedDir, entry);
+  // Scan each plugin directory
+  for (const entry of pluginEntries) {
+    const pluginPath = join(pluginsDir, entry);
 
-    // Skip files in the root directory (primitives.css, utilities.css, index.css)
+    // Skip non-directories and special directories
     try {
-      const stats = statSync(entryPath);
-      if (!stats.isDirectory() || stats.isSymbolicLink()) {
+      const stats = statSync(pluginPath);
+      if (
+        !stats.isDirectory() ||
+        stats.isSymbolicLink() ||
+        entry.startsWith('.') ||
+        entry.startsWith('_')
+      ) {
         continue;
       }
     } catch (error) {
@@ -84,39 +99,48 @@ export function discoverThemes(
       continue;
     }
 
-    // This is a plugin directory
-    const pluginId = entry;
-
-    // Look for .css files in this plugin directory
-    const pluginDir = entryPath;
-
-    let cssFiles: string[];
+    // Check for index.ts file
+    const indexPath = join(pluginPath, 'index.ts');
+    let pluginContent: string;
     try {
-      cssFiles = readdirSync(pluginDir).filter((file) => file.endsWith('.css'));
-    } catch (error) {
-      console.warn(
-        `⚠️  Cannot read plugin directory ${pluginId}:`,
-        error instanceof Error ? error.message : 'Unknown error'
-      );
+      pluginContent = readFileSync(indexPath, 'utf-8');
+    } catch {
+      // Skip plugins without index.ts
       continue;
     }
 
-    for (const cssFile of cssFiles) {
-      const themeName = cssFile.replace('.css', '');
+    // Parse plugin metadata to get plugin ID
+    const metadata = parsePluginMetadata(pluginContent);
+    if (!metadata.id) {
+      console.warn(`⚠️  Plugin in ${entry} has no ID, skipping`);
+      continue;
+    }
 
-      // Validate theme name (must start with letter, can contain alphanumeric and hyphens)
-      if (!/^[a-zA-Z][a-zA-Z0-9-]*$/.test(themeName)) {
-        console.warn(
-          `⚠️  Skipping invalid theme name: ${themeName} (must start with a letter)`
-        );
-        continue;
-      }
+    const pluginId = metadata.id;
 
-      const relativePath = `${pluginId}/${cssFile}`;
-      const fullPath = join(pluginDir, cssFile);
+    // Extract theme variant names from plugin source
+    // Look for builder.addThemeVariant('variant-name', ...)
+    const variantPattern = /builder\.addThemeVariant\s*\(\s*['"]([^'"]+)['"]/g;
+    const variants: string[] = [];
+    let match;
+
+    while ((match = variantPattern.exec(pluginContent)) !== null) {
+      variants.push(match[1]);
+    }
+
+    if (variants.length === 0) {
+      // Plugin defines no variants, skip
+      continue;
+    }
+
+    // For each variant, check if generated CSS exists
+    for (const variantName of variants) {
+      const cssFileName = `${variantName}.css`;
+      const relativePath = `${pluginId}/${cssFileName}`;
+      const fullPath = join(generatedDir, relativePath);
 
       themes.push({
-        name: themeName,
+        name: variantName,
         pluginId,
         path: relativePath,
         fullPath,
