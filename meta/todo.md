@@ -58,8 +58,3 @@ Complex, feature-rich components for specialized use cases.
 - [ ] **Popover** - Rich content popup
 - [ ] **CommandPalette** - Keyboard-driven command launcher
 - [ ] **DataGrid** - Advanced table with virtualization
-
-## Problems
-
-- The API generator missed the variant property and descriptions. Let me manually complete the README with comprehensive documentation:
--

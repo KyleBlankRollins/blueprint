@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { badgeStyles } from './badge.style.js';
 
 /**
@@ -62,10 +63,15 @@ export class BpBadge extends LitElement {
   render() {
     return html`
       <span
-        class="badge badge--${this.variant} badge--${this.size} ${this.dot
-          ? 'badge--dot'
-          : ''}"
+        class=${classMap({
+          badge: true,
+          [`badge--${this.variant}`]: true,
+          [`badge--${this.size}`]: true,
+          'badge--dot': this.dot,
+        })}
         part="badge"
+        role="status"
+        aria-live="polite"
       >
         <slot></slot>
       </span>

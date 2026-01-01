@@ -41,6 +41,10 @@ export interface APIResult {
  * @returns True if valid kebab-case format
  */
 export function isValidComponentName(name: string): boolean {
+  // Prevent path traversal attacks
+  if (name.includes('..') || name.includes('/') || name.includes('\\')) {
+    return false;
+  }
   return /^[a-z]+(-[a-z]+)*$/.test(name);
 }
 
@@ -48,15 +52,19 @@ export function isValidComponentName(name: string): boolean {
  * Extracts JSDoc comment before a given line.
  * @param lines - All file lines
  * @param startLine - Line to search backwards from
- * @returns Extracted description or empty string
+ * @returns Object containing description and @default value if present
  */
-function extractJSDoc(lines: string[], startLine: number): string {
+function extractJSDoc(
+  lines: string[],
+  startLine: number
+): { description: string; defaultValue: string } {
   for (
     let lineIndex = startLine - 1;
     lineIndex >= Math.max(0, startLine - JSDOC_SEARCH_LINES);
     lineIndex--
   ) {
     const line = lines[lineIndex]?.trim();
+
     if (line?.includes('*/')) {
       let jsDocStart = -1;
       for (
@@ -72,22 +80,43 @@ function extractJSDoc(lines: string[], startLine: number): string {
 
       if (jsDocStart !== -1) {
         const jsDoc = lines.slice(jsDocStart, lineIndex + 1).join('\n');
-        const descMatch = jsDoc.match(/\/\*\*\s*([\s\S]*?)\*\*/);
+        const descMatch = jsDoc.match(/\/\*\*([\s\S]*?)\*\//);
+
         if (descMatch) {
           const jsDocContent = descMatch[1];
-          return jsDocContent
+          const jsDocLines = jsDocContent
             .split('\n')
             .map((line) => line.replace(/^\s*\*\s?/, '').trim())
-            .filter((line) => line && !line.startsWith('@'))
+            .filter((line) => line);
+
+          // Extract description (lines before @tags)
+          const description = jsDocLines
+            .filter((line) => !line.startsWith('@'))
             .join(' ');
+
+          // Extract @default value if present
+          let defaultValue = '';
+          const defaultMatch = jsDocContent.match(/@default\s+(.+)/);
+          if (defaultMatch) {
+            // Extract value and remove surrounding quotes if present
+            defaultValue =
+              defaultMatch[1]?.trim().replace(/^['"`]|['"`]$/g, '') || '';
+          }
+
+          return { description, defaultValue };
         }
       }
       break;
     }
   }
-  return '';
+  return { description: '', defaultValue: '' };
 }
 
+/**
+ * Extracts property information from component source code.
+ * @param content - Component file content
+ * @returns Array of property information objects
+ */
 function extractProperties(content: string): PropertyInfo[] {
   const properties: PropertyInfo[] = [];
   const lines = content.split('\n');
@@ -99,8 +128,11 @@ function extractProperties(content: string): PropertyInfo[] {
       continue;
     }
 
-    // Extract JSDoc description
-    const description = extractJSDoc(lines, lineIndex);
+    // Extract JSDoc description and default value
+    const { description, defaultValue: jsDocDefault } = extractJSDoc(
+      lines,
+      lineIndex
+    );
 
     // Extract property details from current and next line
     const propertyMatch = line.match(/@property\s*\(\s*\{([^}]*)\}\s*\)/);
@@ -109,24 +141,79 @@ function extractProperties(content: string): PropertyInfo[] {
     }
 
     // Look for property declaration on same line or next line
-    let declarationLine = line;
-    if (!line.includes('declare')) {
-      declarationLine = lines[lineIndex + 1] || '';
+    let declarationStartIndex = lineIndex;
+    let declarationStartCol = 0;
+
+    if (line.includes('declare')) {
+      // @property and declare on same line - find where 'declare' starts
+      const declareIndex = line.indexOf('declare');
+      if (declareIndex !== -1) {
+        declarationStartCol = declareIndex;
+      }
+    } else {
+      // declare is on the next line
+      declarationStartIndex = lineIndex + 1;
     }
 
-    const declMatch = declarationLine.match(
-      /declare\s+(\w+)\s*:\s*([^;=]+)(?:\s*=\s*([^;]+))?;/
-    );
-    if (!declMatch?.[1]) {
+    // Extract property name
+    const declareLine = lines[declarationStartIndex] || '';
+    const declareContent = declareLine.substring(declarationStartCol);
+    const nameMatch = declareContent.match(/declare\s+(\w+)\s*:/);
+    if (!nameMatch?.[1]) {
       continue;
     }
 
-    const name = declMatch[1];
-    const type = declMatch[2]?.trim() || 'unknown';
-    let defaultValue = declMatch[3]?.trim() || '';
+    const name = nameMatch[1];
 
-    if (defaultValue) {
-      defaultValue = defaultValue.replace(/^['"`]|['"`]$/g, '');
+    // Extract multi-line type declaration starting from 'declare'
+    let type = '';
+    let currentIndex = declarationStartIndex;
+    let foundSemicolon = false;
+
+    // Collect lines until we find the semicolon
+    while (currentIndex < lines.length && !foundSemicolon) {
+      const currentLine = lines[currentIndex] || '';
+
+      // For first line, only take content from 'declare' onwards
+      if (currentIndex === declarationStartIndex) {
+        type += currentLine.substring(declarationStartCol);
+      } else {
+        type += ' ' + currentLine.trim();
+      }
+
+      if (currentLine.includes(';')) {
+        foundSemicolon = true;
+      }
+      currentIndex++;
+    }
+
+    // Extract just the type part (after : and before ; or =)
+    const typeMatch = type.match(/:\s*([^;=]+)(?:[;=])/);
+    if (typeMatch) {
+      type = typeMatch[1]
+        .split('\n')
+        .map((line) => line.trim())
+        .filter((line) => line && line !== '|') // Remove empty lines and standalone pipes
+        .join(' ')
+        .replace(/\s*\|\s*/g, ' | ') // Normalize pipe separators
+        .replace(/^\|\s*/, '') // Remove leading pipe
+        .trim();
+    } else {
+      type = 'unknown';
+    }
+
+    // Try to find default value from inline assignment (e.g., = 'value')
+    let defaultValue = '';
+    const inlineDefaultMatch = type.match(/=\s*([^;]+)/);
+    if (inlineDefaultMatch) {
+      defaultValue = inlineDefaultMatch[1].trim().replace(/^['"`]|['"`]$/g, '');
+      // Remove the default assignment from the type
+      type = type.split('=')[0]?.trim() || type;
+    }
+
+    // Prefer JSDoc @default over inline default
+    if (jsDocDefault) {
+      defaultValue = jsDocDefault;
     }
 
     properties.push({
@@ -140,6 +227,12 @@ function extractProperties(content: string): PropertyInfo[] {
   return properties;
 }
 
+/**
+ * Extracts event information from component source code.
+ * Looks for CustomEvent dispatch patterns.
+ * @param content - Component file content
+ * @returns Array of event information objects
+ */
 function extractEvents(content: string): EventInfo[] {
   const events: EventInfo[] = [];
   const eventNames = new Set<string>();
@@ -170,7 +263,8 @@ function extractEvents(content: string): EventInfo[] {
     const lines = beforeEvent.split('\n');
 
     // Extract JSDoc description (check proximity to dispatch)
-    let description = extractJSDoc(lines, lines.length);
+    const { description: jsDocDescription } = extractJSDoc(lines, lines.length);
+    let description = jsDocDescription;
 
     // Only use JSDoc if it's close to the event dispatch (within 5 lines)
     const lastJSDocLine = lines.length - 1;
@@ -254,6 +348,16 @@ export function formatMarkdownTable(
  * @returns API extraction result with properties, events, and errors
  */
 export function extractAPI(componentName: string): APIResult {
+  // Validate component name format
+  if (!isValidComponentName(componentName)) {
+    return {
+      success: false,
+      properties: [],
+      events: [],
+      errors: [`Invalid component name: ${componentName}. Must be kebab-case.`],
+    };
+  }
+
   const root = process.cwd();
   const componentPath = join(
     root,
@@ -272,15 +376,25 @@ export function extractAPI(componentName: string): APIResult {
     };
   }
 
-  const content = readFileSync(componentPath, 'utf-8');
+  try {
+    const content = readFileSync(componentPath, 'utf-8');
+    const properties = extractProperties(content);
+    const events = extractEvents(content);
 
-  const properties = extractProperties(content);
-  const events = extractEvents(content);
-
-  return {
-    success: true,
-    properties,
-    events,
-    errors: [],
-  };
+    return {
+      success: true,
+      properties,
+      events,
+      errors: [],
+    };
+  } catch (error) {
+    return {
+      success: false,
+      properties: [],
+      events: [],
+      errors: [
+        `Failed to parse component file: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      ],
+    };
+  }
 }
