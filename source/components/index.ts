@@ -5,3 +5,4 @@
 export { BpButton } from './button/button.js';
 export { BpInput } from './input/input.js';
 export { BpBadge } from './badge/badge.js';
+export { BpIcon } from './icon/icon.js';

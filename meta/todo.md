@@ -7,7 +7,7 @@ Implement suggestions from the review, but do so carefully so you don't break th
 Core building blocks that other components depend on. These establish the basic interaction patterns and visual language.
 
 - [x] **Badge** - Small status/count indicator
-- [ ] **Icon** - SVG icon wrapper with size variants
+- [x] **Icon** - SVG icon wrapper with size variants
 - [ ] **Spinner** - Loading indicator
 - [ ] **Avatar** - User profile image/initials
 - [ ] **Divider** - Visual separator (horizontal/vertical)

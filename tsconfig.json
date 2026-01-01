@@ -26,7 +26,8 @@
     ]
   },
   "include": [
-    "source/**/*"
+    "source/**/*",
+    "vite-env.d.ts"
   ],
   "exclude": [
     "node_modules",
