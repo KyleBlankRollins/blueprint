@@ -1,6 +1,65 @@
-- implement new theme system. See the theme implementation plan.
-- make the component creator agent aware of the theme system.
-- define initial themes based on Wada Sanzo colors.
-- create foundational components.
-
 Implement suggestions from the review, but do so carefully so you don't break the file.
+
+## Component Library Roadmap
+
+### Category 1: Foundational Components
+
+Core building blocks that other components depend on. These establish the basic interaction patterns and visual language.
+
+- [x] **Badge** - Small status/count indicator
+- [ ] **Icon** - SVG icon wrapper with size variants
+- [ ] **Spinner** - Loading indicator
+- [ ] **Avatar** - User profile image/initials
+- [ ] **Divider** - Visual separator (horizontal/vertical)
+- [ ] **Link** - Styled anchor element with variants
+- [ ] **Heading** - Typography component for headings (h1-h6)
+- [ ] **Text** - Typography component for body text
+- [ ] **Checkbox** - Form checkbox input
+- [ ] **Radio** - Form radio input
+- [ ] **Switch** - Toggle switch control
+- [ ] **Tooltip** - Contextual hint on hover/focus
+- [ ] **Progress** - Progress bar indicator
+
+### Category 2: Composite Components
+
+Components built from foundational elements. These create common UI patterns.
+
+- [ ] **Card** - Content container with header/body/footer
+- [ ] **Alert** - Notification message (success/warning/error/info)
+- [ ] **Select** - Dropdown select input
+- [ ] **Textarea** - Multi-line text input
+- [ ] **Modal** - Dialog overlay
+- [ ] **Dropdown** - Generic dropdown menu
+- [ ] **Tabs** - Tabbed content switcher
+- [ ] **Accordion** - Collapsible content sections
+- [ ] **Tag** - Removable label/chip
+- [ ] **Breadcrumb** - Navigation breadcrumb trail
+- [ ] **Pagination** - Page navigation controls
+- [ ] **Menu** - Context menu / action menu
+- [ ] **Toast** - Temporary notification popup
+- [ ] **Banner** - Full-width announcement bar
+
+### Category 3: Advanced Components
+
+Complex, feature-rich components for specialized use cases.
+
+- [ ] **Table** - Data table with sorting/filtering
+- [ ] **Form** - Form wrapper with validation
+- [ ] **Drawer** - Side panel overlay
+- [ ] **Sidebar** - Persistent side navigation
+- [ ] **Navbar** - Top navigation bar
+- [ ] **Stepper** - Multi-step progress indicator
+- [ ] **Calendar** - Date picker calendar view
+- [ ] **DatePicker** - Date selection input
+- [ ] **TimePicker** - Time selection input
+- [ ] **Slider** - Range slider input
+- [ ] **FileUpload** - File upload with drag-drop
+- [ ] **Tree** - Hierarchical tree view
+- [ ] **Popover** - Rich content popup
+- [ ] **CommandPalette** - Keyboard-driven command launcher
+- [ ] **DataGrid** - Advanced table with virtualization
+
+## Problems
+
+- The API generator missed the variant property and descriptions. Let me manually complete the README with comprehensive documentation:
+-

@@ -26,6 +26,8 @@ You are an expert web component developer specializing in the Blueprint componen
 - `bp theme create` - Create new theme plugin with interactive prompts (name, colors)
 - `bp theme list` - List all installed plugins and their variants
 - `bp theme info <plugin-id>` - Show plugin metadata and color definitions
+- `bp theme generate-types` - Generate TypeScript types for theme autocomplete
+- `bp theme generate-types --watch` - Auto-regenerate types on changes
 
 **Development:**
 
@@ -62,7 +64,8 @@ You are an expert web component developer specializing in the Blueprint componen
 
 - `source/` - All source code (you READ and WRITE here)
 - `source/components/` - Individual web components (you CREATE components here)
-- `source/themes/light.css` - CSS design tokens (you READ from here, never hardcode values)
+- `source/themes/plugins/` - Theme plugin definitions (blueprint-core, wada-sanzo, etc.)
+- `source/themes/generated/` - Generated CSS and types from plugins (READ ONLY)
 - `source/cli/` - CLI tool for scaffolding, validation, and code generation
 - `demo/` - Development demo page for manual testing
 - `dist/` - Built library output (never modify)
@@ -71,7 +74,7 @@ You are an expert web component developer specializing in the Blueprint componen
 
 1. **Scaffold** - Run `bp scaffold <component-name>` to create stub files
 2. **Implement component** - Fill in `.ts` file with component logic
-3. **Implement styles** - Fill in `.style.ts` file using design tokens
+3. **Implement styles** - Fill in `.style.ts` file using design tokens from active theme
 4. **Validate tokens** - Run `bp validate tokens <component-name>` to ensure no hardcoded values
 5. **Implement tests** - Fill in `.test.ts` file with comprehensive tests
 6. **Generate stories** - Run `bp generate stories <component-name>` to auto-generate Storybook stories
@@ -118,16 +121,76 @@ declare global {
 
 ## Design Tokens (Critical)
 
-**✅ Always use tokens from `source/themes/light.css`:**
+### Theme System Architecture
+
+Blueprint uses a **plugin-based theme system**. Design tokens are generated from theme plugins, not static CSS files.
+
+**How it works:**
+
+1. Theme plugins define colors in `source/themes/plugins/` (e.g., blueprint-core, wada-sanzo)
+2. Plugins register colors using `builder.addColor()` with OKLCH color definitions
+3. CSS files are generated to `source/themes/generated/<plugin-name>/`
+4. TypeScript types are generated for autocomplete and validation
+
+### Finding Available Tokens
+
+**Option 1: Generated CSS files (easiest)**
+
+Check generated theme files to see all available tokens:
+
+```bash
+# View the default blueprint-core theme
+cat source/themes/generated/blueprint-core/light.css
+
+# Or any other installed theme
+cat source/themes/generated/wada-sanzo/light.css
+```
+
+**Option 2: TypeScript autocomplete**
+
+Generate types for IDE autocomplete:
+
+```bash
+bp theme generate-types
+```
+
+Then your IDE will suggest all available colors as you type `builder.colors.`
+
+**Option 3: CLI inspection**
+
+```bash
+# List all themes and their variants
+bp theme list
+
+# View specific theme details
+bp theme info blueprint-core
+```
+
+### Using Design Tokens
+
+**✅ Always use semantic tokens:**
 
 ```css
 /* Use tokens for colors, spacing, typography, borders, shadows, transitions */
 color: var(--bp-color-primary);
+background-color: var(--bp-color-background);
+border-color: var(--bp-color-border);
 padding: var(--bp-spacing-md);
 border-radius: var(--bp-border-radius-md);
 font-size: var(--bp-font-size-base);
+font-family: var(--bp-font-family-sans);
 transition: background-color var(--bp-transition-fast);
 ```
+
+**Available token categories:**
+
+- **Colors:** `--bp-color-primary`, `--bp-color-text`, `--bp-color-background`, `--bp-color-error`, etc.
+- **Spacing:** `--bp-spacing-xs`, `--bp-spacing-sm`, `--bp-spacing-md`, `--bp-spacing-lg`, etc.
+- **Typography:** `--bp-font-size-*`, `--bp-font-weight-*`, `--bp-font-family-*`, `--bp-line-height-*`
+- **Borders:** `--bp-border-width`, `--bp-border-radius-sm`, `--bp-border-radius-md`, etc.
+- **Shadows:** `--bp-shadow-sm`, `--bp-shadow-md`, `--bp-shadow-lg`
+- **Transitions:** `--bp-transition-fast`, `--bp-transition-base`, `--bp-transition-slow`
+- **Z-index:** `--bp-z-dropdown`, `--bp-z-modal`, `--bp-z-tooltip`
 
 **🚫 Never use hardcoded values or fallbacks:**
 
@@ -137,7 +200,41 @@ color: #3b82f6; /* ❌ No hardcoded values */
 padding: 12px; /* ❌ Use tokens */
 ```
 
-Read `source/themes/light.css` to see all available tokens for colors, spacing, typography, borders, shadows, transitions, and z-index.
+### Theme-Aware Component Development
+
+**Components automatically adapt to themes:**
+
+- Components use semantic tokens (e.g., `--bp-color-primary`)
+- When users switch themes, token values update automatically
+- No component code changes needed for theme support
+- Shadow DOM doesn't block custom property inheritance
+
+**Example - Component works with any theme:**
+
+```typescript
+// Component uses semantic tokens
+const buttonStyles = css`
+  .button {
+    background: var(--bp-color-primary);
+    color: var(--bp-color-text-inverse);
+  }
+`;
+
+// Works with blueprint-core theme
+// Works with wada-sanzo theme
+// Works with any custom theme
+// No code changes needed!
+```
+
+**Testing with different themes:**
+
+```bash
+# Start demo server
+npm run dev
+
+# Visit http://localhost:5173/demo/theme-preview.html
+# Switch between themes to test component appearance
+```
 
 ## Style Organization
 
