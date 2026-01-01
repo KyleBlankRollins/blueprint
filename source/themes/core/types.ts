@@ -113,7 +113,9 @@ export interface ValidationError {
     | 'invalid_ref'
     | 'contrast_violation'
     | 'duplicate_id'
-    | 'dependency_missing';
+    | 'dependency_missing'
+    | 'accessibility'
+    | 'missing_token';
   /** Human-readable error message */
   message: string;
   /** Additional context about the error */
@@ -307,8 +309,8 @@ export interface ThemeConfig {
   /** Responsive breakpoints */
   readonly breakpoints?: Record<string, string>;
   /** Theme variant definitions (must include light and dark) */
-  readonly themes: Record<ThemeVariant, Record<string, string>> &
-    Record<string, Record<string, string>>;
+  readonly themes: Record<ThemeVariant, Record<string, string | OKLCHColor>> &
+    Record<string, Record<string, string | OKLCHColor>>;
   /** Theme metadata - maps variant names to their plugin IDs */
   readonly themeMetadata?: Record<string, { pluginId?: string }>;
   /** Accessibility validation rules */
@@ -325,10 +327,10 @@ export interface GeneratedColorStep {
 export interface ContrastViolation {
   /** Token that violates contrast requirements */
   token: string;
-  /** Foreground color */
-  foreground: string;
-  /** Background color */
-  background: string;
+  /** Foreground color (hex string or OKLCH object) */
+  foreground: string | OKLCHColor;
+  /** Background color (hex string or OKLCH object) */
+  background: string | OKLCHColor;
   /** Actual contrast ratio */
   ratio: number;
   /** Required contrast ratio */

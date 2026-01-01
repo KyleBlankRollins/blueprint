@@ -20,6 +20,8 @@
 
 import { ThemeBase } from '../../builder/ThemeBase.js';
 import type { ThemeBuilderInterface, ThemeConfig } from '../../core/types.js';
+// Validation utilities can be imported when needed:
+// import { validateThemeAccessibility } from '../../builder/validation.js';
 
 export class WadaSanzoTheme extends ThemeBase {
   readonly id = 'wada-sanzo';
@@ -133,6 +135,14 @@ export class WadaSanzoTheme extends ThemeBase {
   // Validation rules for Wada Sanzo
   validate(config: ThemeConfig) {
     const errors = [];
+
+    // NOTE: Built-in validation utilities are available (validateThemeAccessibility)
+    // but they run before ColorRef serialization. To use them, call after build():
+    //
+    //   const config = builder.build();
+    //   const errors = validateThemeAccessibility(config);
+    //
+    // For now, we only validate theme structure:
 
     // Ensure all Wada Sanzo colors exist
     const requiredColors = ['sulphurYellow', 'yellowOrange', 'vandarPoelBlue'];

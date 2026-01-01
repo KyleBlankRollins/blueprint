@@ -6,6 +6,7 @@ import type {
   ThemeConfig,
   ContrastViolation,
   GeneratedColorStep,
+  OKLCHColor,
 } from '../core/types.js';
 import { getContrastRatio } from './colorUtils.js';
 
@@ -37,8 +38,8 @@ const STRICT_MINIMUM_CONTRAST = {
 function checkContrastPairs(
   pairs: ReadonlyArray<readonly [string, string, number]>,
   themeName: string,
-  tokens: Record<string, string>,
-  resolveColor: (ref: string) => string
+  tokens: Record<string, string | OKLCHColor>,
+  resolveColor: (ref: string | OKLCHColor) => string | OKLCHColor
 ): ContrastViolation[] {
   const violations: ContrastViolation[] = [];
 
@@ -96,7 +97,13 @@ export function validateThemeContrast(
   const contrast = config.accessibility?.minimumContrast ?? baseContrast;
 
   // Helper to resolve color from primitive reference
-  const resolveColor = (ref: string): string => {
+  const resolveColor = (ref: string | OKLCHColor): string | OKLCHColor => {
+    // If it's already an OKLCH object, return as-is
+    if (typeof ref === 'object' && 'l' in ref && 'c' in ref && 'h' in ref) {
+      return ref;
+    }
+
+    // Otherwise treat as string reference
     if (ref === 'white') return '#ffffff';
     if (ref === 'black') return '#000000';
 

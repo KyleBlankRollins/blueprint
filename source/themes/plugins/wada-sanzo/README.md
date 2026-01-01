@@ -79,18 +79,51 @@ A sophisticated dark theme with warm text tints and adjusted blues for night vie
 - `text`: sulphurYellow.50 (warm white)
 - `primary`: vandarPoelBlue.400 (lighter for dark mode)
 
+## Architecture
+
+Wada Sanzo extends `ThemeBase` with custom design tokens:
+
+### Design Token Overrides
+
+This theme customizes Blueprint's default tokens for a refined Japanese aesthetic:
+
+```typescript
+// Tighter spacing (base: 3px instead of 4px)
+protected spacing = {
+  base: 3,
+  scale: [0, 0.33, 0.67, 1, 1.33, 1.67, 2, 2.67, 3.33, 4, 5.33, 6.67, 8, 10.67, 13.33, 16],
+  semantic: { xs: 0.67, sm: 1.33, md: 2.67, lg: 4, xl: 5.33 },
+};
+
+// Softer edges (larger radius values)
+protected radius = {
+  none: 0, sm: 3, md: 6, lg: 12, xl: 18, '2xl': 24, '3xl': 32, full: 9999,
+};
+```
+
+All other design tokens (typography, motion, opacity, etc.) use ThemeBase defaults.
+
 ## Usage
+
+### With Defaults
 
 ```typescript
 import { ThemeBuilder } from '@blueprint/themes';
-import primitivesPlugin from '@blueprint/themes/plugins/primitives';
-import blueprintCorePlugin from '@blueprint/themes/plugins/blueprint-core';
-import wadaSanzoPlugin from '@blueprint/themes/plugins/wada-sanzo';
 
-const builder = new ThemeBuilder()
-  .use(primitivesPlugin)
-  .use(blueprintCorePlugin)
-  .use(wadaSanzoPlugin);
+// Wada Sanzo is included in default themes
+const theme = ThemeBuilder.withDefaults().build();
+
+// Access wada-light and wada-dark variants
+```
+
+### Custom Builder
+
+```typescript
+import { ThemeBuilder } from '@blueprint/themes';
+import { blueprintCoreTheme } from '@blueprint/themes/plugins/blueprint-core';
+import { wadaSanzoTheme } from '@blueprint/themes/plugins/wada-sanzo';
+
+const builder = new ThemeBuilder().use(blueprintCoreTheme).use(wadaSanzoTheme);
 
 const theme = builder.build();
 
@@ -98,31 +131,39 @@ const theme = builder.build();
 // - All Wada Sanzo accent colors
 // - wada-light theme variant
 // - wada-dark theme variant
+// - Custom spacing and radius tokens
 // - Type-safe color references
 ```
 
 ## Using as Accent Colors
 
-You can also use Wada Sanzo colors as accents in your own theme:
+Create custom themes using Wada Sanzo colors:
 
 ```typescript
-const myPlugin: ThemePlugin = {
-  id: 'my-theme',
-  version: '1.0.0',
-  dependencies: [{ id: 'wada-sanzo' }],
+import { ThemeBase } from '@blueprint/themes/builder';
+import type { ThemeBuilder } from '@blueprint/themes/builder';
 
-  register(builder) {
+export class MyJapaneseTheme extends ThemeBase {
+  id = 'my-japanese';
+  version = '1.0.0';
+  name = 'My Japanese Theme';
+  description = 'Custom theme with Wada Sanzo accents';
+  author = 'Your Name';
+  license = 'MIT';
+  tags = ['japanese', 'custom'];
+
+  register(builder: ThemeBuilder) {
+    // Mix Wada Sanzo with your own colors
     builder.addThemeVariant('my-custom', {
-      background: builder.colors.white500,
+      background: builder.colors.sulphurYellow50,
+      text: builder.colors.gray900,
       primary: builder.colors.vandarPoelBlue500,
       warning: builder.colors.yellowOrange500,
-      // Mix with Blueprint core colors
       success: builder.colors.green500,
       error: builder.colors.red500,
-      // ...
     });
-  },
-};
+  }
+}
 ```
 
 ## Dependencies

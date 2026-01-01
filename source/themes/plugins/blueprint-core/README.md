@@ -86,24 +86,42 @@ Optimized for low-light viewing with reduced eye strain.
 - Higher contrast borders
 - Inverted text hierarchy
 
+## Architecture
+
+Blueprint Core extends `ThemeBase`, which provides:
+
+- **Default design tokens** - Spacing, typography, motion, radius, opacity, breakpoints, focus, accessibility, zIndex
+- **Customizable per-theme** - Override any tokens in child classes
+- **Deep merge support** - Partial overrides without duplicating entire token groups
+
+This theme uses all default design tokens from ThemeBase without overrides.
+
 ## Usage
+
+### Basic Usage
 
 ```typescript
 import { ThemeBuilder } from '@blueprint/themes';
-import primitivesPlugin from '@blueprint/themes/plugins/primitives';
-import blueprintCorePlugin from '@blueprint/themes/plugins/blueprint-core';
+import { blueprintCoreTheme } from '@blueprint/themes/plugins/blueprint-core';
 
-const builder = new ThemeBuilder()
-  .use(primitivesPlugin)
-  .use(blueprintCorePlugin);
-
-const theme = builder.build();
+const theme = ThemeBuilder.withDefaults().build();
 
 // Generated theme includes:
 // - All color scales (gray, blue, green, red, yellow)
-// - Light theme variant
-// - Dark theme variant
+// - Light and dark theme variants
+// - Design tokens (spacing, typography, motion, etc.)
 // - Type-safe color references
+```
+
+### Custom Builder
+
+```typescript
+import { ThemeBuilder } from '@blueprint/themes';
+import { blueprintCoreTheme } from '@blueprint/themes/plugins/blueprint-core';
+
+const builder = new ThemeBuilder().use(blueprintCoreTheme);
+
+const theme = builder.build();
 ```
 
 ## Dependencies
@@ -128,29 +146,56 @@ The plugin includes validation rules to ensure:
 
 ## Extending
 
-You can extend Blueprint Core to create custom themes:
+Create custom themes by extending ThemeBase:
 
 ```typescript
-import blueprintCorePlugin from '@blueprint/themes/plugins/blueprint-core';
+import { ThemeBase } from '@blueprint/themes/builder';
+import type { ThemeBuilder } from '@blueprint/themes/builder';
 
-const myCustomPlugin: ThemePlugin = {
-  id: 'my-custom-theme',
-  version: '1.0.0',
-  dependencies: [{ id: 'blueprint-core' }],
+export class MyCustomTheme extends ThemeBase {
+  id = 'my-custom';
+  version = '1.0.0';
+  name = 'My Custom Theme';
+  description = 'Custom theme based on Blueprint';
+  author = 'Your Name';
+  license = 'MIT';
+  tags = ['custom'];
 
-  register(builder) {
-    // Add custom colors
+  // Override design tokens (optional)
+  protected spacing = {
+    base: 8, // Larger base spacing
+    scale: [0, 0.5, 1, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24],
+    semantic: { xs: 1, sm: 2, md: 4, lg: 6, xl: 8 },
+  };
+
+  register(builder: ThemeBuilder) {
+    // Add custom purple color
     builder.addColor('purple', {
       source: { l: 0.55, c: 0.15, h: 280 },
       scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
+      metadata: {
+        name: 'Purple',
+        description: 'Custom brand color',
+        tags: ['brand', 'primary'],
+      },
     });
 
-    // Extend light theme
-    builder.extendThemeVariant('light', 'my-light', {
+    // Define custom theme variant
+    builder.addThemeVariant('custom-light', {
+      background: builder.colors.gray50,
+      text: builder.colors.gray900,
       primary: builder.colors.purple500,
+      success: builder.colors.green500,
+      error: builder.colors.red500,
+      warning: builder.colors.yellow600,
     });
-  },
-};
+  }
+}
+
+export const myCustomTheme = new MyCustomTheme();
+
+// Use in ThemeBuilder
+const theme = new ThemeBuilder().use(myCustomTheme).build();
 ```
 
 ## Accessibility

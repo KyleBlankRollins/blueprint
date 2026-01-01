@@ -15,6 +15,8 @@
 
 import { ThemeBase } from '../../builder/ThemeBase.js';
 import type { ThemeBuilderInterface, ThemeConfig } from '../../core/types.js';
+// Validation utilities can be imported when needed:
+// import { validateTheme } from '../../builder/validation.js';
 
 export class BlueprintCoreTheme extends ThemeBase {
   readonly id = 'blueprint-core';
@@ -147,6 +149,16 @@ export class BlueprintCoreTheme extends ThemeBase {
   validate(config: ThemeConfig) {
     const errors = [];
 
+    // NOTE: Built-in validation utilities are available but commented out
+    // because they run before ColorRef serialization. To use them, call
+    // validateTheme() after build() completes:
+    //
+    //   const config = builder.build();
+    //   const errors = validateTheme(config);
+    //
+    // For now, we only validate theme structure:
+
+    // Add plugin-specific validations
     // Ensure all required colors exist
     const requiredColors = ['gray', 'blue', 'green', 'red', 'yellow'];
     for (const colorName of requiredColors) {

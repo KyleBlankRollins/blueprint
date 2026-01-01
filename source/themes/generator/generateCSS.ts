@@ -3,7 +3,11 @@
  * Generates CSS custom properties from theme configuration
  */
 
-import type { GeneratedColorStep, ThemeConfig } from '../core/types.js';
+import type {
+  GeneratedColorStep,
+  ThemeConfig,
+  OKLCHColor,
+} from '../core/types.js';
 import { formatOKLCHforCSS } from '../color/colorUtils.js';
 
 // Token prefix constants
@@ -119,13 +123,17 @@ export function generatePrimitivesCSS(
  */
 export function generateThemeCSS(
   themeName: string,
-  mappings: Record<string, string>
+  mappings: Record<string, string | OKLCHColor>
 ): string {
   const selector = getThemeSelector(themeName);
   let css = `/* ${themeName} theme */\n${selector} {\n`;
 
   for (const [semanticToken, primitiveRef] of Object.entries(mappings)) {
-    const colorValue = resolveColorReference(primitiveRef);
+    // Handle both string references and OKLCH objects
+    const colorValue =
+      typeof primitiveRef === 'object'
+        ? formatOKLCHforCSS(primitiveRef)
+        : resolveColorReference(primitiveRef);
     const tokenName = toKebabCase(semanticToken);
     css += `  --${COLOR_PREFIX}-${tokenName}: ${colorValue};\n`;
   }
