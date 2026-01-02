@@ -8,7 +8,7 @@ Core building blocks that other components depend on. These establish the basic 
 
 - [x] **Badge** - Small status/count indicator
 - [x] **Icon** - SVG icon wrapper with size variants
-- [ ] **Spinner** - Loading indicator
+- [x] **Spinner** - Loading indicator
 - [ ] **Avatar** - User profile image/initials
 - [ ] **Divider** - Visual separator (horizontal/vertical)
 - [ ] **Link** - Styled anchor element with variants
