@@ -11,3 +11,9 @@ export {
   type SpinnerSize,
   type SpinnerVariant,
 } from './spinner/spinner.js';
+export {
+  BpAvatar,
+  type AvatarSize,
+  type AvatarShape,
+  type AvatarStatus,
+} from './avatar/avatar.js';
