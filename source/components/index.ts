@@ -17,3 +17,11 @@ export {
   type AvatarShape,
   type AvatarStatus,
 } from './avatar/avatar.js';
+export {
+  BpDivider,
+  type DividerOrientation,
+  type DividerSpacing,
+  type DividerVariant,
+  type DividerColor,
+  type DividerWeight,
+} from './divider/divider.js';
