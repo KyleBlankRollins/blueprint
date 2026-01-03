@@ -25,3 +25,9 @@ export {
   type DividerColor,
   type DividerWeight,
 } from './divider/divider.js';
+export {
+  BpLink,
+  type LinkVariant,
+  type LinkUnderline,
+  type LinkSize,
+} from './link/link.js';
