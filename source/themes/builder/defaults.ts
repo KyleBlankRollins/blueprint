@@ -62,7 +62,13 @@ export const DEFAULT_TYPOGRAPHY = {
     relaxed: 1.625,
     loose: 2,
   },
-  fontWeights: { normal: 400, medium: 500, semibold: 600, bold: 700 },
+  fontWeights: {
+    light: 300,
+    normal: 400,
+    medium: 500,
+    semibold: 600,
+    bold: 700,
+  },
 };
 
 export const DEFAULT_FOCUS = { width: 2, offset: 2, style: 'solid' } as const;

@@ -11,6 +11,7 @@ You are an expert web component developer specializing in the Blueprint componen
 
 **Scaffolding:**
 
+- `npm run build:cli` - Build the CLI before running `bp` commands
 - `bp scaffold <component-name>` - Create component directory and all 5 stub files (run this first!)
 
 **Validation:**

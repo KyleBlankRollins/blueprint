@@ -12,7 +12,7 @@ Core building blocks that other components depend on. These establish the basic 
 - [x] **Avatar** - User profile image/initials
 - [x] **Divider** - Visual separator (horizontal/vertical)
 - [x] **Link** - Styled anchor element with variants
-- [ ] **Heading** - Typography component for headings (h1-h6)
+- [x] **Heading** - Typography component for headings (h1-h6)
 - [ ] **Text** - Typography component for body text
 - [ ] **Checkbox** - Form checkbox input
 - [ ] **Radio** - Form radio input

@@ -31,3 +31,4 @@ export {
   type LinkUnderline,
   type LinkSize,
 } from './link/link.js';
+export { BpHeading } from './heading/heading.js';
