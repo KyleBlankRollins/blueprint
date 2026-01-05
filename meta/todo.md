@@ -24,7 +24,7 @@ Core building blocks that other components depend on. These establish the basic 
 
 Components built from foundational elements. These create common UI patterns.
 
-- [ ] **Card** - Content container with header/body/footer
+- [x] **Card** - Content container with header/body/footer
 - [ ] **Alert** - Notification message (success/warning/error/info)
 - [ ] **Select** - Dropdown select input
 - [ ] **Textarea** - Multi-line text input
