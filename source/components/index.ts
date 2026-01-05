@@ -33,3 +33,6 @@ export {
 } from './link/link.js';
 export { BpHeading } from './heading/heading.js';
 export { BpText } from './text/text.js';
+export { BpCheckbox } from './checkbox/checkbox.js';
+export { BpRadio } from './radio/radio.js';
+export { BpSwitch } from './switch/switch.js';

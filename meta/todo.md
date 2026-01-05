@@ -14,9 +14,9 @@ Core building blocks that other components depend on. These establish the basic 
 - [x] **Link** - Styled anchor element with variants
 - [x] **Heading** - Typography component for headings (h1-h6)
 - [x] **Text** - Typography component for body text
-- [ ] **Checkbox** - Form checkbox input
-- [ ] **Radio** - Form radio input
-- [ ] **Switch** - Toggle switch control
+- [x] **Checkbox** - Form checkbox input
+- [x] **Radio** - Form radio input
+- [x] **Switch** - Toggle switch control
 - [ ] **Tooltip** - Contextual hint on hover/focus
 - [ ] **Progress** - Progress bar indicator
 
