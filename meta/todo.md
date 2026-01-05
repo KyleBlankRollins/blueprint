@@ -17,7 +17,7 @@ Core building blocks that other components depend on. These establish the basic 
 - [x] **Checkbox** - Form checkbox input
 - [x] **Radio** - Form radio input
 - [x] **Switch** - Toggle switch control
-- [ ] **Tooltip** - Contextual hint on hover/focus
+- [x] **Tooltip** - Contextual hint on hover/focus
 - [ ] **Progress** - Progress bar indicator
 
 ### Category 2: Composite Components

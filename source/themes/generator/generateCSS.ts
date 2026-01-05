@@ -309,6 +309,10 @@ export function generateUtilityCSS(config: ThemeConfig): string {
     }
   }
 
+  // Text colors (inverse for tooltips, buttons, etc.)
+  css += '\n  /* Text colors */\n';
+  css += `  --${COLOR_PREFIX}-text-inverse: #ffffff;\n`;
+
   // Breakpoints
   if (config.breakpoints) {
     css += '\n  /* Breakpoints */\n';
@@ -373,6 +377,7 @@ export function generateHighContrastCSS(config: ThemeConfig): string {
   [data-theme="dark"] {
     --${COLOR_PREFIX}-text: #ffffff;
     --${COLOR_PREFIX}-background: #000000;
+    --${COLOR_PREFIX}-text-inverse: #000000;
   }
 }
 `;
