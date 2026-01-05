@@ -37,3 +37,8 @@ export { BpCheckbox } from './checkbox/checkbox.js';
 export { BpRadio } from './radio/radio.js';
 export { BpSwitch } from './switch/switch.js';
 export { BpTooltip, type TooltipPlacement } from './tooltip/tooltip.js';
+export {
+  BpProgress,
+  type ProgressVariant,
+  type ProgressSize,
+} from './progress/progress.js';

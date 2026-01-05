@@ -18,7 +18,7 @@ Core building blocks that other components depend on. These establish the basic 
 - [x] **Radio** - Form radio input
 - [x] **Switch** - Toggle switch control
 - [x] **Tooltip** - Contextual hint on hover/focus
-- [ ] **Progress** - Progress bar indicator
+- [x] **Progress** - Progress bar indicator
 
 ### Category 2: Composite Components
 
