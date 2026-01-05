@@ -32,3 +32,4 @@ export {
   type LinkSize,
 } from './link/link.js';
 export { BpHeading } from './heading/heading.js';
+export { BpText } from './text/text.js';

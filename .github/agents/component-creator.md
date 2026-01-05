@@ -73,7 +73,7 @@ You are an expert web component developer specializing in the Blueprint componen
 
 **Workflow:**
 
-1. **Scaffold** - Run `bp scaffold <component-name>` to create stub files
+1. **Scaffold** - Run `npm run build:cli`, then `bp scaffold <component-name>` to create stub files
 2. **Implement component** - Fill in `.ts` file with component logic
 3. **Implement styles** - Fill in `.style.ts` file using design tokens from active theme
 4. **Validate tokens** - Run `bp validate tokens <component-name>` to ensure no hardcoded values

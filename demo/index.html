@@ -226,6 +226,138 @@
         </div>
       </div>
 
+      <div class="section" id="component-heading">
+        <h2>Heading</h2>
+        <div class="examples">
+          <div>
+            <p><strong>Default (h1):</strong></p>
+            <bp-heading>The quick brown fox jumps over the lazy dog</bp-heading>
+          </div>
+
+          <div>
+            <p><strong>All heading levels:</strong></p>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <bp-heading level="1">Heading Level 1</bp-heading>
+              <bp-heading level="2" size="3xl">Heading Level 2</bp-heading>
+              <bp-heading level="3" size="2xl">Heading Level 3</bp-heading>
+              <bp-heading level="4" size="xl">Heading Level 4</bp-heading>
+              <bp-heading level="5" size="lg">Heading Level 5</bp-heading>
+              <bp-heading level="6" size="md">Heading Level 6</bp-heading>
+            </div>
+          </div>
+
+          <div>
+            <p><strong>Different sizes:</strong></p>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <bp-heading size="4xl">4xl - Extra Large</bp-heading>
+              <bp-heading size="2xl">2xl - Large</bp-heading>
+              <bp-heading size="lg">lg - Medium</bp-heading>
+              <bp-heading size="sm">sm - Small</bp-heading>
+            </div>
+          </div>
+
+          <div>
+            <p><strong>Font weights:</strong></p>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <bp-heading weight="light">Light Weight</bp-heading>
+              <bp-heading weight="normal">Normal Weight</bp-heading>
+              <bp-heading weight="medium">Medium Weight</bp-heading>
+              <bp-heading weight="semibold">Semibold Weight</bp-heading>
+              <bp-heading weight="bold">Bold Weight</bp-heading>
+            </div>
+          </div>
+
+          <div>
+            <p><strong>Semantic vs visual (h6 element, but 3xl size):</strong></p>
+            <bp-heading level="6" size="3xl" weight="bold">
+              This is an h6 but looks huge
+            </bp-heading>
+          </div>
+
+          <div>
+            <p><strong>Custom color:</strong></p>
+            <bp-heading style="--bp-heading-color: #059669;" level="2" size="2xl">
+              Custom green heading
+            </bp-heading>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="component-text">
+        <h2>Text</h2>
+        <div class="examples">
+          <div>
+            <p><strong>Default (paragraph):</strong></p>
+            <bp-text>The quick brown fox jumps over the lazy dog</bp-text>
+          </div>
+
+          <div>
+            <p><strong>All sizes:</strong></p>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <bp-text size="xs">Extra small text (xs)</bp-text>
+              <bp-text size="sm">Small text (sm)</bp-text>
+              <bp-text size="base">Base text (base)</bp-text>
+              <bp-text size="lg">Large text (lg)</bp-text>
+              <bp-text size="xl">Extra large text (xl)</bp-text>
+            </div>
+          </div>
+
+          <div>
+            <p><strong>Font weights:</strong></p>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <bp-text weight="light">Light weight</bp-text>
+              <bp-text weight="normal">Normal weight</bp-text>
+              <bp-text weight="medium">Medium weight</bp-text>
+              <bp-text weight="semibold">Semibold weight</bp-text>
+              <bp-text weight="bold">Bold weight</bp-text>
+            </div>
+          </div>
+
+          <div>
+            <p><strong>Color variants:</strong></p>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <bp-text variant="default">Default color</bp-text>
+              <bp-text variant="muted">Muted/secondary text</bp-text>
+              <bp-text variant="primary">Primary color text</bp-text>
+              <bp-text variant="success">Success message</bp-text>
+              <bp-text variant="warning">Warning message</bp-text>
+              <bp-text variant="error">Error message</bp-text>
+            </div>
+          </div>
+
+          <div>
+            <p><strong>Text alignment:</strong></p>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <bp-text align="left">Left aligned text</bp-text>
+              <bp-text align="center">Center aligned text</bp-text>
+              <bp-text align="right">Right aligned text</bp-text>
+            </div>
+          </div>
+
+          <div>
+            <p><strong>Italic text:</strong></p>
+            <bp-text italic>This text is displayed in italic style</bp-text>
+          </div>
+
+          <div>
+            <p><strong>Truncated text (in a constrained container):</strong></p>
+            <div style="max-width: 300px;">
+              <bp-text truncate>
+                This is a very long text that will be truncated with an ellipsis when it
+                overflows the container width
+              </bp-text>
+            </div>
+          </div>
+
+          <div>
+            <p><strong>Combination example:</strong></p>
+            <bp-text size="lg" weight="bold" variant="primary">
+              Large, bold, primary text
+            </bp-text>
+          </div>
+        </div>
+      </div>
+
 
 
 
@@ -234,3 +366,4 @@
     <script type="module" src="/source/index.ts"></script>
   </body>
 </html>
+
