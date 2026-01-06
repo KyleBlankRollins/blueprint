@@ -33,7 +33,6 @@ import {
   type TypeGenerationConfig,
 } from './typeGenerator.js';
 import { blueprintCoreTheme } from '../plugins/blueprint-core/index.js';
-import { wadaSanzoTheme } from '../plugins/wada-sanzo/index.js';
 
 /**
  * Internal color registry entry
@@ -69,8 +68,7 @@ export class ThemeBuilder implements ThemeBuilderInterface {
    * Create a ThemeBuilder pre-loaded with Blueprint's default themes
    *
    * Includes:
-   * - blueprint-core: Core color palette with light/dark variants
-   * - wada-sanzo: Japanese traditional color palette with wada-light/wada-dark variants
+   * - blueprint-core: Core color palette with Wada Sanzo-inspired colors and light/dark variants
    *
    * @returns ThemeBuilder instance with default plugins loaded
    *
@@ -86,7 +84,7 @@ export class ThemeBuilder implements ThemeBuilderInterface {
    * ```
    */
   static withDefaults(): ThemeBuilder {
-    return new ThemeBuilder().use(blueprintCoreTheme).use(wadaSanzoTheme);
+    return new ThemeBuilder().use(blueprintCoreTheme);
   }
 
   /**
@@ -594,8 +592,7 @@ export class ThemeBuilder implements ThemeBuilderInterface {
    * @example
    * ```typescript
    * const builder = new ThemeBuilder()
-   *   .use(blueprintCoreTheme)
-   *   .use(wadaSanzoTheme);
+   *   .use(blueprintCoreTheme);
    *
    * const tokens = builder.getDesignTokens();
    * console.log(tokens.spacing.base); // 4 (or overridden value)

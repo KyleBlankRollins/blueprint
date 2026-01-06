@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,11 +13,15 @@
         <p class="subtitle">
           A highly portable and customizable component library built on Lit
         </p>
+        <div class="theme-controls">
+          <label for="themeSelect">Theme:</label>
+          <select id="themeSelect" class="theme-select">
+            <!-- Options populated dynamically -->
+          </select>
+        </div>
       </header>
 
-      <div class="section">
-        <h2>Components</h2>
-      </div>
+      <bp-heading level="1">Components</bp-heading>
 
       <div class="section" id="component-button">
         <h2>Button</h2>
@@ -129,7 +133,7 @@
 
           <div>
             <p><strong>Different icons (430+ available):</strong></p>
-            <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap">
+            <div class="flex-row">
               <bp-icon name="check" size="lg" color="success"></bp-icon>
               <bp-icon name="cross" size="lg" color="error"></bp-icon>
               <bp-icon name="heart" size="lg" color="error"></bp-icon>
@@ -236,7 +240,7 @@
 
           <div>
             <p><strong>All heading levels:</strong></p>
-            <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div class="flex-col">
               <bp-heading level="1">Heading Level 1</bp-heading>
               <bp-heading level="2" size="3xl">Heading Level 2</bp-heading>
               <bp-heading level="3" size="2xl">Heading Level 3</bp-heading>
@@ -248,7 +252,7 @@
 
           <div>
             <p><strong>Different sizes:</strong></p>
-            <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div class="flex-col">
               <bp-heading size="4xl">4xl - Extra Large</bp-heading>
               <bp-heading size="2xl">2xl - Large</bp-heading>
               <bp-heading size="lg">lg - Medium</bp-heading>
@@ -258,7 +262,7 @@
 
           <div>
             <p><strong>Font weights:</strong></p>
-            <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div class="flex-col">
               <bp-heading weight="light">Light Weight</bp-heading>
               <bp-heading weight="normal">Normal Weight</bp-heading>
               <bp-heading weight="medium">Medium Weight</bp-heading>
@@ -276,7 +280,7 @@
 
           <div>
             <p><strong>Custom color:</strong></p>
-            <bp-heading style="--bp-heading-color: #059669;" level="2" size="2xl">
+            <bp-heading style="--bp-heading-color: #059669" level="2" size="2xl">
               Custom green heading
             </bp-heading>
           </div>
@@ -293,7 +297,7 @@
 
           <div>
             <p><strong>All sizes:</strong></p>
-            <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div class="flex-col">
               <bp-text size="xs">Extra small text (xs)</bp-text>
               <bp-text size="sm">Small text (sm)</bp-text>
               <bp-text size="base">Base text (base)</bp-text>
@@ -304,7 +308,7 @@
 
           <div>
             <p><strong>Font weights:</strong></p>
-            <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div class="flex-col">
               <bp-text weight="light">Light weight</bp-text>
               <bp-text weight="normal">Normal weight</bp-text>
               <bp-text weight="medium">Medium weight</bp-text>
@@ -315,7 +319,7 @@
 
           <div>
             <p><strong>Color variants:</strong></p>
-            <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div class="flex-col">
               <bp-text variant="default">Default color</bp-text>
               <bp-text variant="muted">Muted/secondary text</bp-text>
               <bp-text variant="primary">Primary color text</bp-text>
@@ -327,7 +331,7 @@
 
           <div>
             <p><strong>Text alignment:</strong></p>
-            <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div class="flex-col">
               <bp-text align="left">Left aligned text</bp-text>
               <bp-text align="center">Center aligned text</bp-text>
               <bp-text align="right">Right aligned text</bp-text>
@@ -341,7 +345,7 @@
 
           <div>
             <p><strong>Truncated text (in a constrained container):</strong></p>
-            <div style="max-width: 300px;">
+            <div class="max-width-300">
               <bp-text truncate>
                 This is a very long text that will be truncated with an ellipsis when it
                 overflows the container width
@@ -756,6 +760,60 @@
     </div>
 
     <script type="module" src="/source/index.ts"></script>
+    <script type="module">
+      // Theme handling
+      const urlParams = new URLSearchParams(window.location.search);
+      const initialTheme = urlParams.get('theme') || 'light';
+      let availableThemes = [];
+
+      // Set initial theme
+      document.documentElement.setAttribute('data-theme', initialTheme);
+
+      async function loadThemes() {
+        try {
+          const response = await fetch('../source/themes/generated/themes.json');
+          if (!response.ok) {
+            throw new Error(`Failed to load themes manifest: ${response.status}`);
+          }
+          const manifest = await response.json();
+          availableThemes = manifest.themes || [];
+        } catch (error) {
+          console.warn('Could not load themes manifest, using defaults:', error);
+          // Fallback to hardcoded themes
+          availableThemes = [
+            { value: 'light', label: 'Light (Blueprint Core)', pluginId: 'blueprint-core' },
+            { value: 'dark', label: 'Dark (Blueprint Core)', pluginId: 'blueprint-core' },
+            { value: 'wada-light', label: 'Wada Light (Wada Sanzo)', pluginId: 'wada-sanzo' },
+            { value: 'wada-dark', label: 'Wada Dark (Wada Sanzo)', pluginId: 'wada-sanzo' },
+          ];
+        }
+
+        populateThemeSelector();
+      }
+
+      function populateThemeSelector() {
+        const themeSelect = document.getElementById('themeSelect');
+        if (!themeSelect) return;
+
+        availableThemes.forEach((theme) => {
+          const option = document.createElement('option');
+          option.value = theme.value;
+          option.textContent = theme.label;
+          if (theme.value === initialTheme) {
+            option.selected = true;
+          }
+          themeSelect.appendChild(option);
+        });
+
+        themeSelect.addEventListener('change', (e) => {
+          const newTheme = e.target.value;
+          document.documentElement.setAttribute('data-theme', newTheme);
+        });
+      }
+
+      // Load themes on page load
+      loadThemes();
+    </script>
   </body>
 </html>
 
