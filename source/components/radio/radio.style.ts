@@ -11,7 +11,7 @@ export const radioStyles = css`
     align-items: center;
     gap: var(--bp-spacing-sm);
     cursor: pointer;
-    font-family: var(--bp-font-family-sans);
+    font-family: var(--bp-font-sans);
     font-size: var(--bp-font-size-base);
     color: var(--bp-color-text);
     user-select: none;
@@ -93,8 +93,8 @@ export const radioStyles = css`
 
   /* States - Focus */
   .radio--focused .radio__circle {
-    outline: 2px solid var(--bp-color-focus);
-    outline-offset: 2px;
+    outline: var(--bp-spacing-xs) solid var(--bp-color-focus);
+    outline-offset: var(--bp-spacing-xs);
   }
 
   /* States - Hover */

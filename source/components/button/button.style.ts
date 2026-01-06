@@ -21,7 +21,7 @@ export const buttonStyles = css`
     user-select: none;
 
     /* Typography */
-    font-family: var(--bp-font-family-sans);
+    font-family: var(--bp-font-sans);
     font-weight: var(--bp-font-weight-medium);
     text-decoration: none;
     white-space: nowrap;
@@ -63,7 +63,7 @@ export const buttonStyles = css`
   .button--secondary {
     background: var(--bp-color-surface-elevated);
     color: var(--bp-color-text);
-    border: 1px solid var(--bp-color-border-strong);
+    border: var(--bp-border-width) solid var(--bp-color-border-strong);
   }
 
   /* Sizes */
@@ -87,8 +87,8 @@ export const buttonStyles = css`
 
   /* States */
   .button:hover:not(:disabled) {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(calc(-1 * var(--bp-spacing-0-5)));
+    box-shadow: var(--bp-shadow-md);
   }
 
   .button--primary:hover:not(:disabled) {

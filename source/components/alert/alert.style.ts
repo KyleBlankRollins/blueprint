@@ -10,7 +10,7 @@ export const alertStyles = css`
   @keyframes slideIn {
     from {
       opacity: 0;
-      transform: translateY(-8px);
+      transform: translateY(calc(-1 * var(--bp-spacing-md)));
     }
     to {
       opacity: 1;
@@ -24,7 +24,7 @@ export const alertStyles = css`
     align-items: flex-start;
     gap: var(--bp-spacing-md);
     padding: var(--bp-spacing-sm) var(--bp-spacing-md);
-    font-family: var(--bp-font-family-sans);
+    font-family: var(--bp-font-sans);
     font-size: var(--bp-font-size-base);
     line-height: var(--bp-line-height-relaxed);
     border-radius: var(--bp-border-radius-md);
@@ -32,7 +32,7 @@ export const alertStyles = css`
     border-style: solid;
   }
 
-  @media (min-width: 640px) {
+  @media (min-width: var(--bp-breakpoint-sm)) {
     .alert {
       padding: var(--bp-spacing-md) var(--bp-spacing-lg);
     }
@@ -48,13 +48,13 @@ export const alertStyles = css`
   .alert-icon {
     display: flex;
     align-items: flex-start;
-    padding-top: 2px;
+    padding-top: var(--bp-spacing-0-5);
     flex-shrink: 0;
   }
 
   .alert-icon svg {
-    width: 20px;
-    height: 20px;
+    width: var(--bp-spacing-5);
+    height: var(--bp-spacing-5);
     flex-shrink: 0;
   }
 
@@ -86,11 +86,12 @@ export const alertStyles = css`
 
   .alert-close:hover {
     opacity: 1;
-    background-color: rgba(0, 0, 0, 0.08);
+    background-color: currentColor;
+    opacity: 0.1;
   }
 
   .alert-close:active {
-    background-color: rgba(0, 0, 0, 0.12);
+    opacity: 0.15;
   }
 
   .alert-close:focus-visible {
@@ -102,21 +103,21 @@ export const alertStyles = css`
   .alert--info {
     background-color: var(--bp-blue-50);
     border-color: var(--bp-blue-400);
-    border-left-width: 4px;
+    border-left-width: var(--bp-spacing-1);
     color: var(--bp-blue-900);
   }
 
   .alert--success {
     background-color: var(--bp-green-100);
     border-color: var(--bp-green-600);
-    border-left-width: 4px;
+    border-left-width: var(--bp-spacing-1);
     color: var(--bp-green-900);
   }
 
   .alert--warning {
     background-color: var(--bp-yellow-200);
     border-color: var(--bp-yellow-700);
-    border-left-width: 4px;
+    border-left-width: var(--bp-spacing-1);
     color: var(--bp-yellow-900);
     box-shadow: var(--bp-shadow-sm);
   }
@@ -124,7 +125,7 @@ export const alertStyles = css`
   .alert--error {
     background-color: var(--bp-red-200);
     border-color: var(--bp-red-700);
-    border-left-width: 4px;
+    border-left-width: var(--bp-spacing-1);
     color: var(--bp-red-900);
     box-shadow: var(--bp-shadow-sm);
   }

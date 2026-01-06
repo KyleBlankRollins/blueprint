@@ -8,7 +8,7 @@ export const switchStyles = css`
     gap: var(--bp-spacing-sm);
     cursor: pointer;
     user-select: none;
-    font-family: var(--bp-font-family-sans);
+    font-family: var(--bp-font-sans);
     font-size: var(--bp-font-size-base);
     line-height: var(--bp-line-height-normal);
     color: var(--bp-color-text);
@@ -47,7 +47,7 @@ export const switchStyles = css`
 
   /* Sizes */
   .switch--sm .switch__track {
-    width: var(--bp-spacing-9);
+    width: var(--bp-spacing-10);
     height: var(--bp-spacing-5);
     padding: var(--bp-spacing-2xs);
   }
@@ -70,7 +70,7 @@ export const switchStyles = css`
 
   .switch--lg .switch__track {
     width: var(--bp-spacing-12);
-    height: var(--bp-spacing-7);
+    height: var(--bp-spacing-6);
     padding: var(--bp-spacing-xs);
   }
 

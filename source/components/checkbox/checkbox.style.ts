@@ -11,7 +11,7 @@ export const checkboxStyles = css`
     align-items: center;
     gap: var(--bp-spacing-sm);
     cursor: pointer;
-    font-family: var(--bp-font-family-sans);
+    font-family: var(--bp-font-sans);
     font-size: var(--bp-font-size-base);
     color: var(--bp-color-text);
     user-select: none;
@@ -127,8 +127,8 @@ export const checkboxStyles = css`
 
   /* States - Focused */
   .checkbox--focused .checkbox__checkmark {
-    outline: 2px solid var(--bp-color-focus);
-    outline-offset: 2px;
+    outline: var(--bp-focus-width) solid var(--bp-color-focus);
+    outline-offset: var(--bp-focus-offset);
   }
 
   /* States - Disabled */

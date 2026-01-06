@@ -8,7 +8,7 @@ export const linkStyles = css`
 
   .link {
     display: inline;
-    font-family: var(--bp-font-family-sans);
+    font-family: var(--bp-font-sans);
     font-size: inherit;
     font-weight: inherit;
     color: var(--bp-color-primary);
@@ -23,7 +23,7 @@ export const linkStyles = css`
 
   .link:active {
     color: var(--bp-color-primary-active);
-    transform: translateY(1px);
+    transform: translateY(var(--bp-spacing-0-5));
   }
 
   .link:visited {
@@ -35,13 +35,14 @@ export const linkStyles = css`
   }
 
   .link:focus-visible {
-    outline: 2px solid var(--bp-color-focus);
-    outline-offset: 2px;
+    outline: var(--bp-focus-width) solid var(--bp-color-focus);
+    outline-offset: var(--bp-focus-offset);
     border-radius: var(--bp-border-radius-sm);
   }
 
   .link[aria-disabled='true'] {
-    color: var(--bp-color-text-disabled);
+    color: var(--bp-color-text-muted);
+    opacity: 0.5;
     cursor: not-allowed;
   }
 
@@ -55,7 +56,7 @@ export const linkStyles = css`
   }
 
   .link--muted:hover {
-    color: var(--bp-color-text-secondary);
+    color: var(--bp-color-text);
   }
 
   .link--muted:active {
@@ -69,15 +70,11 @@ export const linkStyles = css`
   /* Underline variants */
   .link--underline-always {
     text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.15em;
   }
 
   .link--underline-hover {
     text-decoration: underline;
     text-decoration-color: transparent;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.15em;
     transition: text-decoration-color var(--bp-transition-fast);
   }
 
@@ -95,7 +92,7 @@ export const linkStyles = css`
 
   /* Size variants */
   .link--size-sm {
-    font-size: 0.875em;
+    font-size: var(--bp-font-size-sm);
   }
 
   .link--size-md {
@@ -103,14 +100,13 @@ export const linkStyles = css`
   }
 
   .link--size-lg {
-    font-size: 1.125em;
+    font-size: var(--bp-font-size-lg);
   }
 
   /* External link indicator */
   .link[target='_blank']::after {
     content: '↗';
-    margin-left: 0.3em;
-    font-size: 0.7em;
+    margin-left: var(--bp-spacing-1);
     vertical-align: super;
     line-height: 0;
     opacity: 0.75;

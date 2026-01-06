@@ -14,7 +14,7 @@ export const dividerStyles = css`
   .divider {
     display: flex;
     align-items: center;
-    font-family: var(--bp-font-family-sans);
+    font-family: var(--bp-font-sans);
     font-size: var(--bp-font-size-xs);
     color: var(--bp-color-text-muted);
   }
@@ -22,7 +22,7 @@ export const dividerStyles = css`
   .divider__line {
     flex: 1;
     border: none;
-    border-top: 1px solid var(--bp-color-border);
+    border-top: var(--bp-border-width) solid var(--bp-color-border);
     transition:
       border-color 150ms ease,
       border-width 150ms ease;
@@ -39,7 +39,7 @@ export const dividerStyles = css`
     font-weight: var(--bp-font-weight-semibold);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--bp-color-text-secondary);
+    color: var(--bp-color-text-muted);
   }
 
   .divider__content:empty {
@@ -53,17 +53,16 @@ export const dividerStyles = css`
   }
 
   .divider--vertical {
-    min-height: 2em;
     height: 100%;
     flex-direction: column;
     align-self: stretch;
   }
 
   .divider--vertical .divider__line {
-    width: 1px;
+    width: var(--bp-border-width);
     height: auto;
     border-top: none;
-    border-left: 1px solid var(--bp-color-border);
+    border-left: var(--bp-border-width) solid var(--bp-color-border);
   }
 
   /* Spacing */
@@ -94,21 +93,17 @@ export const dividerStyles = css`
   /* Variants */
   .divider__line--dashed {
     border-style: dashed;
-    border-top-width: 1.5px;
   }
 
   .divider__line--dotted {
     border-style: dotted;
-    border-top-width: 2px;
   }
 
   .divider--vertical .divider__line--dashed {
-    border-left-width: 1.5px;
     border-top-width: 0;
   }
 
   .divider--vertical .divider__line--dotted {
-    border-left-width: 2px;
     border-top-width: 0;
   }
 
@@ -118,7 +113,8 @@ export const dividerStyles = css`
   }
 
   :host([color='subtle']) .divider__line {
-    border-color: var(--bp-color-neutral-200);
+    border-color: var(--bp-color-border);
+    opacity: 0.5;
   }
 
   :host([color='accent']) .divider__line {
@@ -127,29 +123,29 @@ export const dividerStyles = css`
 
   /* Weight variants */
   :host([weight='thin']) .divider__line {
-    border-top-width: 1px;
+    border-top-width: var(--bp-border-width);
   }
 
   :host([weight='medium']) .divider__line {
-    border-top-width: 2px;
+    border-top-width: calc(var(--bp-border-width) * 2);
   }
 
   :host([weight='thick']) .divider__line {
-    border-top-width: 3px;
+    border-top-width: calc(var(--bp-border-width) * 3);
   }
 
   :host([weight='thin'][orientation='vertical']) .divider__line {
-    border-left-width: 1px;
+    border-left-width: var(--bp-border-width);
     border-top-width: 0;
   }
 
   :host([weight='medium'][orientation='vertical']) .divider__line {
-    border-left-width: 2px;
+    border-left-width: calc(var(--bp-border-width) * 2);
     border-top-width: 0;
   }
 
   :host([weight='thick'][orientation='vertical']) .divider__line {
-    border-left-width: 3px;
+    border-left-width: calc(var(--bp-border-width) * 3);
     border-top-width: 0;
   }
 `;

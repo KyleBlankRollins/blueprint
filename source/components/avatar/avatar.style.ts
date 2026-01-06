@@ -14,11 +14,11 @@ export const avatarStyles = css`
     overflow: hidden;
     background: var(--bp-color-primary);
     color: var(--bp-color-text-inverse);
-    font-family: var(--bp-font-family-sans);
+    font-family: var(--bp-font-sans);
     font-weight: var(--bp-font-weight-semibold);
     user-select: none;
     flex-shrink: 0;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--bp-shadow-sm);
     position: relative;
   }
 
@@ -61,7 +61,7 @@ export const avatarStyles = css`
   }
 
   .avatar--xs .avatar__initials {
-    font-size: 10px;
+    font-size: var(--bp-font-size-xs);
   }
 
   .avatar--sm {
@@ -70,7 +70,7 @@ export const avatarStyles = css`
   }
 
   .avatar--sm .avatar__initials {
-    font-size: 13px;
+    font-size: var(--bp-font-size-sm);
   }
 
   .avatar--md {
@@ -79,7 +79,7 @@ export const avatarStyles = css`
   }
 
   .avatar--md .avatar__initials {
-    font-size: 16px;
+    font-size: var(--bp-font-size-base);
   }
 
   .avatar--lg {
@@ -88,7 +88,7 @@ export const avatarStyles = css`
   }
 
   .avatar--lg .avatar__initials {
-    font-size: 19px;
+    font-size: var(--bp-font-size-lg);
   }
 
   .avatar--xl {
@@ -97,7 +97,7 @@ export const avatarStyles = css`
   }
 
   .avatar--xl .avatar__initials {
-    font-size: 26px;
+    font-size: var(--bp-font-size-2xl);
   }
 
   /* States - Interactive */
@@ -109,13 +109,13 @@ export const avatarStyles = css`
   }
 
   :host([clickable]) .avatar:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    transform: translateY(calc(-1 * var(--bp-spacing-0-5)));
+    box-shadow: var(--bp-shadow-md);
   }
 
   :host([clickable]:focus-within) .avatar {
-    outline: 2px solid var(--bp-color-focus);
-    outline-offset: 2px;
+    outline: var(--bp-focus-width) solid var(--bp-color-focus);
+    outline-offset: var(--bp-focus-offset);
   }
 
   /* Status indicator */
@@ -125,10 +125,10 @@ export const avatarStyles = css`
     right: 0;
     width: 25%;
     height: 25%;
-    min-width: 8px;
-    min-height: 8px;
+    min-width: var(--bp-spacing-2);
+    min-height: var(--bp-spacing-2);
     border-radius: var(--bp-border-radius-full);
-    border: 2px solid var(--bp-color-surface-elevated);
+    border: var(--bp-focus-width) solid var(--bp-color-surface-elevated);
   }
 
   .avatar__status--online {

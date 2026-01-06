@@ -13,7 +13,7 @@ export const textStyles = css`
   .text {
     margin: 0;
     padding: 0;
-    font-family: var(--bp-font-family-sans);
+    font-family: var(--bp-font-sans);
     color: var(--bp-color-text);
     line-height: var(--bp-line-height-normal);
   }

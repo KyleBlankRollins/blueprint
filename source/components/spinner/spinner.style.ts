@@ -57,21 +57,21 @@ export const spinnerStyles = css`
   .spinner--sm .spinner__circle {
     width: var(--bp-spacing-4);
     height: var(--bp-spacing-4);
-    border-width: 1.5px;
+    border-width: var(--bp-spacing-xs);
     animation-duration: var(--bp-duration-normal);
   }
 
   .spinner--md .spinner__circle {
     width: var(--bp-spacing-6);
     height: var(--bp-spacing-6);
-    border-width: 2px;
+    border-width: var(--bp-spacing-xs);
     animation-duration: var(--bp-duration-slow);
   }
 
   .spinner--lg .spinner__circle {
     width: var(--bp-spacing-8);
     height: var(--bp-spacing-8);
-    border-width: 2.5px;
+    border-width: var(--bp-spacing-xs);
     animation-duration: 600ms;
   }
 

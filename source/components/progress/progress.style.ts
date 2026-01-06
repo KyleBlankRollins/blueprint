@@ -15,7 +15,7 @@ export const progressStyles = css`
     justify-content: space-between;
     align-items: center;
     margin-bottom: var(--bp-spacing-sm);
-    font-family: var(--bp-font-family-sans);
+    font-family: var(--bp-font-sans);
     font-size: var(--bp-font-size-sm);
     color: var(--bp-color-text);
   }
@@ -44,8 +44,8 @@ export const progressStyles = css`
     height: 100%;
     border-radius: var(--bp-border-radius-full);
     transition:
-      width var(--bp-transition-normal),
-      background-color var(--bp-transition-normal);
+      width var(--bp-transition-base),
+      background-color var(--bp-transition-base);
     opacity: 1;
   }
 

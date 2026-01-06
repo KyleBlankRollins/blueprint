@@ -9,7 +9,7 @@ export const selectStyles = css`
 
   .select {
     position: relative;
-    font-family: var(--bp-font-family-sans);
+    font-family: var(--bp-font-sans);
   }
 
   .select-trigger {
@@ -43,8 +43,8 @@ export const selectStyles = css`
   }
 
   .select-icon {
-    width: 16px;
-    height: 16px;
+    width: var(--bp-spacing-4);
+    height: var(--bp-spacing-4);
     flex-shrink: 0;
     margin-left: var(--bp-spacing-xs);
     transition:
@@ -57,7 +57,6 @@ export const selectStyles = css`
     top: calc(100% + var(--bp-spacing-2xs));
     left: 0;
     right: 0;
-    max-height: 300px;
     overflow-y: auto;
     background-color: var(--bp-color-background);
     border: var(--bp-border-width) solid var(--bp-color-border);
@@ -71,7 +70,7 @@ export const selectStyles = css`
   @keyframes slideDown {
     from {
       opacity: 0;
-      transform: translateY(-8px);
+      transform: translateY(calc(-1 * var(--bp-spacing-2)));
     }
     to {
       opacity: 1;
@@ -90,13 +89,17 @@ export const selectStyles = css`
   }
 
   .select-option--focused {
-    background-color: var(--bp-color-primary-100);
-    outline: 2px solid var(--bp-color-primary);
-    outline-offset: -2px;
+    background-color: var(--bp-gray-50);
+    outline: var(--bp-focus-width) solid var(--bp-color-primary);
+    outline-offset: calc(-1 * var(--bp-focus-width));
   }
 
   .select-option--selected {
-    background-color: var(--bp-color-primary-50);
+    background-color: color-mix(
+      in srgb,
+      var(--bp-color-primary) 8%,
+      transparent
+    );
     color: var(--bp-color-primary);
     font-weight: var(--bp-font-weight-semibold);
     position: relative;
@@ -110,7 +113,7 @@ export const selectStyles = css`
     right: var(--bp-spacing-md);
     color: var(--bp-color-primary);
     font-weight: var(--bp-font-weight-bold);
-    font-size: 1.125em;
+    font-size: var(--bp-font-size-lg);
   }
 
   /* Sizes */
@@ -154,8 +157,8 @@ export const selectStyles = css`
   }
 
   .select-trigger:focus-visible {
-    outline: 2px solid var(--bp-color-primary);
-    outline-offset: 2px;
+    outline: var(--bp-focus-width) solid var(--bp-color-primary);
+    outline-offset: var(--bp-focus-offset);
     border-color: var(--bp-color-primary);
   }
 

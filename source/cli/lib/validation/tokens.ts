@@ -233,11 +233,20 @@ export function checkTokenUsage(componentName: string): TokenCheckResult {
     tokensUsed.set(token, (tokensUsed.get(token) || 0) + 1);
   }
 
-  // Identify undefined tokens
+  // Identify undefined tokens and add them as violations
   const undefinedTokens = new Map<string, number>();
   for (const [token, count] of tokensUsed.entries()) {
     if (!definedTokens.has(token)) {
       undefinedTokens.set(token, count);
+      // Add one violation per usage of undefined token
+      for (let i = 0; i < count; i++) {
+        violations.push({
+          line: 0,
+          type: 'Undefined token',
+          code: token,
+          suggestion: `Token ${token} is not defined in any theme file. Use an existing token or add it to your theme plugin.`,
+        });
+      }
     }
   }
 

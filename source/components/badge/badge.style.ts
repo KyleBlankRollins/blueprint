@@ -10,7 +10,7 @@ export const badgeStyles = css`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-family: var(--bp-font-family-sans);
+    font-family: var(--bp-font-sans);
     font-weight: var(--bp-font-weight-medium);
     line-height: 1;
     border-radius: var(--bp-border-radius-full);
