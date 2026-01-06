@@ -43,3 +43,4 @@ export {
   type ProgressSize,
 } from './progress/progress.js';
 export { BpCard, type CardVariant } from './card/card.js';
+export { BpAlert, type AlertVariant } from './alert/alert.js';
