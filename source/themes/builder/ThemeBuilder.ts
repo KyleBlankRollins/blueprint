@@ -693,8 +693,13 @@ export class ThemeBuilder implements ThemeBuilderInterface {
 
     for (const [variantName, variant] of this.themeVariants) {
       const serializedTokens: Record<string, string> = {};
-      for (const [tokenName, colorRef] of Object.entries(variant.tokens)) {
-        serializedTokens[tokenName] = serializeColorRef(colorRef);
+      for (const [tokenName, tokenValue] of Object.entries(variant.tokens)) {
+        // If it's already a string (borderWidth, shadows), use it directly
+        // Otherwise, serialize the ColorRef
+        serializedTokens[tokenName] =
+          typeof tokenValue === 'string'
+            ? tokenValue
+            : serializeColorRef(tokenValue);
       }
       themes[variantName] = serializedTokens;
       themeMetadata[variantName] = { pluginId: variant.pluginId };

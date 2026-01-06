@@ -128,14 +128,30 @@ export function generateThemeCSS(
   const selector = getThemeSelector(themeName);
   let css = `/* ${themeName} theme */\n${selector} {\n`;
 
+  // Non-color tokens that should use --bp- prefix instead of --bp-color-
+  const nonColorTokens = [
+    'borderWidth',
+    'shadowSm',
+    'shadowMd',
+    'shadowLg',
+    'shadowXl',
+  ];
+
   for (const [semanticToken, primitiveRef] of Object.entries(mappings)) {
-    // Handle both string references and OKLCH objects
-    const colorValue =
-      typeof primitiveRef === 'object'
-        ? formatOKLCHforCSS(primitiveRef)
-        : resolveColorReference(primitiveRef);
+    const isNonColorToken = nonColorTokens.includes(semanticToken);
     const tokenName = toKebabCase(semanticToken);
-    css += `  --${COLOR_PREFIX}-${tokenName}: ${colorValue};\n`;
+
+    if (isNonColorToken) {
+      // Non-color tokens: use direct value without resolving as color reference
+      css += `  --${TOKEN_PREFIX}-${tokenName}: ${primitiveRef};\n`;
+    } else {
+      // Color tokens: resolve reference and use color prefix
+      const colorValue =
+        typeof primitiveRef === 'object'
+          ? formatOKLCHforCSS(primitiveRef)
+          : resolveColorReference(primitiveRef);
+      css += `  --${COLOR_PREFIX}-${tokenName}: ${colorValue};\n`;
+    }
   }
 
   css += '}\n';

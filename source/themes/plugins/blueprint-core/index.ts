@@ -94,6 +94,7 @@ export class BlueprintCoreTheme extends ThemeBase {
 
       // Text
       text: builder.colors.gray900,
+      textStrong: builder.colors.gray950,
       textMuted: builder.colors.gray600,
       textInverse: builder.colors.white500,
 
@@ -111,7 +112,17 @@ export class BlueprintCoreTheme extends ThemeBase {
       // UI Elements
       border: builder.colors.gray200,
       borderStrong: builder.colors.gray300,
+      borderWidth: '1px',
       focus: builder.colors.blue500,
+
+      // Shadows
+      shadowSm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+      shadowMd:
+        '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+      shadowLg:
+        '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      shadowXl:
+        '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
     });
 
     // Dark theme variant with adjusted colors for dark backgrounds
@@ -124,6 +135,7 @@ export class BlueprintCoreTheme extends ThemeBase {
 
       // Text
       text: builder.colors.gray50,
+      textStrong: builder.colors.white500,
       textMuted: builder.colors.gray400,
       textInverse: builder.colors.gray900,
 
@@ -141,7 +153,17 @@ export class BlueprintCoreTheme extends ThemeBase {
       // UI Elements
       border: builder.colors.gray800,
       borderStrong: builder.colors.gray700,
+      borderWidth: '1px',
       focus: builder.colors.blue400,
+
+      // Shadows (lighter shadows for dark backgrounds)
+      shadowSm: '0 1px 2px 0 rgba(0, 0, 0, 0.3)',
+      shadowMd:
+        '0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3)',
+      shadowLg:
+        '0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3)',
+      shadowXl:
+        '0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3)',
     });
   }
 

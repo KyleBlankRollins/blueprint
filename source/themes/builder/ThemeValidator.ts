@@ -129,16 +129,38 @@ export class ThemeValidator {
         });
       }
 
-      // Check that all color refs resolve to actual colors
-      for (const [tokenName, colorRef] of Object.entries(variant.tokens)) {
-        const resolved = this.builder.resolveColorRef(colorRef);
-        if (!resolved) {
-          errors.push({
-            plugin: undefined,
-            type: 'missing_color',
-            message: `Theme variant "${variantName}": Token "${tokenName}" references non-existent color`,
-            context: { variantName, tokenName, colorRef },
-          });
+      // Check that all tokens are valid
+      for (const [tokenName, tokenValue] of Object.entries(variant.tokens)) {
+        // String tokens (borderWidth, shadows) should be validated as strings
+        const isStringToken = [
+          'borderWidth',
+          'shadowSm',
+          'shadowMd',
+          'shadowLg',
+          'shadowXl',
+        ].includes(tokenName);
+
+        if (isStringToken) {
+          // Validate string token
+          if (typeof tokenValue !== 'string') {
+            errors.push({
+              plugin: undefined,
+              type: 'invalid_ref',
+              message: `Theme variant "${variantName}": Token "${tokenName}" must be a string`,
+              context: { variantName, tokenName, value: tokenValue },
+            });
+          }
+        } else {
+          // Validate ColorRef token
+          const resolved = this.builder.resolveColorRef(tokenValue);
+          if (!resolved) {
+            errors.push({
+              plugin: undefined,
+              type: 'missing_color',
+              message: `Theme variant "${variantName}": Token "${tokenName}" references non-existent color`,
+              context: { variantName, tokenName, colorRef: tokenValue },
+            });
+          }
         }
       }
     }
