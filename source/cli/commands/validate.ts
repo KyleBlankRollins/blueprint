@@ -100,9 +100,31 @@ Invalid examples:
           (a, b) => a[0].localeCompare(b[0])
         );
         for (const [token, count] of sortedTokens) {
-          console.log(`  - ${token} (${count} use${count !== 1 ? 's' : ''})`);
+          const isUndefined = result.undefinedTokens.has(token);
+          const marker = isUndefined ? '❌' : '  ';
+          const suffix = isUndefined ? ' (UNDEFINED)' : '';
+          console.log(
+            `${marker} ${token} (${count} use${count !== 1 ? 's' : ''})${suffix}`
+          );
         }
         console.log('');
+      }
+
+      // Show undefined tokens summary
+      if (result.undefinedTokens.size > 0) {
+        console.log(
+          `⚠️  Found ${result.undefinedTokens.size} undefined token${result.undefinedTokens.size !== 1 ? 's' : ''}:`
+        );
+        const sortedUndefined = Array.from(
+          result.undefinedTokens.entries()
+        ).sort((a, b) => a[0].localeCompare(b[0]));
+        for (const [token] of sortedUndefined) {
+          console.log(`   ${token}`);
+        }
+        console.log(
+          '\nThese tokens are used but not defined in source/themes/generated/'
+        );
+        console.log('Add them to your theme plugin or use existing tokens.\n');
       }
 
       // Show violations

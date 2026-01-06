@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { cardStyles } from './card.style.js';
 
 export type CardVariant = 'default' | 'outlined' | 'elevated';
@@ -73,7 +74,7 @@ export class BpCard extends LitElement {
         part="card"
         @click=${this.handleClick}
         role=${this.clickable ? 'button' : 'article'}
-        tabindex=${this.clickable ? '0' : undefined}
+        tabindex=${ifDefined(this.clickable ? '0' : undefined)}
         @keydown=${this.clickable ? this.handleKeydown : undefined}
       >
         <slot name="media" part="media"></slot>

@@ -531,23 +531,89 @@
         <h2>Card</h2>
         <div class="examples">
           <div>
-            <p><strong>Default:</strong></p>
-            <bp-card>Click me</bp-card>
+            <p><strong>Default card:</strong></p>
+            <bp-card>
+              <bp-heading level="3" size="lg">Welcome to Blueprint</bp-heading>
+              <bp-text>
+                A highly portable and customizable component library built on Lit.
+                Start building beautiful interfaces today.
+              </bp-text>
+            </bp-card>
           </div>
 
           <div>
-            <p><strong>Hoverable state:</strong></p>
-            <bp-card hoverable>Click me</bp-card>
+            <p><strong>Card with header slot:</strong></p>
+            <bp-card>
+              <div slot="header">User Profile</div>
+              <bp-text>
+                This card uses the header slot for a title section.
+                The header has a border-bottom separator.
+              </bp-text>
+            </bp-card>
           </div>
 
           <div>
-            <p><strong>Clickable state:</strong></p>
-            <bp-card clickable>Click me</bp-card>
+            <p><strong>Card with footer slot:</strong></p>
+            <bp-card>
+              <bp-heading level="4" size="md">Article Title</bp-heading>
+              <bp-text>
+                This is the main content of the card. The footer slot below
+                provides a subtle separated section for metadata or actions.
+              </bp-text>
+              <div slot="footer">Last updated: January 5, 2026</div>
+            </bp-card>
           </div>
 
           <div>
-            <p><strong>NoPadding state:</strong></p>
-            <bp-card noPadding>Click me</bp-card>
+            <p><strong>Hoverable card (try hovering):</strong></p>
+            <bp-card hoverable>
+              <bp-heading level="4" size="md">Interactive Card</bp-heading>
+              <bp-text>
+                This card has a subtle hover effect with shadow and transform.
+              </bp-text>
+            </bp-card>
+          </div>
+
+          <div>
+            <p><strong>Clickable card (try clicking):</strong></p>
+            <bp-card clickable>
+              <bp-heading level="4" size="md">Clickable Card</bp-heading>
+              <bp-text>
+                This card is clickable and shows cursor pointer. It also has
+                focus styles for keyboard navigation.
+              </bp-text>
+            </bp-card>
+          </div>
+
+          <div>
+            <p><strong>Outlined variant:</strong></p>
+            <bp-card variant="outlined">
+              <bp-heading level="4" size="md">Outlined Style</bp-heading>
+              <bp-text>
+                This card uses the outlined variant with a stronger border and no shadow.
+              </bp-text>
+            </bp-card>
+          </div>
+
+          <div>
+            <p><strong>Elevated variant:</strong></p>
+            <bp-card variant="elevated">
+              <bp-heading level="4" size="md">Elevated Style</bp-heading>
+              <bp-text>
+                This card uses the elevated variant with no border and a larger shadow.
+              </bp-text>
+            </bp-card>
+          </div>
+
+          <div>
+            <p><strong>No padding (with media slot):</strong></p>
+            <bp-card noPadding>
+              <img slot="media" src="https://via.placeholder.com/400x200/667eea/ffffff?text=Media+Slot" alt="Media example" />
+              <bp-text>
+                This card uses the media slot and demonstrates the noPadding property.
+                The media stretches edge-to-edge.
+              </bp-text>
+            </bp-card>
           </div>
         </div>
       </div>
@@ -555,32 +621,138 @@
         <h2>Alert</h2>
         <div class="examples">
           <div>
-            <p><strong>Default:</strong></p>
-            <bp-alert>Click me</bp-alert>
+            <p><strong>Info variant:</strong></p>
+            <bp-alert variant="info" showIcon>
+              <span slot="title">New feature available</span>
+              You can now customize your dashboard layout. Try it out in settings.
+            </bp-alert>
           </div>
 
           <div>
-            <p><strong>Dismissible state:</strong></p>
-            <bp-alert dismissible>Click me</bp-alert>
+            <p><strong>Success variant:</strong></p>
+            <bp-alert variant="success" showIcon dismissible>
+              <span slot="title">Profile updated</span>
+              Your profile has been successfully saved and is now live.
+            </bp-alert>
           </div>
 
           <div>
-            <p><strong>ShowIcon state:</strong></p>
-            <bp-alert showIcon>Click me</bp-alert>
+            <p><strong>Warning variant:</strong></p>
+            <bp-alert variant="warning" showIcon dismissible>
+              <span slot="title">Action required</span>
+              Your subscription will expire in 7 days. Please renew to avoid service interruption.
+            </bp-alert>
+          </div>
+
+          <div>
+            <p><strong>Error variant:</strong></p>
+            <bp-alert variant="error" showIcon dismissible>
+              <span slot="title">Upload failed</span>
+              The file size exceeds the 10MB limit. Please compress your file and try again.
+            </bp-alert>
+          </div>
+
+          <div>
+            <p><strong>Without icon:</strong></p>
+            <bp-alert variant="info" dismissible>
+              This is a simple notification message without an icon.
+            </bp-alert>
+          </div>
+
+          <div>
+            <p><strong>Long message with multiple paragraphs:</strong></p>
+            <bp-alert variant="warning" showIcon dismissible>
+              <span slot="title">Security update available</span>
+              A critical security patch is available for your system. We strongly recommend installing this update as soon as possible to protect your data and maintain system stability.
+            </bp-alert>
           </div>
         </div>
       </div>
+      <div class="section" id="component-select">
+        <h2>Select</h2>
+        <div class="examples">
+          <div>
+            <p><strong>Default:</strong></p>
+            <bp-select placeholder="Choose a framework">
+              <option value="react">React</option>
+              <option value="vue">Vue</option>
+              <option value="angular">Angular</option>
+              <option value="svelte">Svelte</option>
+              <option value="solid">SolidJS</option>
+            </bp-select>
+          </div>
 
+          <div>
+            <p><strong>With selected value:</strong></p>
+            <bp-select value="vue" placeholder="Choose a framework">
+              <option value="react">React</option>
+              <option value="vue">Vue</option>
+              <option value="angular">Angular</option>
+              <option value="svelte">Svelte</option>
+            </bp-select>
+          </div>
 
+          <div>
+            <p><strong>Small size:</strong></p>
+            <bp-select size="small" placeholder="Choose a color">
+              <option value="red">Red</option>
+              <option value="blue">Blue</option>
+              <option value="green">Green</option>
+              <option value="yellow">Yellow</option>
+            </bp-select>
+          </div>
 
+          <div>
+            <p><strong>Large size:</strong></p>
+            <bp-select size="large" placeholder="Choose a country">
+              <option value="us">United States</option>
+              <option value="uk">United Kingdom</option>
+              <option value="ca">Canada</option>
+              <option value="au">Australia</option>
+            </bp-select>
+          </div>
 
+          <div>
+            <p><strong>Long option list (with scrolling):</strong></p>
+            <bp-select placeholder="Choose a country">
+              <option value="us">United States</option>
+              <option value="ca">Canada</option>
+              <option value="mx">Mexico</option>
+              <option value="uk">United Kingdom</option>
+              <option value="fr">France</option>
+              <option value="de">Germany</option>
+              <option value="it">Italy</option>
+              <option value="es">Spain</option>
+              <option value="nl">Netherlands</option>
+              <option value="be">Belgium</option>
+              <option value="ch">Switzerland</option>
+              <option value="au">Australia</option>
+              <option value="nz">New Zealand</option>
+              <option value="jp">Japan</option>
+              <option value="cn">China</option>
+            </bp-select>
+          </div>
 
+          <div>
+            <p><strong>Disabled state:</strong></p>
+            <bp-select disabled value="react">
+              <option value="react">React</option>
+              <option value="vue">Vue</option>
+              <option value="angular">Angular</option>
+            </bp-select>
+          </div>
 
-
-
-
-
-
+          <div>
+            <p><strong>Required state:</strong></p>
+            <bp-select required placeholder="Select a priority (required)">
+              <option value="low">Low Priority</option>
+              <option value="medium">Medium Priority</option>
+              <option value="high">High Priority</option>
+              <option value="urgent">Urgent</option>
+            </bp-select>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script type="module" src="/source/index.ts"></script>

@@ -1,10 +1,11 @@
-import { readFileSync, existsSync } from 'fs';
+import { readFileSync, existsSync, readdirSync } from 'fs';
 import { join } from 'path';
 
 export interface TokenCheckResult {
   success: boolean;
   violations: Violation[];
   tokensUsed: Map<string, number>;
+  undefinedTokens: Map<string, number>;
 }
 
 interface Violation {
@@ -149,6 +150,47 @@ function isInsideFunctionCall(
   return closingIndex !== -1 && matchIndex < closingIndex;
 }
 
+/**
+ * Load all defined tokens from theme CSS files
+ */
+function loadDefinedTokens(): Set<string> {
+  const root = process.cwd();
+  const themesDir = join(root, 'source', 'themes', 'generated');
+  const definedTokens = new Set<string>();
+
+  if (!existsSync(themesDir)) {
+    return definedTokens;
+  }
+
+  // Recursively scan all CSS files in themes/generated
+  function scanDirectory(dir: string): void {
+    try {
+      const entries = readdirSync(dir, { withFileTypes: true });
+
+      for (const entry of entries) {
+        const fullPath = join(dir, entry.name);
+
+        if (entry.isDirectory()) {
+          scanDirectory(fullPath);
+        } else if (entry.isFile() && entry.name.endsWith('.css')) {
+          const content = readFileSync(fullPath, 'utf-8');
+          // Match CSS custom property definitions: --bp-token-name:
+          const tokenRegex = /(--bp-[a-z0-9-]+)\s*:/g;
+          let match;
+          while ((match = tokenRegex.exec(content)) !== null) {
+            definedTokens.add(match[1]);
+          }
+        }
+      }
+    } catch {
+      // Silently continue if directory can't be read
+    }
+  }
+
+  scanDirectory(themesDir);
+  return definedTokens;
+}
+
 export function checkTokenUsage(componentName: string): TokenCheckResult {
   const root = process.cwd();
   const stylePath = join(
@@ -171,6 +213,7 @@ export function checkTokenUsage(componentName: string): TokenCheckResult {
         },
       ],
       tokensUsed: new Map(),
+      undefinedTokens: new Map(),
     };
   }
 
@@ -179,12 +222,23 @@ export function checkTokenUsage(componentName: string): TokenCheckResult {
   const violations: Violation[] = [];
   const tokensUsed = new Map<string, number>();
 
+  // Load all defined tokens from theme files
+  const definedTokens = loadDefinedTokens();
+
   // Find all token usages
-  const tokenPattern = /--bp-[a-z-]+/g;
+  const tokenPattern = /--bp-[a-z0-9-]+/g;
   let tokenRegexMatch;
   while ((tokenRegexMatch = tokenPattern.exec(content)) !== null) {
     const token = tokenRegexMatch[0];
     tokensUsed.set(token, (tokensUsed.get(token) || 0) + 1);
+  }
+
+  // Identify undefined tokens
+  const undefinedTokens = new Map<string, number>();
+  for (const [token, count] of tokensUsed.entries()) {
+    if (!definedTokens.has(token)) {
+      undefinedTokens.set(token, count);
+    }
   }
 
   // Check each line for violations
@@ -229,8 +283,9 @@ export function checkTokenUsage(componentName: string): TokenCheckResult {
   }
 
   return {
-    success: violations.length === 0,
+    success: violations.length === 0 && undefinedTokens.size === 0,
     violations,
     tokensUsed,
+    undefinedTokens,
   };
 }

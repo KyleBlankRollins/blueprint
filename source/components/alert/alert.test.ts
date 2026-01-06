@@ -191,8 +191,9 @@ describe('bp-alert', () => {
     element.showIcon = true;
     await element.updateComplete;
 
-    const icon = element.shadowRoot?.querySelector('.alert-icon svg');
+    const icon = element.shadowRoot?.querySelector('.alert-icon bp-icon');
     expect(icon).toBeTruthy();
+    expect(icon?.getAttribute('name')).toBe('info-circle');
   });
 
   it('should render default success icon when showIcon is true', async () => {
@@ -200,8 +201,9 @@ describe('bp-alert', () => {
     element.showIcon = true;
     await element.updateComplete;
 
-    const icon = element.shadowRoot?.querySelector('.alert-icon svg');
+    const icon = element.shadowRoot?.querySelector('.alert-icon bp-icon');
     expect(icon).toBeTruthy();
+    expect(icon?.getAttribute('name')).toBe('check-circle');
   });
 
   it('should render default warning icon when showIcon is true', async () => {
@@ -209,8 +211,9 @@ describe('bp-alert', () => {
     element.showIcon = true;
     await element.updateComplete;
 
-    const icon = element.shadowRoot?.querySelector('.alert-icon svg');
+    const icon = element.shadowRoot?.querySelector('.alert-icon bp-icon');
     expect(icon).toBeTruthy();
+    expect(icon?.getAttribute('name')).toBe('warning-circle');
   });
 
   it('should render default error icon when showIcon is true', async () => {
@@ -218,8 +221,9 @@ describe('bp-alert', () => {
     element.showIcon = true;
     await element.updateComplete;
 
-    const icon = element.shadowRoot?.querySelector('.alert-icon svg');
+    const icon = element.shadowRoot?.querySelector('.alert-icon bp-icon');
     expect(icon).toBeTruthy();
+    expect(icon?.getAttribute('name')).toBe('cross-circle');
   });
 
   it('should not render icon when showIcon is false', async () => {

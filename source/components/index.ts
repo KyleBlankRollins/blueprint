@@ -44,3 +44,4 @@ export {
 } from './progress/progress.js';
 export { BpCard, type CardVariant } from './card/card.js';
 export { BpAlert, type AlertVariant } from './alert/alert.js';
+export { BpSelect, type SelectSize } from './select/select.js';

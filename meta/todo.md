@@ -26,7 +26,7 @@ Components built from foundational elements. These create common UI patterns.
 
 - [x] **Card** - Content container with header/body/footer
 - [x] **Alert** - Notification message (success/warning/error/info)
-- [ ] **Select** - Dropdown select input
+- [x] **Select** - Dropdown select input
 - [ ] **Textarea** - Multi-line text input
 - [ ] **Modal** - Dialog overlay
 - [ ] **Dropdown** - Generic dropdown menu
