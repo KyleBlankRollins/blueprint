@@ -76,7 +76,6 @@ export {
 import type { ThemeConfig } from '../core/types.js';
 import { generateAllColorScales } from '../color/generateColorScale.js';
 import {
-  generatePrimitivesCSS,
   generateThemeCSS,
   generateSpacingCSS,
   generateRadiusCSS,
@@ -89,11 +88,11 @@ import {
 } from '../generator/generateCSS.js';
 
 export interface GeneratedFiles {
-  'primitives.css': string;
+  'primitives.css'?: string; // Optional - not generated in semantic-only mode
   'utilities.css': string;
   'index.css': string;
   // Allow dynamic theme files from plugins (e.g., 'blueprint-core/light.css')
-  [key: string]: string;
+  [key: string]: string | undefined;
 }
 
 /**
@@ -145,10 +144,14 @@ export function buildTheme(config: ThemeConfig): GeneratedFiles {
     // Generate primitive color scales (shared by all themes)
     const primitives = generateAllColorScales(config.colors);
 
+    // Create color resolution context for direct OKLCH output
+    const colorContext = { colors: primitives };
+
     // Build CSS files
     const files: GeneratedFiles = {
-      // Primitive color scales (shared by all themes)
-      'primitives.css': generatePrimitivesCSS(primitives),
+      // NOTE: Primitive color scales are NO LONGER emitted in semantic-only mode
+      // Keeping this commented for now in case we want to add it back as opt-in
+      // 'primitives.css': generatePrimitivesCSS(primitives),
 
       // Utilities (spacing, radius, motion, typography, etc.)
       'utilities.css': generateUtilitiesFile(config),
@@ -174,7 +177,11 @@ export function buildTheme(config: ThemeConfig): GeneratedFiles {
     for (const [pluginId, variantNames] of themesByPlugin) {
       for (const variantName of variantNames) {
         const themeTokens = config.themes[variantName];
-        const cssContent = generateThemeCSS(variantName, themeTokens);
+        const cssContent = generateThemeCSS(
+          variantName,
+          themeTokens,
+          colorContext
+        );
 
         // Store in plugin directory: plugin-id/variant-name.css
         files[`${pluginId}/${variantName}.css`] = cssContent;

@@ -131,6 +131,19 @@ export class BlueprintCoreTheme extends ThemeBase {
       borderWidth: '1px',
       focus: builder.colors.vandarPoelBlue500,
 
+      // Typography
+      fontFamily:
+        '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+      fontFamilyMono:
+        '"SF Mono", Monaco, "Cascadia Code", "Courier New", monospace',
+      fontFamilyHeading:
+        '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+
+      // Border radius
+      borderRadius: '4px',
+      borderRadiusLarge: '8px',
+      borderRadiusFull: '9999px',
+
       // Shadows
       shadowSm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
       shadowMd:
@@ -171,6 +184,19 @@ export class BlueprintCoreTheme extends ThemeBase {
       borderStrong: builder.colors.gray700,
       borderWidth: '1px',
       focus: builder.colors.vandarPoelBlue400,
+
+      // Typography
+      fontFamily:
+        '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+      fontFamilyMono:
+        '"SF Mono", Monaco, "Cascadia Code", "Courier New", monospace',
+      fontFamilyHeading:
+        '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+
+      // Border radius
+      borderRadius: '4px',
+      borderRadiusLarge: '8px',
+      borderRadiusFull: '9999px',
 
       // Shadows (lighter shadows for dark backgrounds)
       shadowSm: '0 1px 2px 0 rgba(0, 0, 0, 0.3)',

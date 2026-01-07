@@ -10,6 +10,14 @@ import type {
 } from '../core/types.js';
 import { formatOKLCHforCSS } from '../color/colorUtils.js';
 
+/**
+ * Context for resolving color references to OKLCH values
+ * Passed to generateThemeCSS to enable direct OKLCH value resolution
+ */
+export interface ColorResolutionContext {
+  colors: Record<string, Record<number, GeneratedColorStep>>;
+}
+
 // Token prefix constants
 const TOKEN_PREFIX = 'bp';
 const COLOR_PREFIX = `${TOKEN_PREFIX}-color`;
@@ -53,14 +61,19 @@ function getThemeSelector(themeName: string): string {
 }
 
 /**
- * Resolve a color reference to a CSS value
+ * Resolve a color reference to an OKLCH value
  * @param primitiveRef - Color reference (e.g., 'blue.500', 'white', 'black')
- * @returns CSS color value or var() reference
- * @throws {Error} If the color reference format is invalid
+ * @param context - Optional color resolution context with generated color scales
+ * @returns OKLCH color value string
+ * @throws {Error} If the color reference format is invalid or color not found
  */
-function resolveColorReference(primitiveRef: string): string {
-  if (primitiveRef === 'white') return '#ffffff';
-  if (primitiveRef === 'black') return '#000000';
+function resolveColorToOKLCH(
+  primitiveRef: string,
+  context?: ColorResolutionContext
+): string {
+  // Handle special colors
+  if (primitiveRef === 'white') return 'oklch(1 0 0)';
+  if (primitiveRef === 'black') return 'oklch(0 0 0)';
 
   const [colorName, step] = primitiveRef.split('.');
   if (!colorName || !step) {
@@ -69,7 +82,27 @@ function resolveColorReference(primitiveRef: string): string {
     );
   }
 
-  return `var(--${TOKEN_PREFIX}-${colorName}-${step})`;
+  // If no context provided, fall back to var() reference (legacy behavior)
+  if (!context) {
+    return `var(--${TOKEN_PREFIX}-${colorName}-${step})`;
+  }
+
+  // Look up the color in the context
+  const colorScale = context.colors[colorName];
+  if (!colorScale) {
+    throw new Error(
+      `Color "${colorName}" not found in theme. Available colors: ${Object.keys(context.colors).join(', ')}`
+    );
+  }
+
+  const colorStep = colorScale[parseInt(step, 10)];
+  if (!colorStep) {
+    throw new Error(
+      `Step "${step}" not found for color "${colorName}". Available steps: ${Object.keys(colorScale).join(', ')}`
+    );
+  }
+
+  return formatOKLCHforCSS(colorStep.oklch);
 }
 
 /**
@@ -114,43 +147,82 @@ export function generatePrimitivesCSS(
 
 /**
  * Generate semantic theme tokens CSS
- * Maps semantic names to primitive color tokens
+ * Maps semantic names to direct OKLCH color values (not var() references)
  *
  * @param themeName - Name of the theme variant (e.g., 'light', 'dark')
- * @param mappings - Map of semantic token names to primitive color references
+ * @param mappings - Map of semantic token names to color references or direct values
+ * @param context - Optional color resolution context for direct OKLCH output
  * @returns CSS string with semantic theme tokens
  * @throws {Error} If a color reference is invalid
  */
 export function generateThemeCSS(
   themeName: string,
-  mappings: Record<string, string | OKLCHColor>
+  mappings: Record<string, string | OKLCHColor>,
+  context?: ColorResolutionContext
 ): string {
   const selector = getThemeSelector(themeName);
   let css = `/* ${themeName} theme */\n${selector} {\n`;
 
-  // Non-color tokens that should use --bp- prefix instead of --bp-color-
-  const nonColorTokens = [
-    'borderWidth',
-    'shadowSm',
-    'shadowMd',
-    'shadowLg',
-    'shadowXl',
+  // Color tokens (use --bp-color- prefix)
+  const colorTokens = [
+    'background',
+    'surface',
+    'surfaceElevated',
+    'surfaceSubdued',
+    'text',
+    'textStrong',
+    'textMuted',
+    'textInverse',
+    'primary',
+    'primaryHover',
+    'primaryActive',
+    'success',
+    'warning',
+    'error',
+    'info',
+    'border',
+    'borderStrong',
+    'focus',
   ];
 
+  // Typography tokens (use --bp- prefix)
+  const typographyTokens = [
+    'fontFamily',
+    'fontFamilyMono',
+    'fontFamilyHeading',
+  ];
+
+  // Border tokens (use --bp- prefix)
+  const borderTokens = [
+    'borderWidth',
+    'borderRadius',
+    'borderRadiusLarge',
+    'borderRadiusFull',
+  ];
+
+  // Shadow tokens (use --bp- prefix)
+  const shadowTokens = ['shadowSm', 'shadowMd', 'shadowLg', 'shadowXl'];
+
   for (const [semanticToken, primitiveRef] of Object.entries(mappings)) {
-    const isNonColorToken = nonColorTokens.includes(semanticToken);
     const tokenName = toKebabCase(semanticToken);
 
-    if (isNonColorToken) {
-      // Non-color tokens: use direct value without resolving as color reference
-      css += `  --${TOKEN_PREFIX}-${tokenName}: ${primitiveRef};\n`;
-    } else {
-      // Color tokens: resolve reference and use color prefix
+    if (colorTokens.includes(semanticToken)) {
+      // Color tokens: resolve to direct OKLCH value
       const colorValue =
         typeof primitiveRef === 'object'
           ? formatOKLCHforCSS(primitiveRef)
-          : resolveColorReference(primitiveRef);
+          : resolveColorToOKLCH(primitiveRef, context);
       css += `  --${COLOR_PREFIX}-${tokenName}: ${colorValue};\n`;
+    } else if (
+      typographyTokens.includes(semanticToken) ||
+      borderTokens.includes(semanticToken) ||
+      shadowTokens.includes(semanticToken)
+    ) {
+      // Non-color semantic tokens: use direct value with --bp- prefix
+      css += `  --${TOKEN_PREFIX}-${tokenName}: ${primitiveRef};\n`;
+    } else {
+      // Fallback for any unknown tokens (should not happen with strict typing)
+      css += `  --${TOKEN_PREFIX}-${tokenName}: ${primitiveRef};\n`;
     }
   }
 
@@ -414,9 +486,6 @@ export function generateIndexCSS(
  * 
  * To regenerate: npm run theme:generate
  */
-
-/* Primitive color tokens (all color scales) */
-@import './primitives.css';
 
 /* Utility tokens (spacing, radius, motion, typography, etc.) */
 @import './utilities.css';

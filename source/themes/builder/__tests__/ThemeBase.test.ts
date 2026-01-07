@@ -7,7 +7,6 @@ import { describe, it, expect } from 'vitest';
 import { ThemeBase } from '../ThemeBase.js';
 import { ThemeBuilder } from '../ThemeBuilder.js';
 import { blueprintCoreTheme } from '../../plugins/blueprint-core/index.js';
-import { wadaSanzoTheme } from '../../plugins/wada-sanzo/index.js';
 
 // Minimal test theme with custom spacing
 class TightSpacingTheme extends ThemeBase {
@@ -217,7 +216,6 @@ describe('ThemeBase', () => {
     it('should merge design tokens from multiple themes (later overrides earlier)', () => {
       const builder = new ThemeBuilder()
         .use(blueprintCoreTheme)
-        .use(wadaSanzoTheme)
         .use(new TightSpacingTheme());
 
       const config = builder.build();
@@ -227,14 +225,14 @@ describe('ThemeBase', () => {
       expect(config.spacing.semantic).toBeTruthy();
       expect(config.spacing.semantic!.md).toBe(2);
 
-      // wadaSanzoTheme doesn't override radius, should be defaults
+      // blueprintCoreTheme doesn't override radius, should be defaults
       expect(config.radius.md).toBe(4);
 
       // Other tokens from defaults should remain
       expect(config.motion.durations.fast).toBe(150);
 
       // All themes' colors should be present
-      expect(config.colors.blue).toBeDefined();
+      expect(config.colors.gray).toBeDefined();
       expect(config.colors.sulphurYellow).toBeDefined();
 
       // All theme variants should exist

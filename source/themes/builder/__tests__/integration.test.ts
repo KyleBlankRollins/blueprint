@@ -12,7 +12,6 @@ import {
   dependentPlugin,
 } from './fixtures/mockPlugins.js';
 import { blueprintCoreTheme } from '../../plugins/blueprint-core/index.js';
-import { wadaSanzoTheme } from '../../plugins/wada-sanzo/index.js';
 
 describe('Plugin System Integration', () => {
   let builder: ThemeBuilder;
@@ -99,6 +98,7 @@ describe('Plugin System Integration', () => {
         surfaceElevated: builder.colors.gray800,
         surfaceSubdued: builder.colors.gray900,
         text: builder.colors.gray50,
+        textStrong: builder.colors.gray100,
         textMuted: builder.colors.gray400,
         textInverse: builder.colors.gray900,
         primary: builder.colors.testBlue400,
@@ -110,7 +110,18 @@ describe('Plugin System Integration', () => {
         info: builder.colors.testBlue400,
         border: builder.colors.gray700,
         borderStrong: builder.colors.gray600,
+        borderWidth: '1px',
         focus: builder.colors.testBlue400,
+        fontFamily: 'system-ui, sans-serif',
+        fontFamilyMono: 'monospace',
+        fontFamilyHeading: 'system-ui, sans-serif',
+        borderRadius: '4px',
+        borderRadiusLarge: '8px',
+        borderRadiusFull: '9999px',
+        shadowSm: '0 1px 2px rgba(0,0,0,0.3)',
+        shadowMd: '0 4px 6px rgba(0,0,0,0.4)',
+        shadowLg: '0 10px 15px rgba(0,0,0,0.4)',
+        shadowXl: '0 20px 25px rgba(0,0,0,0.4)',
       });
 
       const result = builder.validate();
@@ -144,6 +155,7 @@ describe('Plugin System Integration', () => {
         surfaceElevated: builder.colors.gray800,
         surfaceSubdued: builder.colors.gray900,
         text: builder.colors.gray50,
+        textStrong: builder.colors.gray100,
         textMuted: builder.colors.gray400,
         textInverse: builder.colors.gray900,
         primary: builder.colors.testBlue400,
@@ -155,7 +167,18 @@ describe('Plugin System Integration', () => {
         info: builder.colors.testBlue400,
         border: builder.colors.gray700,
         borderStrong: builder.colors.gray600,
+        borderWidth: '1px',
         focus: builder.colors.testBlue400,
+        fontFamily: 'system-ui, sans-serif',
+        fontFamilyMono: 'monospace',
+        fontFamilyHeading: 'system-ui, sans-serif',
+        borderRadius: '4px',
+        borderRadiusLarge: '8px',
+        borderRadiusFull: '9999px',
+        shadowSm: '0 1px 2px rgba(0,0,0,0.3)',
+        shadowMd: '0 4px 6px rgba(0,0,0,0.4)',
+        shadowLg: '0 10px 15px rgba(0,0,0,0.4)',
+        shadowXl: '0 20px 25px rgba(0,0,0,0.4)',
       });
 
       const config = builder.build();
@@ -189,6 +212,7 @@ describe('Plugin System Integration', () => {
         surfaceElevated: builder.colors.gray800,
         surfaceSubdued: builder.colors.gray900,
         text: builder.colors.gray50,
+        textStrong: builder.colors.gray100,
         textMuted: builder.colors.gray400,
         textInverse: builder.colors.gray900,
         primary: builder.colors.testBlue400,
@@ -200,7 +224,18 @@ describe('Plugin System Integration', () => {
         info: builder.colors.testBlue400,
         border: builder.colors.gray700,
         borderStrong: builder.colors.gray600,
+        borderWidth: '1px',
         focus: builder.colors.testBlue400,
+        fontFamily: 'system-ui, sans-serif',
+        fontFamilyMono: 'monospace',
+        fontFamilyHeading: 'system-ui, sans-serif',
+        borderRadius: '4px',
+        borderRadiusLarge: '8px',
+        borderRadiusFull: '9999px',
+        shadowSm: '0 1px 2px rgba(0,0,0,0.3)',
+        shadowMd: '0 4px 6px rgba(0,0,0,0.4)',
+        shadowLg: '0 10px 15px rgba(0,0,0,0.4)',
+        shadowXl: '0 20px 25px rgba(0,0,0,0.4)',
       });
 
       const config = builder.build();
@@ -283,9 +318,7 @@ describe('Plugin System Integration', () => {
     });
 
     it('should merge design tokens from multiple ThemeBase plugins', () => {
-      const builder = new ThemeBuilder()
-        .use(blueprintCoreTheme)
-        .use(wadaSanzoTheme);
+      const builder = new ThemeBuilder().use(blueprintCoreTheme);
 
       const tokens = builder.getDesignTokens();
 

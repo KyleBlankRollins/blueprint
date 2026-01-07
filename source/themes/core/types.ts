@@ -69,7 +69,7 @@ export interface SemanticTokens<TColorRef = ColorRef | string> {
 
   // Text
   text: TColorRef;
-  textStrong?: TColorRef;
+  textStrong: TColorRef;
   textMuted: TColorRef;
   textInverse: TColorRef;
 
@@ -87,14 +87,24 @@ export interface SemanticTokens<TColorRef = ColorRef | string> {
   // UI elements
   border: TColorRef;
   borderStrong: TColorRef;
-  borderWidth?: string;
+  borderWidth: string;
   focus: TColorRef;
 
+  // Typography
+  fontFamily: string;
+  fontFamilyMono: string;
+  fontFamilyHeading: string;
+
+  // Border radius
+  borderRadius: string;
+  borderRadiusLarge: string;
+  borderRadiusFull: string;
+
   // Shadows
-  shadowSm?: string;
-  shadowMd?: string;
-  shadowLg?: string;
-  shadowXl?: string;
+  shadowSm: string;
+  shadowMd: string;
+  shadowLg: string;
+  shadowXl: string;
 }
 
 /**

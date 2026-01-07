@@ -7,4 +7,3 @@ export {
   BlueprintCoreTheme,
   blueprintCoreTheme,
 } from './blueprint-core/index.js';
-export { WadaSanzoTheme, wadaSanzoTheme } from './wada-sanzo/index.js';

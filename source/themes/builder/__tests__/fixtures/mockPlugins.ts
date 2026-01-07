@@ -161,6 +161,7 @@ export class ThemeVariantPlugin extends ThemeBase {
       surfaceElevated: builder.colors.gray50,
       surfaceSubdued: builder.colors.gray200,
       text: builder.colors.gray900,
+      textStrong: builder.colors.gray950,
       textMuted: builder.colors.gray600,
       textInverse: builder.colors.gray50,
       primary: builder.colors.testBlue500,
@@ -172,7 +173,18 @@ export class ThemeVariantPlugin extends ThemeBase {
       info: builder.colors.testBlue500,
       border: builder.colors.gray200,
       borderStrong: builder.colors.gray300,
+      borderWidth: '1px',
       focus: builder.colors.testBlue500,
+      fontFamily: 'system-ui, sans-serif',
+      fontFamilyMono: 'monospace',
+      fontFamilyHeading: 'system-ui, sans-serif',
+      borderRadius: '4px',
+      borderRadiusLarge: '8px',
+      borderRadiusFull: '9999px',
+      shadowSm: '0 1px 2px rgba(0,0,0,0.05)',
+      shadowMd: '0 4px 6px rgba(0,0,0,0.1)',
+      shadowLg: '0 10px 15px rgba(0,0,0,0.1)',
+      shadowXl: '0 20px 25px rgba(0,0,0,0.1)',
     });
   }
 }

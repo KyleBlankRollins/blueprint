@@ -131,16 +131,22 @@ export class ThemeValidator {
 
       // Check that all tokens are valid
       for (const [tokenName, tokenValue] of Object.entries(variant.tokens)) {
-        // String tokens (borderWidth, shadows) should be validated as strings
-        const isStringToken = [
+        // Non-color tokens (strings) that don't need color resolution
+        const nonColorTokens = [
           'borderWidth',
           'shadowSm',
           'shadowMd',
           'shadowLg',
           'shadowXl',
-        ].includes(tokenName);
+          'fontFamily',
+          'fontFamilyMono',
+          'fontFamilyHeading',
+          'borderRadius',
+          'borderRadiusLarge',
+          'borderRadiusFull',
+        ];
 
-        if (isStringToken) {
+        if (nonColorTokens.includes(tokenName)) {
           // Validate string token
           if (typeof tokenValue !== 'string') {
             errors.push({
