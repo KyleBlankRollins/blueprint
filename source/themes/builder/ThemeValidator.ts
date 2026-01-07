@@ -157,15 +157,29 @@ export class ThemeValidator {
             });
           }
         } else {
-          // Validate ColorRef token
-          const resolved = this.builder.resolveColorRef(tokenValue);
-          if (!resolved) {
-            errors.push({
-              plugin: undefined,
-              type: 'missing_color',
-              message: `Theme variant "${variantName}": Token "${tokenName}" references non-existent color`,
-              context: { variantName, tokenName, colorRef: tokenValue },
-            });
+          // Validate ColorRef or OKLCH string token
+          // Allow direct OKLCH strings like "oklch(0.5 0.1 180)"
+          if (typeof tokenValue === 'string') {
+            // Plain string - should be OKLCH format
+            if (!tokenValue.startsWith('oklch(')) {
+              errors.push({
+                plugin: undefined,
+                type: 'invalid_ref',
+                message: `Theme variant "${variantName}": Token "${tokenName}" must be an OKLCH color string (e.g., "oklch(0.5 0.1 180)")`,
+                context: { variantName, tokenName, value: tokenValue },
+              });
+            }
+          } else {
+            // ColorRef object - validate it resolves
+            const resolved = this.builder.resolveColorRef(tokenValue);
+            if (!resolved) {
+              errors.push({
+                plugin: undefined,
+                type: 'missing_color',
+                message: `Theme variant "${variantName}": Token "${tokenName}" references non-existent color`,
+                context: { variantName, tokenName, colorRef: tokenValue },
+              });
+            }
           }
         }
       }

@@ -177,7 +177,7 @@ export interface ThemeBuilderInterface {
   hasColor(name: string): boolean;
   addThemeVariant(
     name: string,
-    tokens: SemanticTokens<ColorRef>
+    tokens: SemanticTokens<ColorRef | string>
   ): ThemeBuilderInterface;
   getThemeVariant(name: string): SemanticTokens<ColorRef> | undefined;
   extendThemeVariant(

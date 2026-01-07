@@ -224,13 +224,7 @@ Refactor theme system to emit only semantic tokens in CSS output, eliminating pr
    - Component authors: always use semantic tokens
    - Theme authors: must provide all semantic tokens
 
-4. **Create migration guide** (new file or section)
-   - For existing theme authors
-   - How to add new required tokens
-   - What changed and why
-   - Examples of before/after
-
-5. **Update component README templates**
+4. **Update component README templates**
    - Update token usage sections to reference semantic tokens only
 
 **Testing:**

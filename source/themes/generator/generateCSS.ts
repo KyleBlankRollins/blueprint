@@ -62,7 +62,7 @@ function getThemeSelector(themeName: string): string {
 
 /**
  * Resolve a color reference to an OKLCH value
- * @param primitiveRef - Color reference (e.g., 'blue.500', 'white', 'black')
+ * @param primitiveRef - Color reference (e.g., 'blue.500', 'white', 'black', or 'oklch(0.5 0.1 180)')
  * @param context - Optional color resolution context with generated color scales
  * @returns OKLCH color value string
  * @throws {Error} If the color reference format is invalid or color not found
@@ -71,6 +71,11 @@ function resolveColorToOKLCH(
   primitiveRef: string,
   context?: ColorResolutionContext
 ): string {
+  // If already an OKLCH string, return as-is
+  if (primitiveRef.startsWith('oklch(')) {
+    return primitiveRef;
+  }
+
   // Handle special colors
   if (primitiveRef === 'white') return 'oklch(1 0 0)';
   if (primitiveRef === 'black') return 'oklch(0 0 0)';
@@ -78,7 +83,7 @@ function resolveColorToOKLCH(
   const [colorName, step] = primitiveRef.split('.');
   if (!colorName || !step) {
     throw new Error(
-      `Invalid color reference: "${primitiveRef}". Expected format: "colorName.step", "white", or "black"`
+      `Invalid color reference: "${primitiveRef}". Expected format: "colorName.step", "white", "black", or "oklch(...)"`
     );
   }
 
