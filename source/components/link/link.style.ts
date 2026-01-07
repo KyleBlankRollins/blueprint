@@ -8,7 +8,7 @@ export const linkStyles = css`
 
   .link {
     display: inline;
-    font-family: var(--bp-font-sans);
+    font-family: var(--bp-font-family);
     font-size: inherit;
     font-weight: inherit;
     color: var(--bp-color-primary);

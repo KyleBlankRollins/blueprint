@@ -15,7 +15,7 @@ export const progressStyles = css`
     justify-content: space-between;
     align-items: center;
     margin-bottom: var(--bp-spacing-sm);
-    font-family: var(--bp-font-sans);
+    font-family: var(--bp-font-family);
     font-size: var(--bp-font-size-sm);
     color: var(--bp-color-text);
   }

@@ -11,7 +11,7 @@ export const radioStyles = css`
     align-items: center;
     gap: var(--bp-spacing-sm);
     cursor: pointer;
-    font-family: var(--bp-font-sans);
+    font-family: var(--bp-font-family);
     font-size: var(--bp-font-size-base);
     color: var(--bp-color-text);
     user-select: none;

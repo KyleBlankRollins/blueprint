@@ -10,7 +10,7 @@ export const headingStyles = css`
     margin: 0;
     padding: 0;
     color: var(--bp-color-text);
-    font-family: var(--bp-font-sans);
+    font-family: var(--bp-font-family);
   }
 
   /* Sizes */

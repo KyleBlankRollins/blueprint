@@ -9,7 +9,7 @@ export const selectStyles = css`
 
   .select {
     position: relative;
-    font-family: var(--bp-font-sans);
+    font-family: var(--bp-font-family);
   }
 
   .select-trigger {
@@ -85,11 +85,11 @@ export const selectStyles = css`
   }
 
   .select-option:hover:not(.select-option--focused) {
-    background-color: var(--bp-gray-100);
+    background-color: var(--bp-color-surface-elevated);
   }
 
   .select-option--focused {
-    background-color: var(--bp-gray-50);
+    background-color: var(--bp-color-surface-subdued);
     outline: var(--bp-focus-width) solid var(--bp-color-primary);
     outline-offset: calc(-1 * var(--bp-focus-width));
   }
@@ -174,6 +174,6 @@ export const selectStyles = css`
   .select--disabled .select-trigger {
     opacity: 0.5;
     cursor: not-allowed;
-    background-color: var(--bp-gray-50);
+    background-color: var(--bp-color-surface-subdued);
   }
 `;

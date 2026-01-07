@@ -21,7 +21,7 @@ export const buttonStyles = css`
     user-select: none;
 
     /* Typography */
-    font-family: var(--bp-font-sans);
+    font-family: var(--bp-font-family);
     font-weight: var(--bp-font-weight-medium);
     text-decoration: none;
     white-space: nowrap;

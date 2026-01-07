@@ -299,18 +299,18 @@ export const FormButtons: Story = {
       }}
       style="display: flex; flex-direction: column; gap: 16px; max-width: 400px; padding: 24px; border: 1px solid var(--bp-color-border); border-radius: var(--bp-border-radius-lg);"
     >
-      <h3 style="margin: 0 0 8px 0; font-family: var(--bp-font-family-sans);">
+      <h3 style="margin: 0 0 8px 0; font-family: var(--bp-font-family);">
         User Registration
       </h3>
       <input
         type="text"
         placeholder="Username"
-        style="padding: 8px 12px; border: 1px solid var(--bp-color-border); border-radius: var(--bp-border-radius-md); font-family: var(--bp-font-family-sans);"
+        style="padding: 8px 12px; border: 1px solid var(--bp-color-border); border-radius: var(--bp-border-radius-md); font-family: var(--bp-font-family);"
       />
       <input
         type="email"
         placeholder="Email"
-        style="padding: 8px 12px; border: 1px solid var(--bp-color-border); border-radius: var(--bp-border-radius-md); font-family: var(--bp-font-family-sans);"
+        style="padding: 8px 12px; border: 1px solid var(--bp-color-border); border-radius: var(--bp-border-radius-md); font-family: var(--bp-font-family);"
       />
       <div style="display: flex; gap: 12px; justify-content: flex-end;">
         <bp-button type="reset" variant="secondary">Reset</bp-button>
@@ -340,7 +340,7 @@ export const Interactive: Story = {
         </bp-button>
         <p
           id="click-counter"
-          style="margin: 0; font-family: var(--bp-font-family-sans); color: var(--bp-color-text-muted);"
+          style="margin: 0; font-family: var(--bp-font-family); color: var(--bp-color-text-muted);"
         >
           Not clicked yet
         </p>

@@ -7,7 +7,7 @@ export const cardStyles = css`
   }
 
   .card {
-    font-family: var(--bp-font-sans);
+    font-family: var(--bp-font-family);
     background-color: var(--bp-color-surface-elevated);
     border-radius: var(--bp-border-radius-lg);
     overflow: hidden;

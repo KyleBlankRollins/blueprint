@@ -24,7 +24,7 @@ export const tooltipStyles = css`
     color: var(--bp-color-text-inverse);
     border-radius: var(--bp-border-radius-sm);
     font-size: var(--bp-font-size-sm);
-    font-family: var(--bp-font-sans);
+    font-family: var(--bp-font-family);
     line-height: var(--bp-line-height-tight);
     max-width: calc(var(--bp-spacing-24) * 3);
     white-space: normal;

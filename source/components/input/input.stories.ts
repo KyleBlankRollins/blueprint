@@ -299,7 +299,7 @@ export const LoginForm: Story = {
       style="display: flex; flex-direction: column; gap: 20px; max-width: 400px; padding: 32px; border: 1px solid var(--bp-color-border); border-radius: var(--bp-border-radius-lg);"
     >
       <h3
-        style="margin: 0 0 8px 0; font-family: var(--bp-font-family-sans); font-size: var(--bp-font-size-xl);"
+        style="margin: 0 0 8px 0; font-family: var(--bp-font-family); font-size: var(--bp-font-size-xl);"
       >
         Sign In
       </h3>
@@ -324,7 +324,7 @@ export const LoginForm: Story = {
 
       <button
         type="submit"
-        style="padding: 12px 24px; background: var(--bp-color-primary); color: white; border: none; border-radius: var(--bp-border-radius-md); font-family: var(--bp-font-family-sans); font-size: var(--bp-font-size-base); cursor: pointer;"
+        style="padding: 12px 24px; background: var(--bp-color-primary); color: white; border: none; border-radius: var(--bp-border-radius-md); font-family: var(--bp-font-family); font-size: var(--bp-font-size-base); cursor: pointer;"
       >
         Sign In
       </button>
@@ -342,7 +342,7 @@ export const RegistrationForm: Story = {
       style="display: flex; flex-direction: column; gap: 20px; max-width: 400px; padding: 32px; border: 1px solid var(--bp-color-border); border-radius: var(--bp-border-radius-lg);"
     >
       <h3
-        style="margin: 0 0 8px 0; font-family: var(--bp-font-family-sans); font-size: var(--bp-font-size-xl);"
+        style="margin: 0 0 8px 0; font-family: var(--bp-font-family); font-size: var(--bp-font-size-xl);"
       >
         Create Account
       </h3>
@@ -381,7 +381,7 @@ export const RegistrationForm: Story = {
 
       <button
         type="submit"
-        style="padding: 12px 24px; background: var(--bp-color-primary); color: white; border: none; border-radius: var(--bp-border-radius-md); font-family: var(--bp-font-family-sans); font-size: var(--bp-font-size-base); cursor: pointer;"
+        style="padding: 12px 24px; background: var(--bp-color-primary); color: white; border: none; border-radius: var(--bp-border-radius-md); font-family: var(--bp-font-family); font-size: var(--bp-font-size-base); cursor: pointer;"
       >
         Create Account
       </button>
@@ -519,7 +519,7 @@ export const Interactive: Story = {
         ></bp-input>
         <p
           id="char-count"
-          style="margin: 8px 0 0 0; font-family: var(--bp-font-family-sans); font-size: var(--bp-font-size-sm); color: var(--bp-color-text-muted); text-align: right;"
+          style="margin: 8px 0 0 0; font-family: var(--bp-font-family); font-size: var(--bp-font-size-sm); color: var(--bp-color-text-muted); text-align: right;"
         >
           0/${maxChars}
         </p>

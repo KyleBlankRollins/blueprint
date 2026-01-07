@@ -14,7 +14,7 @@ export const dividerStyles = css`
   .divider {
     display: flex;
     align-items: center;
-    font-family: var(--bp-font-sans);
+    font-family: var(--bp-font-family);
     font-size: var(--bp-font-size-xs);
     color: var(--bp-color-text-muted);
   }

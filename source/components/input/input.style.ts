@@ -13,7 +13,7 @@ export const inputStyles = css`
   }
 
   .input-label {
-    font-family: var(--bp-font-sans);
+    font-family: var(--bp-font-family);
     font-size: var(--bp-font-size-sm);
     font-weight: var(--bp-font-weight-medium);
     color: var(--bp-color-text);
@@ -26,7 +26,7 @@ export const inputStyles = css`
   }
 
   .input {
-    font-family: var(--bp-font-sans);
+    font-family: var(--bp-font-family);
     font-size: var(--bp-font-size-base);
     line-height: var(--bp-line-height-normal);
     color: var(--bp-color-text);
@@ -138,7 +138,7 @@ export const inputStyles = css`
 
   /* Messages */
   .input-message {
-    font-family: var(--bp-font-sans);
+    font-family: var(--bp-font-family);
     font-size: var(--bp-font-size-sm);
     line-height: var(--bp-line-height-normal);
     color: var(--bp-color-text-muted);

@@ -8,7 +8,7 @@ export const switchStyles = css`
     gap: var(--bp-spacing-sm);
     cursor: pointer;
     user-select: none;
-    font-family: var(--bp-font-sans);
+    font-family: var(--bp-font-family);
     font-size: var(--bp-font-size-base);
     line-height: var(--bp-line-height-normal);
     color: var(--bp-color-text);

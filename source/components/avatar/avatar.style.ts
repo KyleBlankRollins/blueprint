@@ -14,7 +14,7 @@ export const avatarStyles = css`
     overflow: hidden;
     background: var(--bp-color-primary);
     color: var(--bp-color-text-inverse);
-    font-family: var(--bp-font-sans);
+    font-family: var(--bp-font-family);
     font-weight: var(--bp-font-weight-semibold);
     user-select: none;
     flex-shrink: 0;
