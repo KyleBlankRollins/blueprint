@@ -4,6 +4,7 @@ Advanced patterns and recommendations for creating high-quality theme plugins.
 
 ## Table of Contents
 
+- [Design Token Strategy](#design-token-strategy)
 - [Color Design](#color-design)
 - [Accessibility](#accessibility)
 - [Performance](#performance)
@@ -14,6 +15,145 @@ Advanced patterns and recommendations for creating high-quality theme plugins.
 - [Distribution](#distribution)
 - [Maintenance](#maintenance)
 - [Common Pitfalls](#common-pitfalls)
+
+---
+
+## Design Token Strategy
+
+Understanding when to use semantic tokens vs universal tokens is crucial for theme authoring and component development.
+
+### Semantic Tokens (Theme-Specific)
+
+**Definition:** Tokens that vary between themes and define the visual personality.
+
+**Provided by:** Theme plugins (via `addThemeVariant()`)
+
+**Used in:** Component styles that should adapt to different themes
+
+**Examples:**
+
+- `--bp-color-background` - Main background color
+- `--bp-color-primary` - Brand color
+- `--bp-font-family` - Typography stack
+- `--bp-border-radius` - Border roundness
+- `--bp-shadow-md` - Shadow style
+
+**When to use in components:**
+
+```css
+/* ✅ Good - Adapts to theme */
+.my-component {
+  background: var(--bp-color-surface);
+  color: var(--bp-color-text);
+  font-family: var(--bp-font-family);
+  border-radius: var(--bp-border-radius);
+}
+```
+
+**Complete list of semantic tokens:** See [Semantic Tokens Reference](./plugin-authoring-guide.md#semantic-tokens-reference) in the Plugin Authoring Guide.
+
+### Universal Tokens (Infrastructure)
+
+**Definition:** Tokens that remain consistent across all themes, providing structural foundation.
+
+**Provided by:** `utilities.css` (generated once)
+
+**Used in:** Component spacing, sizing, and structural properties
+
+**Categories:**
+
+- **Spacing scale**: `--bp-spacing-{0-12}`, `--bp-spacing-{xs,sm,md,lg,xl,2xl}`
+- **Font sizes**: `--bp-font-size-{xs,sm,base,lg,xl,2xl,3xl,4xl}`
+- **Font weights**: `--bp-font-weight-{light,normal,medium,semibold,bold}`
+- **Line heights**: `--bp-line-height-{tight,normal,relaxed,loose}`
+- **Motion/timing**: `--bp-transition-{fast,base,slow}`
+- **Z-index**: `--bp-z-{dropdown,modal,tooltip}`
+- **Breakpoints**: `--bp-breakpoint-{sm,md,lg,xl}`
+- **Focus indicators**: `--bp-focus-{width,offset,style}`
+
+**When to use in components:**
+
+```css
+/* ✅ Good - Structural properties */
+.my-component {
+  padding: var(--bp-spacing-md);
+  gap: var(--bp-spacing-sm);
+  font-size: var(--bp-font-size-base);
+  line-height: var(--bp-line-height-normal);
+  transition: var(--bp-transition-fast);
+}
+```
+
+### Decision Matrix
+
+| Property         | Token Type | Example                   | Rationale                |
+| ---------------- | ---------- | ------------------------- | ------------------------ |
+| Background color | Semantic   | `--bp-color-background`   | Varies per theme         |
+| Text color       | Semantic   | `--bp-color-text`         | Varies per theme         |
+| Border color     | Semantic   | `--bp-color-border`       | Varies per theme         |
+| Font family      | Semantic   | `--bp-font-family`        | Theme personality        |
+| Border radius    | Semantic   | `--bp-border-radius`      | Theme personality        |
+| Shadows          | Semantic   | `--bp-shadow-md`          | Theme depth style        |
+| Padding          | Universal  | `--bp-spacing-md`         | Structural consistency   |
+| Font size        | Universal  | `--bp-font-size-base`     | Hierarchical consistency |
+| Line height      | Universal  | `--bp-line-height-normal` | Typographic rhythm       |
+| Transitions      | Universal  | `--bp-transition-fast`    | Motion consistency       |
+
+### For Theme Authors
+
+**Your responsibility:** Provide all 32 required semantic tokens in every theme variant.
+
+```typescript
+builder.addThemeVariant('my-theme', {
+  // All 32 required tokens must be provided
+  // See complete list in plugin-authoring-guide.md
+  background: 'oklch(1 0 0)',
+  surface: 'oklch(0.98 0 0)',
+  // ... 30 more tokens
+});
+```
+
+**Never override universal tokens** - They ensure consistent spacing, sizing, and structure across all themes.
+
+### For Component Authors
+
+**Use semantic tokens for:**
+
+- Colors (background, text, border, etc.)
+- Typography (font-family, heading fonts)
+- Visual style (border-radius, shadows)
+
+**Use universal tokens for:**
+
+- Spacing (padding, margin, gap)
+- Sizing (font-size, icon sizes)
+- Structural properties (line-height, transitions)
+
+**Example component:**
+
+```css
+.bp-button {
+  /* Universal - Structure */
+  padding: var(--bp-spacing-sm) var(--bp-spacing-md);
+  font-size: var(--bp-font-size-base);
+  line-height: var(--bp-line-height-tight);
+  transition: var(--bp-transition-fast);
+
+  /* Semantic - Theme-specific */
+  background: var(--bp-color-primary);
+  color: var(--bp-color-text-inverse);
+  font-family: var(--bp-font-family);
+  border-radius: var(--bp-border-radius);
+  box-shadow: var(--bp-shadow-sm);
+}
+```
+
+### Why This Split?
+
+1. **Theme Interchangeability** - All themes provide the same semantic tokens, so components work everywhere
+2. **Consistent Structure** - Spacing and sizing stay uniform for better UX
+3. **Clear Boundaries** - Theme authors know exactly what they control
+4. **Smaller CSS** - No duplicate infrastructure tokens per theme
 
 ---
 

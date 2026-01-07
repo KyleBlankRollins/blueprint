@@ -310,6 +310,205 @@ bp theme generate-types
 
 This creates `source/themes/generated/theme.d.ts` with all available colors.
 
+## Semantic Tokens Reference
+
+All theme variants must provide a complete set of **semantic tokens**. These tokens define the visual language of your theme and ensure compatibility with all Blueprint components.
+
+### Required Semantic Tokens (32 Total)
+
+#### Background & Surface Colors (4 tokens)
+
+```typescript
+{
+  background: string,        // Main background color
+  surface: string,           // Card/panel backgrounds
+  surfaceElevated: string,   // Elevated surfaces (modals, popovers)
+  surfaceSubdued: string,    // Subtle backgrounds (disabled states)
+}
+```
+
+#### Text Colors (4 tokens)
+
+```typescript
+{
+  text: string,              // Primary text color
+  textStrong: string,        // Emphasized text (headings, labels)
+  textMuted: string,         // Secondary text (captions, help text)
+  textInverse: string,       // Text on colored backgrounds
+}
+```
+
+#### Primary Brand Colors (3 tokens)
+
+```typescript
+{
+  primary: string,           // Primary brand color (buttons, links)
+  primaryHover: string,      // Hover state
+  primaryActive: string,     // Active/pressed state
+}
+```
+
+#### Semantic State Colors (4 tokens)
+
+```typescript
+{
+  success: string,           // Success states (green)
+  warning: string,           // Warning states (yellow/orange)
+  error: string,             // Error states (red)
+  info: string,              // Informational states (blue)
+}
+```
+
+#### UI Element Colors (4 tokens)
+
+```typescript
+{
+  border: string,            // Default borders
+  borderStrong: string,      // Emphasized borders
+  borderWidth: string,       // Border width (e.g., '1px')
+  focus: string,             // Focus ring color
+}
+```
+
+#### Typography Tokens (3 tokens)
+
+```typescript
+{
+  fontFamily: string,        // Main font stack
+  fontFamilyMono: string,    // Monospace font for code
+  fontFamilyHeading: string, // Heading font (can match fontFamily)
+}
+```
+
+**Font Guidelines:**
+
+- Use system font stacks for best performance
+- Ensure fonts work at 16px base size (Blueprint's default)
+- Include fallbacks: `'MyFont, -apple-system, sans-serif'`
+- For monospace: `'"SF Mono", "Courier New", monospace'`
+
+#### Border Radius Tokens (3 tokens)
+
+```typescript
+{
+  borderRadius: string,      // Default radius (e.g., '4px')
+  borderRadiusLarge: string, // Large radius (e.g., '8px')
+  borderRadiusFull: string,  // Full rounded (e.g., '9999px')
+}
+```
+
+Border radius affects theme personality:
+
+- **Sharp** (`0px`): Modern, technical
+- **Subtle** (`2-4px`): Professional, balanced
+- **Rounded** (`8-12px`): Friendly, approachable
+- **Pill-shaped** (`9999px`): Playful, modern
+
+#### Shadow Tokens (4 tokens)
+
+```typescript
+{
+  shadowSm: string,          // Subtle shadow
+  shadowMd: string,          // Default shadow
+  shadowLg: string,          // Elevated shadow
+  shadowXl: string,          // Floating shadow
+}
+```
+
+Example shadows:
+
+```typescript
+shadowSm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+shadowMd: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+shadowLg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+shadowXl: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+```
+
+### Complete Theme Variant Example
+
+Here's a complete theme variant with all 32 required tokens:
+
+```typescript
+builder.addThemeVariant('complete-light', {
+  // Background & Surface (4)
+  background: 'oklch(0.98 0.01 90)',
+  surface: 'oklch(1.00 0 0)',
+  surfaceElevated: 'oklch(1.00 0 0)',
+  surfaceSubdued: 'oklch(0.95 0.01 90)',
+
+  // Text (4)
+  text: 'oklch(0.20 0.01 240)',
+  textStrong: 'oklch(0.10 0.01 240)',
+  textMuted: 'oklch(0.50 0.01 240)',
+  textInverse: 'oklch(1.00 0 0)',
+
+  // Primary Brand (3)
+  primary: 'oklch(0.45 0.15 250)',
+  primaryHover: 'oklch(0.40 0.15 250)',
+  primaryActive: 'oklch(0.35 0.15 250)',
+
+  // Semantic States (4)
+  success: 'oklch(0.50 0.13 145)',
+  warning: 'oklch(0.60 0.13 65)',
+  error: 'oklch(0.50 0.15 25)',
+  info: 'oklch(0.45 0.15 250)',
+
+  // UI Elements (4)
+  border: 'oklch(0.85 0.01 240)',
+  borderStrong: 'oklch(0.70 0.01 240)',
+  borderWidth: '1px',
+  focus: 'oklch(0.45 0.15 250)',
+
+  // Typography (3)
+  fontFamily:
+    '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+  fontFamilyMono: '"SF Mono", Monaco, "Cascadia Code", monospace',
+  fontFamilyHeading:
+    '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+
+  // Border Radius (3)
+  borderRadius: '4px',
+  borderRadiusLarge: '8px',
+  borderRadiusFull: '9999px',
+
+  // Shadows (4)
+  shadowSm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+  shadowMd:
+    '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+  shadowLg:
+    '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+  shadowXl:
+    '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+});
+```
+
+### Direct OKLCH Values vs Color References
+
+You can use either direct OKLCH strings OR ColorRef objects:
+
+```typescript
+// Option 1: Direct OKLCH strings (recommended for simplicity)
+builder.addThemeVariant('my-theme', {
+  background: 'oklch(1 0 0)', // Direct OKLCH
+  primary: 'oklch(0.5 0.15 250)', // Direct OKLCH
+  // ... other tokens
+});
+
+// Option 2: ColorRef objects (if you need color scales)
+builder.addColor('blue', {
+  source: { l: 0.5, c: 0.15, h: 250 },
+  scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
+});
+
+builder.addThemeVariant('my-theme', {
+  background: builder.colors.white, // ColorRef
+  primary: builder.colors.blue500, // ColorRef
+  // ... other tokens
+});
+```
+
+**Note:** The CSS output will contain semantic tokens ONLY. Color scales (like `blue.500`) are internal to the theme plugin and won't appear in generated CSS. This ensures all themes are interchangeable.
+
 ### Type-Safe Color References
 
 All color references are validated at compile time:

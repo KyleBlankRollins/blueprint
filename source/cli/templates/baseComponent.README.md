@@ -40,8 +40,23 @@
 
 ## Design Tokens Used
 
-- `--bp-font-family-sans`
-- [Add other tokens used]
+### Semantic Tokens (Theme-Specific)
+
+- `--bp-color-surface` - Component background
+- `--bp-color-text` - Text color
+- `--bp-color-border` - Border color
+- `--bp-font-family` - Typography
+- `--bp-border-radius` - Border roundness
+- `--bp-shadow-sm` - Shadow effect
+
+### Universal Tokens (Infrastructure)
+
+- `--bp-spacing-md` - Padding/margins
+- `--bp-font-size-base` - Text size
+- `--bp-line-height-normal` - Line spacing
+- `--bp-transition-fast` - Animations
+
+> **Note:** Use semantic tokens for visual style (colors, fonts, shadows) and universal tokens for structure (spacing, sizing). See [Best Practices](../../docs/best-practices.md#design-token-strategy) for guidance.
 
 ## Accessibility
 

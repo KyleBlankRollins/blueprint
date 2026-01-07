@@ -59,29 +59,64 @@ export class ThemeValidator {
    */
   validateSemanticTokens(tokens: SemanticTokens<ColorRef>): void {
     const requiredTokens: (keyof SemanticTokens<ColorRef>)[] = [
+      // Background & surface colors
       'background',
       'surface',
       'surfaceElevated',
       'surfaceSubdued',
+
+      // Text colors
       'text',
+      'textStrong',
       'textMuted',
       'textInverse',
+
+      // Primary brand colors
       'primary',
       'primaryHover',
       'primaryActive',
+
+      // Semantic state colors
       'success',
       'warning',
       'error',
       'info',
+
+      // UI element colors
       'border',
       'borderStrong',
+      'borderWidth',
       'focus',
+
+      // Typography tokens
+      'fontFamily',
+      'fontFamilyMono',
+      'fontFamilyHeading',
+
+      // Border radius tokens
+      'borderRadius',
+      'borderRadiusLarge',
+      'borderRadiusFull',
+
+      // Shadow tokens
+      'shadowSm',
+      'shadowMd',
+      'shadowLg',
+      'shadowXl',
     ];
+
+    const missingTokens: string[] = [];
 
     for (const token of requiredTokens) {
       if (!tokens[token]) {
-        throw new Error(`Missing required semantic token: ${token}`);
+        missingTokens.push(token);
       }
+    }
+
+    if (missingTokens.length > 0) {
+      throw new Error(
+        `Missing required semantic tokens: ${missingTokens.join(', ')}`
+      );
     }
   }
 

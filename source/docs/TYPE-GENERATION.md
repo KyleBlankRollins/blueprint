@@ -195,6 +195,64 @@ Type generation is automatically included in the build process:
 
 This ensures types are always up-to-date when building your project.
 
+## CSS Output: Semantic Tokens Only
+
+While the type system provides type-safe access to color scales (like `builder.colors.blue500`), the **generated CSS contains only semantic tokens**.
+
+### Example Plugin
+
+```typescript
+builder.addColor('oceanBlue', {
+  source: { l: 0.5, c: 0.15, h: 220 },
+  scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
+});
+
+builder.addThemeVariant('ocean-light', {
+  background: builder.colors.oceanBlue50, // ColorRef (internal)
+  primary: builder.colors.oceanBlue600, // ColorRef (internal)
+  // ... other tokens
+});
+```
+
+### Generated CSS
+
+```css
+/* ocean-light theme */
+:root,
+[data-theme='ocean-light'] {
+  /* Semantic tokens with direct OKLCH values */
+  --bp-color-background: oklch(0.95 0.15 220);
+  --bp-color-primary: oklch(0.45 0.15 220);
+  --bp-color-text: oklch(0.2 0.01 240);
+  /* ... other semantic tokens */
+
+  /* NO primitive color scales like: */
+  /* --bp-oceanBlue-50, --bp-oceanBlue-100, etc. */
+}
+```
+
+### Why Semantic-Only?
+
+1. **Theme Interchangeability** - All themes provide the same tokens, so components work with any theme
+2. **Smaller CSS** - No unused color scale tokens
+3. **Clear Contract** - Components know exactly which tokens are available
+4. **Performance** - Direct OKLCH values, no `var()` indirection
+
+### Color Resolution
+
+Color references are resolved to OKLCH at build time:
+
+```typescript
+// In plugin code:
+background: builder.colors.oceanBlue50
+
+// Resolves to (at build time):
+// builder.colors.oceanBlue50 → ColorRef object → Scale lookup → OKLCH value
+
+// In CSS output:
+--bp-color-background: oklch(0.95 0.15 220)
+```
+
 ## Benefits
 
 ### 1. Type Safety
