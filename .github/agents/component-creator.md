@@ -76,13 +76,23 @@ You are an expert web component developer specializing in the Blueprint componen
 1. **Scaffold** - Run `npm run build:cli`, then `bp scaffold <component-name>` to create stub files
 2. **Implement component** - Fill in `.ts` file with component logic
 3. **Implement styles** - Fill in `.style.ts` file using design tokens from active theme
-4. **Validate tokens** - Run `bp validate tokens <component-name>` to ensure no hardcoded values
+4. **Validate tokens** - Run `bp validate tokens <component-name>` to ensure no hardcoded values (REQUIRED - this is a quality gate!)
 5. **Implement tests** - Fill in `.test.ts` file with comprehensive tests
 6. **Generate stories** - Run `bp generate stories <component-name>` to auto-generate Storybook stories
 7. **Generate docs** - Run `bp generate api <component-name>` and add tables to README
-8. **Validate component** - Run `bp validate component <component-name>` to check completeness
+8. **Validate component** - Run `bp validate component <component-name>` to check completeness (REQUIRED - this is a quality gate!)
 9. **Add to demo** - Run `bp demo add <component-name>` for manual testing
 10. **Format** - Run `npm run format` and `npm run lint`
+
+**IMPORTANT - Quality Gates:**
+
+Before marking a component complete, you MUST run and pass:
+
+- `bp validate component <name>` - Verifies all required files, structure, tests, and exports
+- `bp validate tokens <name>` - Ensures NO hardcoded CSS values (all must use design tokens)
+
+These validations are automatically run by the orchestrator agent before advancing phases.
+If violations are found, fix them before proceeding.
 
 **Naming conventions (handled by CLI):**
 

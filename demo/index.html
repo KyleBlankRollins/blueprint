@@ -786,6 +786,62 @@
           </div>
         </div>
       </div>
+      <div class="section" id="component-tag">
+        <h2>Tag</h2>
+        <div class="examples">
+          <div>
+            <p><strong>Default:</strong></p>
+            <bp-tag>Design</bp-tag>
+          </div>
+
+          <div>
+            <p><strong>All colors:</strong></p>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <bp-tag color="primary">Primary</bp-tag>
+              <bp-tag color="success">Success</bp-tag>
+              <bp-tag color="error">Error</bp-tag>
+              <bp-tag color="warning">Warning</bp-tag>
+              <bp-tag color="info">Info</bp-tag>
+              <bp-tag color="neutral">Neutral</bp-tag>
+            </div>
+          </div>
+
+          <div>
+            <p><strong>Removable:</strong></p>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <bp-tag color="primary" removable>TypeScript</bp-tag>
+              <bp-tag color="success" removable>React</bp-tag>
+              <bp-tag color="info" removable>Web Components</bp-tag>
+            </div>
+          </div>
+
+          <div>
+            <p><strong>Outlined variant:</strong></p>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <bp-tag variant="outlined" color="primary">Frontend</bp-tag>
+              <bp-tag variant="outlined" color="success" removable>Backend</bp-tag>
+              <bp-tag variant="outlined" color="info">Design</bp-tag>
+            </div>
+          </div>
+
+          <div>
+            <p><strong>Sizes:</strong></p>
+            <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+              <bp-tag size="small" removable>Small</bp-tag>
+              <bp-tag size="medium" removable>Medium</bp-tag>
+              <bp-tag size="large" removable>Large</bp-tag>
+            </div>
+          </div>
+
+          <div>
+            <p><strong>Disabled state:</strong></p>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <bp-tag disabled>Disabled</bp-tag>
+              <bp-tag color="primary" removable disabled>Cannot Remove</bp-tag>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div>
 

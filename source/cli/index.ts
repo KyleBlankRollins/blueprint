@@ -12,6 +12,7 @@ import { createCommand } from './commands/create.js';
 import { checkCommand } from './commands/check.js';
 import { listCommand } from './commands/list.js';
 import { themeCommand } from './commands/theme.js';
+import { agentCommand } from './commands/agent.js';
 
 const program = new Command();
 
@@ -32,6 +33,9 @@ themeCommand(program);
 // Register workflow commands
 createCommand(program);
 checkCommand(program);
+
+// Register agent orchestration commands
+agentCommand(program);
 
 // Register utility commands
 listCommand(program);

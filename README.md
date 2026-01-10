@@ -73,6 +73,177 @@ The only real downsides are introducing a dependency and complicating build tool
 | `npm run format`       | Format code with Prettier                         |
 | `npm run format:check` | Check if code is properly formatted               |
 
+## Component Development Workflow
+
+Blueprint uses a multi-agent workflow orchestrated by the `bp agent` CLI command. This workflow ensures components follow best practices, pass quality gates, and maintain consistency across the library.
+
+### Quick Start
+
+```bash
+# Start creating a new component
+bp agent create modal
+
+# Review code quality
+bp agent review modal
+
+# Advance to next phase (runs quality gates automatically)
+bp agent next
+
+# Check status anytime
+bp agent status
+```
+
+### Workflow Phases
+
+Each component progresses through three phases with automated quality enforcement:
+
+#### 1. **Create** — Component Implementation
+
+```bash
+bp agent create <component-name>
+```
+
+**What happens:**
+
+- ✅ Loads component definition from `.blueprint/features.toml`:
+  - Description, category, complexity, priority
+  - Dependencies (e.g., modal depends on button, icon)
+- ✅ Creates session in `.blueprint/agent-state.json`
+- ✅ Opens VS Code with component-creator agent context
+- ✅ Agent creates required files:
+  - `component-name.ts` - Component logic with @customElement
+  - `component-name.style.ts` - Styles using design tokens
+  - `component-name.test.ts` - 10+ test cases
+  - `component-name.stories.ts` - Storybook documentation
+  - `README.md` - API documentation
+
+#### 2. **Code Review** — Quality Verification
+
+```bash
+bp agent review <component-name>
+# or automatically triggered by: bp agent next
+```
+
+**What happens:**
+
+- ✅ Code-review agent checks:
+  - Blueprint patterns adherence
+  - TypeScript usage
+  - Test coverage and quality
+  - Documentation completeness
+  - Accessibility implementation
+- ✅ Increments `iterations_taken` counter
+- ✅ Suggests specific improvements with file paths and line numbers
+
+#### 3. **Design Review** — Visual & UX Polish
+
+```bash
+bp agent next  # (advances from code-review)
+```
+
+**What happens:**
+
+- ✅ Designer agent reviews:
+  - Design token usage (colors, spacing, typography)
+  - Visual consistency with existing components
+  - Responsive behavior
+  - UX patterns and interaction feedback
+  - Accessibility from user experience perspective
+
+### Quality Gates
+
+Before advancing between phases, **4 automated quality gates** must pass:
+
+| Gate                   | Command                | Blocking?     |
+| ---------------------- | ---------------------- | ------------- |
+| 1️⃣ **Code Formatting** | `npm run format:check` | ⚠️ Warning    |
+| 2️⃣ **Linting**         | `npm run lint`         | 🚫 **BLOCKS** |
+| 3️⃣ **Type Checking**   | `npm run typecheck`    | 🚫 **BLOCKS** |
+| 4️⃣ **Test Suite**      | `npm test`             | 🚫 **BLOCKS** |
+
+**Quality gates run automatically** when you execute `bp agent next` to advance phases. If any blocking gate fails, the component status becomes `blocked` and you must fix the issues before advancing.
+
+Run quality gates manually without advancing:
+
+```bash
+bp agent verify <component-name>
+```
+
+### Dependency Tracking
+
+Components can declare dependencies in `.blueprint/features.toml`:
+
+```toml
+[[component]]
+name = "modal"
+description = "Dialog overlay"
+depends_on = ["button", "icon"]  # Won't start until these are complete
+```
+
+The workflow automatically checks dependencies before allowing components to advance.
+
+### Example: Creating a Modal Component
+
+```bash
+# Step 1: Start creation
+bp agent create modal
+
+# Output shows feature metadata:
+# 🏗️ Starting component creation for: bp-modal
+# 📋 Feature: Dialog overlay
+# 📊 Category: composite | Complexity: large | Priority: 4
+# 🔗 Dependencies: button, icon
+# 💡 Instructions sent to VS Code Copilot...
+
+# Step 2: Component-creator builds files
+# (agent creates modal.ts, modal.style.ts, modal.test.ts, etc.)
+
+# Step 3: Advance to code review
+bp agent next
+
+# Quality gates run automatically:
+# 🔍 Verifying quality gates...
+#   📐 Quality Gate 1/4: Code Formatting
+#   ✅ Formatting check passed
+#   🔎 Quality Gate 2/4: Linting (BLOCKING)
+#   ✅ Linting passed
+#   🔤 Quality Gate 3/4: Type Checking (BLOCKING)
+#   ✅ Type checking passed
+#   🧪 Quality Gate 4/4: Test Suite (BLOCKING)
+#   ✅ All tests passed
+# ✅ ALL QUALITY GATES PASSED
+# ✅ Component creation phase complete
+# 🔍 Starting code review phase...
+
+# Step 4: Code review suggests improvements
+# (make changes based on feedback)
+
+# Step 5: Advance to design review
+bp agent next
+
+# Step 6: Complete component
+bp agent next
+# 🎉 Component bp-modal is complete!
+```
+
+### Agent Commands Reference
+
+| Command                                        | Description                                |
+| ---------------------------------------------- | ------------------------------------------ |
+| `bp agent create <name>`                       | Start component creation workflow          |
+| `bp agent review <name> [--type code\|design]` | Start code or design review                |
+| `bp agent next`                                | Advance to next phase (runs quality gates) |
+| `bp agent verify [name]`                       | Run quality gates without advancing        |
+| `bp agent status [name]`                       | Show component development status          |
+
+### Workflow State Files
+
+The workflow maintains state in `.blueprint/`:
+
+- **`features.toml`** - Component definitions (name, description, category, complexity, priority, dependencies)
+- **`agent-state.json`** - Current sessions and phase status
+- **`progress.txt`** - Append-only log of all workflow events
+
 ### Project Structure
 
 ```

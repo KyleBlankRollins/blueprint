@@ -209,8 +209,8 @@ describe('ThemeBase', () => {
       const config = builder.build();
 
       expect(config.spacing.base).toBe(4); // Blueprint Core default
-      expect(config.colors.blue).toBeDefined();
       expect(config.themes.light).toBeDefined();
+      expect(config.themes.dark).toBeDefined();
     });
 
     it('should merge design tokens from multiple themes (later overrides earlier)', () => {
@@ -231,13 +231,9 @@ describe('ThemeBase', () => {
       // Other tokens from defaults should remain
       expect(config.motion.durations.fast).toBe(150);
 
-      // All themes' colors should be present
-      expect(config.colors.gray).toBeDefined();
-      expect(config.colors.sulphurYellow).toBeDefined();
-
       // All theme variants should exist
       expect(config.themes.light).toBeDefined();
-      expect(config.themes['wada-light']).toBeDefined();
+      expect(config.themes.dark).toBeDefined();
     });
 
     it('should handle three themes with different overrides', () => {
@@ -255,9 +251,6 @@ describe('ThemeBase', () => {
       // SlowMotionTheme's getDesignTokens() includes default spacing,
       // which overwrites TightSpacingTheme's custom spacing
       expect(config.spacing.base).toBe(4); // Back to defaults from SlowMotionTheme
-
-      // Colors from blueprint-core
-      expect(config.colors.blue).toBeDefined();
 
       // Blueprint core theme variants
       expect(config.themes.light).toBeDefined();

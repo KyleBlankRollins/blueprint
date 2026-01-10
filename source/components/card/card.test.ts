@@ -306,8 +306,8 @@ describe('bp-card', () => {
     element.clickable = false;
     await element.updateComplete;
     const card = element.shadowRoot?.querySelector('.card');
-    // When undefined, the attribute is not set (returns empty string)
-    expect(card?.getAttribute('tabindex')).toBe('');
+    // When undefined, the attribute is not set (returns null)
+    expect(card?.getAttribute('tabindex')).toBeNull();
   });
 
   it('should support keyboard navigation with Enter when clickable', async () => {
