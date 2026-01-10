@@ -45,3 +45,4 @@ export {
 export { BpCard, type CardVariant } from './card/card.js';
 export { BpAlert, type AlertVariant } from './alert/alert.js';
 export { BpSelect, type SelectSize } from './select/select.js';
+export { BpTextarea } from './textarea/textarea.js';
