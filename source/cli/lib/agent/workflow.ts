@@ -9,6 +9,7 @@ import {
   logProgress,
   logFeatureSection,
   updateAgentState,
+  completeComponentSession,
 } from './state.js';
 import { checkUnmetDependencies } from './status.js';
 import { displayQualityGateSummary, runQualityGates } from './quality-gates.js';
@@ -200,13 +201,12 @@ export async function continueNext(): Promise<void> {
       startReview(currentComponent, 'design');
       break;
 
-    case 'design-review':
+    case 'design-review': {
       info('✅ Design review phase complete');
       logProgress(`Phase complete: design-review\\n`);
-      session.phase = 'complete';
-      session.status = 'complete';
+
+      // Increment iterations before completion
       session.iterations_taken += 1;
-      updateAgentState(currentComponent, session);
 
       // Update features.toml to mark component as complete
       updateComponentFeature(currentComponent, {
@@ -238,9 +238,14 @@ export async function continueNext(): Promise<void> {
       logProgress(`- demo/index.html (added demo section)`);
       logProgress(`- .blueprint/features.toml (marked as complete)\\n`);
 
+      // Remove component from active sessions now that it's complete
+      completeComponentSession(currentComponent);
+
       success(`🎉 Component bp-${currentComponent} is complete!`);
       info('📝 Updated features.toml status');
+      info('🧹 Cleared from active agent sessions');
       break;
+    }
 
     default:
       warn('Component is already complete');

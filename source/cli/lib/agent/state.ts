@@ -87,6 +87,26 @@ export function logProgress(message: string): void {
 }
 
 /**
+ * Remove a component from the active sessions and clear currentComponent if it matches
+ */
+export function completeComponentSession(componentName: string): void {
+  ensureBlueprintDir();
+  const state = getAgentState();
+
+  // Remove the completed component from active sessions
+  delete state.sessions[componentName];
+
+  // Clear currentComponent if it matches
+  if (state.currentComponent === componentName) {
+    delete state.currentComponent;
+  }
+
+  state.lastUpdated = new Date().toISOString();
+
+  writeFileSync(AGENT_STATE_FILE, JSON.stringify(state, null, 2));
+}
+
+/**
  * Log feature section header
  */
 export function logFeatureSection(

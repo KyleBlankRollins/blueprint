@@ -64,6 +64,7 @@ export class BlueprintCoreTheme extends ThemeBase {
       borderStrong: 'oklch(0.65 0.02 91.4)',
       borderWidth: '1px',
       focus: 'oklch(0.40 0.08 233.4)',
+      backdrop: 'oklch(0 0 0 / 0.6)',
 
       // Typography
       fontFamily:
@@ -118,6 +119,7 @@ export class BlueprintCoreTheme extends ThemeBase {
       borderStrong: 'oklch(0.45 0.02 240.0)',
       borderWidth: '1px',
       focus: 'oklch(0.26 0.07 233.4)',
+      backdrop: 'oklch(0 0 0 / 0.6)',
 
       // Typography
       fontFamily:

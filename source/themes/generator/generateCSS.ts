@@ -188,6 +188,7 @@ export function generateThemeCSS(
     'border',
     'borderStrong',
     'focus',
+    'backdrop',
   ];
 
   // Typography tokens (use --bp- prefix)

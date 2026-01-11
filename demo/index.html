@@ -843,9 +843,81 @@
         </div>
       </div>
 
+      <div class="section" id="component-modal">
+        <h2>Modal</h2>
+        <div class="examples">
+          <div>
+            <p><strong>Small size:</strong></p>
+            <bp-button id="modalSmallBtn">Open Small Modal</bp-button>
+            <bp-modal id="modalSmall" size="small">
+              <div slot="header">Small Modal</div>
+              <p>This is a small modal for quick confirmations.</p>
+              <div slot="footer">
+                <bp-button variant="secondary" onclick="document.getElementById('modalSmall').close()">Cancel</bp-button>
+                <bp-button onclick="document.getElementById('modalSmall').close()">Confirm</bp-button>
+              </div>
+            </bp-modal>
+          </div>
+
+          <div>
+            <p><strong>Medium size (default):</strong></p>
+            <bp-button id="modalMediumBtn">Open Medium Modal</bp-button>
+            <bp-modal id="modalMedium">
+              <div slot="header">Medium Modal</div>
+              <p>This is the default medium-sized modal, perfect for forms and moderate content.</p>
+              <p>It can contain multiple paragraphs and more detailed information.</p>
+              <div slot="footer">
+                <bp-button variant="secondary" onclick="document.getElementById('modalMedium').close()">Cancel</bp-button>
+                <bp-button onclick="document.getElementById('modalMedium').close()">Save</bp-button>
+              </div>
+            </bp-modal>
+          </div>
+
+          <div>
+            <p><strong>Large size:</strong></p>
+            <bp-button id="modalLargeBtn">Open Large Modal</bp-button>
+            <bp-modal id="modalLarge" size="large">
+              <div slot="header">Large Modal</div>
+              <p>This is a large modal for complex content and detailed forms.</p>
+              <p>It provides more space for rich content, tables, or multi-step workflows.</p>
+              <p>You can include as much content as needed, and it will scroll if necessary.</p>
+              <div slot="footer">
+                <bp-button variant="secondary" onclick="document.getElementById('modalLarge').close()">Cancel</bp-button>
+                <bp-button onclick="document.getElementById('modalLarge').close()">Submit</bp-button>
+              </div>
+            </bp-modal>
+          </div>
+
+          <div>
+            <p><strong>Without footer:</strong></p>
+            <bp-button id="modalNoFooterBtn">Open Modal</bp-button>
+            <bp-modal id="modalNoFooter">
+              <div slot="header">Information</div>
+              <p>This modal doesn't have a footer slot, demonstrating the flexible layout.</p>
+              <p>Click the X button, press ESC, or click outside to close.</p>
+            </bp-modal>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <script type="module" src="/source/index.ts"></script>
+    <script type="module">
+      // Modal event handlers
+      document.getElementById('modalSmallBtn')?.addEventListener('click', () => {
+        document.getElementById('modalSmall').open = true;
+      });
+      document.getElementById('modalMediumBtn')?.addEventListener('click', () => {
+        document.getElementById('modalMedium').open = true;
+      });
+      document.getElementById('modalLargeBtn')?.addEventListener('click', () => {
+        document.getElementById('modalLarge').open = true;
+      });
+      document.getElementById('modalNoFooterBtn')?.addEventListener('click', () => {
+        document.getElementById('modalNoFooter').open = true;
+      });
+    </script>
     <script type="module">
       // Theme handling
       const urlParams = new URLSearchParams(window.location.search);

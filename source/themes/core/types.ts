@@ -89,6 +89,7 @@ export interface SemanticTokens<TColorRef = ColorRef | string> {
   borderStrong: TColorRef;
   borderWidth: string;
   focus: TColorRef;
+  backdrop: TColorRef;
 
   // Typography
   fontFamily: string;

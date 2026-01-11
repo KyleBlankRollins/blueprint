@@ -175,6 +175,7 @@ export class ThemeVariantPlugin extends ThemeBase {
       borderStrong: builder.colors.gray300,
       borderWidth: '1px',
       focus: builder.colors.testBlue500,
+      backdrop: builder.colors.gray950,
       fontFamily: 'system-ui, sans-serif',
       fontFamilyMono: 'monospace',
       fontFamilyHeading: 'system-ui, sans-serif',
