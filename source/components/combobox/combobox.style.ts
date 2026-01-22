@@ -27,8 +27,8 @@ export const comboboxStyles = css`
   }
 
   .combobox__control:focus-within {
-    outline: var(--bp-spacing-0-5) solid var(--bp-color-focus);
-    outline-offset: var(--bp-spacing-0-5);
+    outline: var(--bp-focus-width) solid var(--bp-color-focus);
+    outline-offset: var(--bp-focus-width);
     border-color: var(--bp-color-focus);
   }
 
@@ -78,8 +78,12 @@ export const comboboxStyles = css`
   }
 
   .combobox__clear:hover {
-    background-color: var(--bp-color-surface-subdued);
-    color: var(--bp-color-text);
+    color: var(--bp-color-primary);
+    background-color: color-mix(
+      in srgb,
+      var(--bp-color-primary) 8%,
+      transparent
+    );
   }
 
   .combobox__clear:disabled {
@@ -106,6 +110,7 @@ export const comboboxStyles = css`
     z-index: var(--bp-z-dropdown);
     background-color: var(--bp-color-surface);
     border: var(--bp-border-width) solid var(--bp-color-border);
+    border-top: calc(var(--bp-border-width) * 2) solid var(--bp-color-primary);
     border-radius: var(--bp-border-radius-md);
     box-shadow: var(--bp-shadow-md);
     max-height: calc(var(--bp-spacing-10) * 6);
@@ -141,11 +146,19 @@ export const comboboxStyles = css`
   }
 
   .combobox__option:hover {
-    background-color: var(--bp-color-surface-elevated);
+    background-color: color-mix(
+      in srgb,
+      var(--bp-color-primary) 8%,
+      transparent
+    );
   }
 
   .combobox__option--focused {
-    background-color: var(--bp-color-surface-subdued);
+    background-color: color-mix(
+      in srgb,
+      var(--bp-color-primary) 8%,
+      transparent
+    );
     outline: var(--bp-focus-width) solid var(--bp-color-primary);
     outline-offset: calc(-1 * var(--bp-focus-width));
   }

@@ -60,3 +60,7 @@ export {
   type ComboboxSize,
   type ComboboxVariant,
 } from './combobox/combobox.js';
+export {
+  BpDatePicker,
+  type DatePickerSize,
+} from './date-picker/date-picker.js';
