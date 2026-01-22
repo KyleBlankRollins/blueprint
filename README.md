@@ -312,66 +312,69 @@ Based on analysis of popular design systems (Shoelace, Carbon, Spectrum, Materia
 
 These components cover 80% of common UI patterns:
 
-| Component           | Description                                                              |
-| ------------------- | ------------------------------------------------------------------------ |
-| **Button**          | Primary, secondary, outline, ghost, danger, loading states, icon support |
-| **Input**           | Text input with labels, validation, help text, prefix/suffix slots       |
-| **Textarea**        | Multi-line text input with auto-resize option                            |
-| **Checkbox**        | Standard and indeterminate states                                        |
-| **Radio**           | Radio buttons and radio groups                                           |
-| **Switch / Toggle** | Boolean toggle control                                                   |
-| **Select**          | Dropdown selection (single)                                              |
-| **Icon**            | SVG icon wrapper with sizing                                             |
-| **Spinner**         | Loading indicator                                                        |
-| **Badge**           | Status indicators and counts                                             |
-| **Alert**           | Informational, success, warning, error messages                          |
-| **Card**            | Content container with header, body, footer slots                        |
-| **Dialog / Modal**  | Overlay dialogs with focus trapping                                      |
-| **Tooltip**         | Hover/focus information popups                                           |
+| Component           | Status | Description                                                              |
+| ------------------- | ------ | ------------------------------------------------------------------------ |
+| **Button**          | ✅     | Primary, secondary, outline, ghost, danger, loading states, icon support |
+| **Input**           | ✅     | Text input with labels, validation, help text, prefix/suffix slots       |
+| **Textarea**        | ✅     | Multi-line text input with auto-resize option                            |
+| **Checkbox**        | ✅     | Standard and indeterminate states                                        |
+| **Radio**           | ✅     | Radio buttons and radio groups                                           |
+| **Switch / Toggle** | ✅     | Boolean toggle control                                                   |
+| **Select**          | ✅     | Dropdown selection (single)                                              |
+| **Icon**            | ✅     | SVG icon wrapper with sizing                                             |
+| **Spinner**         | ✅     | Loading indicator                                                        |
+| **Badge**           | ✅     | Status indicators and counts                                             |
+| **Alert**           | ✅     | Informational, success, warning, error messages                          |
+| **Card**            | ✅     | Content container with header, body, footer slots                        |
+| **Dialog / Modal**  | ✅     | Overlay dialogs with focus trapping                                      |
+| **Tooltip**         | ✅     | Hover/focus information popups                                           |
 
 ### Phase 2: Enhanced Inputs & Navigation
 
-| Component                   | Description                               |
-| --------------------------- | ----------------------------------------- |
-| **Multi-select**            | Dropdown with multiple selection and tags |
-| **Combobox / Autocomplete** | Searchable dropdown                       |
-| **Date Picker**             | Calendar-based date selection             |
-| **Time Picker**             | Time input with dropdown                  |
-| **Slider / Range**          | Numeric range selection                   |
-| **Number Input**            | Increment/decrement numeric input         |
-| **File Upload**             | Drag-and-drop file selection              |
-| **Tabs**                    | Tabbed content navigation                 |
-| **Breadcrumb**              | Navigation path indicator                 |
-| **Pagination**              | Page navigation controls                  |
-| **Menu**                    | Dropdown and context menus                |
-| **Dropdown**                | Generic popover trigger                   |
+| Component                   | Status | Description                               |
+| --------------------------- | ------ | ----------------------------------------- |
+| **Multi-select**            | ✅     | Dropdown with multiple selection and tags |
+| **Combobox / Autocomplete** | ✅     | Searchable dropdown                       |
+| **Date Picker**             | ❌     | Calendar-based date selection             |
+| **Time Picker**             | ❌     | Time input with dropdown                  |
+| **Slider / Range**          | ❌     | Numeric range selection                   |
+| **Number Input**            | ❌     | Increment/decrement numeric input         |
+| **File Upload**             | ❌     | Drag-and-drop file selection              |
+| **Tabs**                    | ❌     | Tabbed content navigation                 |
+| **Breadcrumb**              | ❌     | Navigation path indicator                 |
+| **Pagination**              | ❌     | Page navigation controls                  |
+| **Menu**                    | ❌     | Dropdown and context menus                |
+| **Dropdown**                | ❌     | Generic popover trigger                   |
 
 ### Phase 3: Layout & Data Display
 
-| Component                | Description                                             |
-| ------------------------ | ------------------------------------------------------- |
-| **Avatar**               | User/entity image with fallback initials                |
-| **Tag / Chip**           | Removable labels and filters                            |
-| **Progress Bar**         | Determinate and indeterminate progress                  |
-| **Skeleton**             | Loading placeholders                                    |
-| **Toast / Notification** | Non-blocking alerts                                     |
-| **Accordion**            | Collapsible content sections                            |
-| **Table**                | Data tables with sorting, selection (consider headless) |
-| **Tree**                 | Hierarchical data display                               |
-| **Divider**              | Visual separator                                        |
+| Component                | Status | Description                                             |
+| ------------------------ | ------ | ------------------------------------------------------- |
+| **Avatar**               | ✅     | User/entity image with fallback initials                |
+| **Tag / Chip**           | ✅     | Removable labels and filters                            |
+| **Progress Bar**         | ✅     | Determinate and indeterminate progress                  |
+| **Divider**              | ✅     | Visual separator                                        |
+| **Heading**              | ✅     | Typography component for headings                       |
+| **Link**                 | ✅     | Hyperlink component                                     |
+| **Text**                 | ✅     | Text/paragraph component                                |
+| **Skeleton**             | ❌     | Loading placeholders                                    |
+| **Toast / Notification** | ❌     | Non-blocking alerts                                     |
+| **Accordion**            | ❌     | Collapsible content sections                            |
+| **Table**                | ❌     | Data tables with sorting, selection (consider headless) |
+| **Tree**                 | ❌     | Hierarchical data display                               |
 
 ### Phase 4: Advanced Components
 
-| Component            | Description                                                |
-| -------------------- | ---------------------------------------------------------- |
-| **Drawer / Sidebar** | Slide-in panels                                            |
-| **Popover**          | Rich content popovers                                      |
-| **Color Picker**     | Color selection tool                                       |
-| **Carousel**         | Image/content slider                                       |
-| **Calendar**         | Full calendar display                                      |
-| **Stepper / Wizard** | Multi-step form navigation                                 |
-| **Rating**           | Star/icon rating input                                     |
-| **Rich Text Editor** | WYSIWYG text editing (complex, consider wrapping existing) |
+| Component            | Status | Description                                                |
+| -------------------- | ------ | ---------------------------------------------------------- |
+| **Drawer / Sidebar** | ❌     | Slide-in panels                                            |
+| **Popover**          | ❌     | Rich content popovers                                      |
+| **Color Picker**     | ❌     | Color selection tool                                       |
+| **Carousel**         | ❌     | Image/content slider                                       |
+| **Calendar**         | ❌     | Full calendar display                                      |
+| **Stepper / Wizard** | ❌     | Multi-step form navigation                                 |
+| **Rating**           | ❌     | Star/icon rating input                                     |
+| **Rich Text Editor** | ❌     | WYSIWYG text editing (complex, consider wrapping existing) |
 
 ## Reference Design Systems
 

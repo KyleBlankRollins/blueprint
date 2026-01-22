@@ -48,3 +48,15 @@ export { BpSelect, type SelectSize } from './select/select.js';
 export { BpTextarea } from './textarea/textarea.js';
 export { BpTag } from './tag/tag.js';
 export { BpModal, type ModalSize } from './modal/modal.js';
+export {
+  BpMultiSelect,
+  type MultiSelectOption,
+  type MultiSelectSize,
+  type MultiSelectVariant,
+} from './multi-select/multi-select.js';
+export {
+  BpCombobox,
+  type ComboboxOption,
+  type ComboboxSize,
+  type ComboboxVariant,
+} from './combobox/combobox.js';
