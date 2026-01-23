@@ -70,3 +70,8 @@ export {
   type TimeFormat,
 } from './time-picker/time-picker.js';
 export { BpSlider, type SliderSize } from './slider/slider.js';
+export { BpNumberInput } from './number-input/number-input.js';
+export type {
+  NumberInputSize,
+  NumberInputVariant,
+} from './number-input/number-input.js';

@@ -27,6 +27,7 @@ export default [
         HTMLElement: 'readonly',
         HTMLInputElement: 'readonly',
         HTMLTextAreaElement: 'readonly',
+        HTMLButtonElement: 'readonly',
         FocusEvent: 'readonly',
         InputEvent: 'readonly',
         customElements: 'readonly',

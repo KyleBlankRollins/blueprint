@@ -338,7 +338,7 @@ These components cover 80% of common UI patterns:
 | **Date Picker**             | ✅     | Calendar-based date selection             |
 | **Time Picker**             | ✅     | Time input with dropdown                  |
 | **Slider / Range**          | ✅     | Numeric range selection                   |
-| **Number Input**            | ❌     | Increment/decrement numeric input         |
+| **Number Input**            | ✅     | Increment/decrement numeric input         |
 | **File Upload**             | ❌     | Drag-and-drop file selection              |
 | **Tabs**                    | ❌     | Tabbed content navigation                 |
 | **Breadcrumb**              | ❌     | Navigation path indicator                 |
