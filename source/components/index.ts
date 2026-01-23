@@ -75,3 +75,5 @@ export type {
   NumberInputSize,
   NumberInputVariant,
 } from './number-input/number-input.js';
+export { BpFileUpload } from './file-upload/file-upload.js';
+export type { FileInfo } from './file-upload/file-upload.js';

@@ -31,6 +31,10 @@ export default [
         FocusEvent: 'readonly',
         InputEvent: 'readonly',
         customElements: 'readonly',
+        File: 'readonly',
+        DataTransfer: 'readonly',
+        DragEvent: 'readonly',
+        Node: 'readonly',
       },
     },
     plugins: {
