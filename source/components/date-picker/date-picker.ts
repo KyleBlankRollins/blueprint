@@ -14,18 +14,20 @@ export type DatePickerSize = 'small' | 'medium' | 'large';
  *
  * @csspart control - The outer container
  * @csspart input - The text input field
+ * @csspart indicator - The calendar icon
+ * @csspart clear-button - The clear button
  * @csspart calendar - The calendar dropdown
  * @csspart header - The calendar header with navigation
  * @csspart nav-button - Month/year navigation buttons
  * @csspart month-year - Month and year display
  * @csspart weekday - Day of week header cell
  * @csspart day - Individual day cell
- * @csspart clear-button - The clear button
  */
 @customElement('bp-date-picker')
 export class BpDatePicker extends LitElement {
   @property({ type: String, reflect: true }) declare value: string;
   @property({ type: String }) declare name: string;
+  @property({ type: String }) declare label: string;
   @property({ type: String }) declare placeholder: string;
   @property({ type: Boolean, reflect: true }) declare disabled: boolean;
   @property({ type: Boolean, reflect: true }) declare required: boolean;
@@ -46,6 +48,7 @@ export class BpDatePicker extends LitElement {
     super();
     this.value = '';
     this.name = '';
+    this.label = '';
     this.placeholder = 'Select date...';
     this.disabled = false;
     this.required = false;
@@ -239,7 +242,13 @@ export class BpDatePicker extends LitElement {
   private parseDate(value: string): Date | null {
     if (!value) return null;
     const date = new Date(value);
-    return isNaN(date.getTime()) ? null : date;
+    if (isNaN(date.getTime())) {
+      console.warn(
+        `bp-date-picker: Invalid date format "${value}". Expected YYYY-MM-DD.`
+      );
+      return null;
+    }
+    return date;
   }
 
   private getSelectedDate(): Date | null {
@@ -273,6 +282,7 @@ export class BpDatePicker extends LitElement {
   }
 
   private getCalendarDays(): Date[] {
+    const CALENDAR_GRID_SIZE = 42; // 6 weeks × 7 days for consistent grid
     const firstDay = new Date(this.displayYear, this.displayMonth, 1);
     const lastDay = new Date(this.displayYear, this.displayMonth + 1, 0);
 
@@ -294,12 +304,27 @@ export class BpDatePicker extends LitElement {
     }
 
     // Add next month's days to complete the grid
-    const remainingDays = 42 - days.length;
+    const remainingDays = CALENDAR_GRID_SIZE - days.length;
     for (let i = 1; i <= remainingDays; i++) {
       days.push(new Date(this.displayYear, this.displayMonth + 1, i));
     }
 
     return days;
+  }
+
+  private checkValidity(): boolean {
+    // Check required validation
+    if (this.required && !this.value) {
+      return false;
+    }
+    // Check min/max validation
+    if (this.value) {
+      const date = this.parseDate(this.value);
+      if (date && this.isDateDisabled(date)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   private getWeekdayNames(): string[] {
@@ -354,7 +379,7 @@ export class BpDatePicker extends LitElement {
             aria-haspopup="grid"
             aria-expanded=${this.isOpen}
             aria-disabled=${this.disabled}
-            aria-label="Date picker"
+            aria-label=${this.label || this.placeholder || 'Date picker'}
           />
           ${hasValue && !this.disabled
             ? html`

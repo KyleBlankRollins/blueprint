@@ -98,6 +98,7 @@ A calendar-based date picker component that allows users to select dates through
 | ---------------- | -------------------------------- | ----------------- | -------------------------------------------- |
 | `value`          | `string`                         | `''`              | Selected date in YYYY-MM-DD format           |
 | `name`           | `string`                         | `''`              | Form field name for form submissions         |
+| `label`          | `string`                         | `''`              | Accessible label for screen readers          |
 | `placeholder`    | `string`                         | `'Select a date'` | Placeholder text shown when no date selected |
 | `disabled`       | `boolean`                        | `false`           | Disables the date picker                     |
 | `required`       | `boolean`                        | `false`           | Marks the field as required for forms        |
@@ -116,16 +117,18 @@ A calendar-based date picker component that allows users to select dates through
 
 The following parts are exposed for custom styling:
 
-| Part            | Description                            |
-| --------------- | -------------------------------------- |
-| `input-wrapper` | Container for input and dropdown       |
-| `input`         | The text input element                 |
-| `calendar`      | The calendar dropdown container        |
-| `header`        | Calendar header with navigation        |
-| `nav-button`    | Previous/next month navigation buttons |
-| `month-year`    | Month and year display text            |
-| `weekdays`      | Container for weekday headers          |
-| `days`          | Container for calendar day cells       |
+| Part           | Description                            |
+| -------------- | -------------------------------------- |
+| `control`      | The outer container                    |
+| `input`        | The text input element                 |
+| `indicator`    | The calendar icon indicator            |
+| `clear-button` | The clear button (when value exists)   |
+| `calendar`     | The calendar dropdown container        |
+| `header`       | Calendar header with navigation        |
+| `nav-button`   | Previous/next month navigation buttons |
+| `month-year`   | Month and year display text            |
+| `weekday`      | Individual weekday header cell         |
+| `day`          | Individual day cell button             |
 
 ### Example: Custom Styling
 

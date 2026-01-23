@@ -15,6 +15,10 @@ const meta: Meta = {
       control: 'text',
       description: 'Form field name for form submissions',
     },
+    label: {
+      control: 'text',
+      description: 'Accessible label for screen readers',
+    },
     placeholder: {
       control: 'text',
       description: 'Placeholder text shown when no date is selected',

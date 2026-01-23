@@ -64,3 +64,8 @@ export {
   BpDatePicker,
   type DatePickerSize,
 } from './date-picker/date-picker.js';
+export {
+  BpTimePicker,
+  type TimePickerSize,
+  type TimeFormat,
+} from './time-picker/time-picker.js';
