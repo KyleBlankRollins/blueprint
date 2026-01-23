@@ -30,6 +30,7 @@ export default [
         HTMLButtonElement: 'readonly',
         FocusEvent: 'readonly',
         InputEvent: 'readonly',
+        KeyboardEvent: 'readonly',
         customElements: 'readonly',
         File: 'readonly',
         DataTransfer: 'readonly',

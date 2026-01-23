@@ -77,3 +77,11 @@ export type {
 } from './number-input/number-input.js';
 export { BpFileUpload } from './file-upload/file-upload.js';
 export type { FileInfo } from './file-upload/file-upload.js';
+export {
+  BpTabs,
+  BpTabPanel,
+  type TabsSize,
+  type TabsVariant,
+  type TabsPlacement,
+  type TabItem,
+} from './tabs/tabs.js';
