@@ -69,3 +69,4 @@ export {
   type TimePickerSize,
   type TimeFormat,
 } from './time-picker/time-picker.js';
+export { BpSlider, type SliderSize } from './slider/slider.js';
