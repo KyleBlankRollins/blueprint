@@ -341,7 +341,7 @@ These components cover 80% of common UI patterns:
 | **Number Input**            | ✅     | Increment/decrement numeric input         |
 | **File Upload**             | ✅     | Drag-and-drop file selection              |
 | **Tabs**                    | ✅     | Tabbed content navigation                 |
-| **Breadcrumb**              | ❌     | Navigation path indicator                 |
+| **Breadcrumb**              | ✅     | Navigation path indicator                 |
 | **Pagination**              | ❌     | Page navigation controls                  |
 | **Menu**                    | ❌     | Dropdown and context menus                |
 | **Dropdown**                | ❌     | Generic popover trigger                   |

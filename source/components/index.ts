@@ -85,3 +85,10 @@ export {
   type TabsPlacement,
   type TabItem,
 } from './tabs/tabs.js';
+export {
+  BpBreadcrumb,
+  BpBreadcrumbItem,
+  type BreadcrumbSize,
+  type BreadcrumbSeparator,
+  type BreadcrumbItem,
+} from './breadcrumb/breadcrumb.js';
