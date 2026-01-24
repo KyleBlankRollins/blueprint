@@ -93,3 +93,4 @@ export {
   type BreadcrumbItem,
 } from './breadcrumb/breadcrumb.js';
 export { BpPagination } from './pagination/pagination.js';
+export { BpMenu } from './menu/menu.js';

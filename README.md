@@ -343,7 +343,7 @@ These components cover 80% of common UI patterns:
 | **Tabs**                    | ✅     | Tabbed content navigation                 |
 | **Breadcrumb**              | ✅     | Navigation path indicator                 |
 | **Pagination**              | ✅     | Page navigation controls                  |
-| **Menu**                    | ❌     | Dropdown and context menus                |
+| **Menu**                    | ✅     | Dropdown and context menus                |
 | **Dropdown**                | ❌     | Generic popover trigger                   |
 
 ### Phase 3: Layout & Data Display
