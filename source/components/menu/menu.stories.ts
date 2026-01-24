@@ -107,19 +107,6 @@ export const WithSelectedItem: Story = {
     </bp-menu>
   `,
 };
-export const WithSelectedItem: Story = {
-  args: {
-    size: 'medium',
-  },
-  render: (args) => html`
-    <bp-menu .size=${args.size}>
-      <bp-menu-item value="home">Home</bp-menu-item>
-      <bp-menu-item value="about" selected>About</bp-menu-item>
-      <bp-menu-item value="services">Services</bp-menu-item>
-      <bp-menu-item value="contact">Contact</bp-menu-item>
-    </bp-menu>
-  `,
-};
 
 export const Small: Story = {
   args: {
