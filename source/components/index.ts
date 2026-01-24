@@ -95,3 +95,4 @@ export {
 export { BpPagination } from './pagination/pagination.js';
 export { BpMenu } from './menu/menu.js';
 export { BpDropdown } from './dropdown/dropdown.js';
+export { BpSkeleton } from './skeleton/skeleton.js';

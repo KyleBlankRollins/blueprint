@@ -357,7 +357,7 @@ These components cover 80% of common UI patterns:
 | **Heading**              | ✅     | Typography component for headings                       |
 | **Link**                 | ✅     | Hyperlink component                                     |
 | **Text**                 | ✅     | Text/paragraph component                                |
-| **Skeleton**             | ❌     | Loading placeholders                                    |
+| **Skeleton**             | ✅     | Loading placeholders                                    |
 | **Toast / Notification** | ❌     | Non-blocking alerts                                     |
 | **Accordion**            | ❌     | Collapsible content sections                            |
 | **Table**                | ❌     | Data tables with sorting, selection (consider headless) |
