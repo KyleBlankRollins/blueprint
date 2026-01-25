@@ -360,7 +360,7 @@ These components cover 80% of common UI patterns:
 | **Skeleton**             | ✅     | Loading placeholders                                    |
 | **Toast / Notification** | ✅     | Non-blocking alerts                                     |
 | **Accordion**            | ✅     | Collapsible content sections                            |
-| **Table**                | ❌     | Data tables with sorting, selection (consider headless) |
+| **Table**                | ✅     | Data tables with sorting, selection (consider headless) |
 | **Tree**                 | ❌     | Hierarchical data display                               |
 
 ### Phase 4: Advanced Components
