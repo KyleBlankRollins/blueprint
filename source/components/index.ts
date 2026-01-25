@@ -105,3 +105,8 @@ export {
   type DrawerPlacement,
   type DrawerSize,
 } from './drawer/drawer.js';
+export {
+  BpPopover,
+  type PopoverPlacement,
+  type PopoverTrigger,
+} from './popover/popover.js';

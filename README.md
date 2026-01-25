@@ -368,7 +368,7 @@ These components cover 80% of common UI patterns:
 | Component            | Status | Description                |
 | -------------------- | ------ | -------------------------- |
 | **Drawer / Sidebar** | ✅     | Slide-in panels            |
-| **Popover**          | ❌     | Rich content popovers      |
+| **Popover**          | ✅     | Rich content popovers      |
 | **Color Picker**     | ❌     | Color selection tool       |
 | **Calendar**         | ❌     | Full calendar display      |
 | **Stepper / Wizard** | ❌     | Multi-step form navigation |
