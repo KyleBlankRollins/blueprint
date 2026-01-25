@@ -110,3 +110,4 @@ export {
   type PopoverPlacement,
   type PopoverTrigger,
 } from './popover/popover.js';
+export { BpColorPicker } from './color-picker/color-picker.js';
