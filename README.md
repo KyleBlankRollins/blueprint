@@ -359,7 +359,7 @@ These components cover 80% of common UI patterns:
 | **Text**                 | ✅     | Text/paragraph component                                |
 | **Skeleton**             | ✅     | Loading placeholders                                    |
 | **Toast / Notification** | ✅     | Non-blocking alerts                                     |
-| **Accordion**            | ❌     | Collapsible content sections                            |
+| **Accordion**            | ✅     | Collapsible content sections                            |
 | **Table**                | ❌     | Data tables with sorting, selection (consider headless) |
 | **Tree**                 | ❌     | Hierarchical data display                               |
 

@@ -383,7 +383,7 @@ describe('bp-notification', () => {
     await element.updateComplete;
 
     // Wait for focus to be applied in updateComplete.then()
-    await new Promise((resolve) => setTimeout(resolve, 50));
+    await new Promise((resolve) => window.setTimeout(resolve, 50));
 
     const closeButton = element.shadowRoot?.querySelector(
       '.notification__close'
