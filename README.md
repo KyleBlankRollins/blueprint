@@ -361,7 +361,7 @@ These components cover 80% of common UI patterns:
 | **Toast / Notification** | ✅     | Non-blocking alerts                                     |
 | **Accordion**            | ✅     | Collapsible content sections                            |
 | **Table**                | ✅     | Data tables with sorting, selection (consider headless) |
-| **Tree**                 | ❌     | Hierarchical data display                               |
+| **Tree**                 | ✅     | Hierarchical data display                               |
 
 ### Phase 4: Advanced Components
 

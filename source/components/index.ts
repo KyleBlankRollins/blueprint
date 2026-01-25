@@ -99,3 +99,4 @@ export { BpSkeleton } from './skeleton/skeleton.js';
 export { BpNotification } from './notification/notification.js';
 export { BpAccordion } from './accordion/accordion.js';
 export { BpTable } from './table/table.js';
+export { BpTree } from './tree/tree.js';
