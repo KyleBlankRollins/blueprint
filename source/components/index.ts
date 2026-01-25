@@ -111,3 +111,4 @@ export {
   type PopoverTrigger,
 } from './popover/popover.js';
 export { BpColorPicker } from './color-picker/color-picker.js';
+export { BpStepper } from './stepper/stepper.js';
