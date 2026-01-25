@@ -100,3 +100,8 @@ export { BpNotification } from './notification/notification.js';
 export { BpAccordion } from './accordion/accordion.js';
 export { BpTable } from './table/table.js';
 export { BpTree } from './tree/tree.js';
+export {
+  BpDrawer,
+  type DrawerPlacement,
+  type DrawerSize,
+} from './drawer/drawer.js';

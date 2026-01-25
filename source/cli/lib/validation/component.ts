@@ -151,8 +151,9 @@ function checkExportedInIndex(componentName: string): boolean {
   }
 
   const content = readFileSync(indexPath, 'utf-8');
+  // Use [\s\S]* to match any characters including newlines (for multi-line exports)
   const exportPattern = new RegExp(
-    `export.*from.*['"]./${componentName}/${componentName}.js['"]`
+    `export[\\s\\S]*?from\\s*['"]./${componentName}/${componentName}.js['"]`
   );
   return exportPattern.test(content);
 }

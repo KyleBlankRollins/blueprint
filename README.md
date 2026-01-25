@@ -365,16 +365,13 @@ These components cover 80% of common UI patterns:
 
 ### Phase 4: Advanced Components
 
-| Component            | Status | Description                                                |
-| -------------------- | ------ | ---------------------------------------------------------- |
-| **Drawer / Sidebar** | ❌     | Slide-in panels                                            |
-| **Popover**          | ❌     | Rich content popovers                                      |
-| **Color Picker**     | ❌     | Color selection tool                                       |
-| **Carousel**         | ❌     | Image/content slider                                       |
-| **Calendar**         | ❌     | Full calendar display                                      |
-| **Stepper / Wizard** | ❌     | Multi-step form navigation                                 |
-| **Rating**           | ❌     | Star/icon rating input                                     |
-| **Rich Text Editor** | ❌     | WYSIWYG text editing (complex, consider wrapping existing) |
+| Component            | Status | Description                |
+| -------------------- | ------ | -------------------------- |
+| **Drawer / Sidebar** | ✅     | Slide-in panels            |
+| **Popover**          | ❌     | Rich content popovers      |
+| **Color Picker**     | ❌     | Color selection tool       |
+| **Calendar**         | ❌     | Full calendar display      |
+| **Stepper / Wizard** | ❌     | Multi-step form navigation |
 
 ## Reference Design Systems
 
