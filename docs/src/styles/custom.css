@@ -1,0 +1,53 @@
+/* Custom styles for Blueprint docs */
+
+/* Note: Blueprint themes are loaded via the component import in Head.astro */
+/* The themes/index.ts exports the CSS which gets bundled with the components */
+
+/* Apply Blueprint theme variables to Starlight */
+:root {
+  --sl-color-accent-low: var(--bp-color-primary-100);
+  --sl-color-accent: var(--bp-color-primary-500);
+  --sl-color-accent-high: var(--bp-color-primary-700);
+}
+
+:root[data-theme='dark'] {
+  --sl-color-accent-low: var(--bp-color-primary-800);
+  --sl-color-accent: var(--bp-color-primary-400);
+  --sl-color-accent-high: var(--bp-color-primary-200);
+}
+
+/* Component preview container */
+.component-preview {
+  padding: var(--bp-spacing-lg, 1.5rem);
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.5rem;
+  background: var(--sl-color-gray-7);
+  margin: 1rem 0;
+}
+
+.component-preview-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.component-preview-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Ensure Blueprint components render properly */
+bp-button,
+bp-input,
+bp-card,
+bp-badge,
+bp-alert,
+bp-checkbox,
+bp-radio,
+bp-switch,
+bp-select,
+bp-tag {
+  display: inline-block;
+}

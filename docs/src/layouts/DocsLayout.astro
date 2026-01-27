@@ -1,0 +1,155 @@
+---
+/**
+ * Documentation page layout combining header, sidebar, content area, and TOC.
+ */
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Sidebar from '../components/Sidebar.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  headings?: { depth: number; slug: string; text: string }[];
+}
+
+const { title, description, headings = [] } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <Header />
+
+  <div class="docs-container">
+    <Sidebar />
+
+    <main class="docs-main">
+      <article class="docs-content">
+        <header class="content-header">
+          <bp-heading level="1" size="3xl" weight="bold">{title}</bp-heading>
+          {
+            description && (
+              <bp-text size="lg" variant="muted">
+                {description}
+              </bp-text>
+            )
+          }
+        </header>
+
+        <div class="content-body">
+          <slot />
+        </div>
+      </article>
+    </main>
+
+    <TableOfContents headings={headings} />
+  </div>
+</BaseLayout>
+
+<style>
+  .docs-container {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .docs-main {
+    flex: 1;
+    min-width: 0;
+    padding: 2rem 3rem;
+  }
+
+  .docs-content {
+    max-width: 800px;
+  }
+
+  .content-header {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .content-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* Markdown content styling */
+  .content-body :global(h2) {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--bp-color-border);
+  }
+
+  .content-body :global(h2:first-child) {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .content-body :global(h3) {
+    margin-top: 1.5rem;
+  }
+
+  .content-body :global(p) {
+    line-height: 1.7;
+    color: var(--bp-color-text);
+  }
+
+  .content-body :global(ul),
+  .content-body :global(ol) {
+    padding-left: 1.5rem;
+    line-height: 1.7;
+  }
+
+  .content-body :global(li) {
+    margin-bottom: 0.25rem;
+  }
+
+  .content-body :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.875rem;
+  }
+
+  .content-body :global(th),
+  .content-body :global(td) {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--bp-color-border);
+  }
+
+  .content-body :global(th) {
+    font-weight: 600;
+    background: var(--bp-color-surface-secondary);
+  }
+
+  .content-body :global(.component-preview) {
+    padding: 2rem;
+    border: 1px solid var(--bp-color-border);
+    border-radius: var(--bp-border-radius-lg, 0.5rem);
+    background: var(--bp-color-surface);
+    margin: 1rem 0;
+  }
+
+  .content-body :global(.component-preview-row) {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .content-body :global(.component-preview-col) {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .docs-main {
+      padding: 1.5rem;
+    }
+  }
+</style>

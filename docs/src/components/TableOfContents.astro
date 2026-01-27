@@ -1,0 +1,83 @@
+---
+/**
+ * Table of contents component for the right sidebar.
+ * Uses Blueprint components: bp-heading, bp-link
+ */
+interface TocItem {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: TocItem[];
+}
+
+const { headings } = Astro.props;
+const filteredHeadings = headings.filter(
+  (heading: TocItem) => heading.depth >= 2 && heading.depth <= 3
+);
+---
+
+{
+  filteredHeadings.length > 0 && (
+    <aside class="toc">
+      <bp-heading level="2" size="xs" weight="semibold">
+        On this page
+      </bp-heading>
+      <ul class="toc-list">
+        {filteredHeadings.map((heading: TocItem) => (
+          <li class:list={['toc-item', `depth-${heading.depth}`]}>
+            <a href={`#${heading.slug}`} class="toc-link">
+              {heading.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </aside>
+  )
+}
+
+<style>
+  .toc {
+    width: 200px;
+    height: calc(100vh - 57px);
+    position: sticky;
+    top: 57px;
+    overflow-y: auto;
+    padding: 1.5rem 1rem;
+  }
+
+  .toc-list {
+    list-style: none;
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .toc-item {
+    font-size: 0.8125rem;
+  }
+
+  .toc-item.depth-3 {
+    padding-left: 0.75rem;
+  }
+
+  .toc-link {
+    display: block;
+    padding: 0.25rem 0;
+    color: var(--bp-color-text-muted);
+    transition: color 0.15s ease;
+  }
+
+  .toc-link:hover {
+    color: var(--bp-color-text);
+  }
+
+  @media (max-width: 1200px) {
+    .toc {
+      display: none;
+    }
+  }
+</style>

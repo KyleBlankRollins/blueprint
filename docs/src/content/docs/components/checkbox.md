@@ -1,0 +1,104 @@
+---
+title: Checkbox
+description: Selection control for boolean values
+---
+
+The `bp-checkbox` component provides a styled checkbox input with support for various states including indeterminate.
+
+## Import
+
+```javascript
+import 'blueprint/components/checkbox';
+```
+
+## Examples
+
+### Default
+
+<div class="component-preview">
+  <div class="component-preview-row">
+    <bp-checkbox>Unchecked</bp-checkbox>
+    <bp-checkbox checked>Checked</bp-checkbox>
+  </div>
+</div>
+
+```html
+<bp-checkbox>Unchecked</bp-checkbox> <bp-checkbox checked>Checked</bp-checkbox>
+```
+
+### Sizes
+
+<div class="component-preview">
+  <div class="component-preview-row">
+    <bp-checkbox size="sm">Small</bp-checkbox>
+    <bp-checkbox size="md">Medium</bp-checkbox>
+    <bp-checkbox size="lg">Large</bp-checkbox>
+  </div>
+</div>
+
+```html
+<bp-checkbox size="sm">Small</bp-checkbox>
+<bp-checkbox size="md">Medium</bp-checkbox>
+<bp-checkbox size="lg">Large</bp-checkbox>
+```
+
+### States
+
+<div class="component-preview">
+  <div class="component-preview-col">
+    <bp-checkbox indeterminate>Indeterminate</bp-checkbox>
+    <bp-checkbox disabled>Disabled</bp-checkbox>
+    <bp-checkbox checked disabled>Checked & Disabled</bp-checkbox>
+    <bp-checkbox required>Required</bp-checkbox>
+    <bp-checkbox error>Error state</bp-checkbox>
+  </div>
+</div>
+
+```html
+<bp-checkbox indeterminate>Indeterminate</bp-checkbox>
+<bp-checkbox disabled>Disabled</bp-checkbox>
+<bp-checkbox checked disabled>Checked & Disabled</bp-checkbox>
+<bp-checkbox required>Required</bp-checkbox>
+<bp-checkbox error>Error state</bp-checkbox>
+```
+
+## API Reference
+
+### Properties
+
+| Property        | Type                   | Default | Description                     |
+| --------------- | ---------------------- | ------- | ------------------------------- |
+| `checked`       | `boolean`              | `false` | Whether the checkbox is checked |
+| `indeterminate` | `boolean`              | `false` | Shows indeterminate state       |
+| `disabled`      | `boolean`              | `false` | Disables the checkbox           |
+| `required`      | `boolean`              | `false` | Marks as required               |
+| `error`         | `boolean`              | `false` | Shows error state               |
+| `size`          | `'sm' \| 'md' \| 'lg'` | `'md'`  | Checkbox size                   |
+| `value`         | `string`               | `''`    | Form value                      |
+| `name`          | `string`               | `''`    | Form field name                 |
+
+### Slots
+
+| Slot      | Description    |
+| --------- | -------------- |
+| (default) | Checkbox label |
+
+### Events
+
+| Event    | Detail        | Description              |
+| -------- | ------------- | ------------------------ |
+| `change` | `{ checked }` | Fired when state changes |
+
+### CSS Parts
+
+| Part       | Description          |
+| ---------- | -------------------- |
+| `checkbox` | The checkbox element |
+| `label`    | The label element    |
+
+## Accessibility
+
+- Uses native checkbox semantics
+- Keyboard accessible with Space to toggle
+- Indeterminate state properly announced
+- Required/error states conveyed to assistive technology

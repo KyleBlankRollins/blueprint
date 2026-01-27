@@ -1,0 +1,137 @@
+---
+/**
+ * Site header with navigation, theme switcher, and GitHub link.
+ * Uses Blueprint components: bp-heading, bp-link, bp-select, bp-button, bp-icon
+ */
+---
+
+<header class="site-header">
+  <div class="header-content">
+    <div class="header-left">
+      <a href="/" class="logo-link">
+        <bp-heading level="1" size="lg" weight="bold">Blueprint</bp-heading>
+      </a>
+    </div>
+
+    <nav class="header-nav">
+      <bp-link href="/getting-started/introduction">Docs</bp-link>
+      <bp-link href="/components/button">Components</bp-link>
+    </nav>
+
+    <div class="header-right">
+      <bp-select id="theme-switcher" size="small">
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </bp-select>
+
+      <bp-button variant="secondary" size="small">
+        <bp-icon name="github" size="sm"></bp-icon>
+        GitHub
+      </bp-button>
+
+      <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <bp-icon name="menu" size="md"></bp-icon>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Theme switcher functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const themeSwitcher = document.getElementById(
+      'theme-switcher'
+    ) as HTMLSelectElement;
+    if (themeSwitcher) {
+      // Set initial value from current theme
+      const currentTheme =
+        document.documentElement.getAttribute('data-theme') || 'light';
+      themeSwitcher.value = currentTheme;
+
+      // Listen for bp-change event from bp-select custom element
+      themeSwitcher.addEventListener('bp-change', (event: Event) => {
+        const customEvent = event as CustomEvent;
+        const theme = customEvent.detail.value;
+        window.dispatchEvent(
+          new CustomEvent('theme-change', {
+            detail: { theme },
+          })
+        );
+      });
+    }
+
+    // Mobile menu toggle
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    if (mobileToggle) {
+      mobileToggle.addEventListener('click', () => {
+        document.body.classList.toggle('sidebar-open');
+      });
+    }
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bp-color-surface);
+    border-bottom: 1px solid var(--bp-color-border);
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .header-left {
+    flex-shrink: 0;
+  }
+
+  .logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .header-nav {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .header-right {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: var(--bp-color-text);
+  }
+
+  @media (max-width: 768px) {
+    .header-nav {
+      display: none;
+    }
+
+    .header-right bp-select,
+    .header-right bp-button {
+      display: none;
+    }
+
+    .mobile-menu-toggle {
+      display: flex;
+    }
+  }
+</style>

@@ -1,0 +1,145 @@
+---
+/**
+ * Sidebar navigation component.
+ * Uses Blueprint components: bp-heading, bp-link, bp-divider
+ */
+interface NavItem {
+  label: string;
+  href: string;
+}
+
+interface NavSection {
+  title: string;
+  items: NavItem[];
+}
+
+const navigation: NavSection[] = [
+  {
+    title: 'Getting Started',
+    items: [
+      { label: 'Introduction', href: '/getting-started/introduction' },
+      { label: 'Installation', href: '/getting-started/installation' },
+      { label: 'Theming', href: '/getting-started/theming' },
+    ],
+  },
+  {
+    title: 'Components',
+    items: [
+      { label: 'Alert', href: '/components/alert' },
+      { label: 'Button', href: '/components/button' },
+      { label: 'Card', href: '/components/card' },
+      { label: 'Checkbox', href: '/components/checkbox' },
+      { label: 'Input', href: '/components/input' },
+      { label: 'Select', href: '/components/select' },
+    ],
+  },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<aside class="sidebar">
+  <nav class="sidebar-nav">
+    {
+      navigation.map((section, index) => (
+        <div class="nav-section">
+          <bp-heading level="2" size="xs" weight="semibold">
+            {section.title}
+          </bp-heading>
+          <ul class="nav-list">
+            {section.items.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class:list={[
+                    'nav-link',
+                    {
+                      active:
+                        currentPath === item.href ||
+                        currentPath === item.href + '/',
+                    },
+                  ]}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          {index < navigation.length - 1 && <bp-divider />}
+        </div>
+      ))
+    }
+  </nav>
+</aside>
+
+<style>
+  .sidebar {
+    width: 260px;
+    height: calc(100vh - 57px);
+    position: sticky;
+    top: 57px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    border-right: 1px solid var(--bp-color-border);
+    background: var(--bp-color-surface);
+  }
+
+  .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .nav-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .nav-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .nav-link {
+    display: block;
+    padding: 0.375rem 0.75rem;
+    border-radius: var(--bp-border-radius-md, 0.375rem);
+    color: var(--bp-color-text-secondary);
+    font-size: 0.875rem;
+    transition: all 0.15s ease;
+  }
+
+  .nav-link:hover {
+    background: var(--bp-color-surface-secondary);
+    color: var(--bp-color-text);
+  }
+
+  .nav-link.active {
+    background: var(--bp-color-primary-100);
+    color: var(--bp-color-primary);
+    font-weight: 500;
+  }
+
+  [data-theme='dark'] .nav-link.active {
+    background: var(--bp-color-primary-900);
+  }
+
+  @media (max-width: 1024px) {
+    .sidebar {
+      display: none;
+    }
+
+    .sidebar-open .sidebar {
+      display: block;
+      position: fixed;
+      left: 0;
+      top: 57px;
+      z-index: 99;
+      width: 280px;
+      box-shadow: var(--bp-shadow-lg);
+    }
+  }
+</style>

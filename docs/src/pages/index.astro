@@ -1,0 +1,232 @@
+---
+/**
+ * Landing page for Blueprint documentation.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+---
+
+<BaseLayout title="Blueprint - Component Library">
+  <Header />
+
+  <main class="landing">
+    <section class="hero">
+      <div class="hero-content">
+        <bp-heading level="1" size="4xl" weight="bold">Blueprint</bp-heading>
+        <bp-text size="xl" variant="muted">
+          A highly portable and customizable component library built on Lit.
+          Framework-agnostic web components that work anywhere.
+        </bp-text>
+
+        <div class="hero-actions">
+          <bp-button
+            size="large"
+            onclick="window.location.href='/getting-started/introduction'"
+          >
+            Get Started
+          </bp-button>
+          <bp-button
+            variant="secondary"
+            size="large"
+            onclick="window.location.href='/components/button'"
+          >
+            View Components
+          </bp-button>
+        </div>
+      </div>
+
+      <div class="hero-demo">
+        <bp-card>
+          <bp-heading level="3" size="lg">Live Preview</bp-heading>
+          <bp-text variant="muted"
+            >Try out Blueprint components right here.</bp-text
+          >
+          <div class="demo-row">
+            <bp-button>Primary</bp-button>
+            <bp-button variant="secondary">Secondary</bp-button>
+          </div>
+          <bp-input placeholder="Type something..."></bp-input>
+          <div class="demo-row">
+            <bp-checkbox checked>Checkbox</bp-checkbox>
+            <bp-switch checked>Switch</bp-switch>
+          </div>
+        </bp-card>
+      </div>
+    </section>
+
+    <section class="features">
+      <bp-heading
+        level="2"
+        size="2xl"
+        weight="bold"
+        style="text-align: center;"
+      >
+        Why Blueprint?
+      </bp-heading>
+
+      <div class="feature-grid">
+        <bp-card hoverable>
+          <bp-icon name="puzzle" size="xl" color="primary"></bp-icon>
+          <bp-heading level="3" size="lg">Framework Agnostic</bp-heading>
+          <bp-text variant="muted">
+            Built as native web components. Works with React, Vue, Angular,
+            Svelte, or vanilla JavaScript.
+          </bp-text>
+        </bp-card>
+
+        <bp-card hoverable>
+          <bp-icon name="color-palette" size="xl" color="primary"></bp-icon>
+          <bp-heading level="3" size="lg">Fully Themeable</bp-heading>
+          <bp-text variant="muted">
+            Comprehensive design token system with CSS custom properties. Create
+            custom themes with ease.
+          </bp-text>
+        </bp-card>
+
+        <bp-card hoverable>
+          <bp-icon name="check-circle" size="xl" color="primary"></bp-icon>
+          <bp-heading level="3" size="lg">Accessible</bp-heading>
+          <bp-text variant="muted">
+            Built with accessibility in mind. ARIA attributes, keyboard
+            navigation, and screen reader support.
+          </bp-text>
+        </bp-card>
+
+        <bp-card hoverable>
+          <bp-icon name="grid" size="xl" color="primary"></bp-icon>
+          <bp-heading level="3" size="lg">40+ Components</bp-heading>
+          <bp-text variant="muted">
+            From buttons to data tables, modals to date pickers. Everything you
+            need to build modern interfaces.
+          </bp-text>
+        </bp-card>
+      </div>
+    </section>
+
+    <section class="quick-start">
+      <bp-heading level="2" size="2xl" weight="bold">Quick Start</bp-heading>
+
+      <bp-text>Build the package and install in your project:</bp-text>
+
+      <bp-card variant="outlined">
+        <pre><code># In the Blueprint directory
+npm run build:package
+
+# In your project
+npm install path/to/blueprint/blueprint-0.1.0.tgz</code></pre>
+      </bp-card>
+
+      <bp-text>Then use components in your HTML:</bp-text>
+
+      <bp-card variant="outlined">
+        <pre><code>&lt;bp-button variant="primary"&gt;Click me&lt;/bp-button&gt;
+&lt;bp-input placeholder="Enter text..."&gt;&lt;/bp-input&gt;</code></pre>
+      </bp-card>
+    </section>
+  </main>
+
+  <footer class="landing-footer">
+    <bp-divider></bp-divider>
+    <bp-text variant="muted" size="sm">
+      © 2026 Blueprint. Built with ❤️ using Lit.
+    </bp-text>
+  </footer>
+</BaseLayout>
+
+<style>
+  .landing {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    padding: 4rem 0;
+    min-height: 70vh;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .hero-demo bp-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .demo-row {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .features {
+    padding: 4rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .feature-grid bp-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .quick-start {
+    padding: 4rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 700px;
+  }
+
+  .quick-start pre {
+    margin: 0;
+    background: var(--bp-color-surface-secondary);
+  }
+
+  .landing-footer {
+    padding: 2rem 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr;
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    .hero-actions {
+      justify-content: center;
+    }
+
+    .hero-demo {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+  }
+</style>

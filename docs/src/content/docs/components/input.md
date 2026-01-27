@@ -1,0 +1,95 @@
+---
+title: Input
+description: Text input component for collecting user input
+---
+
+The `bp-input` component provides a styled text input with support for various states and configurations.
+
+## Import
+
+```javascript
+import 'blueprint/components/input';
+```
+
+## Examples
+
+### Default
+
+<div class="component-preview">
+  <bp-input placeholder="Enter your name"></bp-input>
+</div>
+
+```html
+<bp-input placeholder="Enter your name"></bp-input>
+```
+
+### States
+
+<div class="component-preview">
+  <div class="component-preview-col">
+    <bp-input placeholder="Default"></bp-input>
+    <bp-input placeholder="Disabled" disabled></bp-input>
+    <bp-input placeholder="Required" required></bp-input>
+    <bp-input placeholder="Readonly" readonly value="Cannot edit this"></bp-input>
+  </div>
+</div>
+
+```html
+<bp-input placeholder="Default"></bp-input>
+<bp-input placeholder="Disabled" disabled></bp-input>
+<bp-input placeholder="Required" required></bp-input>
+<bp-input placeholder="Readonly" readonly value="Cannot edit this"></bp-input>
+```
+
+### Input Types
+
+<div class="component-preview">
+  <div class="component-preview-col">
+    <bp-input type="text" placeholder="Text input"></bp-input>
+    <bp-input type="email" placeholder="Email address"></bp-input>
+    <bp-input type="password" placeholder="Password"></bp-input>
+    <bp-input type="number" placeholder="Number"></bp-input>
+  </div>
+</div>
+
+```html
+<bp-input type="text" placeholder="Text input"></bp-input>
+<bp-input type="email" placeholder="Email address"></bp-input>
+<bp-input type="password" placeholder="Password"></bp-input>
+<bp-input type="number" placeholder="Number"></bp-input>
+```
+
+## API Reference
+
+### Properties
+
+| Property      | Type      | Default  | Description                 |
+| ------------- | --------- | -------- | --------------------------- |
+| `value`       | `string`  | `''`     | The input value             |
+| `placeholder` | `string`  | `''`     | Placeholder text            |
+| `type`        | `string`  | `'text'` | HTML input type             |
+| `disabled`    | `boolean` | `false`  | Disables the input          |
+| `readonly`    | `boolean` | `false`  | Makes the input read-only   |
+| `required`    | `boolean` | `false`  | Marks the input as required |
+
+### Events
+
+| Event    | Detail      | Description                  |
+| -------- | ----------- | ---------------------------- |
+| `input`  | `{ value }` | Fired on input               |
+| `change` | `{ value }` | Fired when value changes     |
+| `focus`  | -           | Fired when input gains focus |
+| `blur`   | -           | Fired when input loses focus |
+
+### CSS Parts
+
+| Part    | Description                |
+| ------- | -------------------------- |
+| `input` | The internal input element |
+
+## Accessibility
+
+- Uses native `<input>` element for proper semantics
+- Supports all standard keyboard interactions
+- Required state is conveyed via `aria-required`
+- Disabled state prevents interaction

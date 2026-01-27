@@ -1,0 +1,129 @@
+---
+title: Alert
+description: Display important messages to users
+---
+
+The `bp-alert` component is used to display important messages, notifications, and feedback to users.
+
+## Import
+
+```javascript
+import 'blueprint/components/alert';
+```
+
+## Examples
+
+### Variants
+
+<div class="component-preview">
+  <div class="component-preview-col">
+    <bp-alert variant="info" showIcon>
+      <span slot="title">Information</span>
+      This is an informational message.
+    </bp-alert>
+    <bp-alert variant="success" showIcon>
+      <span slot="title">Success</span>
+      Your action was completed successfully.
+    </bp-alert>
+    <bp-alert variant="warning" showIcon>
+      <span slot="title">Warning</span>
+      Please review this important notice.
+    </bp-alert>
+    <bp-alert variant="error" showIcon>
+      <span slot="title">Error</span>
+      Something went wrong. Please try again.
+    </bp-alert>
+  </div>
+</div>
+
+```html
+<bp-alert variant="info" showIcon>
+  <span slot="title">Information</span>
+  This is an informational message.
+</bp-alert>
+
+<bp-alert variant="success" showIcon>
+  <span slot="title">Success</span>
+  Your action was completed successfully.
+</bp-alert>
+
+<bp-alert variant="warning" showIcon>
+  <span slot="title">Warning</span>
+  Please review this important notice.
+</bp-alert>
+
+<bp-alert variant="error" showIcon>
+  <span slot="title">Error</span>
+  Something went wrong. Please try again.
+</bp-alert>
+```
+
+### Dismissible
+
+<div class="component-preview">
+  <bp-alert variant="info" showIcon dismissible>
+    <span slot="title">Dismissible Alert</span>
+    Click the X button to dismiss this alert.
+  </bp-alert>
+</div>
+
+```html
+<bp-alert variant="info" showIcon dismissible>
+  <span slot="title">Dismissible Alert</span>
+  Click the X button to dismiss this alert.
+</bp-alert>
+```
+
+### Without Icon or Title
+
+<div class="component-preview">
+  <bp-alert variant="info">
+    A simple alert message without icon or title.
+  </bp-alert>
+</div>
+
+```html
+<bp-alert variant="info">
+  A simple alert message without icon or title.
+</bp-alert>
+```
+
+## API Reference
+
+### Properties
+
+| Property      | Type                                          | Default  | Description            |
+| ------------- | --------------------------------------------- | -------- | ---------------------- |
+| `variant`     | `'info' \| 'success' \| 'warning' \| 'error'` | `'info'` | Alert type/color       |
+| `showIcon`    | `boolean`                                     | `false`  | Shows the variant icon |
+| `dismissible` | `boolean`                                     | `false`  | Shows dismiss button   |
+
+### Slots
+
+| Slot      | Description           |
+| --------- | --------------------- |
+| (default) | Alert message content |
+| `title`   | Alert title/heading   |
+
+### Events
+
+| Event     | Detail | Description                   |
+| --------- | ------ | ----------------------------- |
+| `dismiss` | -      | Fired when alert is dismissed |
+
+### CSS Parts
+
+| Part      | Description         |
+| --------- | ------------------- |
+| `alert`   | The alert container |
+| `icon`    | The icon container  |
+| `content` | The content area    |
+| `title`   | The title element   |
+| `close`   | The dismiss button  |
+
+## Accessibility
+
+- Uses `role="alert"` for important messages
+- Dismiss button is keyboard accessible
+- Icon is decorative (hidden from screen readers)
+- Color is not the only indicator of variant type

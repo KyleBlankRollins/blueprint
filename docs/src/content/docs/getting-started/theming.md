@@ -1,0 +1,137 @@
+---
+title: Theming
+description: Customize Blueprint with themes and design tokens
+---
+
+Blueprint uses a comprehensive design token system built on CSS custom properties. This makes it easy to customize the look and feel of your application.
+
+## Built-in Themes
+
+Blueprint includes two built-in themes: **light** and **dark**.
+
+### Using Themes
+
+Set the theme using the `data-theme` attribute on your HTML element:
+
+```html
+<html data-theme="light">
+  <!-- Your content -->
+</html>
+```
+
+### Switching Themes
+
+Toggle between themes with JavaScript:
+
+```javascript
+// Switch to dark theme
+document.documentElement.setAttribute('data-theme', 'dark');
+
+// Switch to light theme
+document.documentElement.setAttribute('data-theme', 'light');
+```
+
+## Design Tokens
+
+Blueprint's design system is built on semantic tokens organized into categories:
+
+### Colors
+
+```css
+/* Primary colors */
+--bp-color-primary: /* Primary brand color */ --bp-color-primary-hover:
+  /* Primary hover state */
+  /* Semantic colors */ --bp-color-success: /* Success states */
+  --bp-color-warning: /* Warning states */ --bp-color-error: /* Error states */
+  --bp-color-info: /* Informational states */ /* Surface colors */
+  --bp-color-surface: /* Component backgrounds */
+  --bp-color-background: /* Page background */ --bp-color-border: /* Borders */;
+```
+
+### Typography
+
+```css
+/* Font families */
+--bp-font-family-base: /* Body text */ --bp-font-family-heading: /* Headings */
+  --bp-font-family-mono: /* Code */ /* Font sizes */ --bp-font-size-xs: 0.75rem;
+--bp-font-size-sm: 0.875rem;
+--bp-font-size-base: 1rem;
+--bp-font-size-lg: 1.125rem;
+--bp-font-size-xl: 1.25rem;
+```
+
+### Spacing
+
+```css
+--bp-spacing-xs: 0.25rem;
+--bp-spacing-sm: 0.5rem;
+--bp-spacing-md: 1rem;
+--bp-spacing-lg: 1.5rem;
+--bp-spacing-xl: 2rem;
+```
+
+### Border Radius
+
+```css
+--bp-border-radius-sm: 0.25rem;
+--bp-border-radius-md: 0.375rem;
+--bp-border-radius-lg: 0.5rem;
+--bp-border-radius-full: 9999px;
+```
+
+## Custom Themes
+
+You can create custom themes by overriding the CSS custom properties:
+
+```css
+[data-theme='my-custom-theme'] {
+  --bp-color-primary: #8b5cf6;
+  --bp-color-primary-hover: #7c3aed;
+  --bp-color-surface: #faf5ff;
+  --bp-color-background: #ffffff;
+}
+```
+
+### Theme Plugins
+
+Blueprint supports a plugin system for creating and distributing themes. See the [Plugin Authoring Guide](/guides/plugins/) for more information.
+
+## Component-Level Customization
+
+Each component exposes CSS custom properties for fine-grained styling:
+
+```css
+/* Customize button appearance */
+bp-button {
+  --bp-button-padding: 1rem 2rem;
+  --bp-button-font-size: 1.125rem;
+}
+```
+
+### CSS Parts
+
+Components also expose CSS parts for styling internal elements:
+
+```css
+bp-button::part(button) {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+```
+
+## Dark Mode Support
+
+Blueprint automatically responds to system preferences when no explicit theme is set:
+
+```css
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    /* Apply dark theme tokens */
+  }
+}
+```
+
+## Next Steps
+
+- [Button Component](/components/button/) - See theming in action
+- [All Components](/components/) - Explore the full library
