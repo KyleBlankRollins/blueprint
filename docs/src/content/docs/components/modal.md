@@ -1,0 +1,226 @@
+---
+title: Modal
+description: Dialog overlay for focused interactions
+---
+
+The `bp-modal` component displays content in a dialog overlay that requires user interaction before returning to the main content. It's used for confirmations, forms, alerts, and any content that needs focused attention.
+
+## Import
+
+```javascript
+import 'blueprint/components/modal';
+```
+
+## Examples
+
+### Default
+
+<div class="component-preview">
+  <bp-button onclick="document.querySelector('#demo-modal').open = true">Open Modal</bp-button>
+  <bp-modal id="demo-modal">
+    <div slot="header">Modal Title</div>
+    <p>This is the modal content. Click outside or press Escape to close.</p>
+    <div slot="footer">
+      <bp-button variant="secondary" onclick="document.querySelector('#demo-modal').open = false">Cancel</bp-button>
+      <bp-button onclick="document.querySelector('#demo-modal').open = false">Confirm</bp-button>
+    </div>
+  </bp-modal>
+</div>
+
+```html
+<bp-button onclick="modal.open = true">Open Modal</bp-button>
+
+<bp-modal id="modal">
+  <div slot="header">Modal Title</div>
+  <p>This is the modal content.</p>
+  <div slot="footer">
+    <bp-button variant="secondary">Cancel</bp-button>
+    <bp-button>Confirm</bp-button>
+  </div>
+</bp-modal>
+```
+
+### Sizes
+
+<div class="component-preview">
+  <div style="display: flex; gap: 0.5rem;">
+    <bp-button onclick="document.querySelector('#modal-small').open = true">Small</bp-button>
+    <bp-button onclick="document.querySelector('#modal-medium').open = true">Medium</bp-button>
+    <bp-button onclick="document.querySelector('#modal-large').open = true">Large</bp-button>
+  </div>
+  <bp-modal id="modal-small" size="small">
+    <div slot="header">Small Modal</div>
+    <p>Compact modal for simple messages.</p>
+  </bp-modal>
+  <bp-modal id="modal-medium" size="medium">
+    <div slot="header">Medium Modal</div>
+    <p>Default modal size for forms and content.</p>
+  </bp-modal>
+  <bp-modal id="modal-large" size="large">
+    <div slot="header">Large Modal</div>
+    <p>Larger modal for complex content or wide layouts.</p>
+  </bp-modal>
+</div>
+
+```html
+<bp-modal size="small">...</bp-modal>
+<bp-modal size="medium">...</bp-modal>
+<bp-modal size="large">...</bp-modal>
+```
+
+### Confirmation Dialog
+
+<div class="component-preview">
+  <bp-button variant="danger" onclick="document.querySelector('#modal-confirm').open = true">Delete Item</bp-button>
+  <bp-modal id="modal-confirm" size="small">
+    <div slot="header">Confirm Delete</div>
+    <p>Are you sure you want to delete this item? This action cannot be undone.</p>
+    <div slot="footer">
+      <bp-button variant="secondary" onclick="document.querySelector('#modal-confirm').open = false">Cancel</bp-button>
+      <bp-button variant="danger" onclick="document.querySelector('#modal-confirm').open = false">Delete</bp-button>
+    </div>
+  </bp-modal>
+</div>
+
+```html
+<bp-modal size="small">
+  <div slot="header">Confirm Delete</div>
+  <p>Are you sure you want to delete this item?</p>
+  <div slot="footer">
+    <bp-button variant="secondary">Cancel</bp-button>
+    <bp-button variant="danger">Delete</bp-button>
+  </div>
+</bp-modal>
+```
+
+### Form Modal
+
+<div class="component-preview">
+  <bp-button onclick="document.querySelector('#modal-form').open = true">Edit Profile</bp-button>
+  <bp-modal id="modal-form">
+    <div slot="header">Edit Profile</div>
+    <form style="display: flex; flex-direction: column; gap: 1rem;">
+      <bp-input label="Name" value="John Doe"></bp-input>
+      <bp-input label="Email" type="email" value="john@example.com"></bp-input>
+      <bp-textarea label="Bio" rows="3"></bp-textarea>
+    </form>
+    <div slot="footer">
+      <bp-button variant="secondary" onclick="document.querySelector('#modal-form').open = false">Cancel</bp-button>
+      <bp-button onclick="document.querySelector('#modal-form').open = false">Save Changes</bp-button>
+    </div>
+  </bp-modal>
+</div>
+
+```html
+<bp-modal>
+  <div slot="header">Edit Profile</div>
+  <form>
+    <bp-input label="Name"></bp-input>
+    <bp-input label="Email" type="email"></bp-input>
+    <bp-textarea label="Bio"></bp-textarea>
+  </form>
+  <div slot="footer">
+    <bp-button variant="secondary">Cancel</bp-button>
+    <bp-button>Save Changes</bp-button>
+  </div>
+</bp-modal>
+```
+
+### Without Header
+
+<div class="component-preview">
+  <bp-button onclick="document.querySelector('#modal-noheader').open = true">Alert Style</bp-button>
+  <bp-modal id="modal-noheader" size="small">
+    <div style="text-align: center; padding: 1rem;">
+      <bp-icon name="check-circle" size="48" style="color: var(--bp-color-success);"></bp-icon>
+      <h3>Success!</h3>
+      <p>Your changes have been saved successfully.</p>
+      <bp-button onclick="document.querySelector('#modal-noheader').open = false">OK</bp-button>
+    </div>
+  </bp-modal>
+</div>
+
+```html
+<bp-modal size="small">
+  <div style="text-align: center;">
+    <bp-icon name="check-circle" size="48"></bp-icon>
+    <h3>Success!</h3>
+    <p>Your changes have been saved.</p>
+    <bp-button>OK</bp-button>
+  </div>
+</bp-modal>
+```
+
+### Scrollable Content
+
+<div class="component-preview">
+  <bp-button onclick="document.querySelector('#modal-scroll').open = true">Long Content</bp-button>
+  <bp-modal id="modal-scroll">
+    <div slot="header">Terms of Service</div>
+    <div style="max-height: 300px; overflow-y: auto;">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+      <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
+    </div>
+    <div slot="footer">
+      <bp-button onclick="document.querySelector('#modal-scroll').open = false">I Agree</bp-button>
+    </div>
+  </bp-modal>
+</div>
+
+## API Reference
+
+### Properties
+
+| Property          | Type                             | Default    | Description                             |
+| ----------------- | -------------------------------- | ---------- | --------------------------------------- |
+| `open`            | `boolean`                        | `false`    | Whether the modal is open               |
+| `size`            | `'small' \| 'medium' \| 'large'` | `'medium'` | Modal size variant                      |
+| `aria-labelledby` | `string`                         | `''`       | ID of the element that labels the modal |
+
+### Events
+
+| Event      | Detail | Description             |
+| ---------- | ------ | ----------------------- |
+| `bp-close` | -      | Fired when modal closes |
+
+### Slots
+
+| Slot      | Description            |
+| --------- | ---------------------- |
+| (default) | Main modal content     |
+| `header`  | Modal header/title     |
+| `footer`  | Modal footer (buttons) |
+
+### CSS Parts
+
+| Part       | Description            |
+| ---------- | ---------------------- |
+| `backdrop` | Backdrop overlay       |
+| `dialog`   | Modal dialog container |
+| `header`   | Header section         |
+| `body`     | Body/content section   |
+| `footer`   | Footer section         |
+| `close`    | Close button           |
+
+### Keyboard Navigation
+
+- **Escape**: Close the modal
+- **Tab**: Navigate focusable elements (trapped within modal)
+- **Shift+Tab**: Navigate backwards (trapped within modal)
+
+### Focus Management
+
+- Focus is trapped within the modal when open
+- First focusable element receives focus on open
+- Focus returns to triggering element on close
+- Body scroll is prevented when modal is open
+
+### Accessibility
+
+- Uses `role="dialog"` with `aria-modal="true"`
+- `aria-labelledby` points to header element
+- Focus trapping prevents tabbing out of modal
+- Screen readers announce modal content

@@ -258,7 +258,7 @@ export default defineConfig({
 
 | Component         | Documented | Notes   |
 | ----------------- | ---------- | ------- |
-| `bp-accordion`    | ❌         |         |
+| `bp-accordion`    | ✅         | Batch 6 |
 | `bp-alert`        | ✅         |         |
 | `bp-avatar`       | ✅         | Batch 2 |
 | `bp-badge`        | ✅         | Batch 1 |
@@ -270,17 +270,17 @@ export default defineConfig({
 | `bp-combobox`     | ✅         | Batch 4 |
 | `bp-date-picker`  | ✅         | Batch 4 |
 | `bp-divider`      | ✅         | Batch 1 |
-| `bp-drawer`       | ❌         |         |
-| `bp-dropdown`     | ❌         |         |
+| `bp-drawer`       | ✅         | Batch 6 |
+| `bp-dropdown`     | ✅         | Batch 6 |
 | `bp-file-upload`  | ✅         | Batch 3 |
 | `bp-heading`      | ✅         | Batch 2 |
 | `bp-icon`         | ✅         | Batch 1 |
 | `bp-input`        | ✅         |         |
 | `bp-link`         | ✅         | Batch 2 |
 | `bp-menu`         | ✅         | Batch 5 |
-| `bp-modal`        | ❌         |         |
+| `bp-modal`        | ✅         | Batch 6 |
 | `bp-multi-select` | ✅         | Batch 4 |
-| `bp-notification` | ❌         |         |
+| `bp-notification` | ✅         | Batch 6 |
 | `bp-number-input` | ✅         | Batch 3 |
 | `bp-pagination`   | ✅         | Batch 5 |
 | `bp-popover`      | ✅         | Batch 2 |
@@ -301,7 +301,7 @@ export default defineConfig({
 | `bp-tooltip`      | ✅         | Batch 2 |
 | `bp-tree`         | ❌         |         |
 
-**Summary:** 35 of 42 components documented (83%)
+**Summary:** 40 of 42 components documented (95%)
 
 ## Suggested Documentation Batches
 

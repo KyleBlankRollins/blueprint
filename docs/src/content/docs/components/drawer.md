@@ -1,0 +1,240 @@
+---
+title: Drawer
+description: Slide-in panel from screen edge
+---
+
+The `bp-drawer` component displays a panel that slides in from any edge of the viewport. It's commonly used for navigation menus, sidebars, settings panels, and mobile navigation.
+
+## Import
+
+```javascript
+import 'blueprint/components/drawer';
+```
+
+## Examples
+
+### Default
+
+<div class="component-preview">
+  <bp-button onclick="document.querySelector('#demo-drawer').show()">Open Drawer</bp-button>
+  <bp-drawer id="demo-drawer" label="Demo Drawer">
+    <span slot="header">Drawer Title</span>
+    <p>This is the drawer content. It slides in from the left by default.</p>
+  </bp-drawer>
+</div>
+
+```html
+<bp-button onclick="document.querySelector('#demo-drawer').show()">
+  Open Drawer
+</bp-button>
+
+<bp-drawer id="demo-drawer" label="Demo Drawer">
+  <span slot="header">Drawer Title</span>
+  <p>This is the drawer content.</p>
+</bp-drawer>
+```
+
+### Placement Options
+
+<div class="component-preview">
+  <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+    <bp-button onclick="document.querySelector('#drawer-left').show()">Left</bp-button>
+    <bp-button onclick="document.querySelector('#drawer-right').show()">Right</bp-button>
+    <bp-button onclick="document.querySelector('#drawer-top').show()">Top</bp-button>
+    <bp-button onclick="document.querySelector('#drawer-bottom').show()">Bottom</bp-button>
+  </div>
+  <bp-drawer id="drawer-left" placement="left" label="Left Drawer">
+    <span slot="header">Left Drawer</span>
+    <p>Slides in from the left edge.</p>
+  </bp-drawer>
+  <bp-drawer id="drawer-right" placement="right" label="Right Drawer">
+    <span slot="header">Right Drawer</span>
+    <p>Slides in from the right edge.</p>
+  </bp-drawer>
+  <bp-drawer id="drawer-top" placement="top" label="Top Drawer">
+    <span slot="header">Top Drawer</span>
+    <p>Slides in from the top edge.</p>
+  </bp-drawer>
+  <bp-drawer id="drawer-bottom" placement="bottom" label="Bottom Drawer">
+    <span slot="header">Bottom Drawer</span>
+    <p>Slides in from the bottom edge.</p>
+  </bp-drawer>
+</div>
+
+```html
+<bp-drawer placement="left">...</bp-drawer>
+<bp-drawer placement="right">...</bp-drawer>
+<bp-drawer placement="top">...</bp-drawer>
+<bp-drawer placement="bottom">...</bp-drawer>
+```
+
+### Sizes
+
+<div class="component-preview">
+  <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+    <bp-button onclick="document.querySelector('#drawer-small').show()">Small</bp-button>
+    <bp-button onclick="document.querySelector('#drawer-medium').show()">Medium</bp-button>
+    <bp-button onclick="document.querySelector('#drawer-large').show()">Large</bp-button>
+    <bp-button onclick="document.querySelector('#drawer-full').show()">Full</bp-button>
+  </div>
+  <bp-drawer id="drawer-small" size="small" label="Small Drawer">
+    <span slot="header">Small Drawer</span>
+    <p>Narrow drawer width.</p>
+  </bp-drawer>
+  <bp-drawer id="drawer-medium" size="medium" label="Medium Drawer">
+    <span slot="header">Medium Drawer</span>
+    <p>Default drawer width.</p>
+  </bp-drawer>
+  <bp-drawer id="drawer-large" size="large" label="Large Drawer">
+    <span slot="header">Large Drawer</span>
+    <p>Wide drawer width.</p>
+  </bp-drawer>
+  <bp-drawer id="drawer-full" size="full" label="Full Drawer">
+    <span slot="header">Full Drawer</span>
+    <p>Full viewport width.</p>
+  </bp-drawer>
+</div>
+
+```html
+<bp-drawer size="small">...</bp-drawer>
+<bp-drawer size="medium">...</bp-drawer>
+<bp-drawer size="large">...</bp-drawer>
+<bp-drawer size="full">...</bp-drawer>
+```
+
+### With Header and Footer
+
+<div class="component-preview">
+  <bp-button onclick="document.querySelector('#drawer-complete').show()">Open</bp-button>
+  <bp-drawer id="drawer-complete" label="Complete Drawer">
+    <span slot="header">Drawer Header</span>
+    <p>Main drawer content goes here. This can contain any elements.</p>
+    <div slot="footer">
+      <bp-button variant="secondary" onclick="document.querySelector('#drawer-complete').hide()">Cancel</bp-button>
+      <bp-button>Save</bp-button>
+    </div>
+  </bp-drawer>
+</div>
+
+```html
+<bp-drawer label="Complete Drawer">
+  <span slot="header">Drawer Header</span>
+  <p>Main drawer content.</p>
+  <div slot="footer">
+    <bp-button variant="secondary">Cancel</bp-button>
+    <bp-button>Save</bp-button>
+  </div>
+</bp-drawer>
+```
+
+### No Backdrop
+
+<div class="component-preview">
+  <bp-button onclick="document.querySelector('#drawer-nobackdrop').show()">No Backdrop</bp-button>
+  <bp-drawer id="drawer-nobackdrop" show-backdrop="false" label="No Backdrop Drawer">
+    <span slot="header">No Backdrop</span>
+    <p>The page behind remains fully visible.</p>
+  </bp-drawer>
+</div>
+
+```html
+<bp-drawer show-backdrop="false">...</bp-drawer>
+```
+
+### Prevent Close
+
+<div class="component-preview">
+  <bp-button onclick="document.querySelector('#drawer-noclose').show()">Controlled Close</bp-button>
+  <bp-drawer id="drawer-noclose" close-on-backdrop="false" close-on-escape="false" label="Controlled Drawer">
+    <span slot="header">Controlled Close</span>
+    <p>Can only be closed via the X button or programmatically.</p>
+  </bp-drawer>
+</div>
+
+```html
+<bp-drawer close-on-backdrop="false" close-on-escape="false">
+  <!-- Must use close button or call hide() -->
+</bp-drawer>
+```
+
+### Inline Mode (Sidebar)
+
+<div class="component-preview" style="height: 200px; position: relative;">
+  <bp-drawer inline open placement="left" size="small" show-close="false">
+    <p style="padding: 1rem;">Inline sidebar - always visible</p>
+  </bp-drawer>
+</div>
+
+```html
+<bp-drawer inline open placement="left" size="small" show-close="false">
+  <p>Static sidebar content</p>
+</bp-drawer>
+```
+
+## API Reference
+
+### Properties
+
+| Property          | Type                                       | Default    | Description                  |
+| ----------------- | ------------------------------------------ | ---------- | ---------------------------- |
+| `open`            | `boolean`                                  | `false`    | Whether the drawer is open   |
+| `placement`       | `'left' \| 'right' \| 'top' \| 'bottom'`   | `'left'`   | Edge the drawer slides from  |
+| `size`            | `'small' \| 'medium' \| 'large' \| 'full'` | `'medium'` | Drawer size                  |
+| `showClose`       | `boolean`                                  | `true`     | Show close button            |
+| `closeOnBackdrop` | `boolean`                                  | `true`     | Close when clicking backdrop |
+| `closeOnEscape`   | `boolean`                                  | `true`     | Close when pressing Escape   |
+| `showBackdrop`    | `boolean`                                  | `true`     | Show backdrop overlay        |
+| `label`           | `string`                                   | `''`       | Accessible label             |
+| `inline`          | `boolean`                                  | `false`    | Render as static sidebar     |
+
+### Methods
+
+| Method     | Description              |
+| ---------- | ------------------------ |
+| `show()`   | Open the drawer          |
+| `hide()`   | Close the drawer         |
+| `toggle()` | Toggle open/closed state |
+
+### Events
+
+| Event            | Detail       | Description                           |
+| ---------------- | ------------ | ------------------------------------- |
+| `bp-open`        | -            | Fired when drawer opens               |
+| `bp-close`       | `{ reason }` | Fired when drawer closes (cancelable) |
+| `bp-after-open`  | -            | Fired after open animation            |
+| `bp-after-close` | -            | Fired after close animation           |
+
+Close reasons: `'escape'`, `'backdrop'`, `'close-button'`, `'api'`
+
+### Slots
+
+| Slot      | Description         |
+| --------- | ------------------- |
+| (default) | Main drawer content |
+| `header`  | Header content      |
+| `footer`  | Footer content      |
+
+### CSS Parts
+
+| Part           | Description           |
+| -------------- | --------------------- |
+| `drawer`       | Main drawer container |
+| `backdrop`     | Backdrop overlay      |
+| `panel`        | Drawer panel          |
+| `header`       | Header section        |
+| `body`         | Body/content section  |
+| `footer`       | Footer section        |
+| `close-button` | Close button          |
+
+### Keyboard Navigation
+
+- **Escape**: Close drawer (unless disabled)
+- **Tab**: Navigate within drawer (focus is trapped)
+
+### Accessibility
+
+- Uses `role="dialog"` with `aria-modal="true"`
+- `aria-labelledby` points to header
+- Focus is trapped within drawer when open
+- Focus returns to trigger element on close
+- Body scroll is prevented when drawer is open

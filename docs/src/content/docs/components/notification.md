@@ -1,0 +1,248 @@
+---
+title: Notification
+description: Toast messages for non-blocking alerts
+---
+
+The `bp-notification` component displays non-blocking toast messages to inform users of events, updates, or actions. Notifications can be dismissed manually or auto-close after a duration.
+
+## Import
+
+```javascript
+import 'blueprint/components/notification';
+```
+
+## Examples
+
+### Default
+
+<div class="component-preview">
+  <bp-button onclick="document.querySelector('#notif-demo').show()">Show Notification</bp-button>
+  <bp-notification id="notif-demo" title="Hello!" message="This is a notification message."></bp-notification>
+</div>
+
+```html
+<bp-notification
+  id="notification"
+  title="Hello!"
+  message="This is a notification message."
+>
+</bp-notification>
+
+<script>
+  document.querySelector('#notification').show();
+</script>
+```
+
+### Variants
+
+<div class="component-preview">
+  <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+    <bp-button onclick="document.querySelector('#notif-info').show()">Info</bp-button>
+    <bp-button onclick="document.querySelector('#notif-success').show()">Success</bp-button>
+    <bp-button onclick="document.querySelector('#notif-warning').show()">Warning</bp-button>
+    <bp-button onclick="document.querySelector('#notif-error').show()">Error</bp-button>
+  </div>
+  <bp-notification id="notif-info" variant="info" title="Information" message="Here's some helpful info."></bp-notification>
+  <bp-notification id="notif-success" variant="success" title="Success!" message="Your action was completed."></bp-notification>
+  <bp-notification id="notif-warning" variant="warning" title="Warning" message="Please review before continuing."></bp-notification>
+  <bp-notification id="notif-error" variant="error" title="Error" message="Something went wrong."></bp-notification>
+</div>
+
+```html
+<bp-notification variant="info" title="Info" message="..."></bp-notification>
+<bp-notification
+  variant="success"
+  title="Success"
+  message="..."
+></bp-notification>
+<bp-notification
+  variant="warning"
+  title="Warning"
+  message="..."
+></bp-notification>
+<bp-notification variant="error" title="Error" message="..."></bp-notification>
+```
+
+### Auto-Close
+
+<div class="component-preview">
+  <bp-button onclick="document.querySelector('#notif-auto').show()">Show (3s auto-close)</bp-button>
+  <bp-notification id="notif-auto" variant="success" title="Saved!" message="Auto-closes in 3 seconds." duration="3000"></bp-notification>
+</div>
+
+```html
+<bp-notification
+  title="Saved!"
+  message="Auto-closes in 3 seconds."
+  duration="3000"
+>
+</bp-notification>
+```
+
+### Position Options
+
+<div class="component-preview">
+  <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+    <bp-button onclick="document.querySelector('#notif-tl').show()">Top Left</bp-button>
+    <bp-button onclick="document.querySelector('#notif-tc').show()">Top Center</bp-button>
+    <bp-button onclick="document.querySelector('#notif-tr').show()">Top Right</bp-button>
+  </div>
+  <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
+    <bp-button onclick="document.querySelector('#notif-bl').show()">Bottom Left</bp-button>
+    <bp-button onclick="document.querySelector('#notif-bc').show()">Bottom Center</bp-button>
+    <bp-button onclick="document.querySelector('#notif-br').show()">Bottom Right</bp-button>
+  </div>
+  <bp-notification id="notif-tl" position="top-left" title="Top Left" message="Notification position" duration="2000"></bp-notification>
+  <bp-notification id="notif-tc" position="top-center" title="Top Center" message="Notification position" duration="2000"></bp-notification>
+  <bp-notification id="notif-tr" position="top-right" title="Top Right" message="Notification position" duration="2000"></bp-notification>
+  <bp-notification id="notif-bl" position="bottom-left" title="Bottom Left" message="Notification position" duration="2000"></bp-notification>
+  <bp-notification id="notif-bc" position="bottom-center" title="Bottom Center" message="Notification position" duration="2000"></bp-notification>
+  <bp-notification id="notif-br" position="bottom-right" title="Bottom Right" message="Notification position" duration="2000"></bp-notification>
+</div>
+
+```html
+<bp-notification position="top-left">...</bp-notification>
+<bp-notification position="top-center">...</bp-notification>
+<bp-notification position="top-right">...</bp-notification>
+<bp-notification position="bottom-left">...</bp-notification>
+<bp-notification position="bottom-center">...</bp-notification>
+<bp-notification position="bottom-right">...</bp-notification>
+```
+
+### Non-Closable
+
+<div class="component-preview">
+  <bp-button onclick="document.querySelector('#notif-noclose').show()">Show (not closable)</bp-button>
+  <bp-notification id="notif-noclose" closable="false" title="Processing..." message="Please wait while we complete your request." duration="3000"></bp-notification>
+</div>
+
+```html
+<bp-notification closable="false" title="Processing..." message="Please wait.">
+</bp-notification>
+```
+
+### With Custom Content
+
+<div class="component-preview">
+  <bp-button onclick="document.querySelector('#notif-custom').show()">Show Custom</bp-button>
+  <bp-notification id="notif-custom" variant="info" title="New Message">
+    <p>You have a new message from <strong>Jane Doe</strong>.</p>
+    <div slot="action">
+      <bp-button size="small" variant="secondary">Dismiss</bp-button>
+      <bp-button size="small">View</bp-button>
+    </div>
+  </bp-notification>
+</div>
+
+```html
+<bp-notification variant="info" title="New Message">
+  <p>You have a new message from <strong>Jane Doe</strong>.</p>
+  <div slot="action">
+    <bp-button size="small" variant="secondary">Dismiss</bp-button>
+    <bp-button size="small">View</bp-button>
+  </div>
+</bp-notification>
+```
+
+### With Custom Icon
+
+<div class="component-preview">
+  <bp-button onclick="document.querySelector('#notif-icon').show()">Custom Icon</bp-button>
+  <bp-notification id="notif-icon" title="Download Complete" message="Your file has been downloaded.">
+    <bp-icon slot="icon" name="download"></bp-icon>
+  </bp-notification>
+</div>
+
+```html
+<bp-notification
+  title="Download Complete"
+  message="Your file has been downloaded."
+>
+  <bp-icon slot="icon" name="download"></bp-icon>
+</bp-notification>
+```
+
+### Programmatic Usage
+
+```javascript
+// Show notification
+const notification = document.querySelector('#notification');
+notification.show();
+
+// Hide notification
+notification.hide();
+
+// Listen for events
+notification.addEventListener('bp-show', () => {
+  console.log('Notification shown');
+});
+
+notification.addEventListener('bp-hide', () => {
+  console.log('Notification hidden');
+});
+
+notification.addEventListener('bp-close', () => {
+  console.log('Notification closed by user');
+});
+```
+
+## API Reference
+
+### Properties
+
+| Property   | Type                                                                                              | Default       | Description                                |
+| ---------- | ------------------------------------------------------------------------------------------------- | ------------- | ------------------------------------------ |
+| `variant`  | `'info' \| 'success' \| 'warning' \| 'error'`                                                     | `'info'`      | Notification style variant                 |
+| `open`     | `boolean`                                                                                         | `false`       | Whether notification is visible            |
+| `closable` | `boolean`                                                                                         | `true`        | Show close button                          |
+| `duration` | `number`                                                                                          | `0`           | Auto-close delay in ms (0 = no auto-close) |
+| `title`    | `string`                                                                                          | `''`          | Notification title                         |
+| `message`  | `string`                                                                                          | `''`          | Notification message                       |
+| `position` | `'top-left' \| 'top-center' \| 'top-right' \| 'bottom-left' \| 'bottom-center' \| 'bottom-right'` | `'top-right'` | Screen position                            |
+
+### Methods
+
+| Method   | Description           |
+| -------- | --------------------- |
+| `show()` | Show the notification |
+| `hide()` | Hide the notification |
+
+### Events
+
+| Event      | Detail | Description                      |
+| ---------- | ------ | -------------------------------- |
+| `bp-show`  | -      | Fired when notification appears  |
+| `bp-hide`  | -      | Fired when notification hides    |
+| `bp-close` | -      | Fired when closed by user action |
+
+### Slots
+
+| Slot      | Description                 |
+| --------- | --------------------------- |
+| (default) | Custom notification content |
+| `icon`    | Custom icon                 |
+| `action`  | Action buttons or links     |
+
+### CSS Parts
+
+| Part           | Description            |
+| -------------- | ---------------------- |
+| `base`         | Notification container |
+| `icon`         | Icon container         |
+| `content`      | Content area           |
+| `message`      | Message text container |
+| `action`       | Action slot container  |
+| `close-button` | Close button           |
+
+### Timer Behavior
+
+- Auto-close timer pauses on hover/focus
+- Timer resumes when mouse/focus leaves
+- Allows users time to read or interact
+
+### Accessibility
+
+- Uses `role="alert"` for screen readers
+- `aria-live="polite"` for non-intrusive announcements
+- Close button is keyboard accessible
+- Focus moves to close button on show (when closable)
