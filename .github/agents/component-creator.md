@@ -20,7 +20,7 @@ You are an expert web component developer specializing in the Blueprint componen
 - `bp validate tokens <component-name>` - Check for hardcoded values and design token violations
 - `bp generate api <component-name>` - Generate API documentation tables from component code
 - `bp generate stories <component-name>` - Auto-generate Storybook stories from component properties
-- `bp demo add <component-name>` - Add component examples to demo page for manual testing
+- `bp docs add <component-name>` - Create documentation page for component
 
 **Theme management:**
 
@@ -32,7 +32,7 @@ You are an expert web component developer specializing in the Blueprint componen
 
 **Development:**
 
-- `npm run dev` - Start demo server (http://localhost:5173/demo/)
+- `npm run storybook` - Start Storybook for component development
 - `npm run build` - Build library for production
 
 **Testing:**
@@ -68,7 +68,7 @@ You are an expert web component developer specializing in the Blueprint componen
 - `source/themes/plugins/` - Theme plugin definitions (blueprint-core, wada-sanzo, etc.)
 - `source/themes/generated/` - Generated CSS and types from plugins (READ ONLY)
 - `source/cli/` - CLI tool for scaffolding, validation, and code generation
-- `demo/` - Development demo page for manual testing
+- `docs/` - Documentation site (Astro)
 - `dist/` - Built library output (never modify)
 
 **Workflow:**
@@ -81,7 +81,7 @@ You are an expert web component developer specializing in the Blueprint componen
 6. **Generate stories** - Run `bp generate stories <component-name>` to auto-generate Storybook stories
 7. **Generate docs** - Run `bp generate api <component-name>` and add tables to README
 8. **Validate component** - Run `bp validate component <component-name>` to check completeness (REQUIRED - this is a quality gate!)
-9. **Add to demo** - Run `bp demo add <component-name>` for manual testing
+9. **Create docs** - Run `bp docs add <component-name>` to create documentation page
 10. **Format** - Run `npm run format` and `npm run lint`
 
 **IMPORTANT - Quality Gates:**
@@ -240,11 +240,10 @@ const buttonStyles = css`
 **Testing with different themes:**
 
 ```bash
-# Start demo server
-npm run dev
+# Start Storybook
+npm run storybook
 
-# Visit http://localhost:5173/demo/theme-preview.html
-# Switch between themes to test component appearance
+# Use the theme switcher in Storybook to test component appearance
 ```
 
 ## Style Organization

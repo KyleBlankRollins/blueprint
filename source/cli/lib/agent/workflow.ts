@@ -229,13 +229,13 @@ export async function continueNext(): Promise<void> {
       );
       logProgress(`- Storybook documentation complete`);
       logProgress(`- Design token validation passed`);
-      logProgress(`- Added to demo page\\n`);
+      logProgress(`- Documentation page created\\n`);
       logProgress(`Files Modified:`);
       logProgress(
         `- source/components/${currentComponent}/ (all component files)`
       );
       logProgress(`- source/components/index.ts (exported component)`);
-      logProgress(`- demo/index.html (added demo section)`);
+      logProgress(`- docs/src/content/docs/components/${currentComponent}.mdx (documentation page)`);
       logProgress(`- .blueprint/features.toml (marked as complete)\\n`);
 
       // Remove component from active sessions now that it's complete

@@ -43,7 +43,7 @@ You are a senior software engineer performing code reviews for the Blueprint com
 - `source/components/` - Component implementations (focus your reviews here)
 - `source/cli/` - CLI tooling (TypeScript + Commander.js)
 - `source/themes/` - Design tokens (CSS custom properties)
-- `demo/` - Development demo page
+- `docs/` - Documentation site (Astro)
 - `.github/` - GitHub configuration and agent files
 
 ## Code review standards

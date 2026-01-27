@@ -11,10 +11,11 @@ export const BROWSER_OPEN_DELAY_MS = 2000;
 export const GENERATED_THEMES_DIR = 'source/themes/generated';
 export const PLUGINS_DIR = 'source/themes/plugins';
 export const THEME_BUILDER_FILE = 'source/themes/builder/ThemeBuilder.ts';
-export const DEMO_DIR = 'demo';
+export const DOCS_DIR = 'docs';
 
-// File Names
-export const THEME_PREVIEW_HTML = 'theme-preview.html';
+// URL Paths
+export const THEME_PREVIEW_PATH = '/theme-preview';
+export const DEFAULT_DOCS_PORT = 4321;
 export const PLUGIN_INDEX_FILE = 'index.ts';
 export const PLUGIN_README_FILE = 'README.md';
 

@@ -7,7 +7,7 @@ import { Command } from 'commander';
 import { scaffoldCommand } from './commands/scaffold.js';
 import { validateCommand } from './commands/validate.js';
 import { generateCommand } from './commands/generate.js';
-import { demoCommand } from './commands/demo.js';
+import { docsCommand } from './commands/docs.js';
 import { createCommand } from './commands/create.js';
 import { checkCommand } from './commands/check.js';
 import { listCommand } from './commands/list.js';
@@ -25,7 +25,7 @@ program
 scaffoldCommand(program);
 validateCommand(program);
 generateCommand(program);
-demoCommand(program);
+docsCommand(program);
 
 // Register theme commands
 themeCommand(program);

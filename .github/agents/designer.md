@@ -25,12 +25,12 @@ Your output: Design specifications, token definitions, and component API designs
 
 - `source/themes/` - Design tokens (READ and WRITE here for token changes)
 - `source/components/` - Web components (you provide specs for these)
-- `demo/` - Development demo page
+- `docs/` - Documentation site (Astro)
 - `source/themes/light.css` - All design tokens defined here
 
 ## Commands You Can Use
 
-**Preview designs:** `npm run dev` (starts dev server at http://localhost:5173/demo/)  
+**Preview designs:** `npm run storybook` (starts Storybook for component preview)  
 **Build library:** `npm run build` (validates all components compile)  
 **Lint:** `npm run lint` (checks code quality)
 

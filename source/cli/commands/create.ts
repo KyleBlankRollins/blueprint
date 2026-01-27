@@ -5,28 +5,28 @@ import {
 } from '../lib/component/scaffold.js';
 import { generateStories } from '../lib/component/generateStories.js';
 import { extractAPI } from '../lib/component/extractAPI.js';
-import { addToDemo } from '../lib/component/addToDemo.js';
+import { addToDocs } from '../lib/component/addToDocs.js';
 import { success, error, info, warn } from '../utils/logger.js';
 import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
 /**
- * Creates a complete component workflow: scaffold → generate stories → generate API → add to demo.
+ * Creates a complete component workflow: scaffold → generate stories → generate API → create docs.
  * This is the recommended way to create new components.
  */
 export function createCommand(program: Command): void {
   program
     .command('create <name>')
     .description(
-      'Create a complete component (scaffold + stories + API docs + demo)'
+      'Create a complete component (scaffold + stories + API docs + docs page)'
     )
-    .option('--skip-demo', 'Skip adding component to demo page')
+    .option('--skip-docs', 'Skip creating documentation page')
     .option(
       '--dry-run',
       'Show what would be created without actually creating files'
     )
     .action(
-      (name: string, options: { skipDemo?: boolean; dryRun?: boolean }) => {
+      (name: string, options: { skipDocs?: boolean; dryRun?: boolean }) => {
         info(`\nCreating component: bp-${name}\n`);
 
         // Validate name format
@@ -42,10 +42,11 @@ export function createCommand(program: Command): void {
         }
 
         if (options.dryRun) {
-          const step4 = options.skipDemo
-            ? '  4. Skip demo (--skip-demo flag)'
-            : `  4. Add to demo page
-     - Insert example into demo/index.html`;
+          const step4 = options.skipDocs
+            ? '  4. Skip docs (--skip-docs flag)'
+            : `  4. Create documentation page
+     - Create docs/src/content/docs/components/${name}.mdx
+     - Update docs/src/components/Sidebar.astro`;
 
           info('DRY RUN: No files will be created or modified');
           info('Workflow steps that would be executed:');
@@ -141,19 +142,19 @@ ${step4}
           }
         }
 
-        // Step 4: Add to demo (optional)
-        if (!options.skipDemo) {
-          info('\nStep 4/4: Adding component to demo page...');
-          const demoResult = addToDemo(name);
+        // Step 4: Create documentation page (optional)
+        if (!options.skipDocs) {
+          info('\nStep 4/4: Creating documentation page...');
+          const docsResult = addToDocs(name);
 
-          if (!demoResult.success) {
-            warn('Could not add to demo page (you can run manually later)');
-            demoResult.errors.forEach((err) => console.log(`  - ${err}`));
+          if (!docsResult.success) {
+            warn('Could not create docs page (you can run manually later)');
+            docsResult.errors.forEach((err) => console.log(`  - ${err}`));
           } else {
-            success('✓ Added to demo page');
+            success('✓ Documentation page created');
           }
         } else {
-          info('Step 4/4: Skipped (--skip-demo flag)');
+          info('Step 4/4: Skipped (--skip-docs flag)');
         }
 
         // Final summary

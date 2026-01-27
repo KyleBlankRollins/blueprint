@@ -23,6 +23,6 @@ export default defineConfig({
     sourcemap: true,
   },
   server: {
-    open: '/demo/',
+    open: '/docs/',
   },
 });

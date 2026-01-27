@@ -186,23 +186,23 @@ Creates stories for:
 - All sizes (if `size` property exists)
 - Disabled state (if `disabled` property exists)
 
-### Demo Management
+### Documentation Management
 
-**`bp demo add <component-name>`**
+**`bp docs add <component-name>`**
 
-Adds a component example to the demo page (`demo/index.html`).
+Creates a documentation page for a component in the docs site.
 
 ```bash
-bp demo add button
+bp docs add button
 ```
 
-Generates HTML example based on component properties and inserts it into the demo page.
+Generates an MDX documentation page with component examples, API reference, and updates the sidebar navigation.
 
 ### Workflow Commands
 
 **`bp create <component-name>`**
 
-Creates a complete component with one command. This runs the full workflow: scaffold → generate stories → generate API docs → add to demo.
+Creates a complete component with one command. This runs the full workflow: scaffold → generate stories → generate API docs → create docs page.
 
 ```bash
 bp create my-button
@@ -214,12 +214,12 @@ This is equivalent to running:
 bp scaffold my-button
 bp generate stories my-button
 bp generate api my-button
-bp demo add my-button
+bp docs add my-button
 ```
 
 Options:
 
-- `--skip-demo` - Skip adding the component to the demo page
+- `--skip-docs` - Skip creating the documentation page
 
 **`bp check <component-name>`**
 
@@ -264,9 +264,9 @@ bp list --detailed
 | `bp validate tokens <name>`    | Check for hardcoded values                                      |
 | `bp generate api <name>`       | Generate API documentation                                      |
 | `bp generate stories <name>`   | Generate Storybook stories                                      |
-| `bp demo add <name>`           | Add component to demo page                                      |
+| `bp docs add <name>`           | Create documentation page for component                         |
 | **Workflow Commands**          |                                                                 |
-| `bp create <name>`             | Create complete component (scaffold + stories + API + demo)     |
+| `bp create <name>`             | Create complete component (scaffold + stories + API + docs)     |
 | `bp check <name>`              | Run all validation checks (component structure + design tokens) |
 | **Utility Commands**           |                                                                 |
 | `bp list`                      | List all components                                             |
@@ -298,7 +298,7 @@ Many commands support a `--dry-run` flag that shows what would happen without ac
 - `bp create <name> --dry-run` - Preview the full component creation workflow
 - `bp generate api <name> --dry-run` - Preview API documentation changes
 - `bp generate stories <name> --dry-run` - Preview story file changes
-- `bp demo add <name> --dry-run` - Preview demo page additions
+- `bp docs add <name> --dry-run` - Preview documentation page creation
 
 **Example:**
 
@@ -354,8 +354,8 @@ bp generate api my-button
 # 4. Generate stories
 bp generate stories my-button
 
-# 5. Add to demo page
-bp demo add my-button
+# 5. Create documentation page
+bp docs add my-button
 
 # 6. Validate everything is complete
 bp check my-button
@@ -407,14 +407,14 @@ source/cli/
 │   ├── scaffold.ts
 │   ├── validate.ts
 │   ├── generate.ts
-│   └── demo.ts
+│   └── docs.ts
 ├── lib/                  # Reusable logic
 │   ├── scaffold.ts
 │   ├── validateComponent.ts
 │   ├── validateTokens.ts
 │   ├── extractAPI.ts
 │   ├── generateStories.ts
-│   └── addToDemo.ts
+│   └── addToDocs.ts
 ├── templates/            # File templates
 │   ├── baseComponent.template
 │   ├── baseComponent.style.template

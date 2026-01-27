@@ -1,0 +1,433 @@
+---
+/**
+ * Theme Preview Page
+ * Interactive showcase of all Blueprint components with theme switching.
+ * Supports query params: ?theme=<name> and ?all=true
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+---
+
+<BaseLayout title="Theme Preview">
+  <Header />
+
+  <main class="theme-preview">
+    <header class="preview-header">
+      <div class="header-content">
+        <bp-heading level="1" size="2xl" weight="bold">Theme Preview</bp-heading>
+        <bp-text variant="muted">
+          Preview Blueprint components with different theme variants.
+        </bp-text>
+      </div>
+
+      <div class="controls">
+        <bp-select id="theme-selector" label="Theme" size="small">
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </bp-select>
+      </div>
+    </header>
+
+    <div id="preview-container" class="preview-content">
+      <!-- Single theme view (default) -->
+      <div id="single-view" class="single-view">
+        <section class="component-section">
+          <bp-heading level="2" size="xl">Buttons</bp-heading>
+          <div class="component-grid">
+            <div class="component-card">
+              <bp-text size="sm" weight="semibold">Variants</bp-text>
+              <div class="component-row">
+                <bp-button variant="primary">Primary</bp-button>
+                <bp-button variant="secondary">Secondary</bp-button>
+              </div>
+            </div>
+            <div class="component-card">
+              <bp-text size="sm" weight="semibold">Sizes</bp-text>
+              <div class="component-row">
+                <bp-button size="small">Small</bp-button>
+                <bp-button size="medium">Medium</bp-button>
+                <bp-button size="large">Large</bp-button>
+              </div>
+            </div>
+            <div class="component-card">
+              <bp-text size="sm" weight="semibold">States</bp-text>
+              <div class="component-row">
+                <bp-button disabled>Disabled</bp-button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="component-section">
+          <bp-heading level="2" size="xl">Form Controls</bp-heading>
+          <div class="component-grid">
+            <div class="component-card">
+              <bp-text size="sm" weight="semibold">Input</bp-text>
+              <bp-input placeholder="Enter text..."></bp-input>
+              <bp-input value="With value"></bp-input>
+              <bp-input placeholder="Disabled" disabled></bp-input>
+            </div>
+            <div class="component-card">
+              <bp-text size="sm" weight="semibold">Select</bp-text>
+              <bp-select placeholder="Choose option">
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+                <option value="3">Option 3</option>
+              </bp-select>
+            </div>
+            <div class="component-card">
+              <bp-text size="sm" weight="semibold">Textarea</bp-text>
+              <bp-textarea placeholder="Enter longer text..."></bp-textarea>
+            </div>
+            <div class="component-card">
+              <bp-text size="sm" weight="semibold">Checkbox & Radio</bp-text>
+              <div class="component-column">
+                <bp-checkbox>Unchecked</bp-checkbox>
+                <bp-checkbox checked>Checked</bp-checkbox>
+                <bp-radio name="demo" value="1">Option A</bp-radio>
+                <bp-radio name="demo" value="2" checked>Option B</bp-radio>
+              </div>
+            </div>
+            <div class="component-card">
+              <bp-text size="sm" weight="semibold">Switch</bp-text>
+              <div class="component-column">
+                <bp-switch>Off</bp-switch>
+                <bp-switch checked>On</bp-switch>
+              </div>
+            </div>
+            <div class="component-card">
+              <bp-text size="sm" weight="semibold">Slider</bp-text>
+              <bp-slider value="50" min="0" max="100"></bp-slider>
+            </div>
+          </div>
+        </section>
+
+        <section class="component-section">
+          <bp-heading level="2" size="xl">Feedback</bp-heading>
+          <div class="component-grid">
+            <div class="component-card">
+              <bp-text size="sm" weight="semibold">Alerts</bp-text>
+              <div class="component-column">
+                <bp-alert variant="info">Info alert message</bp-alert>
+                <bp-alert variant="success">Success alert message</bp-alert>
+                <bp-alert variant="warning">Warning alert message</bp-alert>
+                <bp-alert variant="error">Error alert message</bp-alert>
+              </div>
+            </div>
+            <div class="component-card">
+              <bp-text size="sm" weight="semibold">Badges</bp-text>
+              <div class="component-row">
+                <bp-badge>Default</bp-badge>
+                <bp-badge variant="success">Success</bp-badge>
+                <bp-badge variant="warning">Warning</bp-badge>
+                <bp-badge variant="error">Error</bp-badge>
+              </div>
+            </div>
+            <div class="component-card">
+              <bp-text size="sm" weight="semibold">Tags</bp-text>
+              <div class="component-row">
+                <bp-tag>Default</bp-tag>
+                <bp-tag removable>Removable</bp-tag>
+                <bp-tag variant="outline">Outline</bp-tag>
+              </div>
+            </div>
+            <div class="component-card">
+              <bp-text size="sm" weight="semibold">Progress</bp-text>
+              <div class="component-column">
+                <bp-progress value="25"></bp-progress>
+                <bp-progress value="50"></bp-progress>
+                <bp-progress value="75"></bp-progress>
+              </div>
+            </div>
+            <div class="component-card">
+              <bp-text size="sm" weight="semibold">Spinner</bp-text>
+              <div class="component-row">
+                <bp-spinner size="small"></bp-spinner>
+                <bp-spinner size="medium"></bp-spinner>
+                <bp-spinner size="large"></bp-spinner>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="component-section">
+          <bp-heading level="2" size="xl">Navigation</bp-heading>
+          <div class="component-grid">
+            <div class="component-card wide">
+              <bp-text size="sm" weight="semibold">Tabs</bp-text>
+              <bp-tabs>
+                <bp-tab slot="tab">Tab 1</bp-tab>
+                <bp-tab slot="tab">Tab 2</bp-tab>
+                <bp-tab slot="tab">Tab 3</bp-tab>
+                <bp-tab-panel slot="panel">Content for Tab 1</bp-tab-panel>
+                <bp-tab-panel slot="panel">Content for Tab 2</bp-tab-panel>
+                <bp-tab-panel slot="panel">Content for Tab 3</bp-tab-panel>
+              </bp-tabs>
+            </div>
+            <div class="component-card wide">
+              <bp-text size="sm" weight="semibold">Breadcrumb</bp-text>
+              <bp-breadcrumb>
+                <bp-breadcrumb-item href="#">Home</bp-breadcrumb-item>
+                <bp-breadcrumb-item href="#">Products</bp-breadcrumb-item>
+                <bp-breadcrumb-item>Current Page</bp-breadcrumb-item>
+              </bp-breadcrumb>
+            </div>
+            <div class="component-card wide">
+              <bp-text size="sm" weight="semibold">Pagination</bp-text>
+              <bp-pagination total="100" page="5" page-size="10"></bp-pagination>
+            </div>
+          </div>
+        </section>
+
+        <section class="component-section">
+          <bp-heading level="2" size="xl">Data Display</bp-heading>
+          <div class="component-grid">
+            <div class="component-card">
+              <bp-text size="sm" weight="semibold">Card</bp-text>
+              <bp-card>
+                <bp-heading level="3" size="md">Card Title</bp-heading>
+                <bp-text variant="muted">Card content goes here.</bp-text>
+              </bp-card>
+            </div>
+            <div class="component-card">
+              <bp-text size="sm" weight="semibold">Avatar</bp-text>
+              <div class="component-row">
+                <bp-avatar size="small" initials="SM"></bp-avatar>
+                <bp-avatar size="medium" initials="MD"></bp-avatar>
+                <bp-avatar size="large" initials="LG"></bp-avatar>
+              </div>
+            </div>
+            <div class="component-card">
+              <bp-text size="sm" weight="semibold">Tooltip</bp-text>
+              <bp-tooltip content="Tooltip text">
+                <bp-button>Hover me</bp-button>
+              </bp-tooltip>
+            </div>
+            <div class="component-card">
+              <bp-text size="sm" weight="semibold">Skeleton</bp-text>
+              <div class="component-column">
+                <bp-skeleton width="100%" height="20px"></bp-skeleton>
+                <bp-skeleton width="80%" height="20px"></bp-skeleton>
+                <bp-skeleton width="60%" height="20px"></bp-skeleton>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="component-section">
+          <bp-heading level="2" size="xl">Typography</bp-heading>
+          <div class="component-grid">
+            <div class="component-card wide">
+              <bp-text size="sm" weight="semibold">Headings</bp-text>
+              <div class="component-column">
+                <bp-heading level="1" size="4xl">Heading 4XL</bp-heading>
+                <bp-heading level="2" size="2xl">Heading 2XL</bp-heading>
+                <bp-heading level="3" size="xl">Heading XL</bp-heading>
+                <bp-heading level="4" size="lg">Heading LG</bp-heading>
+              </div>
+            </div>
+            <div class="component-card wide">
+              <bp-text size="sm" weight="semibold">Text</bp-text>
+              <div class="component-column">
+                <bp-text size="lg">Large text content</bp-text>
+                <bp-text>Default text content</bp-text>
+                <bp-text size="sm">Small text content</bp-text>
+                <bp-text variant="muted">Muted text content</bp-text>
+              </div>
+            </div>
+            <div class="component-card wide">
+              <bp-text size="sm" weight="semibold">Link</bp-text>
+              <div class="component-row">
+                <bp-link href="#">Default link</bp-link>
+                <bp-link href="#" variant="muted">Muted link</bp-link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="component-section">
+          <bp-heading level="2" size="xl">Layout</bp-heading>
+          <div class="component-grid">
+            <div class="component-card wide">
+              <bp-text size="sm" weight="semibold">Divider</bp-text>
+              <div class="component-column">
+                <bp-text>Content above</bp-text>
+                <bp-divider></bp-divider>
+                <bp-text>Content below</bp-text>
+              </div>
+            </div>
+            <div class="component-card wide">
+              <bp-text size="sm" weight="semibold">Accordion</bp-text>
+              <bp-accordion>
+                <bp-accordion-item>
+                  <span slot="header">Section 1</span>
+                  <bp-text>Content for section 1</bp-text>
+                </bp-accordion-item>
+                <bp-accordion-item>
+                  <span slot="header">Section 2</span>
+                  <bp-text>Content for section 2</bp-text>
+                </bp-accordion-item>
+              </bp-accordion>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- All themes view (side-by-side comparison) -->
+      <div id="all-view" class="all-view" style="display: none;">
+        <bp-text variant="muted">
+          Side-by-side theme comparison coming soon. Use the theme selector above to preview individual themes.
+        </bp-text>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  // Parse query parameters
+  const params = new URLSearchParams(window.location.search);
+  const initialTheme = params.get('theme');
+  const showAll = params.get('all') === 'true';
+
+  // Apply initial theme from query param
+  if (initialTheme) {
+    document.documentElement.setAttribute('data-theme', initialTheme);
+    localStorage.setItem('blueprint-theme', initialTheme);
+  }
+
+  // Handle all themes view
+  if (showAll) {
+    const singleView = document.getElementById('single-view');
+    const allView = document.getElementById('all-view');
+    if (singleView && allView) {
+      singleView.style.display = 'none';
+      allView.style.display = 'block';
+    }
+  }
+
+  // Theme selector handling
+  const themeSelector = document.getElementById('theme-selector') as HTMLSelectElement | null;
+  if (themeSelector) {
+    // Set initial value
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    themeSelector.value = currentTheme;
+
+    // Listen for changes
+    themeSelector.addEventListener('bp-change', (event: Event) => {
+      const customEvent = event as CustomEvent;
+      const theme = customEvent.detail.value;
+
+      // Update theme
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('blueprint-theme', theme);
+
+      // Update URL without reload
+      const url = new URL(window.location.href);
+      url.searchParams.set('theme', theme);
+      window.history.replaceState({}, '', url.toString());
+
+      // Dispatch theme-change event for any listeners
+      window.dispatchEvent(
+        new CustomEvent('theme-change', {
+          detail: { theme },
+        })
+      );
+    });
+  }
+</script>
+
+<style>
+  .theme-preview {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--bp-color-border);
+  }
+
+  .header-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .preview-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .component-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .component-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .component-card {
+    background: var(--bp-color-surface);
+    border: 1px solid var(--bp-color-border);
+    border-radius: var(--bp-border-radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .component-card.wide {
+    grid-column: span 2;
+  }
+
+  @media (max-width: 768px) {
+    .component-card.wide {
+      grid-column: span 1;
+    }
+  }
+
+  .component-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .component-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .all-view {
+    padding: 2rem;
+    text-align: center;
+  }
+
+  @media (max-width: 640px) {
+    .preview-header {
+      flex-direction: column;
+    }
+
+    .component-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

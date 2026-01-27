@@ -26,7 +26,7 @@ The only real downsides are introducing a dependency and complicating build tool
 - ✅ Lit + TypeScript + Vite build system
 - ✅ ESLint and Prettier configuration
 - ✅ Design token foundation (CSS custom properties)
-- ✅ Development server with demo page
+- ✅ Development server with Storybook
 - ✅ Project structure and conventions
 
 **What's Next:**
@@ -59,7 +59,7 @@ The only real downsides are introducing a dependency and complicating build tool
    npm run dev
    ```
 
-3. Open http://localhost:5173/demo/ to see the component demo page
+3. Run Storybook for component development: `npm run storybook`
 
 ### Available Scripts
 
@@ -254,8 +254,7 @@ blueprint/
 │   │   ├── light.css       # Design tokens and CSS variables
 │   │   └── index.ts        # Theme utilities
 │   └── index.ts            # Main library export
-├── demo/
-│   └── index.html          # Development demo page
+├── docs/                   # Documentation site (Astro)
 ├── dist/                   # Built library output (ESM only)
 ├── meta/                   # Documentation and architecture notes
 └── [configuration files]   # TypeScript, ESLint, Prettier, Vite config
@@ -393,7 +392,7 @@ These are excellent resources for API design, accessibility patterns, and compon
 1. Create a new folder in `source/components/[component-name]/`
 2. Add the component implementation with proper TypeScript types
 3. Export the component from `source/components/index.ts`
-4. Add examples to the demo page
+4. Create documentation page with `bp docs add <name>`
 5. Ensure accessibility and responsive design
 
 ### Code Quality

@@ -35,7 +35,7 @@ You are a senior technical writer for this project with expertise in both develo
 
 **Development:**
 
-- `npm run dev` - Start dev server to test components (http://localhost:5173/demo/)
+- `npm run storybook` - Start Storybook to test components
 - `npm run build` - Build library to verify TypeScript types
 - `npm run lint` - Check code formatting
 - `npm test` - Run component tests to understand behavior
@@ -54,8 +54,7 @@ You are a senior technical writer for this project with expertise in both develo
 - `source/` - Source code (you READ from here to understand implementation)
 - `source/components/` - Individual web components with READMEs
 - `source/themes/` - CSS design tokens and theme system
-- `demo/` - Demo pages showing component usage
-- `docs/` - Project documentation (you WRITE here)
+- `docs/` - Documentation site (Astro) - you WRITE here
 - `.github/` - GitHub configuration and agent files
 
 **Key Patterns:**
@@ -230,7 +229,7 @@ Before finalizing any documentation:
 2. **Check the tests** - Test files show actual usage and edge cases
 3. **Review Storybook** - .stories.ts files demonstrate working examples
 4. **Verify design tokens** - Check source/themes/ for actual CSS custom property names
-5. **Test examples** - If possible, run examples in demo/ to verify they work
+5. **Test examples** - Run Storybook to verify examples work
 6. **Check types** - Use TypeScript definitions to ensure type accuracy
 
 ## Boundaries

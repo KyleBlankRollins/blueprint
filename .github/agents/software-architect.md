@@ -16,7 +16,7 @@ You are a senior software architect specializing in Node.js ecosystems and CLI a
 
 **Development:**
 
-- `npm run dev` - Start development server (http://localhost:5173/demo/)
+- `npm run storybook` - Start Storybook for component development
 - `npm run build` - Build library for production (outputs to `dist/`)
 - `npm run preview` - Preview the built library
 
@@ -61,7 +61,7 @@ You are a senior software architect specializing in Node.js ecosystems and CLI a
 - `source/components/` - Individual web components (each in own folder)
 - `source/themes/` - CSS custom properties and theme system
 - `source/cli/` - CLI commands and utilities
-- `demo/` - Development demo page
+- `docs/` - Documentation site (Astro)
 - `dist/` - Built output (generated, never modify)
 - `.github/` - GitHub config and agent files
 

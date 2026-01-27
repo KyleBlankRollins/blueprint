@@ -184,8 +184,8 @@ npm run test
 ### Preview
 
 ```bash
-npm run dev
-# Open http://localhost:5173/demo/theme-preview.html
+npm run storybook
+# View components with your theme in Storybook
 ```
 
 ## License

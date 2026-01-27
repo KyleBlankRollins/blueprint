@@ -4,7 +4,8 @@
 
 **Development:**
 
-- `npm run dev` - Start development server (http://localhost:5173/demo/)
+- `npm run dev` - Start development server
+- `npm run storybook` - Start Storybook for component development
 - `npm run build` - Build library for production (outputs to `dist/`)
 - `npm run preview` - Preview the built library
 
@@ -24,7 +25,7 @@
 - `source/` - Source code (you READ and WRITE here)
 - `source/components/` - Individual web components
 - `source/themes/` - CSS custom properties and design tokens
-- `demo/` - Development demo page
+- `docs/` - Documentation site (Astro)
 - `dist/` - Built library output (generated, don't modify)
 - `.github/` - GitHub configuration and this file
 
@@ -183,7 +184,7 @@ declare global {
 - Export components from `source/components/index.ts`
 - Run `npm run lint` and `npm run format` before committing
 - Use semantic HTML and proper ARIA attributes
-- Test components in the demo page (`npm run dev`)
+- Test components in Storybook (`npm run storybook`)
 
 ### ⚠️ Ask first:
 
@@ -204,7 +205,7 @@ declare global {
 ## Development Workflow
 
 1. **Create component:** Use the folder structure in `source/components/component-name/`
-2. **Test locally:** Run `npm run dev` and test in demo page
+2. **Test locally:** Run `npm run storybook` and test components
 3. **Check quality:** Run `npm run lint` and `npm run format`
 4. **Build:** Run `npm run build` to ensure it compiles
 5. **Export:** Add to `source/components/index.ts`

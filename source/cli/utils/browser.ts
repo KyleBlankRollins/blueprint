@@ -12,7 +12,7 @@ import { platform } from 'os';
  * @param url - URL to open in browser
  * @param silent - Suppress console output (default: false)
  * @example
- * openBrowser('http://localhost:5173/demo');
+ * openBrowser('http://localhost:6006'); // Storybook
  * openBrowser('http://localhost:5173', true); // Silent mode
  */
 export function openBrowser(url: string, silent = false): void {

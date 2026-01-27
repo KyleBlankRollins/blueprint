@@ -9,11 +9,11 @@ import { join } from 'path';
 import { openBrowser } from '../../utils/browser.js';
 import { getThemeNames, themeExists } from './discoverThemes.js';
 import {
-  DEFAULT_VITE_PORT,
+  DEFAULT_DOCS_PORT,
   BROWSER_OPEN_DELAY_MS,
   GENERATED_THEMES_DIR,
-  DEMO_DIR,
-  THEME_PREVIEW_HTML,
+  DOCS_DIR,
+  THEME_PREVIEW_PATH,
 } from '../constants.js';
 
 export interface PreviewServerOptions {
@@ -23,18 +23,18 @@ export interface PreviewServerOptions {
   all?: boolean;
   /** Auto-open browser (default: true) */
   openBrowser?: boolean;
-  /** Port number (default: 5173) */
+  /** Port number (default: 4321 for docs site) */
   port?: number;
   /** Generated themes directory (default: 'source/themes/generated') */
   generatedDir?: string;
 }
 
 /**
- * Start Vite dev server for theme preview
+ * Start docs dev server for theme preview
  *
  * @param options - Preview configuration options
  * @returns Cleanup function to stop server gracefully
- * @throws Error if theme validation fails or preview.html not found
+ * @throws Error if theme validation fails or docs directory not found
  * @example
  * // Preview specific theme
  * const cleanup = await startPreviewServer({ theme: 'ocean-light' });
@@ -52,7 +52,7 @@ export async function startPreviewServer(
     theme,
     all = false,
     openBrowser: shouldOpenBrowser = true,
-    port = DEFAULT_VITE_PORT,
+    port = DEFAULT_DOCS_PORT,
     generatedDir = GENERATED_THEMES_DIR,
   } = options;
 
@@ -69,18 +69,18 @@ export async function startPreviewServer(
     }
   }
 
-  // Check if theme-preview.html exists
-  const previewPath = join(process.cwd(), DEMO_DIR, THEME_PREVIEW_HTML);
+  // Check if docs directory exists
+  const docsPath = join(process.cwd(), DOCS_DIR);
   try {
-    await access(previewPath);
+    await access(docsPath);
   } catch {
     throw new Error(
-      `${DEMO_DIR}/${THEME_PREVIEW_HTML} not found\n\nMake sure you are in the project root directory.`
+      `${DOCS_DIR}/ directory not found\n\nMake sure you are in the project root directory.`
     );
   }
 
   // Build the URL with query params
-  const baseUrl = `http://localhost:${port}/${DEMO_DIR}/${THEME_PREVIEW_HTML}`;
+  const baseUrl = `http://localhost:${port}${THEME_PREVIEW_PATH}`;
   const params = new URLSearchParams();
 
   if (all) {
@@ -91,13 +91,14 @@ export async function startPreviewServer(
 
   const url = params.toString() ? `${baseUrl}?${params.toString()}` : baseUrl;
 
-  console.log('📦 Starting Vite dev server...');
+  console.log('📦 Starting docs dev server...');
   console.log(`🌐 Preview URL: ${url}\n`);
 
-  // Start Vite dev server
-  const viteProcess = spawn('npm', ['run', 'dev'], {
+  // Start docs dev server (Astro)
+  const docsProcess = spawn('npm', ['run', 'dev'], {
     stdio: 'inherit',
     shell: true,
+    cwd: join(process.cwd(), DOCS_DIR),
   });
 
   // Track timeout for cleanup
@@ -111,16 +112,16 @@ export async function startPreviewServer(
   }
 
   // Setup error handler
-  viteProcess.on('error', (err) => {
-    console.error('❌ Failed to start Vite dev server');
+  docsProcess.on('error', (err) => {
+    console.error('❌ Failed to start docs dev server');
     console.error(`   ${err.message}`);
     if (browserTimeout) clearTimeout(browserTimeout);
     process.exit(1);
   });
 
-  viteProcess.on('exit', (code) => {
+  docsProcess.on('exit', (code) => {
     if (code !== 0 && code !== null) {
-      console.error(`\n❌ Vite dev server exited with code ${code}`);
+      console.error(`\n❌ docs dev server exited with code ${code}`);
       if (browserTimeout) clearTimeout(browserTimeout);
       process.exit(code);
     }
@@ -130,13 +131,13 @@ export async function startPreviewServer(
   return async () => {
     console.log('\n\n👋 Stopping theme preview...');
     if (browserTimeout) clearTimeout(browserTimeout);
-    viteProcess.kill('SIGTERM');
+    docsProcess.kill('SIGTERM');
 
     // Force kill if not stopped after 1 second
     return new Promise<void>((resolve) => {
       setTimeout(() => {
-        if (!viteProcess.killed) {
-          viteProcess.kill('SIGKILL');
+        if (!docsProcess.killed) {
+          docsProcess.kill('SIGKILL');
         }
         resolve();
       }, 1000);

@@ -32,7 +32,7 @@ You are a senior QA Engineer for the Blueprint web component library.
 
 **Development:**
 
-- `npm run dev` - Start dev server to manually test components (http://localhost:5173/demo/)
+- `npm run storybook` - Start Storybook to manually test components
 
 ## Project Knowledge
 
