@@ -1,0 +1,207 @@
+---
+title: Combobox
+description: Searchable dropdown with autocomplete functionality
+---
+
+The `bp-combobox` component provides a searchable dropdown that combines a text input with a dropdown list. Users can type to filter options or select from the list.
+
+## Import
+
+```javascript
+import 'blueprint/components/combobox';
+```
+
+## Examples
+
+### Default
+
+<div class="component-preview">
+  <bp-combobox placeholder="Select a fruit...">
+    <option value="apple">Apple</option>
+    <option value="banana">Banana</option>
+    <option value="cherry">Cherry</option>
+    <option value="date">Date</option>
+    <option value="elderberry">Elderberry</option>
+  </bp-combobox>
+</div>
+
+```html
+<bp-combobox placeholder="Select a fruit...">
+  <option value="apple">Apple</option>
+  <option value="banana">Banana</option>
+  <option value="cherry">Cherry</option>
+  <option value="date">Date</option>
+  <option value="elderberry">Elderberry</option>
+</bp-combobox>
+```
+
+### With Initial Value
+
+<div class="component-preview">
+  <bp-combobox value="banana" placeholder="Select a fruit...">
+    <option value="apple">Apple</option>
+    <option value="banana">Banana</option>
+    <option value="cherry">Cherry</option>
+  </bp-combobox>
+</div>
+
+```html
+<bp-combobox value="banana" placeholder="Select a fruit...">
+  <option value="apple">Apple</option>
+  <option value="banana">Banana</option>
+  <option value="cherry">Cherry</option>
+</bp-combobox>
+```
+
+### Sizes
+
+<div class="component-preview">
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
+    <bp-combobox size="small" placeholder="Small">
+      <option value="1">Option 1</option>
+      <option value="2">Option 2</option>
+    </bp-combobox>
+    <bp-combobox size="medium" placeholder="Medium">
+      <option value="1">Option 1</option>
+      <option value="2">Option 2</option>
+    </bp-combobox>
+    <bp-combobox size="large" placeholder="Large">
+      <option value="1">Option 1</option>
+      <option value="2">Option 2</option>
+    </bp-combobox>
+  </div>
+</div>
+
+```html
+<bp-combobox size="small" placeholder="Small">...</bp-combobox>
+<bp-combobox size="medium" placeholder="Medium">...</bp-combobox>
+<bp-combobox size="large" placeholder="Large">...</bp-combobox>
+```
+
+### Validation Variants
+
+<div class="component-preview">
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
+    <bp-combobox variant="success" value="valid" placeholder="Success">
+      <option value="valid">Valid selection</option>
+    </bp-combobox>
+    <bp-combobox variant="error" placeholder="Error state">
+      <option value="1">Option 1</option>
+    </bp-combobox>
+    <bp-combobox variant="warning" placeholder="Warning state">
+      <option value="1">Option 1</option>
+    </bp-combobox>
+  </div>
+</div>
+
+```html
+<bp-combobox variant="success">...</bp-combobox>
+<bp-combobox variant="error">...</bp-combobox>
+<bp-combobox variant="warning">...</bp-combobox>
+```
+
+### Allow Custom Values
+
+Allow users to enter values not in the options list:
+
+<div class="component-preview">
+  <bp-combobox allow-custom-value placeholder="Type or select...">
+    <option value="red">Red</option>
+    <option value="green">Green</option>
+    <option value="blue">Blue</option>
+  </bp-combobox>
+</div>
+
+```html
+<bp-combobox allow-custom-value placeholder="Type or select...">
+  <option value="red">Red</option>
+  <option value="green">Green</option>
+  <option value="blue">Blue</option>
+</bp-combobox>
+```
+
+### Disabled
+
+<div class="component-preview">
+  <bp-combobox disabled placeholder="Disabled combobox">
+    <option value="1">Option 1</option>
+  </bp-combobox>
+</div>
+
+```html
+<bp-combobox disabled placeholder="Disabled">...</bp-combobox>
+```
+
+### Many Options
+
+<div class="component-preview">
+  <bp-combobox placeholder="Select a country...">
+    <option value="us">United States</option>
+    <option value="ca">Canada</option>
+    <option value="mx">Mexico</option>
+    <option value="uk">United Kingdom</option>
+    <option value="de">Germany</option>
+    <option value="fr">France</option>
+    <option value="es">Spain</option>
+    <option value="it">Italy</option>
+    <option value="jp">Japan</option>
+    <option value="au">Australia</option>
+  </bp-combobox>
+</div>
+
+```html
+<bp-combobox placeholder="Select a country...">
+  <option value="us">United States</option>
+  <option value="ca">Canada</option>
+  <!-- More options... -->
+</bp-combobox>
+```
+
+## API Reference
+
+### Properties
+
+| Property           | Type                                                       | Default                 | Description                      |
+| ------------------ | ---------------------------------------------------------- | ----------------------- | -------------------------------- |
+| `value`            | `string`                                                   | `''`                    | Current selected value           |
+| `name`             | `string`                                                   | `''`                    | Name for form submission         |
+| `placeholder`      | `string`                                                   | `'Search or select...'` | Placeholder text                 |
+| `disabled`         | `boolean`                                                  | `false`                 | Whether the combobox is disabled |
+| `required`         | `boolean`                                                  | `false`                 | Whether selection is required    |
+| `size`             | `'small' \| 'medium' \| 'large'`                           | `'medium'`              | Size of the combobox             |
+| `variant`          | `'default' \| 'success' \| 'error' \| 'warning' \| 'info'` | `'default'`             | Validation variant               |
+| `allowCustomValue` | `boolean`                                                  | `false`                 | Allow values not in options      |
+
+### Events
+
+| Event       | Detail      | Description                  |
+| ----------- | ----------- | ---------------------------- |
+| `bp-change` | `{ value }` | Fired when selection changes |
+| `bp-input`  | `{ value }` | Fired during typing          |
+
+### Slots
+
+| Slot      | Description                              |
+| --------- | ---------------------------------------- |
+| (default) | `<option>` elements for the options list |
+
+### CSS Parts
+
+| Part       | Description             |
+| ---------- | ----------------------- |
+| `input`    | The text input element  |
+| `dropdown` | The dropdown container  |
+| `option`   | Individual option items |
+
+### Keyboard Navigation
+
+- **Arrow Down/Up**: Navigate through options
+- **Enter**: Select focused option
+- **Escape**: Close dropdown
+- **Tab**: Move to next focusable element
+
+### Accessibility
+
+- Uses ARIA combobox pattern with `role="combobox"`
+- Announces filtered results to screen readers
+- Full keyboard navigation support

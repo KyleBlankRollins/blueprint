@@ -1,0 +1,199 @@
+---
+title: Color Picker
+description: Advanced color selection with multiple formats
+---
+
+The `bp-color-picker` component provides a comprehensive color selection interface with support for HEX, RGB, and HSL formats, alpha channel, swatches, and an eyedropper tool.
+
+## Import
+
+```javascript
+import 'blueprint/components/color-picker';
+```
+
+## Examples
+
+### Default
+
+<div class="component-preview">
+  <bp-color-picker></bp-color-picker>
+</div>
+
+```html
+<bp-color-picker></bp-color-picker>
+```
+
+### With Initial Value
+
+<div class="component-preview">
+  <bp-color-picker value="#3b82f6"></bp-color-picker>
+</div>
+
+```html
+<bp-color-picker value="#3b82f6"></bp-color-picker>
+```
+
+### Different Formats
+
+<div class="component-preview">
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
+    <bp-color-picker format="hex" value="#e11d48" label="HEX format"></bp-color-picker>
+    <bp-color-picker format="rgb" value="rgb(225, 29, 72)" label="RGB format"></bp-color-picker>
+    <bp-color-picker format="hsl" value="hsl(346, 77%, 50%)" label="HSL format"></bp-color-picker>
+  </div>
+</div>
+
+```html
+<bp-color-picker format="hex" value="#e11d48"></bp-color-picker>
+<bp-color-picker format="rgb" value="rgb(225, 29, 72)"></bp-color-picker>
+<bp-color-picker format="hsl" value="hsl(346, 77%, 50%)"></bp-color-picker>
+```
+
+### With Alpha Channel
+
+<div class="component-preview">
+  <bp-color-picker alpha value="rgba(59, 130, 246, 0.5)" label="With transparency"></bp-color-picker>
+</div>
+
+```html
+<bp-color-picker alpha value="rgba(59, 130, 246, 0.5)"></bp-color-picker>
+```
+
+### Without Alpha
+
+<div class="component-preview">
+  <bp-color-picker alpha="false" value="#10b981" label="No alpha"></bp-color-picker>
+</div>
+
+```html
+<bp-color-picker alpha="false" value="#10b981"></bp-color-picker>
+```
+
+### Sizes
+
+<div class="component-preview">
+  <div style="display: flex; gap: 1rem; align-items: center;">
+    <bp-color-picker size="sm" value="#f59e0b"></bp-color-picker>
+    <bp-color-picker size="md" value="#10b981"></bp-color-picker>
+    <bp-color-picker size="lg" value="#8b5cf6"></bp-color-picker>
+  </div>
+</div>
+
+```html
+<bp-color-picker size="sm" value="#f59e0b"></bp-color-picker>
+<bp-color-picker size="md" value="#10b981"></bp-color-picker>
+<bp-color-picker size="lg" value="#8b5cf6"></bp-color-picker>
+```
+
+### With Swatches
+
+<div class="component-preview">
+  <bp-color-picker 
+    value="#3b82f6"
+    swatches='["#ef4444", "#f97316", "#eab308", "#22c55e", "#3b82f6", "#8b5cf6", "#ec4899", "#000000", "#ffffff"]'>
+  </bp-color-picker>
+</div>
+
+```html
+<bp-color-picker
+  value="#3b82f6"
+  swatches='["#ef4444", "#f97316", "#eab308", "#22c55e", "#3b82f6", "#8b5cf6"]'
+>
+</bp-color-picker>
+```
+
+### Inline Mode
+
+<div class="component-preview">
+  <bp-color-picker inline value="#6366f1"></bp-color-picker>
+</div>
+
+```html
+<bp-color-picker inline value="#6366f1"></bp-color-picker>
+```
+
+### With Label
+
+<div class="component-preview">
+  <bp-color-picker label="Background Color" value="#1e293b"></bp-color-picker>
+</div>
+
+```html
+<bp-color-picker label="Background Color" value="#1e293b"></bp-color-picker>
+```
+
+### Disabled and Readonly
+
+<div class="component-preview">
+  <div style="display: flex; gap: 1rem;">
+    <bp-color-picker disabled value="#9ca3af" label="Disabled"></bp-color-picker>
+    <bp-color-picker readonly value="#3b82f6" label="Readonly"></bp-color-picker>
+  </div>
+</div>
+
+```html
+<bp-color-picker disabled value="#9ca3af"></bp-color-picker>
+<bp-color-picker readonly value="#3b82f6"></bp-color-picker>
+```
+
+## API Reference
+
+### Properties
+
+| Property      | Type                      | Default     | Description                      |
+| ------------- | ------------------------- | ----------- | -------------------------------- |
+| `value`       | `string`                  | `'#000000'` | Current color value              |
+| `format`      | `'hex' \| 'rgb' \| 'hsl'` | `'hex'`     | Output format for value          |
+| `alpha`       | `boolean`                 | `true`      | Enable alpha channel             |
+| `swatches`    | `string[]`                | `[]`        | Predefined swatch colors         |
+| `inline`      | `boolean`                 | `false`     | Render inline instead of popover |
+| `disabled`    | `boolean`                 | `false`     | Disable all interactions         |
+| `readonly`    | `boolean`                 | `false`     | Show value but prevent editing   |
+| `size`        | `'sm' \| 'md' \| 'lg'`    | `'md'`      | Component size                   |
+| `label`       | `string`                  | `''`        | Accessible label                 |
+| `name`        | `string`                  | `''`        | Form field name                  |
+| `placeholder` | `string`                  | `''`        | Placeholder for trigger          |
+
+### Events
+
+| Event       | Detail      | Description                           |
+| ----------- | ----------- | ------------------------------------- |
+| `bp-change` | `{ value }` | Fired when value changes (on confirm) |
+| `bp-input`  | `{ value }` | Fired on every input (live updates)   |
+| `bp-open`   | -           | Popover opened                        |
+| `bp-close`  | -           | Popover closed                        |
+
+### Slots
+
+| Slot       | Description                     |
+| ---------- | ------------------------------- |
+| `trigger`  | Custom trigger button content   |
+| `swatches` | Custom swatch elements          |
+| `footer`   | Additional content below picker |
+
+### CSS Parts
+
+| Part           | Description                      |
+| -------------- | -------------------------------- |
+| `trigger`      | The popover trigger button       |
+| `popover`      | The popover container            |
+| `color-area`   | The 2D saturation/value gradient |
+| `hue-slider`   | The hue selection slider         |
+| `alpha-slider` | The alpha selection slider       |
+| `preview`      | The color preview swatch         |
+| `input`        | Text input fields                |
+| `swatches`     | Swatches container               |
+| `swatch`       | Individual swatch items          |
+
+### Features
+
+- **Eyedropper Tool**: Pick colors from anywhere on screen (when browser supports it)
+- **Format Toggle**: Switch between HEX, RGB, and HSL input modes
+- **Copy to Clipboard**: Copy the current color value
+- **Swatches**: Quick access to predefined colors
+
+### Accessibility
+
+- Full keyboard navigation
+- ARIA labels for all controls
+- Screen reader announcements for color changes

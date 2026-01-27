@@ -266,9 +266,9 @@ export default defineConfig({
 | `bp-button`       | ✅         |         |
 | `bp-card`         | ✅         |         |
 | `bp-checkbox`     | ✅         |         |
-| `bp-color-picker` | ❌         |         |
-| `bp-combobox`     | ❌         |         |
-| `bp-date-picker`  | ❌         |         |
+| `bp-color-picker` | ✅         | Batch 4 |
+| `bp-combobox`     | ✅         | Batch 4 |
+| `bp-date-picker`  | ✅         | Batch 4 |
 | `bp-divider`      | ✅         | Batch 1 |
 | `bp-drawer`       | ❌         |         |
 | `bp-dropdown`     | ❌         |         |
@@ -279,7 +279,7 @@ export default defineConfig({
 | `bp-link`         | ✅         | Batch 2 |
 | `bp-menu`         | ❌         |         |
 | `bp-modal`        | ❌         |         |
-| `bp-multi-select` | ❌         |         |
+| `bp-multi-select` | ✅         | Batch 4 |
 | `bp-notification` | ❌         |         |
 | `bp-number-input` | ✅         | Batch 3 |
 | `bp-pagination`   | ❌         |         |
@@ -297,11 +297,11 @@ export default defineConfig({
 | `bp-tag`          | ✅         | Batch 1 |
 | `bp-text`         | ✅         | Batch 2 |
 | `bp-textarea`     | ✅         | Batch 3 |
-| `bp-time-picker`  | ❌         |         |
+| `bp-time-picker`  | ✅         | Batch 4 |
 | `bp-tooltip`      | ✅         | Batch 2 |
 | `bp-tree`         | ❌         |         |
 
-**Summary:** 25 of 42 components documented (60%)
+**Summary:** 30 of 42 components documented (71%)
 
 ## Suggested Documentation Batches
 

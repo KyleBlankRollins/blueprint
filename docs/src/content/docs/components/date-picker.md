@@ -1,0 +1,173 @@
+---
+title: Date Picker
+description: Calendar-based date selection component
+---
+
+The `bp-date-picker` component provides a calendar interface for selecting dates. It supports date ranges, min/max constraints, and multiple display formats.
+
+## Import
+
+```javascript
+import 'blueprint/components/date-picker';
+```
+
+## Examples
+
+### Default
+
+<div class="component-preview">
+  <bp-date-picker placeholder="Select date..."></bp-date-picker>
+</div>
+
+```html
+<bp-date-picker placeholder="Select date..."></bp-date-picker>
+```
+
+### With Label
+
+<div class="component-preview">
+  <bp-date-picker label="Birth Date" placeholder="Select date..."></bp-date-picker>
+</div>
+
+```html
+<bp-date-picker
+  label="Birth Date"
+  placeholder="Select date..."
+></bp-date-picker>
+```
+
+### With Initial Value
+
+<div class="component-preview">
+  <bp-date-picker label="Event Date" value="2024-06-15"></bp-date-picker>
+</div>
+
+```html
+<bp-date-picker label="Event Date" value="2024-06-15"></bp-date-picker>
+```
+
+### Sizes
+
+<div class="component-preview">
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
+    <bp-date-picker size="small" placeholder="Small"></bp-date-picker>
+    <bp-date-picker size="medium" placeholder="Medium"></bp-date-picker>
+    <bp-date-picker size="large" placeholder="Large"></bp-date-picker>
+  </div>
+</div>
+
+```html
+<bp-date-picker size="small" placeholder="Small"></bp-date-picker>
+<bp-date-picker size="medium" placeholder="Medium"></bp-date-picker>
+<bp-date-picker size="large" placeholder="Large"></bp-date-picker>
+```
+
+### Date Constraints
+
+<div class="component-preview">
+  <bp-date-picker 
+    label="Book appointment" 
+    min="2024-01-01" 
+    max="2024-12-31"
+    placeholder="Select date in 2024...">
+  </bp-date-picker>
+</div>
+
+```html
+<bp-date-picker label="Book appointment" min="2024-01-01" max="2024-12-31">
+</bp-date-picker>
+```
+
+### First Day of Week
+
+<div class="component-preview">
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
+    <bp-date-picker first-day-of-week="0" label="Sunday start"></bp-date-picker>
+    <bp-date-picker first-day-of-week="1" label="Monday start"></bp-date-picker>
+  </div>
+</div>
+
+```html
+<!-- Sunday as first day (default) -->
+<bp-date-picker first-day-of-week="0"></bp-date-picker>
+
+<!-- Monday as first day -->
+<bp-date-picker first-day-of-week="1"></bp-date-picker>
+```
+
+### Disabled
+
+<div class="component-preview">
+  <bp-date-picker disabled label="Disabled" value="2024-06-15"></bp-date-picker>
+</div>
+
+```html
+<bp-date-picker disabled label="Disabled" value="2024-06-15"></bp-date-picker>
+```
+
+### Required
+
+<div class="component-preview">
+  <bp-date-picker required label="Required field" placeholder="Select date..."></bp-date-picker>
+</div>
+
+```html
+<bp-date-picker required label="Required field"></bp-date-picker>
+```
+
+## API Reference
+
+### Properties
+
+| Property            | Type                             | Default            | Description                            |
+| ------------------- | -------------------------------- | ------------------ | -------------------------------------- |
+| `value`             | `string`                         | `''`               | Selected date (ISO format: YYYY-MM-DD) |
+| `name`              | `string`                         | `''`               | Name for form submission               |
+| `label`             | `string`                         | `''`               | Label text                             |
+| `placeholder`       | `string`                         | `'Select date...'` | Placeholder text                       |
+| `disabled`          | `boolean`                        | `false`            | Whether the picker is disabled         |
+| `required`          | `boolean`                        | `false`            | Whether selection is required          |
+| `size`              | `'small' \| 'medium' \| 'large'` | `'medium'`         | Size of the picker                     |
+| `min`               | `string`                         | `''`               | Minimum selectable date (ISO format)   |
+| `max`               | `string`                         | `''`               | Maximum selectable date (ISO format)   |
+| `first-day-of-week` | `'0' \| '1'`                     | `'0'`              | First day of week (0=Sunday, 1=Monday) |
+
+### Events
+
+| Event       | Detail                           | Description                       |
+| ----------- | -------------------------------- | --------------------------------- |
+| `bp-change` | `{ value, previousValue, date }` | Fired when date selection changes |
+
+### CSS Parts
+
+| Part           | Description                     |
+| -------------- | ------------------------------- |
+| `control`      | The outer container             |
+| `input`        | The text input field            |
+| `indicator`    | The calendar icon               |
+| `clear-button` | The clear button                |
+| `calendar`     | The calendar dropdown           |
+| `header`       | Calendar header with navigation |
+| `nav-button`   | Month/year navigation buttons   |
+| `month-year`   | Month and year display          |
+| `weekday`      | Day of week header cell         |
+| `day`          | Individual day cell             |
+
+### Keyboard Navigation
+
+- **Arrow Keys**: Navigate between days
+- **Enter/Space**: Select focused date
+- **Escape**: Close calendar
+- **Home**: Go to first day of month
+- **End**: Go to last day of month
+- **Page Up/Down**: Navigate to previous/next month
+
+### Date Format
+
+Values are always in ISO format (`YYYY-MM-DD`). The displayed format may vary based on locale.
+
+### Accessibility
+
+- Full keyboard navigation
+- Proper ARIA attributes for calendar grid
+- Screen reader announcements for date changes
