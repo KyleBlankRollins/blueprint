@@ -3,6 +3,8 @@ title: Time Picker
 description: Dropdown time selection component
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-time-picker` component provides a dropdown interface for selecting times. It supports both 12-hour and 24-hour formats with configurable step intervals.
 
 ## Import
@@ -15,9 +17,9 @@ import 'blueprint/components/time-picker';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-time-picker placeholder="Select time..."></bp-time-picker>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-time-picker placeholder="Select time..."></bp-time-picker>
@@ -25,9 +27,9 @@ import 'blueprint/components/time-picker';
 
 ### With Label
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-time-picker label="Meeting Time" placeholder="Select time..."></bp-time-picker>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-time-picker
@@ -38,9 +40,9 @@ import 'blueprint/components/time-picker';
 
 ### With Initial Value
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-time-picker label="Alarm" value="9:30 AM"></bp-time-picker>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-time-picker label="Alarm" value="9:30 AM"></bp-time-picker>
@@ -48,9 +50,9 @@ import 'blueprint/components/time-picker';
 
 ### 24-Hour Format
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-time-picker format="24" value="14:30" label="24-hour format"></bp-time-picker>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-time-picker format="24" value="14:30"></bp-time-picker>
@@ -58,13 +60,13 @@ import 'blueprint/components/time-picker';
 
 ### Step Intervals
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
     <bp-time-picker step="15" label="15 minute intervals" placeholder="Select time..."></bp-time-picker>
     <bp-time-picker step="30" label="30 minute intervals" placeholder="Select time..."></bp-time-picker>
     <bp-time-picker step="60" label="1 hour intervals" placeholder="Select time..."></bp-time-picker>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-time-picker step="15" label="15 minute intervals"></bp-time-picker>
@@ -74,13 +76,13 @@ import 'blueprint/components/time-picker';
 
 ### Sizes
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
     <bp-time-picker size="small" placeholder="Small"></bp-time-picker>
     <bp-time-picker size="medium" placeholder="Medium"></bp-time-picker>
     <bp-time-picker size="large" placeholder="Large"></bp-time-picker>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-time-picker size="small" placeholder="Small"></bp-time-picker>
@@ -90,9 +92,9 @@ import 'blueprint/components/time-picker';
 
 ### Disabled
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-time-picker disabled label="Disabled" value="2:00 PM"></bp-time-picker>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-time-picker disabled label="Disabled" value="2:00 PM"></bp-time-picker>
@@ -100,9 +102,9 @@ import 'blueprint/components/time-picker';
 
 ### Required
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-time-picker required label="Appointment Time" placeholder="Select time..."></bp-time-picker>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-time-picker required label="Appointment Time"></bp-time-picker>

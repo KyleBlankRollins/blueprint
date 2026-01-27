@@ -3,6 +3,9 @@ title: Tabs
 description: Tabbed interface for organizing content into sections
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+import TabsDemo from '../../../components/TabsDemo.astro';
+
 The `bp-tabs` component organizes content into tabbed sections, allowing users to switch between different views without leaving the page.
 
 ## Import
@@ -15,35 +18,78 @@ import 'blueprint/components/tabs';
 
 ### Default
 
-<div class="component-preview">
-  <bp-tabs id="tabs-demo"></bp-tabs>
-</div>
-
-```html
-<bp-tabs id="tabs-demo">
-  <div data-tab-id="tab1">Content for Tab 1</div>
-  <div data-tab-id="tab2">Content for Tab 2</div>
-  <div data-tab-id="tab3">Content for Tab 3</div>
-</bp-tabs>
-
-<script>
-  document.querySelector('#tabs-demo').tabs = [
+<ComponentPreview>
+<TabsDemo
+  id="tabs-demo"
+  tabs={[
     { id: 'tab1', label: 'Tab 1' },
     { id: 'tab2', label: 'Tab 2' },
     { id: 'tab3', label: 'Tab 3' },
-  ];
-</script>
+  ]}
+  panels={[
+    { id: 'tab1', content: 'Content for Tab 1' },
+    { id: 'tab2', content: 'Content for Tab 2' },
+    { id: 'tab3', content: 'Content for Tab 3' },
+  ]}
+/>
+</ComponentPreview>
+
+```javascript
+document.querySelector('#tabs-demo').tabs = [
+  { id: 'tab1', label: 'Tab 1' },
+  { id: 'tab2', label: 'Tab 2' },
+  { id: 'tab3', label: 'Tab 3' },
+];
 ```
 
 ### Variants
 
-<div class="component-preview">
-  <div style="display: flex; flex-direction: column; gap: 2rem;">
-    <bp-tabs variant="default" id="tabs-default"></bp-tabs>
-    <bp-tabs variant="pills" id="tabs-pills"></bp-tabs>
-    <bp-tabs variant="underline" id="tabs-underline"></bp-tabs>
-  </div>
+<ComponentPreview>
+<div style="display: flex; flex-direction: column; gap: 2rem;">
+<TabsDemo
+  id="tabs-default"
+  variant="default"
+  tabs={[
+    { id: 'tab1', label: 'Tab 1' },
+    { id: 'tab2', label: 'Tab 2' },
+    { id: 'tab3', label: 'Tab 3' },
+  ]}
+  panels={[
+    { id: 'tab1', content: 'Default variant content' },
+    { id: 'tab2', content: 'Tab 2 content' },
+    { id: 'tab3', content: 'Tab 3 content' },
+  ]}
+/>
+<TabsDemo
+  id="tabs-pills"
+  variant="pills"
+  tabs={[
+    { id: 'tab1', label: 'Tab 1' },
+    { id: 'tab2', label: 'Tab 2' },
+    { id: 'tab3', label: 'Tab 3' },
+  ]}
+  panels={[
+    { id: 'tab1', content: 'Pills variant content' },
+    { id: 'tab2', content: 'Tab 2 content' },
+    { id: 'tab3', content: 'Tab 3 content' },
+  ]}
+/>
+<TabsDemo
+  id="tabs-underline"
+  variant="underline"
+  tabs={[
+    { id: 'tab1', label: 'Tab 1' },
+    { id: 'tab2', label: 'Tab 2' },
+    { id: 'tab3', label: 'Tab 3' },
+  ]}
+  panels={[
+    { id: 'tab1', content: 'Underline variant content' },
+    { id: 'tab2', content: 'Tab 2 content' },
+    { id: 'tab3', content: 'Tab 3 content' },
+  ]}
+/>
 </div>
+</ComponentPreview>
 
 ```html
 <bp-tabs variant="default">...</bp-tabs>
@@ -53,13 +99,46 @@ import 'blueprint/components/tabs';
 
 ### Sizes
 
-<div class="component-preview">
-  <div style="display: flex; flex-direction: column; gap: 2rem;">
-    <bp-tabs size="small" id="tabs-small"></bp-tabs>
-    <bp-tabs size="medium" id="tabs-medium"></bp-tabs>
-    <bp-tabs size="large" id="tabs-large"></bp-tabs>
-  </div>
+<ComponentPreview>
+<div style="display: flex; flex-direction: column; gap: 2rem;">
+<TabsDemo
+  id="tabs-small"
+  size="small"
+  tabs={[
+    { id: 'tab1', label: 'Tab 1' },
+    { id: 'tab2', label: 'Tab 2' },
+  ]}
+  panels={[
+    { id: 'tab1', content: 'Small size content' },
+    { id: 'tab2', content: 'Tab 2 content' },
+  ]}
+/>
+<TabsDemo
+  id="tabs-medium"
+  size="medium"
+  tabs={[
+    { id: 'tab1', label: 'Tab 1' },
+    { id: 'tab2', label: 'Tab 2' },
+  ]}
+  panels={[
+    { id: 'tab1', content: 'Medium size content' },
+    { id: 'tab2', content: 'Tab 2 content' },
+  ]}
+/>
+<TabsDemo
+  id="tabs-large"
+  size="large"
+  tabs={[
+    { id: 'tab1', label: 'Tab 1' },
+    { id: 'tab2', label: 'Tab 2' },
+  ]}
+  panels={[
+    { id: 'tab1', content: 'Large size content' },
+    { id: 'tab2', content: 'Tab 2 content' },
+  ]}
+/>
 </div>
+</ComponentPreview>
 
 ```html
 <bp-tabs size="small">...</bp-tabs>
@@ -69,12 +148,34 @@ import 'blueprint/components/tabs';
 
 ### Tab Placement
 
-<div class="component-preview">
-  <div style="display: flex; flex-direction: column; gap: 2rem;">
-    <bp-tabs placement="top" id="tabs-top"></bp-tabs>
-    <bp-tabs placement="bottom" id="tabs-bottom"></bp-tabs>
-  </div>
+<ComponentPreview>
+<div style="display: flex; flex-direction: column; gap: 2rem;">
+<TabsDemo
+  id="tabs-top"
+  placement="top"
+  tabs={[
+    { id: 'tab1', label: 'Tab 1' },
+    { id: 'tab2', label: 'Tab 2' },
+  ]}
+  panels={[
+    { id: 'tab1', content: 'Tabs at the top' },
+    { id: 'tab2', content: 'Tab 2 content' },
+  ]}
+/>
+<TabsDemo
+  id="tabs-bottom"
+  placement="bottom"
+  tabs={[
+    { id: 'tab1', label: 'Tab 1' },
+    { id: 'tab2', label: 'Tab 2' },
+  ]}
+  panels={[
+    { id: 'tab1', content: 'Tabs at the bottom' },
+    { id: 'tab2', content: 'Tab 2 content' },
+  ]}
+/>
 </div>
+</ComponentPreview>
 
 ```html
 <bp-tabs placement="top">...</bp-tabs>
@@ -85,9 +186,21 @@ import 'blueprint/components/tabs';
 
 ### With Icons
 
-<div class="component-preview">
-  <bp-tabs id="tabs-icons"></bp-tabs>
-</div>
+<ComponentPreview>
+<TabsDemo
+  id="tabs-icons"
+  tabs={[
+    { id: 'home', label: 'Home', icon: 'home' },
+    { id: 'settings', label: 'Settings', icon: 'settings' },
+    { id: 'profile', label: 'Profile', icon: 'user' },
+  ]}
+  panels={[
+    { id: 'home', content: 'Home content' },
+    { id: 'settings', content: 'Settings content' },
+    { id: 'profile', content: 'Profile content' },
+  ]}
+/>
+</ComponentPreview>
 
 ```javascript
 document.querySelector('#tabs-icons').tabs = [
@@ -99,9 +212,21 @@ document.querySelector('#tabs-icons').tabs = [
 
 ### Disabled Tabs
 
-<div class="component-preview">
-  <bp-tabs id="tabs-disabled"></bp-tabs>
-</div>
+<ComponentPreview>
+<TabsDemo
+  id="tabs-disabled"
+  tabs={[
+    { id: 'active', label: 'Active Tab' },
+    { id: 'disabled', label: 'Disabled Tab', disabled: true },
+    { id: 'another', label: 'Another Tab' },
+  ]}
+  panels={[
+    { id: 'active', content: 'Active tab content' },
+    { id: 'disabled', content: 'Disabled tab content' },
+    { id: 'another', content: 'Another tab content' },
+  ]}
+/>
+</ComponentPreview>
 
 ```javascript
 document.querySelector('#tabs-disabled').tabs = [
@@ -113,9 +238,21 @@ document.querySelector('#tabs-disabled').tabs = [
 
 ### Closable Tabs
 
-<div class="component-preview">
-  <bp-tabs id="tabs-closable"></bp-tabs>
-</div>
+<ComponentPreview>
+<TabsDemo
+  id="tabs-closable"
+  tabs={[
+    { id: 'file1', label: 'document.txt', closable: true },
+    { id: 'file2', label: 'styles.css', closable: true },
+    { id: 'file3', label: 'script.js', closable: true },
+  ]}
+  panels={[
+    { id: 'file1', content: 'Document content...' },
+    { id: 'file2', content: 'CSS styles...' },
+    { id: 'file3', content: 'JavaScript code...' },
+  ]}
+/>
+</ComponentPreview>
 
 ```javascript
 document.querySelector('#tabs-closable').tabs = [
@@ -129,9 +266,22 @@ document.querySelector('#tabs-closable').tabs = [
 
 With `manual` mode, tabs are only activated when pressing Enter or Space:
 
-<div class="component-preview">
-  <bp-tabs manual id="tabs-manual"></bp-tabs>
-</div>
+<ComponentPreview>
+<TabsDemo
+  id="tabs-manual"
+  manual={true}
+  tabs={[
+    { id: 'tab1', label: 'Tab 1' },
+    { id: 'tab2', label: 'Tab 2' },
+    { id: 'tab3', label: 'Tab 3' },
+  ]}
+  panels={[
+    { id: 'tab1', content: 'Manual activation - press Enter or Space' },
+    { id: 'tab2', content: 'Tab 2 content' },
+    { id: 'tab3', content: 'Tab 3 content' },
+  ]}
+/>
+</ComponentPreview>
 
 ```html
 <bp-tabs manual>...</bp-tabs>
@@ -205,3 +355,4 @@ interface TabItem {
 - `aria-controls` links tabs to panels
 - Panels have `aria-labelledby` pointing to tab
 - Full keyboard navigation support
+import ComponentPreview from '../../../components/ComponentPreview.astro';

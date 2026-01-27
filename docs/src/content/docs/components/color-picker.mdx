@@ -3,6 +3,8 @@ title: Color Picker
 description: Advanced color selection with multiple formats
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-color-picker` component provides a comprehensive color selection interface with support for HEX, RGB, and HSL formats, alpha channel, swatches, and an eyedropper tool.
 
 ## Import
@@ -15,9 +17,9 @@ import 'blueprint/components/color-picker';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-color-picker></bp-color-picker>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-color-picker></bp-color-picker>
@@ -25,9 +27,9 @@ import 'blueprint/components/color-picker';
 
 ### With Initial Value
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-color-picker value="#3b82f6"></bp-color-picker>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-color-picker value="#3b82f6"></bp-color-picker>
@@ -35,13 +37,13 @@ import 'blueprint/components/color-picker';
 
 ### Different Formats
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
     <bp-color-picker format="hex" value="#e11d48" label="HEX format"></bp-color-picker>
     <bp-color-picker format="rgb" value="rgb(225, 29, 72)" label="RGB format"></bp-color-picker>
     <bp-color-picker format="hsl" value="hsl(346, 77%, 50%)" label="HSL format"></bp-color-picker>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-color-picker format="hex" value="#e11d48"></bp-color-picker>
@@ -51,9 +53,9 @@ import 'blueprint/components/color-picker';
 
 ### With Alpha Channel
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-color-picker alpha value="rgba(59, 130, 246, 0.5)" label="With transparency"></bp-color-picker>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-color-picker alpha value="rgba(59, 130, 246, 0.5)"></bp-color-picker>
@@ -61,9 +63,9 @@ import 'blueprint/components/color-picker';
 
 ### Without Alpha
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-color-picker alpha="false" value="#10b981" label="No alpha"></bp-color-picker>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-color-picker alpha="false" value="#10b981"></bp-color-picker>
@@ -71,13 +73,13 @@ import 'blueprint/components/color-picker';
 
 ### Sizes
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; gap: 1rem; align-items: center;">
     <bp-color-picker size="sm" value="#f59e0b"></bp-color-picker>
     <bp-color-picker size="md" value="#10b981"></bp-color-picker>
     <bp-color-picker size="lg" value="#8b5cf6"></bp-color-picker>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-color-picker size="sm" value="#f59e0b"></bp-color-picker>
@@ -87,12 +89,12 @@ import 'blueprint/components/color-picker';
 
 ### With Swatches
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-color-picker 
     value="#3b82f6"
     swatches='["#ef4444", "#f97316", "#eab308", "#22c55e", "#3b82f6", "#8b5cf6", "#ec4899", "#000000", "#ffffff"]'>
   </bp-color-picker>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-color-picker
@@ -104,9 +106,9 @@ import 'blueprint/components/color-picker';
 
 ### Inline Mode
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-color-picker inline value="#6366f1"></bp-color-picker>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-color-picker inline value="#6366f1"></bp-color-picker>
@@ -114,9 +116,9 @@ import 'blueprint/components/color-picker';
 
 ### With Label
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-color-picker label="Background Color" value="#1e293b"></bp-color-picker>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-color-picker label="Background Color" value="#1e293b"></bp-color-picker>
@@ -124,12 +126,12 @@ import 'blueprint/components/color-picker';
 
 ### Disabled and Readonly
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; gap: 1rem;">
     <bp-color-picker disabled value="#9ca3af" label="Disabled"></bp-color-picker>
     <bp-color-picker readonly value="#3b82f6" label="Readonly"></bp-color-picker>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-color-picker disabled value="#9ca3af"></bp-color-picker>

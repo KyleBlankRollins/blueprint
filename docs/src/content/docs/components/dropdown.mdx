@@ -3,6 +3,8 @@ title: Dropdown
 description: Floating panel triggered by a button
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-dropdown` component displays content in a floating panel that appears when a trigger element is clicked. It's commonly used for menus, action lists, and contextual options.
 
 ## Import
@@ -15,7 +17,7 @@ import 'blueprint/components/dropdown';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-dropdown>
     <bp-button>Open Menu</bp-button>
     <div slot="content" style="padding: 1rem; min-width: 200px;">
@@ -26,7 +28,7 @@ import 'blueprint/components/dropdown';
       </div>
     </div>
   </bp-dropdown>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-dropdown>
@@ -42,7 +44,7 @@ import 'blueprint/components/dropdown';
 
 ### Placement Options
 
-<div class="component-preview">
+<ComponentPreview>
 <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; padding: 4rem 1rem;">
 <bp-dropdown placement="bottom-start">
   <bp-button>Bottom Start</bp-button>
@@ -57,7 +59,7 @@ import 'blueprint/components/dropdown';
   <div slot="content" style="padding: 1rem; min-width: 150px;">Opens upward</div>
 </bp-dropdown>
 </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-dropdown placement="bottom-start">...</bp-dropdown>
@@ -69,14 +71,14 @@ import 'blueprint/components/dropdown';
 
 ### With Arrow
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-dropdown arrow>
     <bp-button>With Arrow</bp-button>
     <div slot="content" style="padding: 1rem; min-width: 180px;">
       Arrow points to the trigger
     </div>
   </bp-dropdown>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-dropdown arrow>
@@ -87,12 +89,12 @@ import 'blueprint/components/dropdown';
 
 ### Custom Distance
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-dropdown distance="16">
     <bp-button>16px Distance</bp-button>
     <div slot="content" style="padding: 1rem; min-width: 180px;">More space from trigger</div>
   </bp-dropdown>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-dropdown distance="16">...</bp-dropdown>
@@ -100,7 +102,7 @@ import 'blueprint/components/dropdown';
 
 ### Stay Open on Select
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-dropdown close-on-select="false">
     <bp-button>Multi-Select</bp-button>
     <div slot="content" style="padding: 1rem;">
@@ -111,7 +113,7 @@ import 'blueprint/components/dropdown';
       </div>
     </div>
   </bp-dropdown>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-dropdown close-on-select="false">...</bp-dropdown>
@@ -119,12 +121,12 @@ import 'blueprint/components/dropdown';
 
 ### Disabled
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-dropdown disabled>
     <bp-button>Disabled</bp-button>
     <div slot="content" style="padding: 1rem;">This won't open</div>
   </bp-dropdown>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-dropdown disabled>...</bp-dropdown>

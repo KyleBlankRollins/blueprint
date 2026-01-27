@@ -1,0 +1,70 @@
+---
+/**
+ * Stepper demo component that initializes a bp-stepper with data
+ */
+interface Step {
+  id: string;
+  label: string;
+  description?: string;
+  disabled?: boolean;
+  icon?: string;
+  error?: string;
+}
+
+interface Props {
+  id: string;
+  steps: Step[];
+  currentStep?: number;
+  orientation?: 'horizontal' | 'vertical';
+  size?: 'sm' | 'md' | 'lg';
+  linear?: boolean;
+  hideLabels?: boolean;
+  clickable?: boolean;
+  showNavigation?: boolean;
+}
+
+const {
+  id,
+  steps,
+  currentStep = 0,
+  orientation = 'horizontal',
+  size = 'md',
+  linear = true,
+  hideLabels = false,
+  clickable = true,
+  showNavigation = true,
+} = Astro.props;
+
+const stepsJson = JSON.stringify(steps);
+---
+
+<bp-stepper id={id} current-step={currentStep} orientation={orientation}
+></bp-stepper>
+
+<script
+  is:inline
+  define:vars={{
+    id,
+    stepsJson,
+    size,
+    linear,
+    hideLabels,
+    clickable,
+    showNavigation,
+  }}
+>
+  // Wait for custom element to be defined
+  customElements.whenDefined('bp-stepper').then(() => {
+    requestAnimationFrame(() => {
+      const stepper = document.getElementById(id);
+      if (stepper) {
+        stepper.steps = JSON.parse(stepsJson);
+        stepper.size = size;
+        stepper.linear = linear;
+        stepper.hideLabels = hideLabels;
+        stepper.clickable = clickable;
+        stepper.showNavigation = showNavigation;
+      }
+    });
+  });
+</script>

@@ -339,6 +339,59 @@ export const stepperStyles = css`
   }
 
   /* ─────────────────────────────────────────────────────────────────────────────
+   * Navigation Buttons
+   * ───────────────────────────────────────────────────────────────────────────── */
+
+  .nav-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--bp-spacing-sm) var(--bp-spacing-md);
+    font-family: var(--bp-font-family);
+    font-size: var(--bp-font-size-sm);
+    font-weight: var(--bp-font-weight-medium);
+    line-height: var(--bp-line-height-tight);
+    border-radius: var(--bp-border-radius-md);
+    cursor: pointer;
+    transition:
+      background-color var(--bp-transition-fast),
+      border-color var(--bp-transition-fast),
+      color var(--bp-transition-fast);
+  }
+
+  .nav-button--previous {
+    background-color: var(--bp-color-surface);
+    border: var(--bp-border-width) solid var(--bp-color-border);
+    color: var(--bp-color-text);
+  }
+
+  .nav-button--previous:hover:not(:disabled) {
+    background-color: var(--bp-color-surface-hover);
+    border-color: var(--bp-color-border-strong);
+  }
+
+  .nav-button--next {
+    background-color: var(--bp-color-primary);
+    border: var(--bp-border-width) solid var(--bp-color-primary);
+    color: var(--bp-color-text-inverse);
+  }
+
+  .nav-button--next:hover:not(:disabled) {
+    background-color: var(--bp-color-primary-hover);
+    border-color: var(--bp-color-primary-hover);
+  }
+
+  .nav-button:disabled {
+    opacity: var(--bp-opacity-disabled);
+    cursor: not-allowed;
+  }
+
+  .nav-button:focus-visible {
+    outline: var(--bp-focus-width) var(--bp-focus-style) var(--bp-color-focus);
+    outline-offset: var(--bp-focus-offset);
+  }
+
+  /* ─────────────────────────────────────────────────────────────────────────────
    * Hover States
    * ───────────────────────────────────────────────────────────────────────────── */
 

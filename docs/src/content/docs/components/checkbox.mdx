@@ -3,6 +3,8 @@ title: Checkbox
 description: Selection control for boolean values
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-checkbox` component provides a styled checkbox input with support for various states including indeterminate.
 
 ## Import
@@ -15,12 +17,12 @@ import 'blueprint/components/checkbox';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-checkbox>Unchecked</bp-checkbox>
     <bp-checkbox checked>Checked</bp-checkbox>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-checkbox>Unchecked</bp-checkbox> <bp-checkbox checked>Checked</bp-checkbox>
@@ -28,13 +30,13 @@ import 'blueprint/components/checkbox';
 
 ### Sizes
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-checkbox size="sm">Small</bp-checkbox>
     <bp-checkbox size="md">Medium</bp-checkbox>
     <bp-checkbox size="lg">Large</bp-checkbox>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-checkbox size="sm">Small</bp-checkbox>
@@ -44,7 +46,7 @@ import 'blueprint/components/checkbox';
 
 ### States
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-col">
     <bp-checkbox indeterminate>Indeterminate</bp-checkbox>
     <bp-checkbox disabled>Disabled</bp-checkbox>
@@ -52,7 +54,7 @@ import 'blueprint/components/checkbox';
     <bp-checkbox required>Required</bp-checkbox>
     <bp-checkbox error>Error state</bp-checkbox>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-checkbox indeterminate>Indeterminate</bp-checkbox>

@@ -1,0 +1,72 @@
+---
+/**
+ * Tabs demo component that initializes bp-tabs with data
+ */
+interface TabItem {
+  id: string;
+  label: string;
+  disabled?: boolean;
+  icon?: string;
+  closable?: boolean;
+}
+
+interface TabPanel {
+  id: string;
+  content: string;
+}
+
+interface Props {
+  id: string;
+  tabs: TabItem[];
+  panels: TabPanel[];
+  value?: string;
+  size?: 'small' | 'medium' | 'large';
+  variant?: 'default' | 'pills' | 'underline';
+  placement?: 'top' | 'bottom' | 'start' | 'end';
+  disabled?: boolean;
+  manual?: boolean;
+}
+
+const {
+  id,
+  tabs,
+  panels,
+  value = tabs[0]?.id || '',
+  size = 'medium',
+  variant = 'default',
+  placement = 'top',
+  disabled = false,
+  manual = false,
+} = Astro.props;
+
+const tabsJson = JSON.stringify(tabs);
+---
+
+<bp-tabs id={id} value={value}>
+  {
+    panels.map((panel) => (
+      <div data-tab-id={panel.id} style="padding: 1rem;">
+        {panel.content}
+      </div>
+    ))
+  }
+</bp-tabs>
+
+<script
+  is:inline
+  define:vars={{ id, tabsJson, size, variant, placement, disabled, manual }}
+>
+  customElements.whenDefined('bp-tabs').then(() => {
+    requestAnimationFrame(() => {
+      const tabsElement = document.getElementById(id);
+      if (tabsElement) {
+        tabsElement.tabs = JSON.parse(tabsJson);
+        tabsElement.size = size;
+        tabsElement.variant = variant;
+        tabsElement.placement = placement;
+        tabsElement.disabled = disabled;
+        tabsElement.manual = manual;
+      }
+    });
+  });
+</script>

@@ -3,6 +3,8 @@ title: Avatar
 description: User profile image with fallback to initials
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-avatar` component displays user profile images with automatic fallback to initials or a placeholder icon. Supports status indicators, multiple sizes, and interactive states.
 
 ## Import
@@ -15,9 +17,9 @@ import 'blueprint/components/avatar';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-avatar src="https://placecats.com/150/150" alt="User"></bp-avatar>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-avatar src="https://placecats.com/150/150" alt="User"></bp-avatar>
@@ -25,13 +27,13 @@ import 'blueprint/components/avatar';
 
 ### With Initials
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-avatar initials="JD"></bp-avatar>
     <bp-avatar initials="AB"></bp-avatar>
     <bp-avatar initials="XY"></bp-avatar>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-avatar initials="JD"></bp-avatar>
@@ -41,7 +43,7 @@ import 'blueprint/components/avatar';
 
 ### Sizes
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-avatar size="xs" initials="XS"></bp-avatar>
     <bp-avatar size="sm" initials="SM"></bp-avatar>
@@ -49,7 +51,7 @@ import 'blueprint/components/avatar';
     <bp-avatar size="lg" initials="LG"></bp-avatar>
     <bp-avatar size="xl" initials="XL"></bp-avatar>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-avatar size="xs" initials="XS"></bp-avatar>
@@ -61,12 +63,12 @@ import 'blueprint/components/avatar';
 
 ### Shapes
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-avatar shape="circle" initials="CR"></bp-avatar>
     <bp-avatar shape="square" initials="SQ"></bp-avatar>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-avatar shape="circle" initials="CR"></bp-avatar>
@@ -75,14 +77,14 @@ import 'blueprint/components/avatar';
 
 ### Status Indicators
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-avatar status="online" initials="ON"></bp-avatar>
     <bp-avatar status="offline" initials="OF"></bp-avatar>
     <bp-avatar status="busy" initials="BS"></bp-avatar>
     <bp-avatar status="away" initials="AW"></bp-avatar>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-avatar status="online" initials="ON"></bp-avatar>
@@ -93,9 +95,9 @@ import 'blueprint/components/avatar';
 
 ### Clickable
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-avatar clickable initials="CL" name="Click me"></bp-avatar>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-avatar clickable initials="CL" name="Click me"></bp-avatar>
@@ -105,12 +107,12 @@ import 'blueprint/components/avatar';
 
 When the image fails to load, falls back to initials or placeholder:
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-avatar src="invalid-url.jpg" initials="FB"></bp-avatar>
     <bp-avatar src="invalid-url.jpg"></bp-avatar>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <!-- Falls back to initials -->
@@ -122,14 +124,14 @@ When the image fails to load, falls back to initials or placeholder:
 
 ### Avatar Group
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex;">
     <bp-avatar src="https://placecats.com/150/150" style="margin-right: -0.5rem; border: 2px solid white;"></bp-avatar>
     <bp-avatar src="https://placecats.com/neo/150/150" style="margin-right: -0.5rem; border: 2px solid white;"></bp-avatar>
     <bp-avatar src="https://placecats.com/millie/150/150" style="margin-right: -0.5rem; border: 2px solid white;"></bp-avatar>
     <bp-avatar initials="+5" style="border: 2px solid white;"></bp-avatar>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <div style="display: flex;">

@@ -3,6 +3,8 @@ title: Input
 description: Text input component for collecting user input
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-input` component provides a styled text input with support for various states and configurations.
 
 ## Import
@@ -15,9 +17,9 @@ import 'blueprint/components/input';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-input placeholder="Enter your name"></bp-input>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-input placeholder="Enter your name"></bp-input>
@@ -25,14 +27,14 @@ import 'blueprint/components/input';
 
 ### States
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-col">
     <bp-input placeholder="Default"></bp-input>
     <bp-input placeholder="Disabled" disabled></bp-input>
     <bp-input placeholder="Required" required></bp-input>
     <bp-input placeholder="Readonly" readonly value="Cannot edit this"></bp-input>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-input placeholder="Default"></bp-input>
@@ -43,14 +45,14 @@ import 'blueprint/components/input';
 
 ### Input Types
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-col">
     <bp-input type="text" placeholder="Text input"></bp-input>
     <bp-input type="email" placeholder="Email address"></bp-input>
     <bp-input type="password" placeholder="Password"></bp-input>
     <bp-input type="number" placeholder="Number"></bp-input>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-input type="text" placeholder="Text input"></bp-input>

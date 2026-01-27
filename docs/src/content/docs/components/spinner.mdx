@@ -3,6 +3,8 @@ title: Spinner
 description: Loading indicator component for async operations
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-spinner` component displays a loading indicator to show that content is being loaded or an operation is in progress.
 
 ## Import
@@ -15,9 +17,9 @@ import 'blueprint/components/spinner';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-spinner></bp-spinner>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-spinner></bp-spinner>
@@ -25,13 +27,13 @@ import 'blueprint/components/spinner';
 
 ### Sizes
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-spinner size="sm"></bp-spinner>
     <bp-spinner size="md"></bp-spinner>
     <bp-spinner size="lg"></bp-spinner>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-spinner size="sm"></bp-spinner>
@@ -41,7 +43,7 @@ import 'blueprint/components/spinner';
 
 ### Variants
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-spinner variant="primary"></bp-spinner>
     <bp-spinner variant="success"></bp-spinner>
@@ -49,7 +51,7 @@ import 'blueprint/components/spinner';
     <bp-spinner variant="warning"></bp-spinner>
     <bp-spinner variant="neutral"></bp-spinner>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-spinner variant="primary"></bp-spinner>
@@ -61,9 +63,9 @@ import 'blueprint/components/spinner';
 
 ### With Custom Label
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-spinner label="Loading data..."></bp-spinner>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-spinner label="Loading data..."></bp-spinner>

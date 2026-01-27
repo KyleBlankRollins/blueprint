@@ -3,6 +3,8 @@ title: Button
 description: Interactive button component with multiple variants and sizes
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-button` component is a versatile button element supporting multiple variants, sizes, and states.
 
 ## Import
@@ -15,9 +17,9 @@ import 'blueprint/components/button';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-button>Click me</bp-button>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-button>Click me</bp-button>
@@ -25,12 +27,12 @@ import 'blueprint/components/button';
 
 ### Variants
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-button variant="primary">Primary</bp-button>
     <bp-button variant="secondary">Secondary</bp-button>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-button variant="primary">Primary</bp-button>
@@ -39,13 +41,13 @@ import 'blueprint/components/button';
 
 ### Sizes
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-button size="small">Small</bp-button>
     <bp-button size="medium">Medium</bp-button>
     <bp-button size="large">Large</bp-button>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-button size="small">Small</bp-button>
@@ -55,9 +57,9 @@ import 'blueprint/components/button';
 
 ### Disabled
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-button disabled>Disabled</bp-button>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-button disabled>Disabled</bp-button>

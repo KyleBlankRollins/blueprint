@@ -3,6 +3,8 @@ title: Popover
 description: Rich content displayed in a floating panel
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-popover` component displays rich content in a floating panel triggered by click, hover, focus, or manual control. Unlike tooltips, popovers can contain complex interactive content.
 
 ## Import
@@ -15,14 +17,14 @@ import 'blueprint/components/popover';
 
 ### Default (Click Trigger)
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-popover>
     <bp-button>Click me</bp-button>
     <div slot="content">
       <bp-text>This is popover content.</bp-text>
     </div>
   </bp-popover>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-popover>
@@ -35,7 +37,7 @@ import 'blueprint/components/popover';
 
 ### Placement
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-popover placement="top">
       <bp-button>Top</bp-button>
@@ -54,7 +56,7 @@ import 'blueprint/components/popover';
       <div slot="content">Right popover</div>
     </bp-popover>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-popover placement="top">...</bp-popover>
@@ -65,12 +67,12 @@ import 'blueprint/components/popover';
 
 ### With Arrow
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-popover arrow>
     <bp-button>With arrow</bp-button>
     <div slot="content">Popover with arrow pointing to trigger</div>
   </bp-popover>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-popover arrow>
@@ -81,12 +83,12 @@ import 'blueprint/components/popover';
 
 ### Hover Trigger
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-popover trigger="hover">
     <bp-button>Hover me</bp-button>
     <div slot="content">Shown on hover</div>
   </bp-popover>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-popover trigger="hover">
@@ -97,7 +99,7 @@ import 'blueprint/components/popover';
 
 ### With Header and Footer
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-popover arrow>
     <bp-button>Full popover</bp-button>
     <bp-heading slot="header" level="3" size="sm">Popover Title</bp-heading>
@@ -109,7 +111,7 @@ import 'blueprint/components/popover';
       <bp-button size="small">Confirm</bp-button>
     </div>
   </bp-popover>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-popover arrow>
@@ -127,12 +129,12 @@ import 'blueprint/components/popover';
 
 ### With Close Button
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-popover show-close arrow>
     <bp-button>With close button</bp-button>
     <div slot="content">Click the X to close</div>
   </bp-popover>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-popover show-close arrow>
@@ -143,12 +145,12 @@ import 'blueprint/components/popover';
 
 ### Manual Control
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-popover id="manual-popover" trigger="manual">
     <bp-button onclick="document.getElementById('manual-popover').open = !document.getElementById('manual-popover').open">Toggle Popover</bp-button>
     <div slot="content">Manually controlled popover</div>
   </bp-popover>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-popover id="my-popover" trigger="manual">
@@ -164,7 +166,7 @@ import 'blueprint/components/popover';
 
 ### Rich Content
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-popover arrow>
     <bp-button>User info</bp-button>
     <div slot="content" style="display: flex; gap: 1rem; align-items: center;">
@@ -175,7 +177,7 @@ import 'blueprint/components/popover';
       </div>
     </div>
   </bp-popover>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-popover arrow>

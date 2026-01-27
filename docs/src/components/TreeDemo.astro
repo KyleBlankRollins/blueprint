@@ -1,0 +1,69 @@
+---
+/**
+ * Tree demo component that initializes bp-tree with data
+ */
+interface TreeNode {
+  id: string;
+  label: string;
+  icon?: string;
+  children?: TreeNode[];
+  disabled?: boolean;
+  data?: unknown;
+}
+
+interface Props {
+  id: string;
+  nodes: TreeNode[];
+  selectedId?: string | null;
+  expandedIds?: string[];
+  multiSelect?: boolean;
+  showLines?: boolean;
+  selectable?: boolean;
+  size?: 'small' | 'medium' | 'large';
+}
+
+const {
+  id,
+  nodes,
+  selectedId = null,
+  expandedIds = [],
+  multiSelect = false,
+  showLines = false,
+  selectable = true,
+  size = 'medium',
+} = Astro.props;
+
+const nodesJson = JSON.stringify(nodes);
+const expandedIdsJson = JSON.stringify(expandedIds);
+---
+
+<bp-tree id={id}></bp-tree>
+
+<script
+  is:inline
+  define:vars={{
+    id,
+    nodesJson,
+    selectedId,
+    expandedIdsJson,
+    multiSelect,
+    showLines,
+    selectable,
+    size,
+  }}
+>
+  customElements.whenDefined('bp-tree').then(() => {
+    requestAnimationFrame(() => {
+      const tree = document.getElementById(id);
+      if (tree) {
+        tree.nodes = JSON.parse(nodesJson);
+        tree.selectedId = selectedId;
+        tree.expandedIds = JSON.parse(expandedIdsJson);
+        tree.multiSelect = multiSelect;
+        tree.showLines = showLines;
+        tree.selectable = selectable;
+        tree.size = size;
+      }
+    });
+  });
+</script>

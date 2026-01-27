@@ -6,24 +6,11 @@
 ---
 
 <div class="component-preview">
-  <bp-card variant="outlined" noPadding>
-    <div class="preview-area">
-      <slot />
-    </div>
-  </bp-card>
+  <slot />
 </div>
 
 <style>
   .component-preview {
     margin: 1rem 0 1.5rem;
-  }
-
-  .preview-area {
-    padding: 2rem;
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
   }
 </style>

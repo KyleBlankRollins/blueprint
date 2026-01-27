@@ -3,6 +3,8 @@ title: Radio
 description: Form radio input with group functionality
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-radio` component provides radio button inputs for selecting one option from a group. Radios with the same `name` attribute form a group where only one can be selected at a time.
 
 ## Import
@@ -15,9 +17,9 @@ import 'blueprint/components/radio';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-radio name="demo" value="option1">Option 1</bp-radio>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-radio name="demo" value="option1">Option 1</bp-radio>
@@ -25,13 +27,13 @@ import 'blueprint/components/radio';
 
 ### Radio Group
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 0.5rem;">
     <bp-radio name="colors" value="red">Red</bp-radio>
     <bp-radio name="colors" value="green">Green</bp-radio>
     <bp-radio name="colors" value="blue" checked>Blue</bp-radio>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-radio name="colors" value="red">Red</bp-radio>
@@ -41,13 +43,13 @@ import 'blueprint/components/radio';
 
 ### Sizes
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 0.5rem;">
     <bp-radio name="size-demo" value="sm" size="sm">Small</bp-radio>
     <bp-radio name="size-demo" value="md" size="md">Medium</bp-radio>
     <bp-radio name="size-demo" value="lg" size="lg">Large</bp-radio>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-radio name="sizes" size="sm">Small</bp-radio>
@@ -57,13 +59,13 @@ import 'blueprint/components/radio';
 
 ### Disabled
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 0.5rem;">
     <bp-radio name="disabled-demo" value="enabled">Enabled option</bp-radio>
     <bp-radio name="disabled-demo" value="disabled" disabled>Disabled option</bp-radio>
     <bp-radio name="disabled-demo" value="checked-disabled" checked disabled>Disabled checked</bp-radio>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-radio name="demo" disabled>Disabled option</bp-radio>
@@ -72,12 +74,12 @@ import 'blueprint/components/radio';
 
 ### Error State
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 0.5rem;">
     <bp-radio name="error-demo" value="1" error>Option with error</bp-radio>
     <bp-radio name="error-demo" value="2" error>Another option</bp-radio>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-radio name="demo" error>Option with error</bp-radio>
@@ -85,9 +87,9 @@ import 'blueprint/components/radio';
 
 ### Required
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-radio name="required-demo" value="agree" required>I agree to the terms</bp-radio>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-radio name="terms" required>I agree to the terms</bp-radio>

@@ -12,7 +12,8 @@
     "dist"
   ],
   "scripts": {
-    "dev": "vite",
+    "dev": "cd docs && npm run dev",
+    "dev:lib": "vite",
     "build": "npm run theme:generate-types && tsc -p tsconfig.build.json && vite build",
     "build:cli": "tsc -p tsconfig.cli.json",
     "build:package": "npm run build && npm pack",

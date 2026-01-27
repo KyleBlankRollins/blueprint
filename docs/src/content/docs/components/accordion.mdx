@@ -3,6 +3,8 @@ title: Accordion
 description: Collapsible content sections
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-accordion` component organizes content into collapsible sections. Users can expand and collapse sections to show or hide content, reducing visual clutter.
 
 ## Import
@@ -15,7 +17,7 @@ import 'blueprint/components/accordion';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-accordion>
     <bp-accordion-item item-id="item1">
       <span slot="header">Section 1</span>
@@ -30,7 +32,7 @@ import 'blueprint/components/accordion';
       <p>Content for the third section.</p>
     </bp-accordion-item>
   </bp-accordion>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-accordion>
@@ -49,7 +51,7 @@ import 'blueprint/components/accordion';
 
 Allow multiple sections to be open simultaneously:
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-accordion multiple>
     <bp-accordion-item item-id="multi1">
       <span slot="header">First Section</span>
@@ -64,7 +66,7 @@ Allow multiple sections to be open simultaneously:
       <p>Try opening all three!</p>
     </bp-accordion-item>
   </bp-accordion>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-accordion multiple>
@@ -75,7 +77,7 @@ Allow multiple sections to be open simultaneously:
 
 ### Variants
 
-<div class="component-preview">
+<ComponentPreview>
 <div style="display: flex; flex-direction: column; gap: 2rem;">
 <bp-accordion variant="default">
   <bp-accordion-item item-id="def1">
@@ -102,7 +104,7 @@ Allow multiple sections to be open simultaneously:
   </bp-accordion-item>
 </bp-accordion>
 </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-accordion variant="default">...</bp-accordion>
@@ -112,7 +114,7 @@ Allow multiple sections to be open simultaneously:
 
 ### Default Expanded
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-accordion id="expanded-demo">
     <bp-accordion-item item-id="exp1" expanded>
       <span slot="header">Open by Default</span>
@@ -123,7 +125,7 @@ Allow multiple sections to be open simultaneously:
       <p>This section starts collapsed.</p>
     </bp-accordion-item>
   </bp-accordion>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-accordion>
@@ -136,7 +138,7 @@ Allow multiple sections to be open simultaneously:
 
 ### Disabled
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-accordion disabled>
     <bp-accordion-item item-id="dis1">
       <span slot="header">Disabled Section</span>
@@ -147,7 +149,7 @@ Allow multiple sections to be open simultaneously:
       <p>All items are disabled.</p>
     </bp-accordion-item>
   </bp-accordion>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-accordion disabled>...</bp-accordion>
@@ -155,7 +157,7 @@ Allow multiple sections to be open simultaneously:
 
 ### Disabled Individual Items
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-accordion>
     <bp-accordion-item item-id="mix1">
       <span slot="header">Enabled Section</span>
@@ -166,7 +168,7 @@ Allow multiple sections to be open simultaneously:
       <p>This cannot be toggled.</p>
     </bp-accordion-item>
   </bp-accordion>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-accordion>

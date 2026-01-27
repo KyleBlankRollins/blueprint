@@ -3,6 +3,8 @@ title: Select
 description: Dropdown selection component
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-select` component provides a styled dropdown for selecting from a list of options.
 
 ## Import
@@ -15,7 +17,7 @@ import 'blueprint/components/select';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-select placeholder="Choose a framework">
     <option value="react">React</option>
     <option value="vue">Vue</option>
@@ -23,7 +25,7 @@ import 'blueprint/components/select';
     <option value="svelte">Svelte</option>
     <option value="lit">Lit</option>
   </bp-select>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-select placeholder="Choose a framework">
@@ -37,13 +39,13 @@ import 'blueprint/components/select';
 
 ### With Selected Value
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-select value="vue" placeholder="Choose a framework">
     <option value="react">React</option>
     <option value="vue">Vue</option>
     <option value="angular">Angular</option>
   </bp-select>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-select value="vue">
@@ -55,7 +57,7 @@ import 'blueprint/components/select';
 
 ### Sizes
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-col">
     <bp-select size="small" placeholder="Small">
       <option value="1">Option 1</option>
@@ -70,7 +72,7 @@ import 'blueprint/components/select';
       <option value="2">Option 2</option>
     </bp-select>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-select size="small" placeholder="Small">...</bp-select>
@@ -80,7 +82,7 @@ import 'blueprint/components/select';
 
 ### States
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-col">
     <bp-select disabled value="disabled">
       <option value="disabled">Disabled</option>
@@ -90,7 +92,7 @@ import 'blueprint/components/select';
       <option value="2">Option 2</option>
     </bp-select>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-select disabled value="disabled">

@@ -3,6 +3,8 @@ title: Skeleton
 description: Placeholder loading component for content
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-skeleton` component displays placeholder shapes while content is loading. Use skeletons to improve perceived performance and reduce layout shift.
 
 ## Import
@@ -15,9 +17,9 @@ import 'blueprint/components/skeleton';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-skeleton></bp-skeleton>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-skeleton></bp-skeleton>
@@ -25,13 +27,13 @@ import 'blueprint/components/skeleton';
 
 ### Variants
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-skeleton variant="text" width="200px"></bp-skeleton>
     <bp-skeleton variant="circular" width="48px" height="48px"></bp-skeleton>
     <bp-skeleton variant="rectangular" width="100px" height="60px"></bp-skeleton>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-skeleton variant="text" width="200px"></bp-skeleton>
@@ -41,13 +43,13 @@ import 'blueprint/components/skeleton';
 
 ### Custom Dimensions
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 0.5rem;">
     <bp-skeleton variant="rectangular" width="100%" height="20px"></bp-skeleton>
     <bp-skeleton variant="rectangular" width="80%" height="20px"></bp-skeleton>
     <bp-skeleton variant="rectangular" width="60%" height="20px"></bp-skeleton>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-skeleton variant="rectangular" width="100%" height="20px"></bp-skeleton>
@@ -57,9 +59,9 @@ import 'blueprint/components/skeleton';
 
 ### Without Animation
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-skeleton width="200px" height="20px" animated="false"></bp-skeleton>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-skeleton width="200px" animated="false"></bp-skeleton>
@@ -67,7 +69,7 @@ import 'blueprint/components/skeleton';
 
 ### Card Skeleton Example
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; gap: 1rem; padding: 1rem; border: 1px solid var(--bp-color-border); border-radius: 0.5rem;">
     <bp-skeleton variant="circular" width="48px" height="48px"></bp-skeleton>
     <div style="flex: 1; display: flex; flex-direction: column; gap: 0.5rem;">
@@ -76,7 +78,7 @@ import 'blueprint/components/skeleton';
       <bp-skeleton variant="text" width="80%"></bp-skeleton>
     </div>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <div style="display: flex; gap: 1rem;">
@@ -91,9 +93,9 @@ import 'blueprint/components/skeleton';
 
 ### Image Skeleton
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-skeleton variant="rectangular" width="300px" height="200px"></bp-skeleton>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-skeleton variant="rectangular" width="300px" height="200px"></bp-skeleton>

@@ -3,6 +3,8 @@ title: Menu
 description: List of actions or navigation options
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-menu` component displays a list of actions, options, or navigation items. It's commonly used in dropdowns, context menus, and sidebars.
 
 ## Import
@@ -15,13 +17,13 @@ import 'blueprint/components/menu';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-menu>
     <bp-menu-item value="edit">Edit</bp-menu-item>
     <bp-menu-item value="duplicate">Duplicate</bp-menu-item>
     <bp-menu-item value="delete">Delete</bp-menu-item>
   </bp-menu>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-menu>
@@ -33,7 +35,7 @@ import 'blueprint/components/menu';
 
 ### With Icons
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-menu>
     <bp-menu-item value="cut">
       <bp-icon slot="prefix" name="scissors"></bp-icon>
@@ -48,7 +50,7 @@ import 'blueprint/components/menu';
       Paste
     </bp-menu-item>
   </bp-menu>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-menu>
@@ -69,14 +71,14 @@ import 'blueprint/components/menu';
 
 ### With Keyboard Shortcuts
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-menu>
     <bp-menu-item value="new" shortcut="Ctrl+N">New File</bp-menu-item>
     <bp-menu-item value="open" shortcut="Ctrl+O">Open</bp-menu-item>
     <bp-menu-item value="save" shortcut="Ctrl+S">Save</bp-menu-item>
     <bp-menu-item value="save-as" shortcut="Ctrl+Shift+S">Save As...</bp-menu-item>
   </bp-menu>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-menu>
@@ -91,7 +93,7 @@ import 'blueprint/components/menu';
 
 ### Sizes
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; gap: 2rem;">
     <bp-menu size="small">
       <bp-menu-item value="1">Small Item 1</bp-menu-item>
@@ -106,7 +108,7 @@ import 'blueprint/components/menu';
       <bp-menu-item value="2">Large Item 2</bp-menu-item>
     </bp-menu>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-menu size="small">...</bp-menu>
@@ -116,7 +118,7 @@ import 'blueprint/components/menu';
 
 ### With Dividers
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-menu>
     <bp-menu-item value="undo">Undo</bp-menu-item>
     <bp-menu-item value="redo">Redo</bp-menu-item>
@@ -127,7 +129,7 @@ import 'blueprint/components/menu';
     <bp-menu-divider></bp-menu-divider>
     <bp-menu-item value="delete">Delete</bp-menu-item>
   </bp-menu>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-menu>
@@ -142,13 +144,13 @@ import 'blueprint/components/menu';
 
 ### Disabled Items
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-menu>
     <bp-menu-item value="edit">Edit</bp-menu-item>
     <bp-menu-item value="duplicate" disabled>Duplicate (disabled)</bp-menu-item>
     <bp-menu-item value="delete">Delete</bp-menu-item>
   </bp-menu>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-menu>
@@ -160,13 +162,13 @@ import 'blueprint/components/menu';
 
 ### Selected State
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-menu>
     <bp-menu-item value="light" selected>Light Theme</bp-menu-item>
     <bp-menu-item value="dark">Dark Theme</bp-menu-item>
     <bp-menu-item value="system">System Default</bp-menu-item>
   </bp-menu>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-menu>
@@ -178,14 +180,14 @@ import 'blueprint/components/menu';
 
 ### With Submenu Indicator
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-menu>
     <bp-menu-item value="file">File</bp-menu-item>
     <bp-menu-item value="edit">Edit</bp-menu-item>
     <bp-menu-item value="view" has-submenu>View</bp-menu-item>
     <bp-menu-item value="help">Help</bp-menu-item>
   </bp-menu>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-menu>

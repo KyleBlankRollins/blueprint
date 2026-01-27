@@ -3,6 +3,8 @@ title: Heading
 description: Semantic heading component with flexible sizing
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-heading` component provides semantic headings (h1-h6) with independent visual sizing. This allows proper document structure while maintaining design flexibility.
 
 ## Import
@@ -15,9 +17,9 @@ import 'blueprint/components/heading';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-heading>Page Title</bp-heading>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-heading>Page Title</bp-heading>
@@ -25,7 +27,7 @@ import 'blueprint/components/heading';
 
 ### Heading Levels
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 0.5rem;">
     <bp-heading level="1">Heading 1</bp-heading>
     <bp-heading level="2">Heading 2</bp-heading>
@@ -34,7 +36,7 @@ import 'blueprint/components/heading';
     <bp-heading level="5">Heading 5</bp-heading>
     <bp-heading level="6">Heading 6</bp-heading>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-heading level="1">Heading 1</bp-heading>
@@ -49,7 +51,7 @@ import 'blueprint/components/heading';
 
 Visual sizes independent of semantic level:
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 0.5rem;">
     <bp-heading level="2" size="4xl">4xl Size</bp-heading>
     <bp-heading level="2" size="3xl">3xl Size</bp-heading>
@@ -60,7 +62,7 @@ Visual sizes independent of semantic level:
     <bp-heading level="2" size="sm">sm Size</bp-heading>
     <bp-heading level="2" size="xs">xs Size</bp-heading>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-heading level="2" size="4xl">4xl Size</bp-heading>
@@ -71,7 +73,7 @@ Visual sizes independent of semantic level:
 
 ### Weights
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 0.5rem;">
     <bp-heading level="2" size="xl" weight="light">Light Weight</bp-heading>
     <bp-heading level="2" size="xl" weight="normal">Normal Weight</bp-heading>
@@ -79,7 +81,7 @@ Visual sizes independent of semantic level:
     <bp-heading level="2" size="xl" weight="semibold">Semibold Weight</bp-heading>
     <bp-heading level="2" size="xl" weight="bold">Bold Weight</bp-heading>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-heading level="2" weight="light">Light Weight</bp-heading>
@@ -93,12 +95,12 @@ Visual sizes independent of semantic level:
 
 Use `level` for document structure and `size` for visual appearance:
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 0.5rem;">
     <bp-heading level="1" size="lg">H1 with small visual size</bp-heading>
     <bp-heading level="3" size="3xl">H3 with large visual size</bp-heading>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <!-- Semantic H1, but visually smaller -->

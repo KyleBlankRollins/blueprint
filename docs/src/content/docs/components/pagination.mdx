@@ -3,6 +3,8 @@ title: Pagination
 description: Navigation controls for paged content
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-pagination` component provides navigation controls for moving through multiple pages of content, such as tables, lists, or search results.
 
 ## Import
@@ -15,9 +17,9 @@ import 'blueprint/components/pagination';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-pagination current-page="5" total-pages="20"></bp-pagination>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-pagination current-page="5" total-pages="20"></bp-pagination>
@@ -25,9 +27,9 @@ import 'blueprint/components/pagination';
 
 ### Basic Usage
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-pagination current-page="1" total-pages="10"></bp-pagination>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-pagination current-page="1" total-pages="10"></bp-pagination>
@@ -35,13 +37,13 @@ import 'blueprint/components/pagination';
 
 ### Sizes
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
     <bp-pagination size="small" current-page="3" total-pages="10"></bp-pagination>
     <bp-pagination size="medium" current-page="3" total-pages="10"></bp-pagination>
     <bp-pagination size="large" current-page="3" total-pages="10"></bp-pagination>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-pagination size="small" current-page="3" total-pages="10"></bp-pagination>
@@ -51,9 +53,9 @@ import 'blueprint/components/pagination';
 
 ### With Page Info
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-pagination current-page="5" total-pages="20" show-info></bp-pagination>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-pagination current-page="5" total-pages="20" show-info></bp-pagination>
@@ -61,9 +63,9 @@ import 'blueprint/components/pagination';
 
 ### Without First/Last Buttons
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-pagination current-page="5" total-pages="20" show-first-last="false"></bp-pagination>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-pagination current-page="5" total-pages="20" show-first-last="false">
@@ -72,9 +74,9 @@ import 'blueprint/components/pagination';
 
 ### Custom Sibling Count
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-pagination current-page="10" total-pages="20" sibling-count="2"></bp-pagination>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-pagination current-page="10" total-pages="20" sibling-count="2">
@@ -83,9 +85,9 @@ import 'blueprint/components/pagination';
 
 ### Disabled State
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-pagination current-page="5" total-pages="20" disabled></bp-pagination>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-pagination current-page="5" total-pages="20" disabled></bp-pagination>
@@ -93,9 +95,9 @@ import 'blueprint/components/pagination';
 
 ### Few Pages
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-pagination current-page="2" total-pages="3"></bp-pagination>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-pagination current-page="2" total-pages="3"></bp-pagination>

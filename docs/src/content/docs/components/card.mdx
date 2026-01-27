@@ -3,6 +3,8 @@ title: Card
 description: Container component for grouping related content
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-card` component provides a styled container with optional header, footer, and media slots.
 
 ## Import
@@ -15,12 +17,12 @@ import 'blueprint/components/card';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-card>
     <bp-heading level="3" size="lg">Card Title</bp-heading>
     <bp-text>This is the card content. Cards are great for grouping related information.</bp-text>
   </bp-card>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-card>
@@ -31,13 +33,13 @@ import 'blueprint/components/card';
 
 ### With Header and Footer
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-card>
     <div slot="header">User Profile</div>
     <bp-text>Main content goes here. The header and footer provide additional structure.</bp-text>
     <div slot="footer">Last updated: January 2026</div>
   </bp-card>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-card>
@@ -49,7 +51,7 @@ import 'blueprint/components/card';
 
 ### Variants
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-col">
     <bp-card variant="default">
       <bp-heading level="4" size="md">Default</bp-heading>
@@ -64,7 +66,7 @@ import 'blueprint/components/card';
       <bp-text>Card with larger shadow.</bp-text>
     </bp-card>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-card variant="default">...</bp-card>
@@ -74,7 +76,7 @@ import 'blueprint/components/card';
 
 ### Interactive Cards
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-card hoverable>
       <bp-heading level="4" size="md">Hoverable</bp-heading>
@@ -85,7 +87,7 @@ import 'blueprint/components/card';
       <bp-text>This card is interactive.</bp-text>
     </bp-card>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-card hoverable>...</bp-card> <bp-card clickable>...</bp-card>

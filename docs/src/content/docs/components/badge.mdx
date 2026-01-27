@@ -3,6 +3,8 @@ title: Badge
 description: Status indicator component for counts and labels
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-badge` component displays status indicators, counts, and labels. Use badges to highlight important information or show notification counts.
 
 ## Import
@@ -15,9 +17,9 @@ import 'blueprint/components/badge';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-badge>New</bp-badge>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-badge>New</bp-badge>
@@ -25,7 +27,7 @@ import 'blueprint/components/badge';
 
 ### Variants
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-badge variant="primary">Primary</bp-badge>
     <bp-badge variant="success">Success</bp-badge>
@@ -34,7 +36,7 @@ import 'blueprint/components/badge';
     <bp-badge variant="info">Info</bp-badge>
     <bp-badge variant="neutral">Neutral</bp-badge>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-badge variant="primary">Primary</bp-badge>
@@ -47,13 +49,13 @@ import 'blueprint/components/badge';
 
 ### Sizes
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-badge size="small">Small</bp-badge>
     <bp-badge size="medium">Medium</bp-badge>
     <bp-badge size="large">Large</bp-badge>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-badge size="small">Small</bp-badge>
@@ -65,13 +67,13 @@ import 'blueprint/components/badge';
 
 Use the `dot` property for notification indicators without text.
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-badge dot></bp-badge>
     <bp-badge dot variant="success"></bp-badge>
     <bp-badge dot variant="error"></bp-badge>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-badge dot></bp-badge>
@@ -81,13 +83,13 @@ Use the `dot` property for notification indicators without text.
 
 ### With Numbers
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-badge>1</bp-badge>
     <bp-badge variant="error">99+</bp-badge>
     <bp-badge variant="info">5</bp-badge>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-badge>1</bp-badge>

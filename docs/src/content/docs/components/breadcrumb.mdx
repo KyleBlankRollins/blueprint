@@ -3,6 +3,8 @@ title: Breadcrumb
 description: Navigation trail showing hierarchical page location
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-breadcrumb` component displays a navigation trail that helps users understand their current location within a site hierarchy and navigate back to parent pages.
 
 ## Import
@@ -15,14 +17,14 @@ import 'blueprint/components/breadcrumb';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-breadcrumb>
     <a href="#">Home</a>
     <a href="#">Products</a>
     <a href="#">Electronics</a>
     <span>Laptops</span>
   </bp-breadcrumb>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-breadcrumb>
@@ -35,7 +37,7 @@ import 'blueprint/components/breadcrumb';
 
 ### Multiple Levels
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-breadcrumb>
     <a href="/">Home</a>
     <a href="/products">Products</a>
@@ -43,7 +45,7 @@ import 'blueprint/components/breadcrumb';
     <a href="/products/electronics/laptops">Laptops</a>
     <span>MacBook Pro</span>
   </bp-breadcrumb>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-breadcrumb>
@@ -57,7 +59,7 @@ import 'blueprint/components/breadcrumb';
 
 ### Separator Styles
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
     <bp-breadcrumb separator="slash">
       <a href="#">Home</a>
@@ -80,7 +82,7 @@ import 'blueprint/components/breadcrumb';
       <span>Page</span>
     </bp-breadcrumb>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-breadcrumb separator="slash">...</bp-breadcrumb>
@@ -91,7 +93,7 @@ import 'blueprint/components/breadcrumb';
 
 ### Sizes
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
     <bp-breadcrumb size="small">
       <a href="#">Home</a>
@@ -109,7 +111,7 @@ import 'blueprint/components/breadcrumb';
       <span>Page</span>
     </bp-breadcrumb>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-breadcrumb size="small">...</bp-breadcrumb>

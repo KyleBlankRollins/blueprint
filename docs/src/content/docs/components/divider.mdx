@@ -3,6 +3,8 @@ title: Divider
 description: Visual separator component for content sections
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-divider` component provides visual separation between content sections. It supports horizontal and vertical orientations, various line styles, and optional text labels.
 
 ## Import
@@ -15,9 +17,9 @@ import 'blueprint/components/divider';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-divider></bp-divider>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-divider></bp-divider>
@@ -25,7 +27,7 @@ import 'blueprint/components/divider';
 
 ### Orientations
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
     <bp-divider orientation="horizontal"></bp-divider>
   </div>
@@ -34,7 +36,7 @@ import 'blueprint/components/divider';
     <bp-divider orientation="vertical"></bp-divider>
     <span>Right</span>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-divider orientation="horizontal"></bp-divider>
@@ -44,13 +46,13 @@ import 'blueprint/components/divider';
 
 ### Variants
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
     <bp-divider variant="solid"></bp-divider>
     <bp-divider variant="dashed"></bp-divider>
     <bp-divider variant="dotted"></bp-divider>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-divider variant="solid"></bp-divider>
@@ -60,7 +62,7 @@ import 'blueprint/components/divider';
 
 ### Spacing
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column;">
     <span>Small spacing</span>
     <bp-divider spacing="sm"></bp-divider>
@@ -70,7 +72,7 @@ import 'blueprint/components/divider';
     <bp-divider spacing="lg"></bp-divider>
     <span>End</span>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-divider spacing="sm"></bp-divider>
@@ -80,13 +82,13 @@ import 'blueprint/components/divider';
 
 ### Weight
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
     <bp-divider weight="thin"></bp-divider>
     <bp-divider weight="medium"></bp-divider>
     <bp-divider weight="thick"></bp-divider>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-divider weight="thin"></bp-divider>
@@ -96,9 +98,9 @@ import 'blueprint/components/divider';
 
 ### With Text Label
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-divider>OR</bp-divider>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-divider>OR</bp-divider>

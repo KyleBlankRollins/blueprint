@@ -3,6 +3,8 @@ title: Notification
 description: Toast messages for non-blocking alerts
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-notification` component displays non-blocking toast messages to inform users of events, updates, or actions. Notifications can be dismissed manually or auto-close after a duration.
 
 ## Import
@@ -15,10 +17,10 @@ import 'blueprint/components/notification';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-button onclick="document.querySelector('#notif-demo').show()">Show Notification</bp-button>
   <bp-notification id="notif-demo" title="Hello!" message="This is a notification message."></bp-notification>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-notification
@@ -35,7 +37,7 @@ import 'blueprint/components/notification';
 
 ### Variants
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
     <bp-button onclick="document.querySelector('#notif-info').show()">Info</bp-button>
     <bp-button onclick="document.querySelector('#notif-success').show()">Success</bp-button>
@@ -46,7 +48,7 @@ import 'blueprint/components/notification';
   <bp-notification id="notif-success" variant="success" title="Success!" message="Your action was completed."></bp-notification>
   <bp-notification id="notif-warning" variant="warning" title="Warning" message="Please review before continuing."></bp-notification>
   <bp-notification id="notif-error" variant="error" title="Error" message="Something went wrong."></bp-notification>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-notification variant="info" title="Info" message="..."></bp-notification>
@@ -65,10 +67,10 @@ import 'blueprint/components/notification';
 
 ### Auto-Close
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-button onclick="document.querySelector('#notif-auto').show()">Show (3s auto-close)</bp-button>
   <bp-notification id="notif-auto" variant="success" title="Saved!" message="Auto-closes in 3 seconds." duration="3000"></bp-notification>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-notification
@@ -81,7 +83,7 @@ import 'blueprint/components/notification';
 
 ### Position Options
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
     <bp-button onclick="document.querySelector('#notif-tl').show()">Top Left</bp-button>
     <bp-button onclick="document.querySelector('#notif-tc').show()">Top Center</bp-button>
@@ -98,7 +100,7 @@ import 'blueprint/components/notification';
   <bp-notification id="notif-bl" position="bottom-left" title="Bottom Left" message="Notification position" duration="2000"></bp-notification>
   <bp-notification id="notif-bc" position="bottom-center" title="Bottom Center" message="Notification position" duration="2000"></bp-notification>
   <bp-notification id="notif-br" position="bottom-right" title="Bottom Right" message="Notification position" duration="2000"></bp-notification>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-notification position="top-left">...</bp-notification>
@@ -111,10 +113,10 @@ import 'blueprint/components/notification';
 
 ### Non-Closable
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-button onclick="document.querySelector('#notif-noclose').show()">Show (not closable)</bp-button>
   <bp-notification id="notif-noclose" closable="false" title="Processing..." message="Please wait while we complete your request." duration="3000"></bp-notification>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-notification closable="false" title="Processing..." message="Please wait.">
@@ -123,7 +125,7 @@ import 'blueprint/components/notification';
 
 ### With Custom Content
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-button onclick="document.querySelector('#notif-custom').show()">Show Custom</bp-button>
   <bp-notification id="notif-custom" variant="info" title="New Message">
     <p>You have a new message from <strong>Jane Doe</strong>.</p>
@@ -132,7 +134,7 @@ import 'blueprint/components/notification';
       <bp-button size="small">View</bp-button>
     </div>
   </bp-notification>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-notification variant="info" title="New Message">
@@ -146,12 +148,12 @@ import 'blueprint/components/notification';
 
 ### With Custom Icon
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-button onclick="document.querySelector('#notif-icon').show()">Custom Icon</bp-button>
   <bp-notification id="notif-icon" title="Download Complete" message="Your file has been downloaded.">
     <bp-icon slot="icon" name="download"></bp-icon>
   </bp-notification>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-notification

@@ -3,6 +3,8 @@ title: Text
 description: Typography component for body text with flexible styling
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-text` component provides flexible body text styling with support for sizes, weights, colors, alignment, and text transformations.
 
 ## Import
@@ -15,9 +17,9 @@ import 'blueprint/components/text';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-text>This is default body text.</bp-text>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-text>This is default body text.</bp-text>
@@ -25,7 +27,7 @@ import 'blueprint/components/text';
 
 ### Sizes
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 0.5rem;">
     <bp-text size="xs">Extra small text</bp-text>
     <bp-text size="sm">Small text</bp-text>
@@ -33,7 +35,7 @@ import 'blueprint/components/text';
     <bp-text size="lg">Large text</bp-text>
     <bp-text size="xl">Extra large text</bp-text>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-text size="xs">Extra small text</bp-text>
@@ -45,7 +47,7 @@ import 'blueprint/components/text';
 
 ### Variants
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 0.5rem;">
     <bp-text variant="default">Default variant</bp-text>
     <bp-text variant="muted">Muted variant</bp-text>
@@ -54,7 +56,7 @@ import 'blueprint/components/text';
     <bp-text variant="warning">Warning variant</bp-text>
     <bp-text variant="error">Error variant</bp-text>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-text variant="default">Default variant</bp-text>
@@ -67,7 +69,7 @@ import 'blueprint/components/text';
 
 ### Weights
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 0.5rem;">
     <bp-text weight="light">Light weight</bp-text>
     <bp-text weight="normal">Normal weight</bp-text>
@@ -75,7 +77,7 @@ import 'blueprint/components/text';
     <bp-text weight="semibold">Semibold weight</bp-text>
     <bp-text weight="bold">Bold weight</bp-text>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-text weight="light">Light weight</bp-text>
@@ -87,13 +89,13 @@ import 'blueprint/components/text';
 
 ### Text Alignment
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 0.5rem;">
     <bp-text align="left">Left aligned text</bp-text>
     <bp-text align="center">Center aligned text</bp-text>
     <bp-text align="right">Right aligned text</bp-text>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-text align="left">Left aligned text</bp-text>
@@ -103,13 +105,13 @@ import 'blueprint/components/text';
 
 ### Text Transform
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 0.5rem;">
     <bp-text transform="uppercase">Uppercase text</bp-text>
     <bp-text transform="lowercase">LOWERCASE TEXT</bp-text>
     <bp-text transform="capitalize">capitalize each word</bp-text>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-text transform="uppercase">Uppercase text</bp-text>
@@ -119,9 +121,9 @@ import 'blueprint/components/text';
 
 ### Italic
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-text italic>This text is italicized.</bp-text>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-text italic>This text is italicized.</bp-text>
@@ -129,9 +131,9 @@ import 'blueprint/components/text';
 
 ### Truncation
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-text truncate style="max-width: 200px;">This is a very long text that will be truncated with an ellipsis when it overflows the container.</bp-text>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-text truncate style="max-width: 200px;">
@@ -141,11 +143,11 @@ import 'blueprint/components/text';
 
 ### Line Clamping
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-text clamp="2" style="max-width: 300px;">
     This is a long paragraph that will be clamped to 2 lines. Any text beyond the second line will be hidden with an ellipsis at the end.
   </bp-text>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-text clamp="2">
@@ -155,13 +157,13 @@ import 'blueprint/components/text';
 
 ### Element Types
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 0.5rem;">
     <bp-text as="p">Rendered as paragraph</bp-text>
     <bp-text as="span">Rendered as span</bp-text>
     <bp-text as="div">Rendered as div</bp-text>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-text as="p">Rendered as paragraph</bp-text>

@@ -3,6 +3,8 @@ title: Modal
 description: Dialog overlay for focused interactions
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-modal` component displays content in a dialog overlay that requires user interaction before returning to the main content. It's used for confirmations, forms, alerts, and any content that needs focused attention.
 
 ## Import
@@ -15,7 +17,7 @@ import 'blueprint/components/modal';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-button onclick="document.querySelector('#demo-modal').open = true">Open Modal</bp-button>
   <bp-modal id="demo-modal">
     <div slot="header">Modal Title</div>
@@ -25,7 +27,7 @@ import 'blueprint/components/modal';
       <bp-button onclick="document.querySelector('#demo-modal').open = false">Confirm</bp-button>
     </div>
   </bp-modal>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-button onclick="modal.open = true">Open Modal</bp-button>
@@ -42,7 +44,7 @@ import 'blueprint/components/modal';
 
 ### Sizes
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; gap: 0.5rem;">
     <bp-button onclick="document.querySelector('#modal-small').open = true">Small</bp-button>
     <bp-button onclick="document.querySelector('#modal-medium').open = true">Medium</bp-button>
@@ -60,7 +62,7 @@ import 'blueprint/components/modal';
     <div slot="header">Large Modal</div>
     <p>Larger modal for complex content or wide layouts.</p>
   </bp-modal>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-modal size="small">...</bp-modal>
@@ -70,7 +72,7 @@ import 'blueprint/components/modal';
 
 ### Confirmation Dialog
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-button variant="danger" onclick="document.querySelector('#modal-confirm').open = true">Delete Item</bp-button>
   <bp-modal id="modal-confirm" size="small">
     <div slot="header">Confirm Delete</div>
@@ -80,7 +82,7 @@ import 'blueprint/components/modal';
       <bp-button variant="danger" onclick="document.querySelector('#modal-confirm').open = false">Delete</bp-button>
     </div>
   </bp-modal>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-modal size="small">
@@ -95,7 +97,7 @@ import 'blueprint/components/modal';
 
 ### Form Modal
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-button onclick="document.querySelector('#modal-form').open = true">Edit Profile</bp-button>
   <bp-modal id="modal-form">
     <div slot="header">Edit Profile</div>
@@ -109,7 +111,7 @@ import 'blueprint/components/modal';
       <bp-button onclick="document.querySelector('#modal-form').open = false">Save Changes</bp-button>
     </div>
   </bp-modal>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-modal>
@@ -128,7 +130,7 @@ import 'blueprint/components/modal';
 
 ### Without Header
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-button onclick="document.querySelector('#modal-noheader').open = true">Alert Style</bp-button>
   <bp-modal id="modal-noheader" size="small">
     <div style="text-align: center; padding: 1rem;">
@@ -138,7 +140,7 @@ import 'blueprint/components/modal';
       <bp-button onclick="document.querySelector('#modal-noheader').open = false">OK</bp-button>
     </div>
   </bp-modal>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-modal size="small">
@@ -153,7 +155,7 @@ import 'blueprint/components/modal';
 
 ### Scrollable Content
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-button onclick="document.querySelector('#modal-scroll').open = true">Long Content</bp-button>
   <bp-modal id="modal-scroll">
     <div slot="header">Terms of Service</div>
@@ -168,7 +170,7 @@ import 'blueprint/components/modal';
       <bp-button onclick="document.querySelector('#modal-scroll').open = false">I Agree</bp-button>
     </div>
   </bp-modal>
-</div>
+</ComponentPreview>
 
 ## API Reference
 

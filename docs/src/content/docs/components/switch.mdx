@@ -3,6 +3,8 @@ title: Switch
 description: Toggle switch for binary on/off states
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-switch` component provides a toggle switch for binary on/off choices. It's an alternative to checkboxes when the setting takes effect immediately.
 
 ## Import
@@ -15,9 +17,9 @@ import 'blueprint/components/switch';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-switch>Enable notifications</bp-switch>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-switch>Enable notifications</bp-switch>
@@ -25,9 +27,9 @@ import 'blueprint/components/switch';
 
 ### Checked
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-switch checked>Dark mode</bp-switch>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-switch checked>Dark mode</bp-switch>
@@ -35,13 +37,13 @@ import 'blueprint/components/switch';
 
 ### Sizes
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 0.75rem;">
     <bp-switch size="sm">Small switch</bp-switch>
     <bp-switch size="md">Medium switch</bp-switch>
     <bp-switch size="lg">Large switch</bp-switch>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-switch size="sm">Small switch</bp-switch>
@@ -51,12 +53,12 @@ import 'blueprint/components/switch';
 
 ### Disabled
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 0.5rem;">
     <bp-switch disabled>Disabled off</bp-switch>
     <bp-switch checked disabled>Disabled on</bp-switch>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-switch disabled>Disabled off</bp-switch>
@@ -65,9 +67,9 @@ import 'blueprint/components/switch';
 
 ### Error State
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-switch error>Accept terms (required)</bp-switch>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-switch error>Accept terms (required)</bp-switch>
@@ -75,9 +77,9 @@ import 'blueprint/components/switch';
 
 ### Without Label
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-switch aria-label="Toggle feature"></bp-switch>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-switch aria-label="Toggle feature"></bp-switch>
@@ -85,7 +87,7 @@ import 'blueprint/components/switch';
 
 ### Settings Example
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem; max-width: 300px;">
     <div style="display: flex; justify-content: space-between; align-items: center;">
       <bp-text>Push notifications</bp-text>
@@ -100,7 +102,7 @@ import 'blueprint/components/switch';
       <bp-switch checked></bp-switch>
     </div>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <div style="display: flex; justify-content: space-between;">

@@ -3,6 +3,8 @@ title: Alert
 description: Display important messages to users
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-alert` component is used to display important messages, notifications, and feedback to users.
 
 ## Import
@@ -15,7 +17,7 @@ import 'blueprint/components/alert';
 
 ### Variants
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-col">
     <bp-alert variant="info" showIcon>
       <span slot="title">Information</span>
@@ -34,7 +36,7 @@ import 'blueprint/components/alert';
       Something went wrong. Please try again.
     </bp-alert>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-alert variant="info" showIcon>
@@ -60,12 +62,12 @@ import 'blueprint/components/alert';
 
 ### Dismissible
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-alert variant="info" showIcon dismissible>
     <span slot="title">Dismissible Alert</span>
     Click the X button to dismiss this alert.
   </bp-alert>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-alert variant="info" showIcon dismissible>
@@ -76,11 +78,11 @@ import 'blueprint/components/alert';
 
 ### Without Icon or Title
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-alert variant="info">
     A simple alert message without icon or title.
   </bp-alert>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-alert variant="info">

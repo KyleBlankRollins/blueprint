@@ -3,6 +3,8 @@ title: Tag
 description: Removable label component for categories and filters
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-tag` component displays removable labels, chips, or category markers. Tags are useful for displaying selected filters, categories, or user-generated labels.
 
 ## Import
@@ -15,9 +17,9 @@ import 'blueprint/components/tag';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-tag>Design</bp-tag>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-tag>Design</bp-tag>
@@ -25,12 +27,12 @@ import 'blueprint/components/tag';
 
 ### Variants
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-tag variant="solid">Solid</bp-tag>
     <bp-tag variant="outlined">Outlined</bp-tag>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-tag variant="solid">Solid</bp-tag>
@@ -39,7 +41,7 @@ import 'blueprint/components/tag';
 
 ### Colors
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-tag color="primary">Primary</bp-tag>
     <bp-tag color="success">Success</bp-tag>
@@ -48,7 +50,7 @@ import 'blueprint/components/tag';
     <bp-tag color="info">Info</bp-tag>
     <bp-tag color="neutral">Neutral</bp-tag>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-tag color="primary">Primary</bp-tag>
@@ -61,13 +63,13 @@ import 'blueprint/components/tag';
 
 ### Sizes
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-tag size="small">Small</bp-tag>
     <bp-tag size="medium">Medium</bp-tag>
     <bp-tag size="large">Large</bp-tag>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-tag size="small">Small</bp-tag>
@@ -77,13 +79,13 @@ import 'blueprint/components/tag';
 
 ### Removable
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-tag removable>Removable</bp-tag>
     <bp-tag removable color="primary">Primary</bp-tag>
     <bp-tag removable variant="outlined">Outlined</bp-tag>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-tag removable>Removable</bp-tag>
@@ -93,12 +95,12 @@ import 'blueprint/components/tag';
 
 ### Disabled
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-tag disabled>Disabled</bp-tag>
     <bp-tag disabled removable>Disabled Removable</bp-tag>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-tag disabled>Disabled</bp-tag>

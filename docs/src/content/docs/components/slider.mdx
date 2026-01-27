@@ -3,6 +3,8 @@ title: Slider
 description: Range input for selecting numeric values
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-slider` component provides a draggable slider for selecting numeric values within a defined range. Supports tick marks, value display, and custom formatting.
 
 ## Import
@@ -15,9 +17,9 @@ import 'blueprint/components/slider';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-slider value="50"></bp-slider>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-slider value="50"></bp-slider>
@@ -25,9 +27,9 @@ import 'blueprint/components/slider';
 
 ### With Label
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-slider label="Volume" value="75"></bp-slider>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-slider label="Volume" value="75"></bp-slider>
@@ -35,9 +37,9 @@ import 'blueprint/components/slider';
 
 ### Show Value
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-slider label="Brightness" value="60" show-value></bp-slider>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-slider label="Brightness" value="60" show-value></bp-slider>
@@ -45,9 +47,9 @@ import 'blueprint/components/slider';
 
 ### Custom Range
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-slider label="Temperature" min="0" max="40" value="22" show-value></bp-slider>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-slider
@@ -61,9 +63,9 @@ import 'blueprint/components/slider';
 
 ### Step Values
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-slider label="Rating" min="1" max="5" step="1" value="3" show-value></bp-slider>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-slider
@@ -78,9 +80,9 @@ import 'blueprint/components/slider';
 
 ### With Tick Marks
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-slider label="Quality" min="0" max="100" step="25" value="50" show-ticks show-value></bp-slider>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-slider label="Quality" min="0" max="100" step="25" show-ticks show-value>
@@ -89,13 +91,13 @@ import 'blueprint/components/slider';
 
 ### Sizes
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1.5rem;">
     <bp-slider size="small" label="Small" value="30"></bp-slider>
     <bp-slider size="medium" label="Medium" value="50"></bp-slider>
     <bp-slider size="large" label="Large" value="70"></bp-slider>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-slider size="small" label="Small"></bp-slider>
@@ -105,9 +107,9 @@ import 'blueprint/components/slider';
 
 ### Disabled
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-slider label="Disabled" value="50" disabled></bp-slider>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-slider label="Disabled" value="50" disabled></bp-slider>
@@ -115,7 +117,7 @@ import 'blueprint/components/slider';
 
 ### Percentage Example
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-slider 
     label="Opacity" 
     min="0" 
@@ -123,7 +125,7 @@ import 'blueprint/components/slider';
     value="80" 
     show-value>
   </bp-slider>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-slider label="Opacity" min="0" max="100" value="80" show-value></bp-slider>
@@ -131,7 +133,7 @@ import 'blueprint/components/slider';
 
 ### Fine-Grained Control
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-slider 
     label="Precision" 
     min="0" 
@@ -140,7 +142,7 @@ import 'blueprint/components/slider';
     value="0.5" 
     show-value>
   </bp-slider>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-slider label="Precision" min="0" max="1" step="0.01" value="0.5" show-value>

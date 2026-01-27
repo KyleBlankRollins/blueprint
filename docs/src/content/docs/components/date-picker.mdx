@@ -3,6 +3,8 @@ title: Date Picker
 description: Calendar-based date selection component
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-date-picker` component provides a calendar interface for selecting dates. It supports date ranges, min/max constraints, and multiple display formats.
 
 ## Import
@@ -15,9 +17,9 @@ import 'blueprint/components/date-picker';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-date-picker placeholder="Select date..."></bp-date-picker>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-date-picker placeholder="Select date..."></bp-date-picker>
@@ -25,9 +27,9 @@ import 'blueprint/components/date-picker';
 
 ### With Label
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-date-picker label="Birth Date" placeholder="Select date..."></bp-date-picker>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-date-picker
@@ -38,9 +40,9 @@ import 'blueprint/components/date-picker';
 
 ### With Initial Value
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-date-picker label="Event Date" value="2024-06-15"></bp-date-picker>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-date-picker label="Event Date" value="2024-06-15"></bp-date-picker>
@@ -48,13 +50,13 @@ import 'blueprint/components/date-picker';
 
 ### Sizes
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
     <bp-date-picker size="small" placeholder="Small"></bp-date-picker>
     <bp-date-picker size="medium" placeholder="Medium"></bp-date-picker>
     <bp-date-picker size="large" placeholder="Large"></bp-date-picker>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-date-picker size="small" placeholder="Small"></bp-date-picker>
@@ -64,14 +66,14 @@ import 'blueprint/components/date-picker';
 
 ### Date Constraints
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-date-picker 
     label="Book appointment" 
     min="2024-01-01" 
     max="2024-12-31"
     placeholder="Select date in 2024...">
   </bp-date-picker>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-date-picker label="Book appointment" min="2024-01-01" max="2024-12-31">
@@ -80,12 +82,12 @@ import 'blueprint/components/date-picker';
 
 ### First Day of Week
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
     <bp-date-picker first-day-of-week="0" label="Sunday start"></bp-date-picker>
     <bp-date-picker first-day-of-week="1" label="Monday start"></bp-date-picker>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <!-- Sunday as first day (default) -->
@@ -97,9 +99,9 @@ import 'blueprint/components/date-picker';
 
 ### Disabled
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-date-picker disabled label="Disabled" value="2024-06-15"></bp-date-picker>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-date-picker disabled label="Disabled" value="2024-06-15"></bp-date-picker>
@@ -107,9 +109,9 @@ import 'blueprint/components/date-picker';
 
 ### Required
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-date-picker required label="Required field" placeholder="Select date..."></bp-date-picker>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-date-picker required label="Required field"></bp-date-picker>

@@ -3,6 +3,8 @@ title: Drawer
 description: Slide-in panel from screen edge
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-drawer` component displays a panel that slides in from any edge of the viewport. It's commonly used for navigation menus, sidebars, settings panels, and mobile navigation.
 
 ## Import
@@ -15,13 +17,13 @@ import 'blueprint/components/drawer';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-button onclick="document.querySelector('#demo-drawer').show()">Open Drawer</bp-button>
   <bp-drawer id="demo-drawer" label="Demo Drawer">
     <span slot="header">Drawer Title</span>
     <p>This is the drawer content. It slides in from the left by default.</p>
   </bp-drawer>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-button onclick="document.querySelector('#demo-drawer').show()">
@@ -36,7 +38,7 @@ import 'blueprint/components/drawer';
 
 ### Placement Options
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
     <bp-button onclick="document.querySelector('#drawer-left').show()">Left</bp-button>
     <bp-button onclick="document.querySelector('#drawer-right').show()">Right</bp-button>
@@ -59,7 +61,7 @@ import 'blueprint/components/drawer';
     <span slot="header">Bottom Drawer</span>
     <p>Slides in from the bottom edge.</p>
   </bp-drawer>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-drawer placement="left">...</bp-drawer>
@@ -70,7 +72,7 @@ import 'blueprint/components/drawer';
 
 ### Sizes
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
     <bp-button onclick="document.querySelector('#drawer-small').show()">Small</bp-button>
     <bp-button onclick="document.querySelector('#drawer-medium').show()">Medium</bp-button>
@@ -93,7 +95,7 @@ import 'blueprint/components/drawer';
     <span slot="header">Full Drawer</span>
     <p>Full viewport width.</p>
   </bp-drawer>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-drawer size="small">...</bp-drawer>
@@ -104,7 +106,7 @@ import 'blueprint/components/drawer';
 
 ### With Header and Footer
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-button onclick="document.querySelector('#drawer-complete').show()">Open</bp-button>
   <bp-drawer id="drawer-complete" label="Complete Drawer">
     <span slot="header">Drawer Header</span>
@@ -114,7 +116,7 @@ import 'blueprint/components/drawer';
       <bp-button>Save</bp-button>
     </div>
   </bp-drawer>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-drawer label="Complete Drawer">
@@ -129,13 +131,13 @@ import 'blueprint/components/drawer';
 
 ### No Backdrop
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-button onclick="document.querySelector('#drawer-nobackdrop').show()">No Backdrop</bp-button>
   <bp-drawer id="drawer-nobackdrop" show-backdrop="false" label="No Backdrop Drawer">
     <span slot="header">No Backdrop</span>
     <p>The page behind remains fully visible.</p>
   </bp-drawer>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-drawer show-backdrop="false">...</bp-drawer>
@@ -143,13 +145,13 @@ import 'blueprint/components/drawer';
 
 ### Prevent Close
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-button onclick="document.querySelector('#drawer-noclose').show()">Controlled Close</bp-button>
   <bp-drawer id="drawer-noclose" close-on-backdrop="false" close-on-escape="false" label="Controlled Drawer">
     <span slot="header">Controlled Close</span>
     <p>Can only be closed via the X button or programmatically.</p>
   </bp-drawer>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-drawer close-on-backdrop="false" close-on-escape="false">

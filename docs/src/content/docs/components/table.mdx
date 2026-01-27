@@ -3,6 +3,9 @@ title: Table
 description: Data table with sorting, selection, and custom rendering
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+import TableDemo from '../../../components/TableDemo.astro';
+
 The `bp-table` component displays tabular data with features like sorting, row selection, custom cell rendering, and various visual styles. It's ideal for presenting structured data that users need to browse, sort, or act upon.
 
 ## Import
@@ -15,37 +18,79 @@ import 'blueprint/components/table';
 
 ### Default
 
-<div class="component-preview">
-  <bp-table id="table-demo"></bp-table>
-</div>
-
-```html
-<bp-table id="table-demo"></bp-table>
-
-<script>
-  const table = document.querySelector('#table-demo');
-  table.columns = [
+<ComponentPreview>
+<TableDemo
+  id="table-demo"
+  columns={[
     { key: 'name', label: 'Name' },
     { key: 'email', label: 'Email' },
     { key: 'role', label: 'Role' },
-  ];
-  table.rows = [
+  ]}
+  rows={[
     { id: 1, name: 'Alice Johnson', email: 'alice@example.com', role: 'Admin' },
     { id: 2, name: 'Bob Smith', email: 'bob@example.com', role: 'User' },
     { id: 3, name: 'Carol White', email: 'carol@example.com', role: 'Editor' },
-  ];
-</script>
+  ]}
+/>
+</ComponentPreview>
+
+```javascript
+const table = document.querySelector('#table-demo');
+table.columns = [
+  { key: 'name', label: 'Name' },
+  { key: 'email', label: 'Email' },
+  { key: 'role', label: 'Role' },
+];
+table.rows = [
+  { id: 1, name: 'Alice Johnson', email: 'alice@example.com', role: 'Admin' },
+  { id: 2, name: 'Bob Smith', email: 'bob@example.com', role: 'User' },
+  { id: 3, name: 'Carol White', email: 'carol@example.com', role: 'Editor' },
+];
 ```
 
 ### Variants
 
-<div class="component-preview">
-  <div style="display: flex; flex-direction: column; gap: 2rem;">
-    <bp-table variant="default" id="table-default"></bp-table>
-    <bp-table variant="striped" id="table-striped"></bp-table>
-    <bp-table variant="bordered" id="table-bordered"></bp-table>
-  </div>
+<ComponentPreview>
+<div style="display: flex; flex-direction: column; gap: 2rem;">
+<TableDemo
+  id="table-default"
+  variant="default"
+  columns={[
+    { key: 'name', label: 'Name' },
+    { key: 'email', label: 'Email' },
+  ]}
+  rows={[
+    { id: 1, name: 'Alice', email: 'alice@example.com' },
+    { id: 2, name: 'Bob', email: 'bob@example.com' },
+  ]}
+/>
+<TableDemo
+  id="table-striped"
+  variant="striped"
+  columns={[
+    { key: 'name', label: 'Name' },
+    { key: 'email', label: 'Email' },
+  ]}
+  rows={[
+    { id: 1, name: 'Alice', email: 'alice@example.com' },
+    { id: 2, name: 'Bob', email: 'bob@example.com' },
+    { id: 3, name: 'Carol', email: 'carol@example.com' },
+  ]}
+/>
+<TableDemo
+  id="table-bordered"
+  variant="bordered"
+  columns={[
+    { key: 'name', label: 'Name' },
+    { key: 'email', label: 'Email' },
+  ]}
+  rows={[
+    { id: 1, name: 'Alice', email: 'alice@example.com' },
+    { id: 2, name: 'Bob', email: 'bob@example.com' },
+  ]}
+/>
 </div>
+</ComponentPreview>
 
 ```html
 <bp-table variant="default">...</bp-table>
@@ -55,13 +100,46 @@ import 'blueprint/components/table';
 
 ### Sizes
 
-<div class="component-preview">
-  <div style="display: flex; flex-direction: column; gap: 2rem;">
-    <bp-table size="small" id="table-small"></bp-table>
-    <bp-table size="medium" id="table-medium"></bp-table>
-    <bp-table size="large" id="table-large"></bp-table>
-  </div>
+<ComponentPreview>
+<div style="display: flex; flex-direction: column; gap: 2rem;">
+<TableDemo
+  id="table-small"
+  size="small"
+  columns={[
+    { key: 'name', label: 'Name' },
+    { key: 'email', label: 'Email' },
+  ]}
+  rows={[
+    { id: 1, name: 'Alice', email: 'alice@example.com' },
+    { id: 2, name: 'Bob', email: 'bob@example.com' },
+  ]}
+/>
+<TableDemo
+  id="table-medium"
+  size="medium"
+  columns={[
+    { key: 'name', label: 'Name' },
+    { key: 'email', label: 'Email' },
+  ]}
+  rows={[
+    { id: 1, name: 'Alice', email: 'alice@example.com' },
+    { id: 2, name: 'Bob', email: 'bob@example.com' },
+  ]}
+/>
+<TableDemo
+  id="table-large"
+  size="large"
+  columns={[
+    { key: 'name', label: 'Name' },
+    { key: 'email', label: 'Email' },
+  ]}
+  rows={[
+    { id: 1, name: 'Alice', email: 'alice@example.com' },
+    { id: 2, name: 'Bob', email: 'bob@example.com' },
+  ]}
+/>
 </div>
+</ComponentPreview>
 
 ```html
 <bp-table size="small">...</bp-table>
@@ -71,9 +149,21 @@ import 'blueprint/components/table';
 
 ### Sortable Columns
 
-<div class="component-preview">
-  <bp-table id="table-sortable"></bp-table>
-</div>
+<ComponentPreview>
+<TableDemo
+  id="table-sortable"
+  columns={[
+    { key: 'name', label: 'Name', sortable: true },
+    { key: 'age', label: 'Age', sortable: true, align: 'right' },
+    { key: 'email', label: 'Email' },
+  ]}
+  rows={[
+    { id: 1, name: 'Alice', age: 28, email: 'alice@example.com' },
+    { id: 2, name: 'Bob', age: 35, email: 'bob@example.com' },
+    { id: 3, name: 'Carol', age: 24, email: 'carol@example.com' },
+  ]}
+/>
+</ComponentPreview>
 
 ```javascript
 const table = document.querySelector('#table-sortable');
@@ -96,9 +186,23 @@ table.addEventListener('bp-sort', (e) => {
 
 ### Row Selection
 
-<div class="component-preview">
-  <bp-table selectable multi-select id="table-selectable"></bp-table>
-</div>
+<ComponentPreview>
+<TableDemo
+  id="table-selectable"
+  selectable={true}
+  multiSelect={true}
+  columns={[
+    { key: 'name', label: 'Name' },
+    { key: 'email', label: 'Email' },
+    { key: 'role', label: 'Role' },
+  ]}
+  rows={[
+    { id: 1, name: 'Alice Johnson', email: 'alice@example.com', role: 'Admin' },
+    { id: 2, name: 'Bob Smith', email: 'bob@example.com', role: 'User' },
+    { id: 3, name: 'Carol White', email: 'carol@example.com', role: 'Editor' },
+  ]}
+/>
+</ComponentPreview>
 
 ```html
 <bp-table selectable multi-select id="table-selectable"></bp-table>
@@ -155,7 +259,24 @@ table.columns = [
 ### Sticky Header
 
 <div class="component-preview" style="max-height: 200px; overflow: auto;">
-  <bp-table sticky-header id="table-sticky"></bp-table>
+<TableDemo
+  id="table-sticky"
+  stickyHeader={true}
+  columns={[
+    { key: 'name', label: 'Name' },
+    { key: 'email', label: 'Email' },
+  ]}
+  rows={[
+    { id: 1, name: 'Alice', email: 'alice@example.com' },
+    { id: 2, name: 'Bob', email: 'bob@example.com' },
+    { id: 3, name: 'Carol', email: 'carol@example.com' },
+    { id: 4, name: 'David', email: 'david@example.com' },
+    { id: 5, name: 'Eve', email: 'eve@example.com' },
+    { id: 6, name: 'Frank', email: 'frank@example.com' },
+    { id: 7, name: 'Grace', email: 'grace@example.com' },
+    { id: 8, name: 'Henry', email: 'henry@example.com' },
+  ]}
+/>
 </div>
 
 ```html
@@ -166,9 +287,17 @@ table.columns = [
 
 ### Loading State
 
-<div class="component-preview">
-  <bp-table loading id="table-loading"></bp-table>
-</div>
+<ComponentPreview>
+<TableDemo
+  id="table-loading"
+  loading={true}
+  columns={[
+    { key: 'name', label: 'Name' },
+    { key: 'email', label: 'Email' },
+  ]}
+  rows={[]}
+/>
+</ComponentPreview>
 
 ```html
 <bp-table loading>...</bp-table>
@@ -176,14 +305,16 @@ table.columns = [
 
 ### Empty State
 
-<div class="component-preview">
-  <bp-table id="table-empty">
-    <div slot="empty">
-      <p>No data available</p>
-      <bp-button size="small">Add Item</bp-button>
-    </div>
-  </bp-table>
-</div>
+<ComponentPreview>
+<TableDemo
+  id="table-empty"
+  columns={[
+    { key: 'name', label: 'Name' },
+    { key: 'email', label: 'Email' },
+  ]}
+  rows={[]}
+/>
+</ComponentPreview>
 
 ```html
 <bp-table>
@@ -286,3 +417,4 @@ interface TableSortState {
 - `aria-sort` on sortable headers
 - `aria-selected` on selected rows
 - Screen reader announces sort changes
+import ComponentPreview from '../../../components/ComponentPreview.astro';

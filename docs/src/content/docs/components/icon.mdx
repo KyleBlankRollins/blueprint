@@ -3,6 +3,8 @@ title: Icon
 description: SVG icon component with size and color variants
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-icon` component displays SVG icons from the built-in icon library. Icons support multiple sizes and color variants.
 
 ## Import
@@ -15,9 +17,9 @@ import 'blueprint/components/icon';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-icon name="check"></bp-icon>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-icon name="check"></bp-icon>
@@ -25,7 +27,7 @@ import 'blueprint/components/icon';
 
 ### Sizes
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-icon name="check" size="xs"></bp-icon>
     <bp-icon name="check" size="sm"></bp-icon>
@@ -33,7 +35,7 @@ import 'blueprint/components/icon';
     <bp-icon name="check" size="lg"></bp-icon>
     <bp-icon name="check" size="xl"></bp-icon>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-icon name="check" size="xs"></bp-icon>
@@ -45,7 +47,7 @@ import 'blueprint/components/icon';
 
 ### Colors
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-icon name="check" color="default"></bp-icon>
     <bp-icon name="check" color="primary"></bp-icon>
@@ -54,7 +56,7 @@ import 'blueprint/components/icon';
     <bp-icon name="check" color="error"></bp-icon>
     <bp-icon name="check" color="muted"></bp-icon>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-icon name="check" color="default"></bp-icon>
@@ -67,7 +69,7 @@ import 'blueprint/components/icon';
 
 ### Common Icons
 
-<div class="component-preview">
+<ComponentPreview>
 <div class="component-preview-row" style="flex-wrap: wrap; gap: 1rem;">
 <bp-icon name="check" size="lg"></bp-icon>
 <bp-icon name="close" size="lg"></bp-icon>
@@ -84,7 +86,7 @@ import 'blueprint/components/icon';
 <bp-icon name="warning-circle" size="lg"></bp-icon>
 <bp-icon name="warning-triangle" size="lg"></bp-icon>
 </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-icon name="check"></bp-icon>
@@ -100,9 +102,9 @@ import 'blueprint/components/icon';
 
 ### With Accessible Label
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-icon name="settings" aria-label="Open settings"></bp-icon>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-icon name="settings" aria-label="Open settings"></bp-icon>
@@ -112,13 +114,13 @@ import 'blueprint/components/icon';
 
 You can provide custom SVG content via the default slot:
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-icon size="lg">
     <svg viewBox="0 0 24 24" fill="currentColor">
       <path d="M12 2L2 7v10c0 5.5 3.8 10.6 10 12 6.2-1.4 10-6.5 10-12V7l-10-5z"/>
     </svg>
   </bp-icon>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-icon size="lg">

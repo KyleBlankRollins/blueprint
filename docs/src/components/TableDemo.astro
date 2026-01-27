@@ -1,0 +1,81 @@
+---
+/**
+ * Table demo component that initializes a bp-table with data
+ */
+interface TableColumn {
+  key: string;
+  label: string;
+  sortable?: boolean;
+  align?: 'left' | 'center' | 'right';
+  width?: string;
+}
+
+interface TableRow {
+  id: string | number;
+  [key: string]: unknown;
+}
+
+interface Props {
+  id: string;
+  columns: TableColumn[];
+  rows: TableRow[];
+  variant?: 'default' | 'striped' | 'bordered';
+  size?: 'small' | 'medium' | 'large';
+  selectable?: boolean;
+  multiSelect?: boolean;
+  stickyHeader?: boolean;
+  hoverable?: boolean;
+  loading?: boolean;
+}
+
+const {
+  id,
+  columns,
+  rows,
+  variant = 'default',
+  size = 'medium',
+  selectable = false,
+  multiSelect = false,
+  stickyHeader = false,
+  hoverable = true,
+  loading = false,
+} = Astro.props;
+
+const columnsJson = JSON.stringify(columns);
+const rowsJson = JSON.stringify(rows);
+---
+
+<bp-table id={id}></bp-table>
+
+<script
+  is:inline
+  define:vars={{
+    id,
+    columnsJson,
+    rowsJson,
+    variant,
+    size,
+    selectable,
+    multiSelect,
+    stickyHeader,
+    hoverable,
+    loading,
+  }}
+>
+  customElements.whenDefined('bp-table').then(() => {
+    requestAnimationFrame(() => {
+      const table = document.getElementById(id);
+      if (table) {
+        table.columns = JSON.parse(columnsJson);
+        table.rows = JSON.parse(rowsJson);
+        table.variant = variant;
+        table.size = size;
+        table.selectable = selectable;
+        table.multiSelect = multiSelect;
+        table.stickyHeader = stickyHeader;
+        table.hoverable = hoverable;
+        table.loading = loading;
+      }
+    });
+  });
+</script>

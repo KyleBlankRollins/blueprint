@@ -3,6 +3,8 @@ title: Multi-Select
 description: Multiple selection dropdown with tag chips
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-multi-select` component allows users to select multiple options from a dropdown list. Selected items are displayed as removable tag chips.
 
 ## Import
@@ -15,7 +17,7 @@ import 'blueprint/components/multi-select';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-multi-select placeholder="Select technologies...">
     <option value="react">React</option>
     <option value="vue">Vue</option>
@@ -23,7 +25,7 @@ import 'blueprint/components/multi-select';
     <option value="svelte">Svelte</option>
     <option value="solid">Solid</option>
   </bp-multi-select>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-multi-select placeholder="Select technologies...">
@@ -37,7 +39,7 @@ import 'blueprint/components/multi-select';
 
 ### With Initial Values
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-multi-select placeholder="Select skills...">
     <option value="js" selected>JavaScript</option>
     <option value="ts" selected>TypeScript</option>
@@ -45,7 +47,7 @@ import 'blueprint/components/multi-select';
     <option value="go">Go</option>
     <option value="rust">Rust</option>
   </bp-multi-select>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-multi-select placeholder="Select skills...">
@@ -57,7 +59,7 @@ import 'blueprint/components/multi-select';
 
 ### Sizes
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
     <bp-multi-select size="small" placeholder="Small">
       <option value="1">Option 1</option>
@@ -72,7 +74,7 @@ import 'blueprint/components/multi-select';
       <option value="2">Option 2</option>
     </bp-multi-select>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-multi-select size="small">...</bp-multi-select>
@@ -82,7 +84,7 @@ import 'blueprint/components/multi-select';
 
 ### Maximum Selections
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-multi-select max-selections="3" placeholder="Select up to 3...">
     <option value="1">Option 1</option>
     <option value="2">Option 2</option>
@@ -90,7 +92,7 @@ import 'blueprint/components/multi-select';
     <option value="4">Option 4</option>
     <option value="5">Option 5</option>
   </bp-multi-select>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-multi-select max-selections="3" placeholder="Select up to 3...">
@@ -104,7 +106,7 @@ import 'blueprint/components/multi-select';
 
 ### Validation Variants
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
     <bp-multi-select variant="success" placeholder="Success">
       <option value="1" selected>Selected</option>
@@ -116,7 +118,7 @@ import 'blueprint/components/multi-select';
       <option value="1">Option 1</option>
     </bp-multi-select>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-multi-select variant="success">...</bp-multi-select>
@@ -126,12 +128,12 @@ import 'blueprint/components/multi-select';
 
 ### Non-Clearable
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-multi-select clearable="false" placeholder="Cannot clear all">
     <option value="1" selected>Item 1</option>
     <option value="2" selected>Item 2</option>
   </bp-multi-select>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-multi-select clearable="false">...</bp-multi-select>
@@ -139,11 +141,11 @@ import 'blueprint/components/multi-select';
 
 ### Disabled
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-multi-select disabled placeholder="Disabled">
     <option value="1" selected>Selected Item</option>
   </bp-multi-select>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-multi-select disabled>...</bp-multi-select>

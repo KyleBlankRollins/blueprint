@@ -3,6 +3,8 @@ title: Combobox
 description: Searchable dropdown with autocomplete functionality
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-combobox` component provides a searchable dropdown that combines a text input with a dropdown list. Users can type to filter options or select from the list.
 
 ## Import
@@ -15,7 +17,7 @@ import 'blueprint/components/combobox';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-combobox placeholder="Select a fruit...">
     <option value="apple">Apple</option>
     <option value="banana">Banana</option>
@@ -23,7 +25,7 @@ import 'blueprint/components/combobox';
     <option value="date">Date</option>
     <option value="elderberry">Elderberry</option>
   </bp-combobox>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-combobox placeholder="Select a fruit...">
@@ -37,13 +39,13 @@ import 'blueprint/components/combobox';
 
 ### With Initial Value
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-combobox value="banana" placeholder="Select a fruit...">
     <option value="apple">Apple</option>
     <option value="banana">Banana</option>
     <option value="cherry">Cherry</option>
   </bp-combobox>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-combobox value="banana" placeholder="Select a fruit...">
@@ -55,7 +57,7 @@ import 'blueprint/components/combobox';
 
 ### Sizes
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
     <bp-combobox size="small" placeholder="Small">
       <option value="1">Option 1</option>
@@ -70,7 +72,7 @@ import 'blueprint/components/combobox';
       <option value="2">Option 2</option>
     </bp-combobox>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-combobox size="small" placeholder="Small">...</bp-combobox>
@@ -80,7 +82,7 @@ import 'blueprint/components/combobox';
 
 ### Validation Variants
 
-<div class="component-preview">
+<ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
     <bp-combobox variant="success" value="valid" placeholder="Success">
       <option value="valid">Valid selection</option>
@@ -92,7 +94,7 @@ import 'blueprint/components/combobox';
       <option value="1">Option 1</option>
     </bp-combobox>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-combobox variant="success">...</bp-combobox>
@@ -104,13 +106,13 @@ import 'blueprint/components/combobox';
 
 Allow users to enter values not in the options list:
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-combobox allow-custom-value placeholder="Type or select...">
     <option value="red">Red</option>
     <option value="green">Green</option>
     <option value="blue">Blue</option>
   </bp-combobox>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-combobox allow-custom-value placeholder="Type or select...">
@@ -122,11 +124,11 @@ Allow users to enter values not in the options list:
 
 ### Disabled
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-combobox disabled placeholder="Disabled combobox">
     <option value="1">Option 1</option>
   </bp-combobox>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-combobox disabled placeholder="Disabled">...</bp-combobox>
@@ -134,7 +136,7 @@ Allow users to enter values not in the options list:
 
 ### Many Options
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-combobox placeholder="Select a country...">
     <option value="us">United States</option>
     <option value="ca">Canada</option>
@@ -147,7 +149,7 @@ Allow users to enter values not in the options list:
     <option value="jp">Japan</option>
     <option value="au">Australia</option>
   </bp-combobox>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-combobox placeholder="Select a country...">

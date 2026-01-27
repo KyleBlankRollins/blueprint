@@ -3,6 +3,8 @@ title: Tooltip
 description: Contextual information displayed on hover or focus
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
 The `bp-tooltip` component displays contextual information when users hover over or focus on an element. Tooltips are ideal for providing additional context without cluttering the interface.
 
 ## Import
@@ -15,11 +17,11 @@ import 'blueprint/components/tooltip';
 
 ### Default
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-tooltip content="This is a tooltip">
     <bp-button>Hover me</bp-button>
   </bp-tooltip>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-tooltip content="This is a tooltip">
@@ -29,7 +31,7 @@ import 'blueprint/components/tooltip';
 
 ### Placement
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-tooltip content="Top tooltip" placement="top">
       <bp-button>Top</bp-button>
@@ -44,7 +46,7 @@ import 'blueprint/components/tooltip';
       <bp-button>Right</bp-button>
     </bp-tooltip>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-tooltip content="Top tooltip" placement="top">
@@ -63,11 +65,11 @@ import 'blueprint/components/tooltip';
 
 ### With Delay
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-tooltip content="Delayed tooltip" delay="500">
     <bp-button>Hover (500ms delay)</bp-button>
   </bp-tooltip>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-tooltip content="Delayed tooltip" delay="500">
@@ -77,11 +79,11 @@ import 'blueprint/components/tooltip';
 
 ### Disabled
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-tooltip content="This won't show" disabled>
     <bp-button>Disabled tooltip</bp-button>
   </bp-tooltip>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-tooltip content="This won't show" disabled>
@@ -91,7 +93,7 @@ import 'blueprint/components/tooltip';
 
 ### On Any Element
 
-<div class="component-preview">
+<ComponentPreview>
   <div class="component-preview-row">
     <bp-tooltip content="Icon tooltip">
       <bp-icon name="info" size="lg"></bp-icon>
@@ -103,7 +105,7 @@ import 'blueprint/components/tooltip';
       <bp-badge>New</bp-badge>
     </bp-tooltip>
   </div>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-tooltip content="Icon tooltip">
@@ -121,11 +123,11 @@ import 'blueprint/components/tooltip';
 
 Tooltips also show on focus for keyboard accessibility:
 
-<div class="component-preview">
+<ComponentPreview>
   <bp-tooltip content="Focus or hover to see this">
     <bp-button>Tab to focus</bp-button>
   </bp-tooltip>
-</div>
+</ComponentPreview>
 
 ```html
 <bp-tooltip content="Focus or hover to see this">

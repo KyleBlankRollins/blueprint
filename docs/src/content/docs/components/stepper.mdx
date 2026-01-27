@@ -3,6 +3,9 @@ title: Stepper
 description: Multi-step workflow progress indicator
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+import StepperDemo from '../../../components/StepperDemo.astro';
+
 The `bp-stepper` component displays progress through a multi-step workflow or wizard. It provides visual feedback on completed, current, and upcoming steps.
 
 ## Import
@@ -15,23 +18,18 @@ import 'blueprint/components/stepper';
 
 ### Default
 
-<div class="component-preview">
-<bp-stepper id="stepper-demo" current-step="1"></bp-stepper>
-</div>
-
-<script is:inline>
-  requestAnimationFrame(() => {
-    const stepper = document.getElementById('stepper-demo');
-    if (stepper) {
-      stepper.steps = [
-        { id: 'account', label: 'Account' },
-        { id: 'profile', label: 'Profile' },
-        { id: 'review', label: 'Review' },
-        { id: 'complete', label: 'Complete' },
-      ];
-    }
-  });
-</script>
+<ComponentPreview>
+<StepperDemo 
+  id="stepper-demo"
+  currentStep={1}
+  steps={[
+    { id: 'account', label: 'Account' },
+    { id: 'profile', label: 'Profile' },
+    { id: 'review', label: 'Review' },
+    { id: 'complete', label: 'Complete' },
+  ]}
+/>
+</ComponentPreview>
 
 ```javascript
 const stepper = document.querySelector('bp-stepper');
@@ -46,22 +44,17 @@ stepper.currentStep = 1;
 
 ### With Descriptions
 
-<div class="component-preview">
-<bp-stepper id="stepper-descriptions" current-step="1"></bp-stepper>
-</div>
-
-<script is:inline>
-  requestAnimationFrame(() => {
-    const stepper = document.getElementById('stepper-descriptions');
-    if (stepper) {
-      stepper.steps = [
-        { id: 'account', label: 'Account', description: 'Create your account' },
-        { id: 'profile', label: 'Profile', description: 'Add your details' },
-        { id: 'review', label: 'Review', description: 'Verify information' },
-      ];
-    }
-  });
-</script>
+<ComponentPreview>
+<StepperDemo 
+  id="stepper-descriptions"
+  currentStep={1}
+  steps={[
+    { id: 'account', label: 'Account', description: 'Create your account' },
+    { id: 'profile', label: 'Profile', description: 'Add your details' },
+    { id: 'review', label: 'Review', description: 'Verify information' },
+  ]}
+/>
+</ComponentPreview>
 
 ```javascript
 stepper.steps = [
@@ -73,22 +66,18 @@ stepper.steps = [
 
 ### Vertical Orientation
 
-<div class="component-preview">
-<bp-stepper id="stepper-vertical" orientation="vertical" current-step="1"></bp-stepper>
-</div>
-
-<script is:inline>
-  requestAnimationFrame(() => {
-    const stepper = document.getElementById('stepper-vertical');
-    if (stepper) {
-      stepper.steps = [
-        { id: 'step1', label: 'Step 1' },
-        { id: 'step2', label: 'Step 2' },
-        { id: 'step3', label: 'Step 3' },
-      ];
-    }
-  });
-</script>
+<ComponentPreview>
+<StepperDemo 
+  id="stepper-vertical"
+  orientation="vertical"
+  currentStep={1}
+  steps={[
+    { id: 'step1', label: 'Step 1' },
+    { id: 'step2', label: 'Step 2' },
+    { id: 'step3', label: 'Step 3' },
+  ]}
+/>
+</ComponentPreview>
 
 ```html
 <bp-stepper orientation="vertical" current-step="1"></bp-stepper>
@@ -96,28 +85,40 @@ stepper.steps = [
 
 ### Sizes
 
-<div class="component-preview">
+<ComponentPreview>
 <div style="display: flex; flex-direction: column; gap: 2rem;">
-<bp-stepper id="stepper-sm" size="sm" current-step="1"></bp-stepper>
-<bp-stepper id="stepper-md" size="md" current-step="1"></bp-stepper>
-<bp-stepper id="stepper-lg" size="lg" current-step="1"></bp-stepper>
+<StepperDemo 
+  id="stepper-sm"
+  size="sm"
+  currentStep={1}
+  steps={[
+    { id: 'step1', label: 'Step 1' },
+    { id: 'step2', label: 'Step 2' },
+    { id: 'step3', label: 'Step 3' },
+  ]}
+/>
+<StepperDemo 
+  id="stepper-md"
+  size="md"
+  currentStep={1}
+  steps={[
+    { id: 'step1', label: 'Step 1' },
+    { id: 'step2', label: 'Step 2' },
+    { id: 'step3', label: 'Step 3' },
+  ]}
+/>
+<StepperDemo 
+  id="stepper-lg"
+  size="lg"
+  currentStep={1}
+  steps={[
+    { id: 'step1', label: 'Step 1' },
+    { id: 'step2', label: 'Step 2' },
+    { id: 'step3', label: 'Step 3' },
+  ]}
+/>
 </div>
-</div>
-
-<script is:inline>
-  requestAnimationFrame(() => {
-    ['stepper-sm', 'stepper-md', 'stepper-lg'].forEach(id => {
-      const stepper = document.getElementById(id);
-      if (stepper) {
-        stepper.steps = [
-          { id: 'step1', label: 'Step 1' },
-          { id: 'step2', label: 'Step 2' },
-          { id: 'step3', label: 'Step 3' },
-        ];
-      }
-    });
-  });
-</script>
+</ComponentPreview>
 
 ```html
 <bp-stepper size="sm">...</bp-stepper>
@@ -127,22 +128,17 @@ stepper.steps = [
 
 ### With Error State
 
-<div class="component-preview">
-<bp-stepper id="stepper-error" current-step="1"></bp-stepper>
-</div>
-
-<script is:inline>
-  requestAnimationFrame(() => {
-    const stepper = document.getElementById('stepper-error');
-    if (stepper) {
-      stepper.steps = [
-        { id: 'step1', label: 'Step 1' },
-        { id: 'step2', label: 'Step 2', error: 'Validation failed' },
-        { id: 'step3', label: 'Step 3' },
-      ];
-    }
-  });
-</script>
+<ComponentPreview>
+<StepperDemo 
+  id="stepper-error"
+  currentStep={1}
+  steps={[
+    { id: 'step1', label: 'Step 1' },
+    { id: 'step2', label: 'Step 2', error: 'Validation failed' },
+    { id: 'step3', label: 'Step 3' },
+  ]}
+/>
+</ComponentPreview>
 
 ```javascript
 stepper.steps = [
@@ -223,3 +219,4 @@ interface Step {
 - Step indicators have `aria-label` with status
 - Disabled steps are properly marked
 - Keyboard navigation between clickable steps
+import ComponentPreview from '../../../components/ComponentPreview.astro';

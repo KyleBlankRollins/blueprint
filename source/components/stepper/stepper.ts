@@ -115,6 +115,12 @@ export class BpStepper extends LitElement {
   @property({ type: Boolean, reflect: true }) declare clickable: boolean;
 
   /**
+   * Show built-in navigation buttons (Previous/Next)
+   */
+  @property({ type: Boolean, reflect: true, attribute: 'show-navigation' })
+  declare showNavigation: boolean;
+
+  /**
    * Tracks which steps have been completed
    */
   @state() private completedSteps: Set<number> = new Set();
@@ -136,6 +142,7 @@ export class BpStepper extends LitElement {
     this.disabled = false;
     this.hideLabels = false;
     this.clickable = true;
+    this.showNavigation = true;
   }
 
   protected updated(changedProperties: PropertyValues): void {
@@ -541,9 +548,36 @@ export class BpStepper extends LitElement {
         </div>
         ${this._renderPanel()}
         <div class="actions" part="actions">
-          <slot name="actions"></slot>
+          <slot name="actions">
+            ${this.showNavigation ? this._renderDefaultNavigation() : nothing}
+          </slot>
         </div>
       </div>
+    `;
+  }
+
+  /**
+   * Render default navigation buttons (Previous/Next)
+   * Only shown when showNavigation is true and no custom actions are slotted
+   */
+  private _renderDefaultNavigation() {
+    return html`
+      <button
+        class="nav-button nav-button--previous"
+        part="nav-button-previous"
+        ?disabled=${this.isFirstStep || this.disabled}
+        @click=${() => this.previous()}
+      >
+        Previous
+      </button>
+      <button
+        class="nav-button nav-button--next"
+        part="nav-button-next"
+        ?disabled=${this.isLastStep || this.disabled}
+        @click=${() => this.next()}
+      >
+        ${this.isLastStep ? 'Finish' : 'Next'}
+      </button>
     `;
   }
 }

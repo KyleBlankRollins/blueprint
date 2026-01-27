@@ -3,6 +3,9 @@ title: Tree
 description: Hierarchical tree view for nested data
 ---
 
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+import TreeDemo from '../../../components/TreeDemo.astro';
+
 The `bp-tree` component displays hierarchical data in an expandable/collapsible tree structure. It supports selection, multi-select, custom icons, and connecting lines between nodes.
 
 ## Import
@@ -15,16 +18,10 @@ import 'blueprint/components/tree';
 
 ### Default
 
-<div class="component-preview">
-  <bp-tree id="tree-demo"></bp-tree>
-</div>
-
-```html
-<bp-tree id="tree-demo"></bp-tree>
-
-<script>
-  const tree = document.querySelector('#tree-demo');
-  tree.nodes = [
+<ComponentPreview>
+<TreeDemo
+  id="tree-demo"
+  nodes={[
     {
       id: 'documents',
       label: 'Documents',
@@ -42,15 +39,53 @@ import 'blueprint/components/tree';
       ],
     },
     { id: 'readme', label: 'README.md' },
-  ];
-</script>
+  ]}
+/>
+</ComponentPreview>
+
+```javascript
+const tree = document.querySelector('#tree-demo');
+tree.nodes = [
+  {
+    id: 'documents',
+    label: 'Documents',
+    children: [
+      { id: 'work', label: 'Work' },
+      { id: 'personal', label: 'Personal' },
+    ],
+  },
+  {
+    id: 'photos',
+    label: 'Photos',
+    children: [
+      { id: '2023', label: '2023' },
+      { id: '2024', label: '2024' },
+    ],
+  },
+  { id: 'readme', label: 'README.md' },
+];
 ```
 
 ### With Icons
 
-<div class="component-preview">
-  <bp-tree id="tree-icons"></bp-tree>
-</div>
+<ComponentPreview>
+<TreeDemo
+  id="tree-icons"
+  nodes={[
+    {
+      id: 'src',
+      label: 'src',
+      icon: 'folder',
+      children: [
+        { id: 'index', label: 'index.ts', icon: 'file' },
+        { id: 'app', label: 'app.ts', icon: 'file' },
+      ],
+    },
+    { id: 'package', label: 'package.json', icon: 'file' },
+    { id: 'readme', label: 'README.md', icon: 'file' },
+  ]}
+/>
+</ComponentPreview>
 
 ```javascript
 const tree = document.querySelector('#tree-icons');
@@ -71,13 +106,43 @@ tree.nodes = [
 
 ### Sizes
 
-<div class="component-preview">
-  <div style="display: flex; gap: 2rem;">
-    <bp-tree size="small" id="tree-small"></bp-tree>
-    <bp-tree size="medium" id="tree-medium"></bp-tree>
-    <bp-tree size="large" id="tree-large"></bp-tree>
-  </div>
+<ComponentPreview>
+<div style="display: flex; gap: 2rem;">
+<TreeDemo
+  id="tree-small"
+  size="small"
+  nodes={[
+    {
+      id: 'folder1',
+      label: 'Folder',
+      children: [{ id: 'file1', label: 'File' }],
+    },
+  ]}
+/>
+<TreeDemo
+  id="tree-medium"
+  size="medium"
+  nodes={[
+    {
+      id: 'folder2',
+      label: 'Folder',
+      children: [{ id: 'file2', label: 'File' }],
+    },
+  ]}
+/>
+<TreeDemo
+  id="tree-large"
+  size="large"
+  nodes={[
+    {
+      id: 'folder3',
+      label: 'Folder',
+      children: [{ id: 'file3', label: 'File' }],
+    },
+  ]}
+/>
 </div>
+</ComponentPreview>
 
 ```html
 <bp-tree size="small">...</bp-tree>
@@ -87,9 +152,26 @@ tree.nodes = [
 
 ### With Connecting Lines
 
-<div class="component-preview">
-  <bp-tree show-lines id="tree-lines"></bp-tree>
-</div>
+<ComponentPreview>
+<TreeDemo
+  id="tree-lines"
+  showLines={true}
+  nodes={[
+    {
+      id: 'root',
+      label: 'Root',
+      children: [
+        {
+          id: 'child1',
+          label: 'Child 1',
+          children: [{ id: 'grandchild1', label: 'Grandchild 1' }],
+        },
+        { id: 'child2', label: 'Child 2' },
+      ],
+    },
+  ]}
+/>
+</ComponentPreview>
 
 ```html
 <bp-tree show-lines>...</bp-tree>
@@ -97,9 +179,23 @@ tree.nodes = [
 
 ### Selectable
 
-<div class="component-preview">
-  <bp-tree selectable id="tree-selectable"></bp-tree>
-</div>
+<ComponentPreview>
+<TreeDemo
+  id="tree-selectable"
+  selectable={true}
+  nodes={[
+    {
+      id: 'documents',
+      label: 'Documents',
+      children: [
+        { id: 'work', label: 'Work' },
+        { id: 'personal', label: 'Personal' },
+      ],
+    },
+    { id: 'photos', label: 'Photos' },
+  ]}
+/>
+</ComponentPreview>
 
 ```javascript
 const tree = document.querySelector('#tree-selectable');
@@ -112,9 +208,24 @@ tree.addEventListener('bp-select', (e) => {
 
 ### Multi-Select
 
-<div class="component-preview">
-  <bp-tree selectable multi-select id="tree-multiselect"></bp-tree>
-</div>
+<ComponentPreview>
+<TreeDemo
+  id="tree-multiselect"
+  selectable={true}
+  multiSelect={true}
+  nodes={[
+    {
+      id: 'documents',
+      label: 'Documents',
+      children: [
+        { id: 'work', label: 'Work' },
+        { id: 'personal', label: 'Personal' },
+      ],
+    },
+    { id: 'photos', label: 'Photos' },
+  ]}
+/>
+</ComponentPreview>
 
 ```html
 <bp-tree selectable multi-select>...</bp-tree>
@@ -128,9 +239,30 @@ tree.addEventListener('bp-select', (e) => {
 
 ### Default Expanded
 
-<div class="component-preview">
-  <bp-tree id="tree-expanded"></bp-tree>
-</div>
+<ComponentPreview>
+<TreeDemo
+  id="tree-expanded"
+  expandedIds={['documents', 'photos']}
+  nodes={[
+    {
+      id: 'documents',
+      label: 'Documents',
+      children: [
+        { id: 'work', label: 'Work' },
+        { id: 'personal', label: 'Personal' },
+      ],
+    },
+    {
+      id: 'photos',
+      label: 'Photos',
+      children: [
+        { id: '2023', label: '2023' },
+        { id: '2024', label: '2024' },
+      ],
+    },
+  ]}
+/>
+</ComponentPreview>
 
 ```javascript
 const tree = document.querySelector('#tree-expanded');
@@ -140,9 +272,20 @@ tree.expandedIds = ['documents', 'photos']; // Pre-expand these nodes
 
 ### Disabled Nodes
 
-<div class="component-preview">
-  <bp-tree id="tree-disabled"></bp-tree>
-</div>
+<ComponentPreview>
+<TreeDemo
+  id="tree-disabled"
+  nodes={[
+    { id: 'active', label: 'Active Node' },
+    { id: 'disabled', label: 'Disabled Node', disabled: true },
+    {
+      id: 'folder',
+      label: 'Folder',
+      children: [{ id: 'child', label: 'Child', disabled: true }],
+    },
+  ]}
+/>
+</ComponentPreview>
 
 ```javascript
 tree.nodes = [
@@ -161,9 +304,32 @@ tree.nodes = [
 
 ### Deep Nesting
 
-<div class="component-preview">
-  <bp-tree show-lines id="tree-deep"></bp-tree>
-</div>
+<ComponentPreview>
+<TreeDemo
+  id="tree-deep"
+  showLines={true}
+  expandedIds={['root', 'level1', 'level2']}
+  nodes={[
+    {
+      id: 'root',
+      label: 'Root',
+      children: [
+        {
+          id: 'level1',
+          label: 'Level 1',
+          children: [
+            {
+              id: 'level2',
+              label: 'Level 2',
+              children: [{ id: 'level3', label: 'Level 3 Item' }],
+            },
+          ],
+        },
+      ],
+    },
+  ]}
+/>
+</ComponentPreview>
 
 ```javascript
 tree.nodes = [
@@ -295,3 +461,4 @@ interface TreeNode {
 - `aria-selected` indicates selection
 - `aria-disabled` for disabled nodes
 - Full keyboard navigation support
+import ComponentPreview from '../../../components/ComponentPreview.astro';
