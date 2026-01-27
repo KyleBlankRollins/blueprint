@@ -272,7 +272,7 @@ export default defineConfig({
 | `bp-divider`      | ✅         | Batch 1 |
 | `bp-drawer`       | ❌         |         |
 | `bp-dropdown`     | ❌         |         |
-| `bp-file-upload`  | ❌         |         |
+| `bp-file-upload`  | ✅         | Batch 3 |
 | `bp-heading`      | ✅         | Batch 2 |
 | `bp-icon`         | ✅         | Batch 1 |
 | `bp-input`        | ✅         |         |
@@ -281,27 +281,27 @@ export default defineConfig({
 | `bp-modal`        | ❌         |         |
 | `bp-multi-select` | ❌         |         |
 | `bp-notification` | ❌         |         |
-| `bp-number-input` | ❌         |         |
+| `bp-number-input` | ✅         | Batch 3 |
 | `bp-pagination`   | ❌         |         |
 | `bp-popover`      | ✅         | Batch 2 |
 | `bp-progress`     | ✅         | Batch 1 |
-| `bp-radio`        | ❌         |         |
+| `bp-radio`        | ✅         | Batch 3 |
 | `bp-select`       | ✅         |         |
 | `bp-skeleton`     | ✅         | Batch 1 |
-| `bp-slider`       | ❌         |         |
+| `bp-slider`       | ✅         | Batch 3 |
 | `bp-spinner`      | ✅         | Batch 1 |
 | `bp-stepper`      | ❌         |         |
-| `bp-switch`       | ❌         |         |
+| `bp-switch`       | ✅         | Batch 3 |
 | `bp-table`        | ❌         |         |
 | `bp-tabs`         | ❌         |         |
 | `bp-tag`          | ✅         | Batch 1 |
 | `bp-text`         | ✅         | Batch 2 |
-| `bp-textarea`     | ❌         |         |
+| `bp-textarea`     | ✅         | Batch 3 |
 | `bp-time-picker`  | ❌         |         |
 | `bp-tooltip`      | ✅         | Batch 2 |
 | `bp-tree`         | ❌         |         |
 
-**Summary:** 19 of 42 components documented (45%)
+**Summary:** 25 of 42 components documented (60%)
 
 ## Suggested Documentation Batches
 

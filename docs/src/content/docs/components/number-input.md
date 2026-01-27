@@ -1,0 +1,200 @@
+---
+title: Number Input
+description: Numeric input with increment/decrement controls
+---
+
+The `bp-number-input` component provides a numeric input field with optional increment/decrement buttons, min/max constraints, and step values.
+
+## Import
+
+```javascript
+import 'blueprint/components/number-input';
+```
+
+## Examples
+
+### Default
+
+<div class="component-preview">
+  <bp-number-input label="Quantity"></bp-number-input>
+</div>
+
+```html
+<bp-number-input label="Quantity"></bp-number-input>
+```
+
+### With Value
+
+<div class="component-preview">
+  <bp-number-input label="Count" value="5"></bp-number-input>
+</div>
+
+```html
+<bp-number-input label="Count" value="5"></bp-number-input>
+```
+
+### Min and Max
+
+<div class="component-preview">
+  <bp-number-input label="Rating (1-10)" min="1" max="10" value="5"></bp-number-input>
+</div>
+
+```html
+<bp-number-input
+  label="Rating (1-10)"
+  min="1"
+  max="10"
+  value="5"
+></bp-number-input>
+```
+
+### Step Values
+
+<div class="component-preview">
+  <bp-number-input label="Price" step="0.25" value="1.50"></bp-number-input>
+</div>
+
+```html
+<bp-number-input label="Price" step="0.25" value="1.50"></bp-number-input>
+```
+
+### Sizes
+
+<div class="component-preview">
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
+    <bp-number-input size="small" label="Small" value="10"></bp-number-input>
+    <bp-number-input size="medium" label="Medium" value="10"></bp-number-input>
+    <bp-number-input size="large" label="Large" value="10"></bp-number-input>
+  </div>
+</div>
+
+```html
+<bp-number-input size="small" label="Small"></bp-number-input>
+<bp-number-input size="medium" label="Medium"></bp-number-input>
+<bp-number-input size="large" label="Large"></bp-number-input>
+```
+
+### Validation Variants
+
+<div class="component-preview">
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
+    <bp-number-input variant="success" label="Success" value="100" message="Valid amount"></bp-number-input>
+    <bp-number-input variant="error" label="Error" value="-5" message="Must be positive"></bp-number-input>
+    <bp-number-input variant="warning" label="Warning" value="999" message="Unusually high value"></bp-number-input>
+  </div>
+</div>
+
+```html
+<bp-number-input
+  variant="success"
+  label="Success"
+  message="Valid"
+></bp-number-input>
+<bp-number-input
+  variant="error"
+  label="Error"
+  message="Invalid"
+></bp-number-input>
+<bp-number-input
+  variant="warning"
+  label="Warning"
+  message="Check value"
+></bp-number-input>
+```
+
+### Without Buttons
+
+<div class="component-preview">
+  <bp-number-input label="Year" hide-buttons value="2024"></bp-number-input>
+</div>
+
+```html
+<bp-number-input label="Year" hide-buttons value="2024"></bp-number-input>
+```
+
+### Precision (Decimal Places)
+
+<div class="component-preview">
+  <bp-number-input label="Amount" precision="2" step="0.01" value="99.99"></bp-number-input>
+</div>
+
+```html
+<bp-number-input
+  label="Amount"
+  precision="2"
+  step="0.01"
+  value="99.99"
+></bp-number-input>
+```
+
+### Disabled and Readonly
+
+<div class="component-preview">
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
+    <bp-number-input disabled label="Disabled" value="50"></bp-number-input>
+    <bp-number-input readonly label="Readonly" value="100"></bp-number-input>
+  </div>
+</div>
+
+```html
+<bp-number-input disabled label="Disabled" value="50"></bp-number-input>
+<bp-number-input readonly label="Readonly" value="100"></bp-number-input>
+```
+
+### With Placeholder
+
+<div class="component-preview">
+  <bp-number-input label="Age" placeholder="Enter your age"></bp-number-input>
+</div>
+
+```html
+<bp-number-input label="Age" placeholder="Enter your age"></bp-number-input>
+```
+
+## API Reference
+
+### Properties
+
+| Property       | Type                                             | Default     | Description                      |
+| -------------- | ------------------------------------------------ | ----------- | -------------------------------- |
+| `value`        | `number \| null`                                 | `null`      | Current value                    |
+| `min`          | `number`                                         | -           | Minimum allowed value            |
+| `max`          | `number`                                         | -           | Maximum allowed value            |
+| `step`         | `number`                                         | `1`         | Step increment                   |
+| `precision`    | `number`                                         | -           | Number of decimal places         |
+| `label`        | `string`                                         | `''`        | Label text                       |
+| `placeholder`  | `string`                                         | `''`        | Placeholder text                 |
+| `name`         | `string`                                         | `''`        | Name for form submission         |
+| `message`      | `string`                                         | `''`        | Help or error message            |
+| `size`         | `'small' \| 'medium' \| 'large'`                 | `'medium'`  | Size of the input                |
+| `variant`      | `'default' \| 'success' \| 'error' \| 'warning'` | `'default'` | Validation variant               |
+| `disabled`     | `boolean`                                        | `false`     | Whether the input is disabled    |
+| `required`     | `boolean`                                        | `false`     | Whether the input is required    |
+| `readonly`     | `boolean`                                        | `false`     | Whether the input is readonly    |
+| `hide-buttons` | `boolean`                                        | `false`     | Hide increment/decrement buttons |
+
+### Events
+
+| Event       | Detail      | Description                               |
+| ----------- | ----------- | ----------------------------------------- |
+| `bp-input`  | `{ value }` | Fired during input                        |
+| `bp-change` | `{ value }` | Fired when value changes (blur or button) |
+
+### CSS Parts
+
+| Part        | Description              |
+| ----------- | ------------------------ |
+| `input`     | The native input element |
+| `decrement` | The decrement button     |
+| `increment` | The increment button     |
+| `label`     | The label element        |
+| `message`   | The help/error message   |
+
+### Keyboard Navigation
+
+- **Up Arrow**: Increment by step
+- **Down Arrow**: Decrement by step
+- **Page Up**: Increment by step × 10
+- **Page Down**: Decrement by step × 10
+- **Home**: Set to minimum (if defined)
+- **End**: Set to maximum (if defined)

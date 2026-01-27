@@ -1,0 +1,225 @@
+---
+title: File Upload
+description: Drag-and-drop file upload with validation
+---
+
+The `bp-file-upload` component provides a file upload interface with drag-and-drop support, file type validation, size limits, and preview capabilities.
+
+## Import
+
+```javascript
+import 'blueprint/components/file-upload';
+```
+
+## Examples
+
+### Default
+
+<div class="component-preview">
+  <bp-file-upload></bp-file-upload>
+</div>
+
+```html
+<bp-file-upload></bp-file-upload>
+```
+
+### With Custom Label
+
+<div class="component-preview">
+  <bp-file-upload 
+    label="Upload your resume" 
+    description="PDF, DOC, or DOCX up to 5MB">
+  </bp-file-upload>
+</div>
+
+```html
+<bp-file-upload
+  label="Upload your resume"
+  description="PDF, DOC, or DOCX up to 5MB"
+>
+</bp-file-upload>
+```
+
+### Accept Specific Types
+
+<div class="component-preview">
+  <bp-file-upload 
+    label="Upload images" 
+    accept="image/*"
+    description="PNG, JPG, or GIF">
+  </bp-file-upload>
+</div>
+
+```html
+<bp-file-upload
+  label="Upload images"
+  accept="image/*"
+  description="PNG, JPG, or GIF"
+>
+</bp-file-upload>
+```
+
+### Multiple Files
+
+<div class="component-preview">
+  <bp-file-upload 
+    label="Upload documents" 
+    multiple
+    description="Select multiple files">
+  </bp-file-upload>
+</div>
+
+```html
+<bp-file-upload label="Upload documents" multiple></bp-file-upload>
+```
+
+### With File Limits
+
+<div class="component-preview">
+  <bp-file-upload 
+    label="Upload attachments" 
+    multiple
+    max-files="3"
+    max-size="5242880"
+    description="Maximum 3 files, 5MB each">
+  </bp-file-upload>
+</div>
+
+```html
+<bp-file-upload
+  label="Upload attachments"
+  multiple
+  max-files="3"
+  max-size="5242880"
+>
+</bp-file-upload>
+```
+
+### Sizes
+
+<div class="component-preview">
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
+    <bp-file-upload size="small" label="Small uploader"></bp-file-upload>
+    <bp-file-upload size="medium" label="Medium uploader"></bp-file-upload>
+    <bp-file-upload size="large" label="Large uploader"></bp-file-upload>
+  </div>
+</div>
+
+```html
+<bp-file-upload size="small" label="Small"></bp-file-upload>
+<bp-file-upload size="medium" label="Medium"></bp-file-upload>
+<bp-file-upload size="large" label="Large"></bp-file-upload>
+```
+
+### Validation States
+
+<div class="component-preview">
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
+    <bp-file-upload variant="success" label="Uploaded" message="File uploaded successfully"></bp-file-upload>
+    <bp-file-upload variant="error" label="Error" message="File too large"></bp-file-upload>
+    <bp-file-upload variant="warning" label="Warning" message="File may be too small"></bp-file-upload>
+  </div>
+</div>
+
+```html
+<bp-file-upload variant="success" message="Upload successful"></bp-file-upload>
+<bp-file-upload variant="error" message="File too large"></bp-file-upload>
+<bp-file-upload variant="warning" message="Check file format"></bp-file-upload>
+```
+
+### Disabled
+
+<div class="component-preview">
+  <bp-file-upload disabled label="Upload disabled"></bp-file-upload>
+</div>
+
+```html
+<bp-file-upload disabled label="Upload disabled"></bp-file-upload>
+```
+
+### Without Previews
+
+<div class="component-preview">
+  <bp-file-upload 
+    label="Upload files"
+    show-previews="false">
+  </bp-file-upload>
+</div>
+
+```html
+<bp-file-upload label="Upload files" show-previews="false"></bp-file-upload>
+```
+
+## API Reference
+
+### Properties
+
+| Property       | Type                                             | Default                                | Description                               |
+| -------------- | ------------------------------------------------ | -------------------------------------- | ----------------------------------------- |
+| `name`         | `string`                                         | `''`                                   | Name for form submission                  |
+| `label`        | `string`                                         | `'Drop files here or click to upload'` | Drop zone label                           |
+| `description`  | `string`                                         | `''`                                   | Description text                          |
+| `accept`       | `string`                                         | `''`                                   | Accepted file types (MIME or extensions)  |
+| `multiple`     | `boolean`                                        | `false`                                | Allow multiple files                      |
+| `maxSize`      | `number`                                         | `0`                                    | Maximum file size in bytes (0 = no limit) |
+| `maxFiles`     | `number`                                         | `0`                                    | Maximum number of files (0 = no limit)    |
+| `disabled`     | `boolean`                                        | `false`                                | Whether upload is disabled                |
+| `required`     | `boolean`                                        | `false`                                | Whether a file is required                |
+| `variant`      | `'default' \| 'success' \| 'error' \| 'warning'` | `'default'`                            | Validation variant                        |
+| `message`      | `string`                                         | `''`                                   | Help or error message                     |
+| `size`         | `'small' \| 'medium' \| 'large'`                 | `'medium'`                             | Size variant                              |
+| `showPreviews` | `boolean`                                        | `true`                                 | Show image previews                       |
+
+### Methods
+
+| Method         | Parameters       | Returns      | Description                |
+| -------------- | ---------------- | ------------ | -------------------------- |
+| `getFiles()`   | -                | `FileInfo[]` | Get list of selected files |
+| `clearFiles()` | -                | `void`       | Clear all selected files   |
+| `removeFile()` | `fileId: string` | `void`       | Remove a specific file     |
+
+### Events
+
+| Event              | Detail                  | Description                        |
+| ------------------ | ----------------------- | ---------------------------------- |
+| `bp-change`        | `{ files: FileInfo[] }` | Fired when files are added/removed |
+| `bp-file-added`    | `{ file: FileInfo }`    | Fired when a file is added         |
+| `bp-file-removed`  | `{ file: FileInfo }`    | Fired when a file is removed       |
+| `bp-file-rejected` | `{ file, reason }`      | Fired when a file is rejected      |
+
+### FileInfo Interface
+
+```typescript
+interface FileInfo {
+  file: File; // Original File object
+  name: string; // File name
+  size: number; // Size in bytes
+  type: string; // MIME type
+  id: string; // Unique identifier
+  previewUrl?: string; // Preview URL for images
+  progress?: number; // Upload progress (0-100)
+  status?: 'pending' | 'uploading' | 'complete' | 'error';
+  error?: string; // Error message if failed
+}
+```
+
+### CSS Parts
+
+| Part          | Description             |
+| ------------- | ----------------------- |
+| `dropzone`    | The drop zone container |
+| `input`       | The hidden file input   |
+| `label`       | The label text          |
+| `description` | The description text    |
+| `icon`        | The upload icon         |
+| `file-list`   | The file list container |
+| `file-item`   | Individual file item    |
+| `file-name`   | File name text          |
+| `file-size`   | File size text          |
+| `file-remove` | Remove file button      |
+
+### Accessibility
+
+- Keyboard accessible (Enter/Space to open file picker)
+- Drag and drop with visual feedback
+- Screen reader announcements for file operations

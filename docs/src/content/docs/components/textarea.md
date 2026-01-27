@@ -1,0 +1,195 @@
+---
+title: Textarea
+description: Multi-line text input with resize options
+---
+
+The `bp-textarea` component provides a multi-line text input field with support for labels, validation states, character limits, and resize controls.
+
+## Import
+
+```javascript
+import 'blueprint/components/textarea';
+```
+
+## Examples
+
+### Default
+
+<div class="component-preview">
+  <bp-textarea placeholder="Enter your message..."></bp-textarea>
+</div>
+
+```html
+<bp-textarea placeholder="Enter your message..."></bp-textarea>
+```
+
+### With Label
+
+<div class="component-preview">
+  <bp-textarea label="Description" placeholder="Enter a description..."></bp-textarea>
+</div>
+
+```html
+<bp-textarea
+  label="Description"
+  placeholder="Enter a description..."
+></bp-textarea>
+```
+
+### With Helper Text
+
+<div class="component-preview">
+  <bp-textarea 
+    label="Bio" 
+    placeholder="Tell us about yourself..." 
+    helperText="Maximum 500 characters">
+  </bp-textarea>
+</div>
+
+```html
+<bp-textarea
+  label="Bio"
+  placeholder="Tell us about yourself..."
+  helperText="Maximum 500 characters"
+>
+</bp-textarea>
+```
+
+### Sizes
+
+<div class="component-preview">
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
+    <bp-textarea size="sm" placeholder="Small textarea"></bp-textarea>
+    <bp-textarea size="md" placeholder="Medium textarea"></bp-textarea>
+    <bp-textarea size="lg" placeholder="Large textarea"></bp-textarea>
+  </div>
+</div>
+
+```html
+<bp-textarea size="sm" placeholder="Small textarea"></bp-textarea>
+<bp-textarea size="md" placeholder="Medium textarea"></bp-textarea>
+<bp-textarea size="lg" placeholder="Large textarea"></bp-textarea>
+```
+
+### Validation Variants
+
+<div class="component-preview">
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
+    <bp-textarea variant="success" label="Success" value="Valid content"></bp-textarea>
+    <bp-textarea variant="error" label="Error" errorMessage="This field is required"></bp-textarea>
+    <bp-textarea variant="warning" label="Warning" helperText="Content may be too short"></bp-textarea>
+  </div>
+</div>
+
+```html
+<bp-textarea variant="success" label="Success"></bp-textarea>
+<bp-textarea
+  variant="error"
+  label="Error"
+  errorMessage="Required"
+></bp-textarea>
+<bp-textarea variant="warning" label="Warning"></bp-textarea>
+```
+
+### Row Control
+
+<div class="component-preview">
+  <bp-textarea label="Comments" rows="5" placeholder="This textarea has 5 rows..."></bp-textarea>
+</div>
+
+```html
+<bp-textarea label="Comments" rows="5"></bp-textarea>
+```
+
+### Resize Options
+
+<div class="component-preview">
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
+    <bp-textarea resize="none" placeholder="No resize"></bp-textarea>
+    <bp-textarea resize="vertical" placeholder="Vertical resize only"></bp-textarea>
+    <bp-textarea resize="both" placeholder="Resize both directions"></bp-textarea>
+  </div>
+</div>
+
+```html
+<bp-textarea resize="none" placeholder="No resize"></bp-textarea>
+<bp-textarea resize="vertical" placeholder="Vertical only"></bp-textarea>
+<bp-textarea resize="both" placeholder="Both directions"></bp-textarea>
+```
+
+### Character Limit
+
+<div class="component-preview">
+  <bp-textarea 
+    label="Tweet" 
+    maxlength="280" 
+    placeholder="What's happening?"
+    helperText="Maximum 280 characters">
+  </bp-textarea>
+</div>
+
+```html
+<bp-textarea label="Tweet" maxlength="280"></bp-textarea>
+```
+
+### Disabled and Readonly
+
+<div class="component-preview">
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
+    <bp-textarea disabled label="Disabled" value="Cannot edit this"></bp-textarea>
+    <bp-textarea readonly label="Readonly" value="Can select but not edit"></bp-textarea>
+  </div>
+</div>
+
+```html
+<bp-textarea disabled label="Disabled" value="Cannot edit"></bp-textarea>
+<bp-textarea readonly label="Readonly" value="Read only"></bp-textarea>
+```
+
+## API Reference
+
+### Properties
+
+| Property       | Type                                                       | Default      | Description                              |
+| -------------- | ---------------------------------------------------------- | ------------ | ---------------------------------------- |
+| `value`        | `string`                                                   | `''`         | Current value                            |
+| `placeholder`  | `string`                                                   | -            | Placeholder text                         |
+| `label`        | `string`                                                   | -            | Label text                               |
+| `helperText`   | `string`                                                   | -            | Helper text below the textarea           |
+| `errorMessage` | `string`                                                   | -            | Error message (shown with error variant) |
+| `variant`      | `'default' \| 'success' \| 'error' \| 'warning' \| 'info'` | `'default'`  | Visual variant                           |
+| `size`         | `'sm' \| 'md' \| 'lg'`                                     | `'md'`       | Size of the textarea                     |
+| `rows`         | `number`                                                   | -            | Number of visible text rows              |
+| `cols`         | `number`                                                   | -            | Number of visible text columns           |
+| `maxlength`    | `number`                                                   | -            | Maximum character length                 |
+| `minlength`    | `number`                                                   | -            | Minimum character length                 |
+| `resize`       | `'none' \| 'both' \| 'horizontal' \| 'vertical'`           | `'vertical'` | Resize behavior                          |
+| `disabled`     | `boolean`                                                  | `false`      | Whether the textarea is disabled         |
+| `required`     | `boolean`                                                  | `false`      | Whether the textarea is required         |
+| `readonly`     | `boolean`                                                  | `false`      | Whether the textarea is readonly         |
+| `name`         | `string`                                                   | -            | Name for form submission                 |
+| `autocomplete` | `string`                                                   | -            | Autocomplete hint                        |
+
+### Events
+
+| Event       | Detail      | Description                            |
+| ----------- | ----------- | -------------------------------------- |
+| `bp-input`  | `{ value }` | Fired on every keystroke               |
+| `bp-change` | `{ value }` | Fired when value changes (on blur)     |
+| `bp-focus`  | -           | Fired when the textarea receives focus |
+| `bp-blur`   | -           | Fired when the textarea loses focus    |
+
+### CSS Parts
+
+| Part       | Description                 |
+| ---------- | --------------------------- |
+| `textarea` | The native textarea element |
+| `label`    | The label element           |
+| `helper`   | The helper text element     |
+| `error`    | The error message element   |
+
+### Accessibility
+
+- Label is associated with the textarea
+- Error messages are announced to screen readers
+- Supports standard keyboard navigation
