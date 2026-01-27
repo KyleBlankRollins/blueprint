@@ -292,16 +292,16 @@ export default defineConfig({
 | `bp-spinner`      | ✅         | Batch 1 |
 | `bp-stepper`      | ✅         | Batch 5 |
 | `bp-switch`       | ✅         | Batch 3 |
-| `bp-table`        | ❌         |         |
+| `bp-table`        | ✅         | Batch 7 |
 | `bp-tabs`         | ✅         | Batch 5 |
 | `bp-tag`          | ✅         | Batch 1 |
 | `bp-text`         | ✅         | Batch 2 |
 | `bp-textarea`     | ✅         | Batch 3 |
 | `bp-time-picker`  | ✅         | Batch 4 |
 | `bp-tooltip`      | ✅         | Batch 2 |
-| `bp-tree`         | ❌         |         |
+| `bp-tree`         | ✅         | Batch 7 |
 
-**Summary:** 40 of 42 components documented (95%)
+**Summary:** 42 of 42 components documented (100%)
 
 ## Suggested Documentation Batches
 
