@@ -1,0 +1,247 @@
+---
+title: Popover
+description: Rich content displayed in a floating panel
+---
+
+The `bp-popover` component displays rich content in a floating panel triggered by click, hover, focus, or manual control. Unlike tooltips, popovers can contain complex interactive content.
+
+## Import
+
+```javascript
+import 'blueprint/components/popover';
+```
+
+## Examples
+
+### Default (Click Trigger)
+
+<div class="component-preview">
+  <bp-popover>
+    <bp-button>Click me</bp-button>
+    <div slot="content">
+      <bp-text>This is popover content.</bp-text>
+    </div>
+  </bp-popover>
+</div>
+
+```html
+<bp-popover>
+  <bp-button>Click me</bp-button>
+  <div slot="content">
+    <bp-text>This is popover content.</bp-text>
+  </div>
+</bp-popover>
+```
+
+### Placement
+
+<div class="component-preview">
+  <div class="component-preview-row">
+    <bp-popover placement="top">
+      <bp-button>Top</bp-button>
+      <div slot="content">Top popover</div>
+    </bp-popover>
+    <bp-popover placement="bottom">
+      <bp-button>Bottom</bp-button>
+      <div slot="content">Bottom popover</div>
+    </bp-popover>
+    <bp-popover placement="left">
+      <bp-button>Left</bp-button>
+      <div slot="content">Left popover</div>
+    </bp-popover>
+    <bp-popover placement="right">
+      <bp-button>Right</bp-button>
+      <div slot="content">Right popover</div>
+    </bp-popover>
+  </div>
+</div>
+
+```html
+<bp-popover placement="top">...</bp-popover>
+<bp-popover placement="bottom">...</bp-popover>
+<bp-popover placement="left">...</bp-popover>
+<bp-popover placement="right">...</bp-popover>
+```
+
+### With Arrow
+
+<div class="component-preview">
+  <bp-popover arrow>
+    <bp-button>With arrow</bp-button>
+    <div slot="content">Popover with arrow pointing to trigger</div>
+  </bp-popover>
+</div>
+
+```html
+<bp-popover arrow>
+  <bp-button>With arrow</bp-button>
+  <div slot="content">Popover with arrow</div>
+</bp-popover>
+```
+
+### Hover Trigger
+
+<div class="component-preview">
+  <bp-popover trigger="hover">
+    <bp-button>Hover me</bp-button>
+    <div slot="content">Shown on hover</div>
+  </bp-popover>
+</div>
+
+```html
+<bp-popover trigger="hover">
+  <bp-button>Hover me</bp-button>
+  <div slot="content">Shown on hover</div>
+</bp-popover>
+```
+
+### With Header and Footer
+
+<div class="component-preview">
+  <bp-popover arrow>
+    <bp-button>Full popover</bp-button>
+    <bp-heading slot="header" level="3" size="sm">Popover Title</bp-heading>
+    <div slot="content">
+      <bp-text>This is the main content of the popover. It can contain any elements.</bp-text>
+    </div>
+    <div slot="footer">
+      <bp-button size="small" variant="secondary">Cancel</bp-button>
+      <bp-button size="small">Confirm</bp-button>
+    </div>
+  </bp-popover>
+</div>
+
+```html
+<bp-popover arrow>
+  <bp-button>Full popover</bp-button>
+  <bp-heading slot="header" level="3" size="sm">Popover Title</bp-heading>
+  <div slot="content">
+    <bp-text>Main content here.</bp-text>
+  </div>
+  <div slot="footer">
+    <bp-button size="small" variant="secondary">Cancel</bp-button>
+    <bp-button size="small">Confirm</bp-button>
+  </div>
+</bp-popover>
+```
+
+### With Close Button
+
+<div class="component-preview">
+  <bp-popover show-close arrow>
+    <bp-button>With close button</bp-button>
+    <div slot="content">Click the X to close</div>
+  </bp-popover>
+</div>
+
+```html
+<bp-popover show-close arrow>
+  <bp-button>With close button</bp-button>
+  <div slot="content">Click the X to close</div>
+</bp-popover>
+```
+
+### Manual Control
+
+<div class="component-preview">
+  <bp-popover id="manual-popover" trigger="manual">
+    <bp-button onclick="document.getElementById('manual-popover').open = !document.getElementById('manual-popover').open">Toggle Popover</bp-button>
+    <div slot="content">Manually controlled popover</div>
+  </bp-popover>
+</div>
+
+```html
+<bp-popover id="my-popover" trigger="manual">
+  <bp-button>Toggle Popover</bp-button>
+  <div slot="content">Manually controlled</div>
+</bp-popover>
+
+<script>
+  const popover = document.getElementById('my-popover');
+  popover.open = !popover.open; // Toggle programmatically
+</script>
+```
+
+### Rich Content
+
+<div class="component-preview">
+  <bp-popover arrow>
+    <bp-button>User info</bp-button>
+    <div slot="content" style="display: flex; gap: 1rem; align-items: center;">
+      <bp-avatar initials="JD" size="lg"></bp-avatar>
+      <div>
+        <bp-heading level="4" size="sm">John Doe</bp-heading>
+        <bp-text variant="muted" size="sm">john@example.com</bp-text>
+      </div>
+    </div>
+  </bp-popover>
+</div>
+
+```html
+<bp-popover arrow>
+  <bp-button>User info</bp-button>
+  <div slot="content" style="display: flex; gap: 1rem;">
+    <bp-avatar initials="JD" size="lg"></bp-avatar>
+    <div>
+      <bp-heading level="4" size="sm">John Doe</bp-heading>
+      <bp-text variant="muted" size="sm">john@example.com</bp-text>
+    </div>
+  </div>
+</bp-popover>
+```
+
+## API Reference
+
+### Properties
+
+| Property                 | Type                                                                                                                                                                 | Default    | Description                          |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------------------------------------ |
+| `open`                   | `boolean`                                                                                                                                                            | `false`    | Whether the popover is open          |
+| `placement`              | `'top' \| 'top-start' \| 'top-end' \| 'bottom' \| 'bottom-start' \| 'bottom-end' \| 'left' \| 'left-start' \| 'left-end' \| 'right' \| 'right-start' \| 'right-end'` | `'bottom'` | Position relative to trigger         |
+| `trigger`                | `'click' \| 'hover' \| 'focus' \| 'manual'`                                                                                                                          | `'click'`  | How the popover is triggered         |
+| `arrow`                  | `boolean`                                                                                                                                                            | `false`    | Show arrow pointing to trigger       |
+| `show-close`             | `boolean`                                                                                                                                                            | `false`    | Show close button                    |
+| `close-on-outside-click` | `boolean`                                                                                                                                                            | `true`     | Close when clicking outside          |
+| `close-on-escape`        | `boolean`                                                                                                                                                            | `true`     | Close when pressing Escape           |
+| `distance`               | `number`                                                                                                                                                             | `8`        | Distance from trigger (pixels)       |
+| `show-delay`             | `number`                                                                                                                                                             | `0`        | Delay before showing (hover trigger) |
+| `hide-delay`             | `number`                                                                                                                                                             | `0`        | Delay before hiding (hover trigger)  |
+| `disabled`               | `boolean`                                                                                                                                                            | `false`    | Disable the popover                  |
+| `label`                  | `string`                                                                                                                                                             | `''`       | Accessible label for the panel       |
+
+### Slots
+
+| Slot      | Description                 |
+| --------- | --------------------------- |
+| (default) | The trigger element         |
+| `content` | Main content of the popover |
+| `header`  | Optional header content     |
+| `footer`  | Optional footer content     |
+
+### Events
+
+| Event           | Detail | Description                           |
+| --------------- | ------ | ------------------------------------- |
+| `bp-show`       | -      | Fired when the popover opens          |
+| `bp-hide`       | -      | Fired when the popover closes         |
+| `bp-after-show` | -      | Fired after open animation completes  |
+| `bp-after-hide` | -      | Fired after close animation completes |
+
+### CSS Parts
+
+| Part           | Description              |
+| -------------- | ------------------------ |
+| `trigger`      | The trigger wrapper      |
+| `panel`        | The popover panel        |
+| `header`       | The header section       |
+| `body`         | The body/content section |
+| `footer`       | The footer section       |
+| `arrow`        | The arrow element        |
+| `close-button` | The close button         |
+
+### Accessibility
+
+- Panel has `role="dialog"` with proper labeling
+- Focus is trapped within the popover when open
+- Escape key closes the popover
+- Focus returns to trigger on close

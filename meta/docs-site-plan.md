@@ -256,52 +256,52 @@ export default defineConfig({
 
 ## Component Documentation Status
 
-| Component         | Documented | Notes                |
-| ----------------- | ---------- | -------------------- |
-| `bp-accordion`    | ❌         |                      |
-| `bp-alert`        | ✅         |                      |
-| `bp-avatar`       | ❌         |                      |
-| `bp-badge`        | ✅         | Batch 1              |
-| `bp-breadcrumb`   | ❌         |                      |
-| `bp-button`       | ✅         |                      |
-| `bp-card`         | ✅         |                      |
-| `bp-checkbox`     | ✅         |                      |
-| `bp-color-picker` | ❌         |                      |
-| `bp-combobox`     | ❌         |                      |
-| `bp-date-picker`  | ❌         |                      |
-| `bp-divider`      | ✅         | Batch 1              |
-| `bp-drawer`       | ❌         |                      |
-| `bp-dropdown`     | ❌         |                      |
-| `bp-file-upload`  | ❌         |                      |
-| `bp-heading`      | ❌         | Typography component |
-| `bp-icon`         | ✅         | Batch 1              |
-| `bp-input`        | ✅         |                      |
-| `bp-link`         | ❌         |                      |
-| `bp-menu`         | ❌         |                      |
-| `bp-modal`        | ❌         |                      |
-| `bp-multi-select` | ❌         |                      |
-| `bp-notification` | ❌         |                      |
-| `bp-number-input` | ❌         |                      |
-| `bp-pagination`   | ❌         |                      |
-| `bp-popover`      | ❌         |                      |
-| `bp-progress`     | ✅         | Batch 1              |
-| `bp-radio`        | ❌         |                      |
-| `bp-select`       | ✅         |                      |
-| `bp-skeleton`     | ✅         | Batch 1              |
-| `bp-slider`       | ❌         |                      |
-| `bp-spinner`      | ✅         | Batch 1              |
-| `bp-stepper`      | ❌         |                      |
-| `bp-switch`       | ❌         |                      |
-| `bp-table`        | ❌         |                      |
-| `bp-tabs`         | ❌         |                      |
-| `bp-tag`          | ✅         | Batch 1              |
-| `bp-text`         | ❌         | Typography component |
-| `bp-textarea`     | ❌         |                      |
-| `bp-time-picker`  | ❌         |                      |
-| `bp-tooltip`      | ❌         |                      |
-| `bp-tree`         | ❌         |                      |
+| Component         | Documented | Notes   |
+| ----------------- | ---------- | ------- |
+| `bp-accordion`    | ❌         |         |
+| `bp-alert`        | ✅         |         |
+| `bp-avatar`       | ✅         | Batch 2 |
+| `bp-badge`        | ✅         | Batch 1 |
+| `bp-breadcrumb`   | ❌         |         |
+| `bp-button`       | ✅         |         |
+| `bp-card`         | ✅         |         |
+| `bp-checkbox`     | ✅         |         |
+| `bp-color-picker` | ❌         |         |
+| `bp-combobox`     | ❌         |         |
+| `bp-date-picker`  | ❌         |         |
+| `bp-divider`      | ✅         | Batch 1 |
+| `bp-drawer`       | ❌         |         |
+| `bp-dropdown`     | ❌         |         |
+| `bp-file-upload`  | ❌         |         |
+| `bp-heading`      | ✅         | Batch 2 |
+| `bp-icon`         | ✅         | Batch 1 |
+| `bp-input`        | ✅         |         |
+| `bp-link`         | ✅         | Batch 2 |
+| `bp-menu`         | ❌         |         |
+| `bp-modal`        | ❌         |         |
+| `bp-multi-select` | ❌         |         |
+| `bp-notification` | ❌         |         |
+| `bp-number-input` | ❌         |         |
+| `bp-pagination`   | ❌         |         |
+| `bp-popover`      | ✅         | Batch 2 |
+| `bp-progress`     | ✅         | Batch 1 |
+| `bp-radio`        | ❌         |         |
+| `bp-select`       | ✅         |         |
+| `bp-skeleton`     | ✅         | Batch 1 |
+| `bp-slider`       | ❌         |         |
+| `bp-spinner`      | ✅         | Batch 1 |
+| `bp-stepper`      | ❌         |         |
+| `bp-switch`       | ❌         |         |
+| `bp-table`        | ❌         |         |
+| `bp-tabs`         | ❌         |         |
+| `bp-tag`          | ✅         | Batch 1 |
+| `bp-text`         | ✅         | Batch 2 |
+| `bp-textarea`     | ❌         |         |
+| `bp-time-picker`  | ❌         |         |
+| `bp-tooltip`      | ✅         | Batch 2 |
+| `bp-tree`         | ❌         |         |
 
-**Summary:** 6 of 42 components documented (14%)
+**Summary:** 19 of 42 components documented (45%)
 
 ## Suggested Documentation Batches
 

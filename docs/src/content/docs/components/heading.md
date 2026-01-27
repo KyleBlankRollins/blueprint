@@ -1,0 +1,142 @@
+---
+title: Heading
+description: Semantic heading component with flexible sizing
+---
+
+The `bp-heading` component provides semantic headings (h1-h6) with independent visual sizing. This allows proper document structure while maintaining design flexibility.
+
+## Import
+
+```javascript
+import 'blueprint/components/heading';
+```
+
+## Examples
+
+### Default
+
+<div class="component-preview">
+  <bp-heading>Page Title</bp-heading>
+</div>
+
+```html
+<bp-heading>Page Title</bp-heading>
+```
+
+### Heading Levels
+
+<div class="component-preview">
+  <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+    <bp-heading level="1">Heading 1</bp-heading>
+    <bp-heading level="2">Heading 2</bp-heading>
+    <bp-heading level="3">Heading 3</bp-heading>
+    <bp-heading level="4">Heading 4</bp-heading>
+    <bp-heading level="5">Heading 5</bp-heading>
+    <bp-heading level="6">Heading 6</bp-heading>
+  </div>
+</div>
+
+```html
+<bp-heading level="1">Heading 1</bp-heading>
+<bp-heading level="2">Heading 2</bp-heading>
+<bp-heading level="3">Heading 3</bp-heading>
+<bp-heading level="4">Heading 4</bp-heading>
+<bp-heading level="5">Heading 5</bp-heading>
+<bp-heading level="6">Heading 6</bp-heading>
+```
+
+### Sizes
+
+Visual sizes independent of semantic level:
+
+<div class="component-preview">
+  <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+    <bp-heading level="2" size="4xl">4xl Size</bp-heading>
+    <bp-heading level="2" size="3xl">3xl Size</bp-heading>
+    <bp-heading level="2" size="2xl">2xl Size</bp-heading>
+    <bp-heading level="2" size="xl">xl Size</bp-heading>
+    <bp-heading level="2" size="lg">lg Size</bp-heading>
+    <bp-heading level="2" size="md">md Size</bp-heading>
+    <bp-heading level="2" size="sm">sm Size</bp-heading>
+    <bp-heading level="2" size="xs">xs Size</bp-heading>
+  </div>
+</div>
+
+```html
+<bp-heading level="2" size="4xl">4xl Size</bp-heading>
+<bp-heading level="2" size="3xl">3xl Size</bp-heading>
+<bp-heading level="2" size="2xl">2xl Size</bp-heading>
+<bp-heading level="2" size="xl">xl Size</bp-heading>
+```
+
+### Weights
+
+<div class="component-preview">
+  <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+    <bp-heading level="2" size="xl" weight="light">Light Weight</bp-heading>
+    <bp-heading level="2" size="xl" weight="normal">Normal Weight</bp-heading>
+    <bp-heading level="2" size="xl" weight="medium">Medium Weight</bp-heading>
+    <bp-heading level="2" size="xl" weight="semibold">Semibold Weight</bp-heading>
+    <bp-heading level="2" size="xl" weight="bold">Bold Weight</bp-heading>
+  </div>
+</div>
+
+```html
+<bp-heading level="2" weight="light">Light Weight</bp-heading>
+<bp-heading level="2" weight="normal">Normal Weight</bp-heading>
+<bp-heading level="2" weight="medium">Medium Weight</bp-heading>
+<bp-heading level="2" weight="semibold">Semibold Weight</bp-heading>
+<bp-heading level="2" weight="bold">Bold Weight</bp-heading>
+```
+
+### Semantic Level vs Visual Size
+
+Use `level` for document structure and `size` for visual appearance:
+
+<div class="component-preview">
+  <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+    <bp-heading level="1" size="lg">H1 with small visual size</bp-heading>
+    <bp-heading level="3" size="3xl">H3 with large visual size</bp-heading>
+  </div>
+</div>
+
+```html
+<!-- Semantic H1, but visually smaller -->
+<bp-heading level="1" size="lg">H1 with small visual size</bp-heading>
+
+<!-- Semantic H3, but visually larger -->
+<bp-heading level="3" size="3xl">H3 with large visual size</bp-heading>
+```
+
+## API Reference
+
+### Properties
+
+| Property | Type                                                              | Default  | Description                    |
+| -------- | ----------------------------------------------------------------- | -------- | ------------------------------ |
+| `level`  | `1 \| 2 \| 3 \| 4 \| 5 \| 6`                                      | `1`      | Semantic heading level (h1-h6) |
+| `size`   | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl' \| '3xl' \| '4xl'` | `'4xl'`  | Visual size of the heading     |
+| `weight` | `'light' \| 'normal' \| 'medium' \| 'semibold' \| 'bold'`         | `'bold'` | Font weight                    |
+
+### Slots
+
+| Slot      | Description         |
+| --------- | ------------------- |
+| (default) | The heading content |
+
+### CSS Parts
+
+| Part      | Description                 |
+| --------- | --------------------------- |
+| `heading` | The heading element (h1-h6) |
+
+### CSS Custom Properties
+
+| Property                   | Description          |
+| -------------------------- | -------------------- |
+| `--bp-heading-color`       | Custom heading color |
+| `--bp-heading-font-family` | Custom font family   |
+
+### Accessibility
+
+The component renders the appropriate semantic heading element (h1-h6) based on the `level` property, ensuring proper document outline for screen readers.

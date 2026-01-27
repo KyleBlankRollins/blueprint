@@ -1,0 +1,171 @@
+---
+title: Tooltip
+description: Contextual information displayed on hover or focus
+---
+
+The `bp-tooltip` component displays contextual information when users hover over or focus on an element. Tooltips are ideal for providing additional context without cluttering the interface.
+
+## Import
+
+```javascript
+import 'blueprint/components/tooltip';
+```
+
+## Examples
+
+### Default
+
+<div class="component-preview">
+  <bp-tooltip content="This is a tooltip">
+    <bp-button>Hover me</bp-button>
+  </bp-tooltip>
+</div>
+
+```html
+<bp-tooltip content="This is a tooltip">
+  <bp-button>Hover me</bp-button>
+</bp-tooltip>
+```
+
+### Placement
+
+<div class="component-preview">
+  <div class="component-preview-row">
+    <bp-tooltip content="Top tooltip" placement="top">
+      <bp-button>Top</bp-button>
+    </bp-tooltip>
+    <bp-tooltip content="Bottom tooltip" placement="bottom">
+      <bp-button>Bottom</bp-button>
+    </bp-tooltip>
+    <bp-tooltip content="Left tooltip" placement="left">
+      <bp-button>Left</bp-button>
+    </bp-tooltip>
+    <bp-tooltip content="Right tooltip" placement="right">
+      <bp-button>Right</bp-button>
+    </bp-tooltip>
+  </div>
+</div>
+
+```html
+<bp-tooltip content="Top tooltip" placement="top">
+  <bp-button>Top</bp-button>
+</bp-tooltip>
+<bp-tooltip content="Bottom tooltip" placement="bottom">
+  <bp-button>Bottom</bp-button>
+</bp-tooltip>
+<bp-tooltip content="Left tooltip" placement="left">
+  <bp-button>Left</bp-button>
+</bp-tooltip>
+<bp-tooltip content="Right tooltip" placement="right">
+  <bp-button>Right</bp-button>
+</bp-tooltip>
+```
+
+### With Delay
+
+<div class="component-preview">
+  <bp-tooltip content="Delayed tooltip" delay="500">
+    <bp-button>Hover (500ms delay)</bp-button>
+  </bp-tooltip>
+</div>
+
+```html
+<bp-tooltip content="Delayed tooltip" delay="500">
+  <bp-button>Hover (500ms delay)</bp-button>
+</bp-tooltip>
+```
+
+### Disabled
+
+<div class="component-preview">
+  <bp-tooltip content="This won't show" disabled>
+    <bp-button>Disabled tooltip</bp-button>
+  </bp-tooltip>
+</div>
+
+```html
+<bp-tooltip content="This won't show" disabled>
+  <bp-button>Disabled tooltip</bp-button>
+</bp-tooltip>
+```
+
+### On Any Element
+
+<div class="component-preview">
+  <div class="component-preview-row">
+    <bp-tooltip content="Icon tooltip">
+      <bp-icon name="info" size="lg"></bp-icon>
+    </bp-tooltip>
+    <bp-tooltip content="Text tooltip">
+      <bp-text>Hover this text</bp-text>
+    </bp-tooltip>
+    <bp-tooltip content="Badge tooltip">
+      <bp-badge>New</bp-badge>
+    </bp-tooltip>
+  </div>
+</div>
+
+```html
+<bp-tooltip content="Icon tooltip">
+  <bp-icon name="info" size="lg"></bp-icon>
+</bp-tooltip>
+<bp-tooltip content="Text tooltip">
+  <bp-text>Hover this text</bp-text>
+</bp-tooltip>
+<bp-tooltip content="Badge tooltip">
+  <bp-badge>New</bp-badge>
+</bp-tooltip>
+```
+
+### Focus Trigger
+
+Tooltips also show on focus for keyboard accessibility:
+
+<div class="component-preview">
+  <bp-tooltip content="Focus or hover to see this">
+    <bp-button>Tab to focus</bp-button>
+  </bp-tooltip>
+</div>
+
+```html
+<bp-tooltip content="Focus or hover to see this">
+  <bp-button>Tab to focus</bp-button>
+</bp-tooltip>
+```
+
+## API Reference
+
+### Properties
+
+| Property    | Type                                     | Default | Description                         |
+| ----------- | ---------------------------------------- | ------- | ----------------------------------- |
+| `content`   | `string`                                 | `''`    | Text content of the tooltip         |
+| `placement` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'top'` | Position relative to trigger        |
+| `disabled`  | `boolean`                                | `false` | Disable the tooltip                 |
+| `delay`     | `number`                                 | `200`   | Delay before showing (milliseconds) |
+
+### Slots
+
+| Slot      | Description         |
+| --------- | ------------------- |
+| (default) | The trigger element |
+
+### Events
+
+| Event     | Detail                   | Description                        |
+| --------- | ------------------------ | ---------------------------------- |
+| `bp-show` | `{ placement, content }` | Fired when tooltip becomes visible |
+| `bp-hide` | `{ placement, content }` | Fired when tooltip becomes hidden  |
+
+### CSS Custom Properties
+
+| Property                 | Description              |
+| ------------------------ | ------------------------ |
+| `--bp-tooltip-max-width` | Maximum width of tooltip |
+
+### Accessibility
+
+- Tooltips are associated with their trigger using `aria-describedby`
+- Content is accessible to screen readers
+- Shows on focus for keyboard navigation
+- Not suitable for critical information (use labels instead)

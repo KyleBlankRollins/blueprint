@@ -1,0 +1,171 @@
+---
+title: Avatar
+description: User profile image with fallback to initials
+---
+
+The `bp-avatar` component displays user profile images with automatic fallback to initials or a placeholder icon. Supports status indicators, multiple sizes, and interactive states.
+
+## Import
+
+```javascript
+import 'blueprint/components/avatar';
+```
+
+## Examples
+
+### Default
+
+<div class="component-preview">
+  <bp-avatar src="https://i.pravatar.cc/150?img=1" alt="User"></bp-avatar>
+</div>
+
+```html
+<bp-avatar src="https://i.pravatar.cc/150?img=1" alt="User"></bp-avatar>
+```
+
+### With Initials
+
+<div class="component-preview">
+  <div class="component-preview-row">
+    <bp-avatar initials="JD"></bp-avatar>
+    <bp-avatar initials="AB"></bp-avatar>
+    <bp-avatar initials="XY"></bp-avatar>
+  </div>
+</div>
+
+```html
+<bp-avatar initials="JD"></bp-avatar>
+<bp-avatar initials="AB"></bp-avatar>
+<bp-avatar initials="XY"></bp-avatar>
+```
+
+### Sizes
+
+<div class="component-preview">
+  <div class="component-preview-row">
+    <bp-avatar size="xs" initials="XS"></bp-avatar>
+    <bp-avatar size="sm" initials="SM"></bp-avatar>
+    <bp-avatar size="md" initials="MD"></bp-avatar>
+    <bp-avatar size="lg" initials="LG"></bp-avatar>
+    <bp-avatar size="xl" initials="XL"></bp-avatar>
+  </div>
+</div>
+
+```html
+<bp-avatar size="xs" initials="XS"></bp-avatar>
+<bp-avatar size="sm" initials="SM"></bp-avatar>
+<bp-avatar size="md" initials="MD"></bp-avatar>
+<bp-avatar size="lg" initials="LG"></bp-avatar>
+<bp-avatar size="xl" initials="XL"></bp-avatar>
+```
+
+### Shapes
+
+<div class="component-preview">
+  <div class="component-preview-row">
+    <bp-avatar shape="circle" initials="CR"></bp-avatar>
+    <bp-avatar shape="square" initials="SQ"></bp-avatar>
+  </div>
+</div>
+
+```html
+<bp-avatar shape="circle" initials="CR"></bp-avatar>
+<bp-avatar shape="square" initials="SQ"></bp-avatar>
+```
+
+### Status Indicators
+
+<div class="component-preview">
+  <div class="component-preview-row">
+    <bp-avatar status="online" initials="ON"></bp-avatar>
+    <bp-avatar status="offline" initials="OF"></bp-avatar>
+    <bp-avatar status="busy" initials="BS"></bp-avatar>
+    <bp-avatar status="away" initials="AW"></bp-avatar>
+  </div>
+</div>
+
+```html
+<bp-avatar status="online" initials="ON"></bp-avatar>
+<bp-avatar status="offline" initials="OF"></bp-avatar>
+<bp-avatar status="busy" initials="BS"></bp-avatar>
+<bp-avatar status="away" initials="AW"></bp-avatar>
+```
+
+### Clickable
+
+<div class="component-preview">
+  <bp-avatar clickable initials="CL" name="Click me"></bp-avatar>
+</div>
+
+```html
+<bp-avatar clickable initials="CL" name="Click me"></bp-avatar>
+```
+
+### Fallback Behavior
+
+When the image fails to load, falls back to initials or placeholder:
+
+<div class="component-preview">
+  <div class="component-preview-row">
+    <bp-avatar src="invalid-url.jpg" initials="FB"></bp-avatar>
+    <bp-avatar src="invalid-url.jpg"></bp-avatar>
+  </div>
+</div>
+
+```html
+<!-- Falls back to initials -->
+<bp-avatar src="invalid-url.jpg" initials="FB"></bp-avatar>
+
+<!-- Falls back to placeholder icon -->
+<bp-avatar src="invalid-url.jpg"></bp-avatar>
+```
+
+### Avatar Group
+
+<div class="component-preview">
+  <div style="display: flex;">
+    <bp-avatar src="https://i.pravatar.cc/150?img=1" style="margin-right: -0.5rem; border: 2px solid white;"></bp-avatar>
+    <bp-avatar src="https://i.pravatar.cc/150?img=2" style="margin-right: -0.5rem; border: 2px solid white;"></bp-avatar>
+    <bp-avatar src="https://i.pravatar.cc/150?img=3" style="margin-right: -0.5rem; border: 2px solid white;"></bp-avatar>
+    <bp-avatar initials="+5" style="border: 2px solid white;"></bp-avatar>
+  </div>
+</div>
+
+```html
+<div style="display: flex;">
+  <bp-avatar src="user1.jpg" style="margin-right: -0.5rem;"></bp-avatar>
+  <bp-avatar src="user2.jpg" style="margin-right: -0.5rem;"></bp-avatar>
+  <bp-avatar src="user3.jpg" style="margin-right: -0.5rem;"></bp-avatar>
+  <bp-avatar initials="+5"></bp-avatar>
+</div>
+```
+
+## API Reference
+
+### Properties
+
+| Property    | Type                                        | Default    | Description                     |
+| ----------- | ------------------------------------------- | ---------- | ------------------------------- |
+| `src`       | `string`                                    | `''`       | Image source URL                |
+| `alt`       | `string`                                    | `''`       | Alt text for the image          |
+| `initials`  | `string`                                    | `''`       | Initials to display as fallback |
+| `size`      | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'`      | `'md'`     | Size of the avatar              |
+| `shape`     | `'circle' \| 'square'`                      | `'circle'` | Shape of the avatar             |
+| `status`    | `'online' \| 'offline' \| 'busy' \| 'away'` | -          | Status indicator                |
+| `clickable` | `boolean`                                   | `false`    | Makes the avatar interactive    |
+| `name`      | `string`                                    | `''`       | Name for tooltip on hover       |
+
+### CSS Parts
+
+| Part       | Description              |
+| ---------- | ------------------------ |
+| `avatar`   | The avatar container     |
+| `image`    | The image element        |
+| `initials` | The initials text        |
+| `status`   | The status indicator dot |
+
+### Accessibility
+
+- Images include proper `alt` text
+- When `clickable`, the avatar is focusable with keyboard navigation
+- Status indicators are decorative and don't require additional labeling
