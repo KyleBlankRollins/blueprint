@@ -251,3 +251,167 @@ export default defineConfig({
 **Add:**
 
 - None required (Shiki comes with Astro)
+
+---
+
+## Component Documentation Status
+
+| Component         | Documented | Notes                |
+| ----------------- | ---------- | -------------------- |
+| `bp-accordion`    | ❌         |                      |
+| `bp-alert`        | ✅         |                      |
+| `bp-avatar`       | ❌         |                      |
+| `bp-badge`        | ✅         | Batch 1              |
+| `bp-breadcrumb`   | ❌         |                      |
+| `bp-button`       | ✅         |                      |
+| `bp-card`         | ✅         |                      |
+| `bp-checkbox`     | ✅         |                      |
+| `bp-color-picker` | ❌         |                      |
+| `bp-combobox`     | ❌         |                      |
+| `bp-date-picker`  | ❌         |                      |
+| `bp-divider`      | ✅         | Batch 1              |
+| `bp-drawer`       | ❌         |                      |
+| `bp-dropdown`     | ❌         |                      |
+| `bp-file-upload`  | ❌         |                      |
+| `bp-heading`      | ❌         | Typography component |
+| `bp-icon`         | ✅         | Batch 1              |
+| `bp-input`        | ✅         |                      |
+| `bp-link`         | ❌         |                      |
+| `bp-menu`         | ❌         |                      |
+| `bp-modal`        | ❌         |                      |
+| `bp-multi-select` | ❌         |                      |
+| `bp-notification` | ❌         |                      |
+| `bp-number-input` | ❌         |                      |
+| `bp-pagination`   | ❌         |                      |
+| `bp-popover`      | ❌         |                      |
+| `bp-progress`     | ✅         | Batch 1              |
+| `bp-radio`        | ❌         |                      |
+| `bp-select`       | ✅         |                      |
+| `bp-skeleton`     | ✅         | Batch 1              |
+| `bp-slider`       | ❌         |                      |
+| `bp-spinner`      | ✅         | Batch 1              |
+| `bp-stepper`      | ❌         |                      |
+| `bp-switch`       | ❌         |                      |
+| `bp-table`        | ❌         |                      |
+| `bp-tabs`         | ❌         |                      |
+| `bp-tag`          | ✅         | Batch 1              |
+| `bp-text`         | ❌         | Typography component |
+| `bp-textarea`     | ❌         |                      |
+| `bp-time-picker`  | ❌         |                      |
+| `bp-tooltip`      | ❌         |                      |
+| `bp-tree`         | ❌         |                      |
+
+**Summary:** 6 of 42 components documented (14%)
+
+## Suggested Documentation Batches
+
+### Batch 1: Simple Display (Low Complexity)
+
+Single-purpose components with few props, easy to document quickly.
+
+| Component     | Complexity | Notes                                                         |
+| ------------- | ---------- | ------------------------------------------------------------- |
+| `bp-divider`  | ⭐         | 5 props (orientation, spacing, variant, color, weight)        |
+| `bp-spinner`  | ⭐         | 2 props (size, variant)                                       |
+| `bp-skeleton` | ⭐         | 4 props (variant, width, height, animation)                   |
+| `bp-badge`    | ⭐         | 4 props (variant, size, pill, dot)                            |
+| `bp-tag`      | ⭐         | 3 props (variant, size, removable)                            |
+| `bp-icon`     | ⭐         | 4 props (name, size, color, label)                            |
+| `bp-progress` | ⭐         | 6 props (value, max, variant, size, indeterminate, showValue) |
+
+**Estimate:** ~1 hour total
+
+---
+
+### Batch 2: Typography & Links (Low Complexity)
+
+Text-related components, important for content authoring.
+
+| Component    | Complexity | Notes                                                      |
+| ------------ | ---------- | ---------------------------------------------------------- |
+| `bp-heading` | ⭐         | 3 props (level, size, weight)                              |
+| `bp-text`    | ⭐         | 10+ props (size, weight, variant, align, transform, etc.)  |
+| `bp-link`    | ⭐         | 6 props (href, variant, underline, size, disabled, target) |
+| `bp-avatar`  | ⭐         | 5 props (src, alt, initials, size, shape, status)          |
+
+**Estimate:** ~45 min total
+
+---
+
+### Batch 3: Form Controls (Medium Complexity)
+
+Remaining input components with events and validation.
+
+| Component         | Complexity | Notes                               |
+| ----------------- | ---------- | ----------------------------------- |
+| `bp-radio`        | ⭐⭐       | Similar to checkbox, group behavior |
+| `bp-switch`       | ⭐⭐       | Similar to checkbox                 |
+| `bp-textarea`     | ⭐⭐       | Multi-line input, resize            |
+| `bp-number-input` | ⭐⭐       | Min/max, step, increment buttons    |
+| `bp-slider`       | ⭐⭐       | Range input, value display          |
+| `bp-file-upload`  | ⭐⭐       | Drag/drop, file list, validation    |
+
+**Estimate:** ~1.5 hours total
+
+---
+
+### Batch 4: Selection Components (Medium-High Complexity)
+
+Dropdown/picker patterns with complex state.
+
+| Component         | Complexity | Notes                                 |
+| ----------------- | ---------- | ------------------------------------- |
+| `bp-combobox`     | ⭐⭐⭐     | Autocomplete, filtering, custom input |
+| `bp-multi-select` | ⭐⭐⭐     | Multiple selection, chips             |
+| `bp-date-picker`  | ⭐⭐⭐     | Calendar, date formatting, validation |
+| `bp-time-picker`  | ⭐⭐⭐     | Hour/minute selection, formats        |
+| `bp-color-picker` | ⭐⭐⭐     | Color formats, swatches, gradients    |
+
+**Estimate:** ~2 hours total
+
+---
+
+### Batch 5: Navigation (Medium Complexity)
+
+Multi-step/multi-item navigation patterns.
+
+| Component       | Complexity | Notes                           |
+| --------------- | ---------- | ------------------------------- |
+| `bp-breadcrumb` | ⭐⭐       | Items, separators               |
+| `bp-pagination` | ⭐⭐       | Page numbers, prev/next         |
+| `bp-tabs`       | ⭐⭐       | Tab panels, placement, variants |
+| `bp-menu`       | ⭐⭐       | Menu items, nested menus        |
+| `bp-stepper`    | ⭐⭐       | Steps, linear vs non-linear     |
+
+**Estimate:** ~1.5 hours total
+
+---
+
+### Batch 6: Overlays & Popups (High Complexity)
+
+Positioning, focus trapping, portal behavior.
+
+| Component         | Complexity | Notes                             |
+| ----------------- | ---------- | --------------------------------- |
+| `bp-tooltip`      | ⭐⭐       | Placement, triggers, delay        |
+| `bp-popover`      | ⭐⭐⭐     | Rich content, triggers            |
+| `bp-dropdown`     | ⭐⭐⭐     | Trigger + panel pattern           |
+| `bp-modal`        | ⭐⭐⭐     | Focus trap, close behavior, sizes |
+| `bp-drawer`       | ⭐⭐⭐     | Placement, sizes, overlay         |
+| `bp-notification` | ⭐⭐⭐     | Stacking, auto-dismiss, variants  |
+
+**Estimate:** ~2 hours total
+
+---
+
+### Batch 7: Complex Data (High Complexity)
+
+Components with many features and sub-components.
+
+| Component      | Complexity | Notes                               |
+| -------------- | ---------- | ----------------------------------- |
+| `bp-accordion` | ⭐⭐⭐     | Expand/collapse, multiple mode      |
+| `bp-table`     | ⭐⭐⭐⭐   | Sorting, selection, pagination      |
+| `bp-tree`      | ⭐⭐⭐⭐   | Nested nodes, expand, select, check |
+
+**Estimate:** ~2 hours total
