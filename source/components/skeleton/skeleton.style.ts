@@ -22,7 +22,7 @@ export const skeletonStyles = css`
     background: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0.6) 50%,
       transparent 100%
     );
     animation: skeleton-shimmer 1.5s infinite linear;

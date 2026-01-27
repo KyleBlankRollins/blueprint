@@ -33,23 +33,26 @@ import 'blueprint/components/breadcrumb';
 </bp-breadcrumb>
 ```
 
-### Programmatic Items
+### Multiple Levels
 
 <div class="component-preview">
-  <bp-breadcrumb id="breadcrumb-demo"></bp-breadcrumb>
+  <bp-breadcrumb>
+    <a href="/">Home</a>
+    <a href="/products">Products</a>
+    <a href="/products/electronics">Electronics</a>
+    <a href="/products/electronics/laptops">Laptops</a>
+    <span>MacBook Pro</span>
+  </bp-breadcrumb>
 </div>
 
 ```html
-<bp-breadcrumb id="breadcrumb-demo"></bp-breadcrumb>
-
-<script>
-  document.querySelector('#breadcrumb-demo').items = [
-    { label: 'Home', href: '/' },
-    { label: 'Products', href: '/products' },
-    { label: 'Electronics', href: '/products/electronics' },
-    { label: 'Laptops', current: true },
-  ];
-</script>
+<bp-breadcrumb>
+  <a href="/">Home</a>
+  <a href="/products">Products</a>
+  <a href="/products/electronics">Electronics</a>
+  <a href="/products/electronics/laptops">Laptops</a>
+  <span>MacBook Pro</span>
+</bp-breadcrumb>
 ```
 
 ### Separator Styles
@@ -114,28 +117,29 @@ import 'blueprint/components/breadcrumb';
 <bp-breadcrumb size="large">...</bp-breadcrumb>
 ```
 
-### With Icons
+### Programmatic API
 
-<div class="component-preview">
-  <bp-breadcrumb id="breadcrumb-icons"></bp-breadcrumb>
-</div>
+You can set breadcrumb items programmatically using the `items` property:
 
 ```javascript
-document.querySelector('#breadcrumb-icons').items = [
+const breadcrumb = document.querySelector('bp-breadcrumb');
+
+breadcrumb.items = [
   { label: 'Home', href: '/', icon: 'home' },
   { label: 'Settings', href: '/settings', icon: 'settings' },
   { label: 'Profile', current: true, icon: 'user' },
 ];
 ```
 
-### Collapsed (Max Items)
+### Max Items
 
-<div class="component-preview">
-  <bp-breadcrumb max-items="4" id="breadcrumb-collapsed"></bp-breadcrumb>
-</div>
+Limit visible items with the `maxItems` property. Middle items are collapsed into an ellipsis:
 
 ```javascript
-document.querySelector('#breadcrumb-collapsed').items = [
+const breadcrumb = document.querySelector('bp-breadcrumb');
+breadcrumb.maxItems = 4;
+
+breadcrumb.items = [
   { label: 'Home', href: '/' },
   { label: 'Category', href: '/category' },
   { label: 'Subcategory', href: '/category/sub' },
@@ -143,6 +147,7 @@ document.querySelector('#breadcrumb-collapsed').items = [
   { label: 'Electronics', href: '/category/sub/products/electronics' },
   { label: 'Current Page', current: true },
 ];
+// Renders: Home > ... > Electronics > Current Page
 ```
 
 ## API Reference

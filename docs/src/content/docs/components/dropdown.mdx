@@ -17,43 +17,46 @@ import 'blueprint/components/dropdown';
 
 <div class="component-preview">
   <bp-dropdown>
-    <bp-button slot="trigger">Open Menu</bp-button>
-    <bp-menu slot="content">
-      <bp-menu-item value="edit">Edit</bp-menu-item>
-      <bp-menu-item value="duplicate">Duplicate</bp-menu-item>
-      <bp-menu-item value="delete">Delete</bp-menu-item>
-    </bp-menu>
+    <bp-button>Open Menu</bp-button>
+    <div slot="content" style="padding: 1rem; min-width: 200px;">
+      <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+        <bp-button variant="text" size="small">Edit</bp-button>
+        <bp-button variant="text" size="small">Duplicate</bp-button>
+        <bp-button variant="text" size="small">Delete</bp-button>
+      </div>
+    </div>
   </bp-dropdown>
 </div>
 
 ```html
 <bp-dropdown>
-  <bp-button slot="trigger">Open Menu</bp-button>
-  <bp-menu slot="content">
-    <bp-menu-item value="edit">Edit</bp-menu-item>
-    <bp-menu-item value="duplicate">Duplicate</bp-menu-item>
-    <bp-menu-item value="delete">Delete</bp-menu-item>
-  </bp-menu>
+  <bp-button>Open Menu</bp-button>
+  <div slot="content">
+    <!-- Dropdown content -->
+    <bp-button variant="text">Edit</bp-button>
+    <bp-button variant="text">Duplicate</bp-button>
+    <bp-button variant="text">Delete</bp-button>
+  </div>
 </bp-dropdown>
 ```
 
 ### Placement Options
 
 <div class="component-preview">
-  <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-    <bp-dropdown placement="bottom-start">
-      <bp-button slot="trigger">Bottom Start</bp-button>
-      <div slot="content" style="padding: 1rem;">Dropdown content</div>
-    </bp-dropdown>
-    <bp-dropdown placement="bottom-end">
-      <bp-button slot="trigger">Bottom End</bp-button>
-      <div slot="content" style="padding: 1rem;">Dropdown content</div>
-    </bp-dropdown>
-    <bp-dropdown placement="top">
-      <bp-button slot="trigger">Top</bp-button>
-      <div slot="content" style="padding: 1rem;">Dropdown content</div>
-    </bp-dropdown>
-  </div>
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; padding: 4rem 1rem;">
+<bp-dropdown placement="bottom-start">
+  <bp-button>Bottom Start</bp-button>
+  <div slot="content" style="padding: 1rem; min-width: 150px;">Aligned to left</div>
+</bp-dropdown>
+<bp-dropdown placement="bottom-end">
+  <bp-button>Bottom End</bp-button>
+  <div slot="content" style="padding: 1rem; min-width: 150px;">Aligned to right</div>
+</bp-dropdown>
+<bp-dropdown placement="top">
+  <bp-button>Top</bp-button>
+  <div slot="content" style="padding: 1rem; min-width: 150px;">Opens upward</div>
+</bp-dropdown>
+</div>
 </div>
 
 ```html
@@ -68,8 +71,8 @@ import 'blueprint/components/dropdown';
 
 <div class="component-preview">
   <bp-dropdown arrow>
-    <bp-button slot="trigger">With Arrow</bp-button>
-    <div slot="content" style="padding: 1rem;">
+    <bp-button>With Arrow</bp-button>
+    <div slot="content" style="padding: 1rem; min-width: 180px;">
       Arrow points to the trigger
     </div>
   </bp-dropdown>
@@ -77,7 +80,7 @@ import 'blueprint/components/dropdown';
 
 ```html
 <bp-dropdown arrow>
-  <bp-button slot="trigger">With Arrow</bp-button>
+  <bp-button>With Arrow</bp-button>
   <div slot="content">Arrow points to the trigger</div>
 </bp-dropdown>
 ```
@@ -86,8 +89,8 @@ import 'blueprint/components/dropdown';
 
 <div class="component-preview">
   <bp-dropdown distance="16">
-    <bp-button slot="trigger">16px Distance</bp-button>
-    <div slot="content" style="padding: 1rem;">More space from trigger</div>
+    <bp-button>16px Distance</bp-button>
+    <div slot="content" style="padding: 1rem; min-width: 180px;">More space from trigger</div>
   </bp-dropdown>
 </div>
 
@@ -99,12 +102,14 @@ import 'blueprint/components/dropdown';
 
 <div class="component-preview">
   <bp-dropdown close-on-select="false">
-    <bp-button slot="trigger">Multi-Select</bp-button>
-    <bp-menu slot="content">
-      <bp-menu-item value="1">Option 1</bp-menu-item>
-      <bp-menu-item value="2">Option 2</bp-menu-item>
-      <bp-menu-item value="3">Option 3</bp-menu-item>
-    </bp-menu>
+    <bp-button>Multi-Select</bp-button>
+    <div slot="content" style="padding: 1rem;">
+      <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+        <bp-checkbox>Option 1</bp-checkbox>
+        <bp-checkbox>Option 2</bp-checkbox>
+        <bp-checkbox>Option 3</bp-checkbox>
+      </div>
+    </div>
   </bp-dropdown>
 </div>
 
@@ -116,8 +121,8 @@ import 'blueprint/components/dropdown';
 
 <div class="component-preview">
   <bp-dropdown disabled>
-    <bp-button slot="trigger">Disabled</bp-button>
-    <div slot="content">This won't open</div>
+    <bp-button>Disabled</bp-button>
+    <div slot="content" style="padding: 1rem;">This won't open</div>
   </bp-dropdown>
 </div>
 
@@ -125,25 +130,26 @@ import 'blueprint/components/dropdown';
 <bp-dropdown disabled>...</bp-dropdown>
 ```
 
-### Controlled State
+### Programmatic Control
 
-<div class="component-preview">
-  <bp-dropdown id="controlled-dropdown">
-    <bp-button slot="trigger">Controlled</bp-button>
-    <div slot="content" style="padding: 1rem;">
-      <p>Controlled dropdown</p>
-      <bp-button size="small" onclick="this.closest('bp-dropdown').hide()">Close</bp-button>
-    </div>
-  </bp-dropdown>
-</div>
+You can control the dropdown programmatically:
 
 ```javascript
-const dropdown = document.querySelector('#controlled-dropdown');
+const dropdown = document.querySelector('bp-dropdown');
 
-// Programmatic control
+// Open/close/toggle
 dropdown.show();
 dropdown.hide();
 dropdown.toggle();
+
+// Listen to events
+dropdown.addEventListener('bp-show', () => {
+  console.log('Dropdown opened');
+});
+
+dropdown.addEventListener('bp-hide', () => {
+  console.log('Dropdown closed');
+});
 ```
 
 ## API Reference
