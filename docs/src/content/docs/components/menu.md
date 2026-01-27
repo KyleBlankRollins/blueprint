@@ -1,0 +1,263 @@
+---
+title: Menu
+description: List of actions or navigation options
+---
+
+The `bp-menu` component displays a list of actions, options, or navigation items. It's commonly used in dropdowns, context menus, and sidebars.
+
+## Import
+
+```javascript
+import 'blueprint/components/menu';
+```
+
+## Examples
+
+### Default
+
+<div class="component-preview">
+  <bp-menu>
+    <bp-menu-item value="edit">Edit</bp-menu-item>
+    <bp-menu-item value="duplicate">Duplicate</bp-menu-item>
+    <bp-menu-item value="delete">Delete</bp-menu-item>
+  </bp-menu>
+</div>
+
+```html
+<bp-menu>
+  <bp-menu-item value="edit">Edit</bp-menu-item>
+  <bp-menu-item value="duplicate">Duplicate</bp-menu-item>
+  <bp-menu-item value="delete">Delete</bp-menu-item>
+</bp-menu>
+```
+
+### With Icons
+
+<div class="component-preview">
+  <bp-menu>
+    <bp-menu-item value="cut">
+      <bp-icon slot="prefix" name="scissors"></bp-icon>
+      Cut
+    </bp-menu-item>
+    <bp-menu-item value="copy">
+      <bp-icon slot="prefix" name="copy"></bp-icon>
+      Copy
+    </bp-menu-item>
+    <bp-menu-item value="paste">
+      <bp-icon slot="prefix" name="clipboard"></bp-icon>
+      Paste
+    </bp-menu-item>
+  </bp-menu>
+</div>
+
+```html
+<bp-menu>
+  <bp-menu-item value="cut">
+    <bp-icon slot="prefix" name="scissors"></bp-icon>
+    Cut
+  </bp-menu-item>
+  <bp-menu-item value="copy">
+    <bp-icon slot="prefix" name="copy"></bp-icon>
+    Copy
+  </bp-menu-item>
+  <bp-menu-item value="paste">
+    <bp-icon slot="prefix" name="clipboard"></bp-icon>
+    Paste
+  </bp-menu-item>
+</bp-menu>
+```
+
+### With Keyboard Shortcuts
+
+<div class="component-preview">
+  <bp-menu>
+    <bp-menu-item value="new" shortcut="Ctrl+N">New File</bp-menu-item>
+    <bp-menu-item value="open" shortcut="Ctrl+O">Open</bp-menu-item>
+    <bp-menu-item value="save" shortcut="Ctrl+S">Save</bp-menu-item>
+    <bp-menu-item value="save-as" shortcut="Ctrl+Shift+S">Save As...</bp-menu-item>
+  </bp-menu>
+</div>
+
+```html
+<bp-menu>
+  <bp-menu-item value="new" shortcut="Ctrl+N">New File</bp-menu-item>
+  <bp-menu-item value="open" shortcut="Ctrl+O">Open</bp-menu-item>
+  <bp-menu-item value="save" shortcut="Ctrl+S">Save</bp-menu-item>
+  <bp-menu-item value="save-as" shortcut="Ctrl+Shift+S"
+    >Save As...</bp-menu-item
+  >
+</bp-menu>
+```
+
+### Sizes
+
+<div class="component-preview">
+  <div style="display: flex; gap: 2rem;">
+    <bp-menu size="small">
+      <bp-menu-item value="1">Small Item 1</bp-menu-item>
+      <bp-menu-item value="2">Small Item 2</bp-menu-item>
+    </bp-menu>
+    <bp-menu size="medium">
+      <bp-menu-item value="1">Medium Item 1</bp-menu-item>
+      <bp-menu-item value="2">Medium Item 2</bp-menu-item>
+    </bp-menu>
+    <bp-menu size="large">
+      <bp-menu-item value="1">Large Item 1</bp-menu-item>
+      <bp-menu-item value="2">Large Item 2</bp-menu-item>
+    </bp-menu>
+  </div>
+</div>
+
+```html
+<bp-menu size="small">...</bp-menu>
+<bp-menu size="medium">...</bp-menu>
+<bp-menu size="large">...</bp-menu>
+```
+
+### With Dividers
+
+<div class="component-preview">
+  <bp-menu>
+    <bp-menu-item value="undo">Undo</bp-menu-item>
+    <bp-menu-item value="redo">Redo</bp-menu-item>
+    <bp-menu-divider></bp-menu-divider>
+    <bp-menu-item value="cut">Cut</bp-menu-item>
+    <bp-menu-item value="copy">Copy</bp-menu-item>
+    <bp-menu-item value="paste">Paste</bp-menu-item>
+    <bp-menu-divider></bp-menu-divider>
+    <bp-menu-item value="delete">Delete</bp-menu-item>
+  </bp-menu>
+</div>
+
+```html
+<bp-menu>
+  <bp-menu-item value="undo">Undo</bp-menu-item>
+  <bp-menu-item value="redo">Redo</bp-menu-item>
+  <bp-menu-divider></bp-menu-divider>
+  <bp-menu-item value="cut">Cut</bp-menu-item>
+  <bp-menu-item value="copy">Copy</bp-menu-item>
+  <bp-menu-item value="paste">Paste</bp-menu-item>
+</bp-menu>
+```
+
+### Disabled Items
+
+<div class="component-preview">
+  <bp-menu>
+    <bp-menu-item value="edit">Edit</bp-menu-item>
+    <bp-menu-item value="duplicate" disabled>Duplicate (disabled)</bp-menu-item>
+    <bp-menu-item value="delete">Delete</bp-menu-item>
+  </bp-menu>
+</div>
+
+```html
+<bp-menu>
+  <bp-menu-item value="edit">Edit</bp-menu-item>
+  <bp-menu-item value="duplicate" disabled>Duplicate</bp-menu-item>
+  <bp-menu-item value="delete">Delete</bp-menu-item>
+</bp-menu>
+```
+
+### Selected State
+
+<div class="component-preview">
+  <bp-menu>
+    <bp-menu-item value="light" selected>Light Theme</bp-menu-item>
+    <bp-menu-item value="dark">Dark Theme</bp-menu-item>
+    <bp-menu-item value="system">System Default</bp-menu-item>
+  </bp-menu>
+</div>
+
+```html
+<bp-menu>
+  <bp-menu-item value="light" selected>Light Theme</bp-menu-item>
+  <bp-menu-item value="dark">Dark Theme</bp-menu-item>
+  <bp-menu-item value="system">System Default</bp-menu-item>
+</bp-menu>
+```
+
+### With Submenu Indicator
+
+<div class="component-preview">
+  <bp-menu>
+    <bp-menu-item value="file">File</bp-menu-item>
+    <bp-menu-item value="edit">Edit</bp-menu-item>
+    <bp-menu-item value="view" has-submenu>View</bp-menu-item>
+    <bp-menu-item value="help">Help</bp-menu-item>
+  </bp-menu>
+</div>
+
+```html
+<bp-menu>
+  <bp-menu-item value="file">File</bp-menu-item>
+  <bp-menu-item value="edit">Edit</bp-menu-item>
+  <bp-menu-item value="view" has-submenu>View</bp-menu-item>
+  <bp-menu-item value="help">Help</bp-menu-item>
+</bp-menu>
+```
+
+## API Reference
+
+### bp-menu Properties
+
+| Property | Type                             | Default    | Description             |
+| -------- | -------------------------------- | ---------- | ----------------------- |
+| `size`   | `'small' \| 'medium' \| 'large'` | `'medium'` | Size for all menu items |
+
+### bp-menu Events
+
+| Event            | Detail      | Description                    |
+| ---------------- | ----------- | ------------------------------ |
+| `bp-menu-select` | `{ value }` | Fired when an item is selected |
+
+### bp-menu-item Properties
+
+| Property     | Type                             | Default    | Description                   |
+| ------------ | -------------------------------- | ---------- | ----------------------------- |
+| `value`      | `string`                         | `''`       | Value for the menu item       |
+| `disabled`   | `boolean`                        | `false`    | Whether item is disabled      |
+| `selected`   | `boolean`                        | `false`    | Whether item is selected      |
+| `hasSubmenu` | `boolean`                        | `false`    | Shows submenu arrow indicator |
+| `size`       | `'small' \| 'medium' \| 'large'` | `'medium'` | Size (inherited from menu)    |
+| `shortcut`   | `string`                         | `''`       | Keyboard shortcut hint        |
+
+### bp-menu-item Slots
+
+| Slot      | Description                          |
+| --------- | ------------------------------------ |
+| (default) | Item label content                   |
+| `prefix`  | Content before label (icon)          |
+| `suffix`  | Content after label (arrow/shortcut) |
+
+### CSS Parts
+
+#### bp-menu
+
+| Part        | Description    |
+| ----------- | -------------- |
+| `container` | Menu container |
+
+#### bp-menu-item
+
+| Part     | Description         |
+| -------- | ------------------- |
+| `base`   | Item container      |
+| `prefix` | Prefix slot wrapper |
+| `label`  | Label wrapper       |
+| `suffix` | Suffix slot wrapper |
+
+### Keyboard Navigation
+
+- **Arrow Down**: Focus next item
+- **Arrow Up**: Focus previous item
+- **Home**: Focus first item
+- **End**: Focus last item
+- **Enter/Space**: Select focused item
+- **Escape**: Close menu (when in dropdown)
+
+### Accessibility
+
+- Uses `role="menu"` and `role="menuitem"`
+- `aria-disabled` for disabled items
+- `aria-current` for selected items
+- Full keyboard navigation support

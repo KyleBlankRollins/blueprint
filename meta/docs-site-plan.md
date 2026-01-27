@@ -262,7 +262,7 @@ export default defineConfig({
 | `bp-alert`        | ✅         |         |
 | `bp-avatar`       | ✅         | Batch 2 |
 | `bp-badge`        | ✅         | Batch 1 |
-| `bp-breadcrumb`   | ❌         |         |
+| `bp-breadcrumb`   | ✅         | Batch 5 |
 | `bp-button`       | ✅         |         |
 | `bp-card`         | ✅         |         |
 | `bp-checkbox`     | ✅         |         |
@@ -277,12 +277,12 @@ export default defineConfig({
 | `bp-icon`         | ✅         | Batch 1 |
 | `bp-input`        | ✅         |         |
 | `bp-link`         | ✅         | Batch 2 |
-| `bp-menu`         | ❌         |         |
+| `bp-menu`         | ✅         | Batch 5 |
 | `bp-modal`        | ❌         |         |
 | `bp-multi-select` | ✅         | Batch 4 |
 | `bp-notification` | ❌         |         |
 | `bp-number-input` | ✅         | Batch 3 |
-| `bp-pagination`   | ❌         |         |
+| `bp-pagination`   | ✅         | Batch 5 |
 | `bp-popover`      | ✅         | Batch 2 |
 | `bp-progress`     | ✅         | Batch 1 |
 | `bp-radio`        | ✅         | Batch 3 |
@@ -290,10 +290,10 @@ export default defineConfig({
 | `bp-skeleton`     | ✅         | Batch 1 |
 | `bp-slider`       | ✅         | Batch 3 |
 | `bp-spinner`      | ✅         | Batch 1 |
-| `bp-stepper`      | ❌         |         |
+| `bp-stepper`      | ✅         | Batch 5 |
 | `bp-switch`       | ✅         | Batch 3 |
 | `bp-table`        | ❌         |         |
-| `bp-tabs`         | ❌         |         |
+| `bp-tabs`         | ✅         | Batch 5 |
 | `bp-tag`          | ✅         | Batch 1 |
 | `bp-text`         | ✅         | Batch 2 |
 | `bp-textarea`     | ✅         | Batch 3 |
@@ -301,7 +301,7 @@ export default defineConfig({
 | `bp-tooltip`      | ✅         | Batch 2 |
 | `bp-tree`         | ❌         |         |
 
-**Summary:** 30 of 42 components documented (71%)
+**Summary:** 35 of 42 components documented (83%)
 
 ## Suggested Documentation Batches
 
