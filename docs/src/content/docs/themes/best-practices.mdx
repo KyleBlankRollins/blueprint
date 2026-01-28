@@ -1,21 +1,8 @@
-# Theme Plugin Best Practices
-
-Advanced patterns and recommendations for creating high-quality theme plugins.
-
-## Table of Contents
-
-- [Design Token Strategy](#design-token-strategy)
-- [Color Design](#color-design)
-- [Accessibility](#accessibility)
-- [Performance](#performance)
-- [Naming Conventions](#naming-conventions)
-- [Plugin Architecture](#plugin-architecture)
-- [Testing](#testing)
-- [Documentation](#documentation)
-- [Distribution](#distribution)
-- [Maintenance](#maintenance)
-- [Common Pitfalls](#common-pitfalls)
-
+---
+title: Theme Plugin Best Practices
+description: Advanced patterns and recommendations for creating high-quality theme plugins
+category: guides
+order: 3
 ---
 
 ## Design Token Strategy
@@ -50,7 +37,7 @@ Understanding when to use semantic tokens vs universal tokens is crucial for the
 }
 ```
 
-**Complete list of semantic tokens:** See [Semantic Tokens Reference](./plugin-authoring-guide.md#semantic-tokens-reference) in the Plugin Authoring Guide.
+**Complete list of semantic tokens:** See [Semantic Tokens Reference](/themes/plugin-authoring-guide#semantic-tokens-reference) in the Plugin Authoring Guide.
 
 ### Universal Tokens (Infrastructure)
 
@@ -336,21 +323,25 @@ register(builder) {
 Use the built-in validation:
 
 ```typescript
+import { ThemeBase } from '../../builder/ThemeBase.js';
 import { validateThemeAccessibility } from '../builder/validation.js';
+import type { ThemeBuilderInterface, ThemeConfig } from '../../core/types.js';
 
-export const myTheme: ThemePlugin = {
-  id: 'my-theme',
-  version: '1.0.0',
+export class MyTheme extends ThemeBase {
+  readonly id = 'my-theme';
+  readonly version = '1.0.0';
 
-  register(builder) {
+  register(builder: ThemeBuilderInterface): void {
     // ... define colors and variants
-  },
+  }
 
-  validate(config) {
+  validate(config: ThemeConfig) {
     // Automatically checks WCAG AA compliance
     return validateThemeAccessibility(config);
-  },
-};
+  }
+}
+
+export const myTheme = new MyTheme();
 ```
 
 **Run validation regularly:**
@@ -463,39 +454,42 @@ scale: [100, 300, 500, 700, 900];
 If your plugin does complex calculations:
 
 ```typescript
-export const myTheme: ThemePlugin = {
-  id: 'my-theme',
-  version: '1.0.0',
+// Cache at module level
+const cachedColors: Record<string, ColorDefinition> = {};
 
-  register(builder) {
-    // ❌ Bad - Recalculates every time
-    const computedColor = expensiveColorCalculation();
-    builder.addColor('computed', computedColor);
+export class MyTheme extends ThemeBase {
+  readonly id = 'my-theme';
+  readonly version = '1.0.0';
 
+  register(builder: ThemeBuilderInterface): void {
     // ✅ Good - Calculate once, cache result
     if (!cachedColors.computed) {
       cachedColors.computed = expensiveColorCalculation();
     }
     builder.addColor('computed', cachedColors.computed);
-  },
-};
+  }
+}
+
+export const myTheme = new MyTheme();
 ```
 
 ### Lazy Load Plugin Dependencies
 
 ```typescript
-export const myTheme: ThemePlugin = {
-  id: 'my-theme',
-  version: '1.0.0',
+export class MyTheme extends ThemeBase {
+  readonly id = 'my-theme';
+  readonly version = '1.0.0';
 
-  async register(builder) {
+  async register(builder: ThemeBuilderInterface): Promise<void> {
     // Only load heavy dependencies if needed
     if (needsAdvancedFeatures) {
       const { advancedColors } = await import('./advanced-colors.js');
       builder.addColor('special', advancedColors.special);
     }
-  },
-};
+  }
+}
+
+export const myTheme = new MyTheme();
 ```
 
 ### Optimize Theme Variants
@@ -603,48 +597,40 @@ Each plugin should have one clear purpose:
 **Good:**
 
 ```typescript
-// ocean-theme plugin - Defines ocean color palette
-export const oceanTheme: ThemePlugin = {
-  id: 'ocean',
-  register(builder) {
+// ocean-colors.ts - Defines ocean color palette
+export class OceanColorsTheme extends ThemeBase {
+  readonly id = 'ocean-colors';
+  readonly version = '1.0.0';
+
+  register(builder: ThemeBuilderInterface): void {
     builder.addColor('oceanBlue', {
       /* ... */
     });
     builder.addColor('seaGreen', {
       /* ... */
     });
-  },
-};
+  }
+}
 
-// ocean-variants plugin - Creates theme variants
-export const oceanVariants: ThemePlugin = {
-  id: 'ocean-variants',
-  dependencies: [{ id: 'ocean' }],
-  register(builder) {
+export const oceanColorsTheme = new OceanColorsTheme();
+
+// ocean-variants.ts - Creates theme variants
+export class OceanVariantsTheme extends ThemeBase {
+  readonly id = 'ocean-variants';
+  readonly version = '1.0.0';
+  readonly dependencies = [{ id: 'ocean-colors' }];
+
+  register(builder: ThemeBuilderInterface): void {
     builder.addThemeVariant('ocean-light', {
       /* ... */
     });
     builder.addThemeVariant('ocean-dark', {
       /* ... */
     });
-  },
-};
-```
+  }
+}
 
-**Avoid:**
-
-```typescript
-// ❌ Plugin does too much
-export const megaPlugin: ThemePlugin = {
-  id: 'mega',
-  register(builder) {
-    // Defines 20 colors
-    // Creates 10 theme variants
-    // Modifies design tokens
-    // Sets up custom validation
-    // 500+ lines of code
-  },
-};
+export const oceanVariantsTheme = new OceanVariantsTheme();
 ```
 
 ### Use Dependencies for Composition
@@ -652,21 +638,23 @@ export const megaPlugin: ThemePlugin = {
 **Declare dependencies explicitly:**
 
 ```typescript
-export const oceanDarkTheme: ThemePlugin = {
-  id: 'ocean-dark',
-  version: '1.0.0',
+export class OceanDarkTheme extends ThemeBase {
+  readonly id = 'ocean-dark';
+  readonly version = '1.0.0';
 
   // Explicit dependencies
-  dependencies: [{ id: 'ocean', version: '^1.0.0' }],
+  readonly dependencies = [{ id: 'ocean', version: '^1.0.0' }];
 
-  register(builder) {
+  register(builder: ThemeBuilderInterface): void {
     // Extend colors from ocean plugin
     builder.extendThemeVariant('ocean-light', 'ocean-dark', {
       background: builder.colors.oceanBlue950,
       text: builder.colors.oceanBlue50,
     });
-  },
-};
+  }
+}
+
+export const oceanDarkTheme = new OceanDarkTheme();
 ```
 
 ### Organize Large Plugins
@@ -684,21 +672,27 @@ plugins/ocean/
 
 ```typescript
 // index.ts
+import { ThemeBase } from '../../builder/ThemeBase.js';
 import { defineColors } from './colors.js';
 import { defineVariants } from './variants.js';
 import { validateOceanTheme } from './validation.js';
+import type { ThemeBuilderInterface, ThemeConfig } from '../../core/types.js';
 
-export const oceanTheme: ThemePlugin = {
-  id: 'ocean',
-  version: '1.0.0',
+export class OceanTheme extends ThemeBase {
+  readonly id = 'ocean';
+  readonly version = '1.0.0';
 
-  register(builder) {
+  register(builder: ThemeBuilderInterface): void {
     defineColors(builder);
     defineVariants(builder);
-  },
+  }
 
-  validate: validateOceanTheme,
-};
+  validate(config: ThemeConfig) {
+    return validateOceanTheme(config);
+  }
+}
+
+export const oceanTheme = new OceanTheme();
 ```
 
 ### Provide Configuration Options
@@ -713,14 +707,14 @@ export interface OceanThemeConfig {
   includeVariants?: boolean; // Default: true
 }
 
-export function createOceanTheme(config: OceanThemeConfig = {}): ThemePlugin {
+export function createOceanTheme(config: OceanThemeConfig = {}): OceanTheme {
   const { primaryHue = 220, accentHue = 180, includeVariants = true } = config;
 
-  return {
-    id: 'ocean',
-    version: '1.0.0',
+  return new (class extends ThemeBase {
+    readonly id = 'ocean';
+    readonly version = '1.0.0';
 
-    register(builder) {
+    register(builder: ThemeBuilderInterface): void {
       builder.addColor('oceanBlue', {
         source: { l: 0.5, c: 0.15, h: primaryHue },
         scale: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950],
@@ -734,8 +728,8 @@ export function createOceanTheme(config: OceanThemeConfig = {}): ThemePlugin {
           /* ... */
         });
       }
-    },
-  };
+    }
+  })();
 }
 ```
 
@@ -923,6 +917,9 @@ MIT
 ### Add JSDoc Comments
 
 ````typescript
+import { ThemeBase } from '../../builder/ThemeBase.js';
+import type { ThemeBuilderInterface } from '../../core/types.js';
+
 /**
  * Ocean Theme Plugin
  *
@@ -936,13 +933,13 @@ MIT
  *   .build();
  * ```
  */
-export const oceanTheme: ThemePlugin = {
-  id: 'ocean',
-  version: '1.0.0',
-  name: 'Ocean Theme',
-  description: 'Calming ocean-inspired color palette',
-  author: 'Your Name <email@example.com>',
-  tags: ['blue', 'ocean', 'calm', 'professional'],
+export class OceanTheme extends ThemeBase {
+  readonly id = 'ocean';
+  readonly version = '1.0.0';
+  readonly name = 'Ocean Theme';
+  readonly description = 'Calming ocean-inspired color palette';
+  readonly author = 'Your Name <email@example.com>';
+  readonly tags = ['blue', 'ocean', 'calm', 'professional'];
 
   /**
    * Registers ocean colors and theme variants with the builder
@@ -953,210 +950,13 @@ export const oceanTheme: ThemePlugin = {
    * - ocean-light theme variant
    * - ocean-dark theme variant
    */
-  register(builder) {
+  register(builder: ThemeBuilderInterface): void {
     // Implementation
-  },
-};
-````
-
-### Document Breaking Changes
-
-**In CHANGELOG.md:**
-
-````markdown
-# Changelog
-
-## [2.0.0] - 2025-01-15
-
-### Breaking Changes
-
-- Removed `oceanTeal` color (use `seaGreen` instead)
-- Renamed `ocean` variant to `ocean-light`
-- Changed primary hue from 210 to 220 (slight blue shift)
-
-### Migration Guide
-
-```diff
-- primary: builder.colors.oceanTeal600
-+ primary: builder.colors.seaGreen600
-
-- builder.addThemeVariant('ocean', { ... })
-+ builder.addThemeVariant('ocean-light', { ... })
-```
-````
-
-## [1.1.0] - 2024-12-20
-
-### Added
-
-- New `seaGreen` accent color
-- High contrast variant: `ocean-high-contrast`
-
-## [1.0.0] - 2024-12-01
-
-### Added
-
-- Initial release with oceanBlue color
-- Light and dark theme variants
-
-````
-
----
-
-## Distribution
-
-### Prepare for npm Publishing
-
-**package.json:**
-
-```json
-{
-  "name": "@yourorg/blueprint-theme-ocean",
-  "version": "1.0.0",
-  "description": "Ocean theme plugin for Blueprint design system",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE"
-  ],
-  "keywords": [
-    "blueprint",
-    "theme",
-    "design-system",
-    "ocean",
-    "blue"
-  ],
-  "peerDependencies": {
-    "@blueprint/themes": "^1.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/yourorg/blueprint-theme-ocean"
-  },
-  "license": "MIT"
-}
-````
-
-### Version Appropriately
-
-**Before publishing:**
-
-```bash
-# Patch release (bug fixes)
-npm version patch
-
-# Minor release (new features, backwards compatible)
-npm version minor
-
-# Major release (breaking changes)
-npm version major
-```
-
-### Create GitHub Releases
-
-**Release notes template:**
-
-````markdown
-## Ocean Theme v1.1.0
-
-### New Features
-
-- Added `seaGreen` accent color for better visual hierarchy
-- Introduced `ocean-high-contrast` variant for accessibility
-
-### Improvements
-
-- Improved text contrast in dark mode (now exceeds WCAG AAA)
-- Optimized color scale for better gradients
-
-### Documentation
-
-- Added configuration options guide
-- Updated examples with new colors
-
-### Breaking Changes
-
-None - fully backwards compatible with v1.0.0
-
-### Installation
-
-```bash
-npm install @yourorg/blueprint-theme-ocean@1.1.0
-```
-````
-
-````
-
----
-
-## Maintenance
-
-### Monitor for Deprecations
-
-```typescript
-export const oceanTheme: ThemePlugin = {
-  id: 'ocean',
-  version: '1.0.0',
-
-  beforeBuild(config) {
-    // Check for deprecated color usage
-    if (config.colors.oldColor) {
-      console.warn(
-        'Warning: "oldColor" is deprecated and will be removed in v2.0.0. ' +
-        'Use "newColor" instead.'
-      );
-    }
   }
-};
-````
-
-### Provide Migration Paths
-
-```typescript
-/**
- * @deprecated Use createOceanTheme() instead
- * Will be removed in v2.0.0
- */
-export const oceanTheme: ThemePlugin = {
-  id: 'ocean',
-  version: '1.5.0',
-  register(builder) {
-    console.warn(
-      'oceanTheme export is deprecated. ' +
-        'Use createOceanTheme() instead for configuration options.'
-    );
-    // ... existing implementation
-  },
-};
-
-/**
- * Recommended way to create ocean theme
- */
-export function createOceanTheme(config = {}) {
-  return {
-    id: 'ocean',
-    version: '1.5.0',
-    register(builder) {
-      // ... new implementation
-    },
-  };
 }
-```
 
-### Keep Dependencies Updated
-
-```bash
-# Check for outdated dependencies
-npm outdated
-
-# Update Blueprint peer dependency
-npm update @blueprint/themes
-
-# Test after updates
-npm test
-```
+export const oceanTheme = new OceanTheme();
+````
 
 ---
 
@@ -1246,7 +1046,7 @@ builder.addThemeVariant('complete', {
 
 ```typescript
 // Assumes 'ocean' plugin is loaded, but doesn't declare dependency
-register(builder) {
+register(builder: ThemeBuilderInterface): void {
   builder.extendThemeVariant('ocean-light', 'ocean-custom', {
     // This will fail if ocean plugin isn't loaded!
     primary: builder.colors.oceanBlue700,
@@ -1257,19 +1057,21 @@ register(builder) {
 **✅ Good:**
 
 ```typescript
-export const oceanCustomTheme: ThemePlugin = {
-  id: 'ocean-custom',
-  version: '1.0.0',
+export class OceanCustomTheme extends ThemeBase {
+  readonly id = 'ocean-custom';
+  readonly version = '1.0.0';
 
   // Explicit dependency
-  dependencies: [{ id: 'ocean', version: '^1.0.0' }],
+  readonly dependencies = [{ id: 'ocean', version: '^1.0.0' }];
 
-  register(builder) {
+  register(builder: ThemeBuilderInterface): void {
     builder.extendThemeVariant('ocean-light', 'ocean-custom', {
       primary: builder.colors.oceanBlue700,
     });
-  },
-};
+  }
+}
+
+export const oceanCustomTheme = new OceanCustomTheme();
 ```
 
 ### Test Contrast Before Publishing
@@ -1346,14 +1148,6 @@ Before publishing your plugin:
 - [ ] CHANGELOG.md maintained
 - [ ] LICENSE file included
 
-**Distribution:**
-
-- [ ] package.json configured correctly
-- [ ] Peer dependencies declared
-- [ ] Version follows semver
-- [ ] Git tags created for releases
-- [ ] GitHub release notes written
-
 **Accessibility:**
 
 - [ ] Text contrast ≥ 4.5:1
@@ -1366,16 +1160,9 @@ Before publishing your plugin:
 
 ## Resources
 
-- **[Plugin Authoring Guide](./PLUGIN-AUTHORING-GUIDE.md)** - Getting started with plugins
-- **[API Reference](./API-REFERENCE.md)** - Complete API documentation
-- **[Type Generation](./TYPE-GENERATION.md)** - TypeScript type generation
-- **[OKLCH Color Picker](https://oklch.com/)** - Visual OKLCH color tool
-- **[WCAG Contrast Checker](https://webaim.org/resources/contrastchecker/)** - Test contrast ratios
-- **[Semantic Versioning](https://semver.org/)** - Version numbering guide
-
-## Next Steps
-
-1. Review existing plugins in `source/themes/plugins/` for examples
-2. Start with a simple plugin using the CLI: `bp theme plugin create`
-3. Test thoroughly before publishing
-4. Share your plugin with the community!
+- [Plugin Authoring Guide](/themes/plugin-authoring-guide) - Getting started with plugins
+- [API Reference](/themes/api-reference) - Complete API documentation
+- [Type Generation](/themes/type-generation) - TypeScript type generation
+- [OKLCH Color Picker](https://oklch.com/) - Visual OKLCH color tool
+- [WCAG Contrast Checker](https://webaim.org/resources/contrastchecker/) - Test contrast ratios
+- [Semantic Versioning](https://semver.org/) - Version numbering guide

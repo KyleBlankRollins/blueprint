@@ -4,7 +4,6 @@
 
 import { describe, it, expect } from 'vitest';
 import {
-  createPlugin,
   validatePlugin,
   createColorRef,
   resolveColorRef,
@@ -17,36 +16,6 @@ import {
 import type { ThemePlugin, ColorDefinition } from '../../core/types.js';
 
 describe('pluginUtils', () => {
-  describe('createPlugin', () => {
-    it('should return plugin as-is', () => {
-      const plugin: ThemePlugin = {
-        id: 'test',
-        version: '1.0.0',
-        register: () => {},
-      };
-
-      const result = createPlugin(plugin);
-      expect(result).toBe(plugin);
-    });
-
-    it('should preserve all plugin properties', () => {
-      const plugin: ThemePlugin = {
-        id: 'test',
-        version: '1.0.0',
-        name: 'Test Plugin',
-        description: 'A test plugin',
-        author: 'Test Author',
-        register: () => {},
-      };
-
-      const result = createPlugin(plugin);
-      expect(result.id).toBe('test');
-      expect(result.name).toBe('Test Plugin');
-      expect(result.description).toBe('A test plugin');
-      expect(result.author).toBe('Test Author');
-    });
-  });
-
   describe('validatePlugin', () => {
     it('should pass valid plugin with minimal fields', () => {
       const plugin: ThemePlugin = {

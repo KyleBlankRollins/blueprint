@@ -16,28 +16,6 @@ const VALID_STEPS = new Set([
 ]);
 
 /**
- * Create a theme plugin with type safety
- * This is a helper function that provides better TypeScript inference
- *
- * @param plugin - Plugin configuration
- * @returns Typed theme plugin
- *
- * @example
- * ```typescript
- * export default createPlugin({
- *   id: 'ocean',
- *   version: '1.0.0',
- *   register(builder) {
- *     builder.addColor('oceanBlue', { l: 0.5, c: 0.15, h: 220 });
- *   }
- * });
- * ```
- */
-export function createPlugin(plugin: ThemePlugin): ThemePlugin {
-  return plugin;
-}
-
-/**
  * Validate plugin metadata and structure
  * Checks that required fields are present and valid
  *

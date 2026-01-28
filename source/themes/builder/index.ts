@@ -63,7 +63,6 @@ export { validateThemeContrast } from '../color/validateContrast.js';
 
 // Export plugin utilities
 export {
-  createPlugin,
   validatePlugin,
   createColorRef,
   resolveColorRef,

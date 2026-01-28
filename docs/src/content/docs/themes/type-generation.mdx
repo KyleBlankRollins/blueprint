@@ -1,6 +1,9 @@
-# Theme Type Generation
-
-Automatically generate TypeScript declaration files for type-safe theme development.
+---
+title: Theme Type Generation
+description: Automatically generate TypeScript declaration files for type-safe theme development
+category: guides
+order: 4
+---
 
 ## Overview
 
@@ -102,13 +105,14 @@ declare module '../builder/ThemeBuilder.js' {
 With generated types, you get full IDE support:
 
 ```typescript
-import { createPlugin } from '@blueprint/themes';
+import { ThemeBase } from '../../builder/ThemeBase.js';
+import type { ThemeBuilderInterface } from '../../core/types.js';
 
-export const oceanTheme = createPlugin({
-  id: 'ocean',
-  version: '1.0.0',
+export class OceanTheme extends ThemeBase {
+  readonly id = 'ocean';
+  readonly version = '1.0.0';
 
-  register(builder) {
+  register(builder: ThemeBuilderInterface): void {
     // Add a color
     builder.addColor('oceanBlue', {
       source: { l: 0.5, c: 0.15, h: 220 },
@@ -123,8 +127,10 @@ export const oceanTheme = createPlugin({
       // builder.colors.oceanBlue1000  ❌ Error: Invalid step
       // builder.colors.fakeColor500   ❌ Error: Color doesn't exist
     });
-  },
-});
+  }
+}
+
+export const oceanTheme = new OceanTheme();
 ```
 
 ## CLI Options
@@ -320,14 +326,8 @@ npm run theme:generate-types
 2. Ensure `theme.d.ts` is included in your `tsconfig.json`
 3. Check that types are generated in the correct location
 
-## Files
-
-- `source/themes/builder/typeGenerator.ts` - Type generation utilities
-- `source/cli/commands/generate-types.ts` - CLI command
-- `source/themes/generated/theme.d.ts` - Generated types (auto-generated)
-
 ## See Also
 
-- [Theme Plugin System](../theme-plugin-implementation-plan.md)
-- [ThemeBuilder API](../source/themes/builder/README.md)
-- [Creating Plugins](../source/themes/plugins/README.md)
+- [Plugin Authoring Guide](/themes/plugin-authoring-guide) - Getting started with plugins
+- [API Reference](/themes/api-reference) - Complete ThemeBuilder API
+- [Best Practices](/themes/best-practices) - Theme development patterns
