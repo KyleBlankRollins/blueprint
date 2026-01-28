@@ -183,6 +183,7 @@ import type {
   TypographyConfig,
   FocusConfig,
   AccessibilityConfig,
+  PluginAssetDefinition,
 } from '../core/types.js';
 
 import {
@@ -301,6 +302,30 @@ export abstract class ThemeBase implements ThemePlugin {
   // ============================================================================
   // Public API for accessing design tokens
   // ============================================================================
+
+  /**
+   * Define static assets bundled with this plugin.
+   * Override to provide fonts, images, or other assets.
+   *
+   * @returns Array of asset definitions, or empty array if no assets
+   * @example
+   * ```typescript
+   * getAssets(): PluginAssetDefinition[] {
+   *   return [
+   *     {
+   *       type: 'font',
+   *       path: 'fonts/MyFont.woff2',
+   *       family: 'My Font',
+   *       weight: '400 700',
+   *       display: 'swap',
+   *     },
+   *   ];
+   * }
+   * ```
+   */
+  getAssets(): PluginAssetDefinition[] {
+    return [];
+  }
 
   /**
    * Get all design tokens as a plain object for merging

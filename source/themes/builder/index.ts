@@ -42,6 +42,24 @@ export {
   createDefaultThemeConfig,
 } from './defaults.js';
 
+// Export asset utilities
+export {
+  collectPluginAssets,
+  filterAssetsByPlugin,
+  getPluginIdsFromAssets,
+} from './assetCollector.js';
+export {
+  copyPluginAssets,
+  getAssetsTotalSize,
+  formatBytes,
+} from './assetCopier.js';
+export {
+  generateFontFaceCSS,
+  generateFontFaceCSSForPlugin,
+  pluginHasFonts,
+  getFontFamilies,
+} from './fontFaceGenerator.js';
+
 // Re-export types from core
 export type {
   ThemePlugin,
@@ -55,6 +73,12 @@ export type {
   ColorRef,
   ThemeConfig,
   ContrastViolation,
+  // Asset types
+  PluginAssetDefinition,
+  FontAssetDefinition,
+  GenericAssetDefinition,
+  ResolvedAsset,
+  AssetCopyResult,
 } from '../core/types.js';
 
 // Re-export utilities from color module

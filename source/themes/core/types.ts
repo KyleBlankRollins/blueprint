@@ -356,6 +356,71 @@ export interface ContrastViolation {
   required: number;
 }
 
+// ============================================================================
+// Plugin Asset Types
+// ============================================================================
+
+/**
+ * Font asset with metadata for @font-face generation
+ */
+export interface FontAssetDefinition {
+  type: 'font';
+  /** Path relative to plugin's assets/ directory (e.g., 'fonts/Figtree.woff2') */
+  path: string;
+  /** Font family name for @font-face */
+  family: string;
+  /** Font weight - single value or range (e.g., '400' or '100 900' for variable) */
+  weight?: string;
+  /** Font style (e.g., 'normal', 'italic') */
+  style?: string;
+  /** Font display strategy */
+  display?: 'auto' | 'block' | 'swap' | 'fallback' | 'optional';
+  /** Unicode range (optional, for subsetting) */
+  unicodeRange?: string;
+}
+
+/**
+ * Generic asset (images, icons, other files)
+ */
+export interface GenericAssetDefinition {
+  type: 'image' | 'icon' | 'other';
+  /** Path relative to plugin's assets/ directory */
+  path: string;
+}
+
+/**
+ * Union type for all asset definitions
+ */
+export type PluginAssetDefinition = FontAssetDefinition | GenericAssetDefinition;
+
+/**
+ * Resolved asset with full paths (internal use during build)
+ */
+export interface ResolvedAsset {
+  /** Original definition */
+  definition: PluginAssetDefinition;
+  /** Plugin that owns this asset */
+  pluginId: string;
+  /** Absolute source path */
+  sourcePath: string;
+  /** Relative target path from output directory */
+  targetPath: string;
+}
+
+/**
+ * Result of copying plugin assets
+ */
+export interface AssetCopyResult {
+  /** Successfully copied asset paths */
+  copied: string[];
+  /** Warning messages (e.g., large file sizes) */
+  warnings: string[];
+}
+
+// ============================================================================
+// Runtime type guards for validation
+// ============================================================================
+
 /**
  * Runtime type guards for validation
  * Use these to validate user input at runtime

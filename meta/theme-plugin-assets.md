@@ -1,6 +1,6 @@
 # Theme Plugin Asset Management
 
-**Status:** Proposed
+**Status:** Phase 1 Complete
 **Created:** January 27, 2026
 **Updated:** January 27, 2026
 **Author:** Blueprint Team
@@ -637,20 +637,22 @@ Assets are part of the published package under `dist/themes/generated/`, maintai
 
 ## Implementation Checklist
 
-- [ ] Add `PluginAssetDefinition` types to `core/types.ts`
-- [ ] Add `getAssets()` method to `ThemeBase` (returns empty array)
-- [ ] Implement `collectPluginAssets()` with validation
-- [ ] Implement `copyPluginAssets()` utility
-- [ ] Implement `generateFontFaceCSS()`
+### Phase 1: Foundation (Complete)
+- [x] Add `PluginAssetDefinition` types to `core/types.ts`
+- [x] Add `getAssets()` method to `ThemeBase` (returns empty array)
+- [x] Implement `collectPluginAssets()` with validation
+- [x] Implement `copyPluginAssets()` utility
+- [x] Implement `generateFontFaceCSS()`
+- [x] Add tests for asset collection and validation
+- [x] Add tests for asset copying
+- [x] Add tests for @font-face generation
+
+### Phase 2: Blueprint Core Font (Pending)
 - [ ] Update CSS generation to include @font-face
-- [ ] Update `ThemeBuilder.getPlugins()` to expose plugins
 - [ ] Update `generateTheme` CLI command
 - [ ] Add Figtree font files to `blueprint-core/assets/fonts/`
 - [ ] Implement `getAssets()` in BlueprintCoreTheme
 - [ ] Update blueprint-core font-family tokens
-- [ ] Add tests for asset collection and validation
-- [ ] Add tests for asset copying
-- [ ] Add tests for @font-face generation
 - [ ] Update documentation
 
 ## References
