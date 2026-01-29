@@ -481,15 +481,17 @@ export function generateHighContrastCSS(config: ThemeConfig): string {
  * Generate main index CSS that imports all theme files
  *
  * @param themesByPlugin - Map of plugin IDs to their theme variant names
+ * @param pluginsWithFonts - Set of plugin IDs that have fonts.css files
  * @returns CSS string with import statements for all theme files
  */
 export function generateIndexCSS(
-  themesByPlugin?: Map<string, string[]>
+  themesByPlugin?: Map<string, string[]>,
+  pluginsWithFonts?: Set<string>
 ): string {
   let imports = `/**
  * Blueprint Theme System
  * Auto-generated theme files - DO NOT EDIT MANUALLY
- * 
+ *
  * To regenerate: npm run theme:generate
  */
 
@@ -512,6 +514,12 @@ export function generateIndexCSS(
   // Generate imports organized by plugin
   for (const [pluginId, variantNames] of themesByPlugin) {
     imports += `/* ${pluginId} themes */\n`;
+
+    // Import fonts.css first if this plugin has fonts
+    if (pluginsWithFonts?.has(pluginId)) {
+      imports += `@import './${pluginId}/fonts.css'; /* bundled fonts */\n`;
+    }
+
     for (const variantName of variantNames) {
       const comment =
         variantName === 'light'

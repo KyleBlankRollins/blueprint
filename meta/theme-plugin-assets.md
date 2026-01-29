@@ -1,6 +1,6 @@
 # Theme Plugin Asset Management
 
-**Status:** Phase 1 Complete
+**Status:** Phase 2 Complete
 **Created:** January 27, 2026
 **Updated:** January 27, 2026
 **Author:** Blueprint Team
@@ -612,12 +612,30 @@ Assets are part of the published package under `dist/themes/generated/`, maintai
    - Reject paths containing `..` or starting with `/`
    - All assets scoped to plugin's `assets/` directory
 
-2. **File Type Validation**
-   - Allowlist of extensions per asset type
-   - Blocklist of executable extensions
-   - Extension must match declared type
+2. **Symlink Attack Prevention**
+   - Use `realpathSync()` to resolve all symlinks before file operations
+   - Verify resolved path remains within the plugin's `assets/` directory
+   - Reject any asset where the real path escapes the allowed directory
 
-3. **Size Limits**
+3. **Null Byte Injection Prevention**
+   - Reject any paths containing null bytes (`\x00`)
+   - Prevents path truncation attacks in some environments
+
+4. **File Type Validation**
+   - Allowlist of extensions per asset type
+   - Blocklist of executable and scripting extensions:
+     - Executables: `.exe`, `.dll`, `.so`, `.dylib`
+     - Shell: `.sh`, `.bat`, `.cmd`, `.ps1`
+     - JavaScript: `.js`, `.ts`, `.mjs`, `.cjs`, `.jsx`, `.tsx`
+     - Scripting: `.php`, `.py`, `.rb`, `.pl`, `.lua`
+   - Extension must match declared asset type
+
+5. **CSS Injection Prevention**
+   - Font family names are sanitized before CSS generation
+   - Removes characters that could break CSS context: `'`, `"`, `\`, `;`, `{`, `}`, `(`, `)`, newlines
+   - Prevents malicious font names from injecting CSS rules
+
+6. **Size Limits**
    - Warning threshold at 5MB per asset
    - Plugins should document total asset size
 
@@ -638,6 +656,7 @@ Assets are part of the published package under `dist/themes/generated/`, maintai
 ## Implementation Checklist
 
 ### Phase 1: Foundation (Complete)
+
 - [x] Add `PluginAssetDefinition` types to `core/types.ts`
 - [x] Add `getAssets()` method to `ThemeBase` (returns empty array)
 - [x] Implement `collectPluginAssets()` with validation
@@ -647,13 +666,14 @@ Assets are part of the published package under `dist/themes/generated/`, maintai
 - [x] Add tests for asset copying
 - [x] Add tests for @font-face generation
 
-### Phase 2: Blueprint Core Font (Pending)
-- [ ] Update CSS generation to include @font-face
-- [ ] Update `generateTheme` CLI command
-- [ ] Add Figtree font files to `blueprint-core/assets/fonts/`
-- [ ] Implement `getAssets()` in BlueprintCoreTheme
-- [ ] Update blueprint-core font-family tokens
-- [ ] Update documentation
+### Phase 2: Blueprint Core Font (Complete)
+
+- [x] Update CSS generation to include @font-face
+- [x] Update `generateTheme` CLI command
+- [x] Add Figtree font files to `blueprint-core/assets/fonts/`
+- [x] Implement `getAssets()` in BlueprintCoreTheme
+- [x] Update blueprint-core font-family tokens
+- [x] Update documentation
 
 ## References
 

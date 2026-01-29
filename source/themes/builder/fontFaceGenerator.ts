@@ -39,6 +39,22 @@ function getFontFormat(path: string): string {
 }
 
 /**
+ * Sanitize font family name to prevent CSS injection attacks.
+ *
+ * Removes characters that could break out of the CSS string context
+ * or inject malicious CSS rules.
+ *
+ * @param family - Raw font family name from asset definition
+ * @returns Sanitized font family name safe for CSS
+ */
+export function sanitizeFontFamily(family: string): string {
+  // Remove characters that could break CSS string or inject rules:
+  // ' " \ ; { } ( ) allow CSS injection
+  // Newlines could break the declaration
+  return family.replace(/['"\\\n\r;{}()]/g, '');
+}
+
+/**
  * Generate @font-face CSS declarations from font assets
  *
  * The generated CSS uses relative paths that work when the CSS file
@@ -75,10 +91,11 @@ export function generateFontFaceCSS(assets: ResolvedAsset[]): string {
     const font = asset.definition;
     const relativePath = `./assets/${font.path}`;
     const format = getFontFormat(font.path);
+    const safeFamily = sanitizeFontFamily(font.family);
 
     const lines: string[] = [
       '@font-face {',
-      `  font-family: '${font.family}';`,
+      `  font-family: '${safeFamily}';`,
       `  src: url('${relativePath}') format('${format}');`,
     ];
 

@@ -86,6 +86,47 @@ Optimized for low-light viewing with reduced eye strain.
 - Higher contrast borders
 - Inverted text hierarchy
 
+## Typography
+
+Blueprint Core bundles the **Figtree** variable font for self-hosted typography. Figtree is a friendly geometric sans-serif designed by Erik Kennedy, available under the SIL Open Font License.
+
+### Bundled Font
+
+- **Font:** Figtree Variable (300-900 weight range)
+- **Format:** TTF (truetype)
+- **Size:** ~62KB
+- **License:** SIL OFL 1.1
+
+### Font Stack
+
+```css
+/* Primary font family */
+font-family: Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+/* Monospace font family */
+font-family: "SF Mono", Monaco, "Cascadia Code", "Courier New", monospace;
+```
+
+### How It Works
+
+When you run `npm run theme:generate`, the CLI:
+1. Collects font assets declared in `getAssets()`
+2. Generates a `fonts.css` file with `@font-face` declarations
+3. Copies font files to `generated/blueprint-core/assets/fonts/`
+4. Imports `fonts.css` in the main `index.css`
+
+The generated `fonts.css`:
+
+```css
+@font-face {
+  font-family: 'Figtree';
+  src: url('./assets/fonts/Figtree-VariableFont_wght.ttf') format('truetype');
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+```
+
 ## Architecture
 
 Blueprint Core extends `ThemeBase`, which provides:

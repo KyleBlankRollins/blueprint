@@ -5,12 +5,9 @@
  * Ensures assets exist, have valid extensions, and don't contain path traversal.
  */
 
-import { existsSync } from 'node:fs';
-import { join } from 'node:path';
-import type {
-  PluginAssetDefinition,
-  ResolvedAsset,
-} from '../core/types.js';
+import { existsSync, realpathSync } from 'node:fs';
+import { join, resolve } from 'node:path';
+import type { PluginAssetDefinition, ResolvedAsset } from '../core/types.js';
 import type { ThemeBase } from './ThemeBase.js';
 
 /**
@@ -25,18 +22,32 @@ const ALLOWED_EXTENSIONS: Record<string, string[]> = {
 
 /**
  * Blocked file extensions (security)
+ * Includes executables and scripting languages
  */
 const BLOCKED_EXTENSIONS = [
+  // Executables
   '.exe',
   '.dll',
+  '.so',
+  '.dylib',
+  // Shell scripts
   '.sh',
   '.bat',
   '.cmd',
   '.ps1',
+  // JavaScript/TypeScript
   '.js',
   '.ts',
   '.mjs',
   '.cjs',
+  '.jsx',
+  '.tsx',
+  // Other scripting languages
+  '.php',
+  '.py',
+  '.rb',
+  '.pl',
+  '.lua',
 ];
 
 /**
@@ -95,6 +106,11 @@ function resolveAndValidateAsset(
   pluginId: string,
   pluginAssetsDir: string
 ): ResolvedAsset {
+  // Check for null byte injection
+  if (asset.path.includes('\x00')) {
+    throw new Error(`Plugin "${pluginId}": Invalid null byte in asset path`);
+  }
+
   // Validate path doesn't contain traversal
   if (asset.path.includes('..') || asset.path.startsWith('/')) {
     throw new Error(
@@ -107,7 +123,10 @@ function resolveAndValidateAsset(
 
   // Check file extension
   const lastDotIndex = normalizedPath.lastIndexOf('.');
-  const ext = lastDotIndex >= 0 ? normalizedPath.substring(lastDotIndex).toLowerCase() : '';
+  const ext =
+    lastDotIndex >= 0
+      ? normalizedPath.substring(lastDotIndex).toLowerCase()
+      : '';
 
   if (BLOCKED_EXTENSIONS.includes(ext)) {
     throw new Error(
@@ -134,10 +153,33 @@ function resolveAndValidateAsset(
     );
   }
 
+  // Resolve symlinks and verify the real path stays within the plugin directory
+  // This prevents symlink attacks where a symlink points outside the allowed directory
+  let realSourcePath: string;
+  try {
+    realSourcePath = realpathSync(sourcePath);
+  } catch {
+    throw new Error(
+      `Plugin "${pluginId}": Cannot resolve asset path: ${sourcePath}`
+    );
+  }
+
+  // Get the real path of the plugin assets directory for comparison
+  // Use resolve() to normalize the path even if directory doesn't exist yet
+  const realPluginAssetsDir = existsSync(pluginAssetsDir)
+    ? realpathSync(pluginAssetsDir)
+    : resolve(pluginAssetsDir);
+
+  if (!realSourcePath.startsWith(realPluginAssetsDir)) {
+    throw new Error(
+      `Plugin "${pluginId}": Asset path escapes plugin directory (possible symlink attack)`
+    );
+  }
+
   return {
     definition: asset,
     pluginId,
-    sourcePath,
+    sourcePath: realSourcePath,
     targetPath,
   };
 }

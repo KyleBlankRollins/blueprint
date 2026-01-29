@@ -135,21 +135,32 @@ function generateUtilitiesFile(config: ThemeConfig): string {
   ].join('');
 }
 
+export interface BuildThemeOptions {
+  /**
+   * Map of plugin ID to @font-face CSS to prepend to theme variant files.
+   * If provided, the CSS will be prepended to each theme variant file for the plugin.
+   */
+  fontFaceByPlugin?: Map<string, string>;
+}
+
 /**
  * Generate all theme files from configuration
  *
- * Creates 5 CSS files:
- * - primitives.css: Color scales with hex fallbacks + OKLCH for modern browsers
+ * Creates CSS files:
  * - utilities.css: Spacing, radius, motion, typography, focus, z-index, opacity, breakpoints
- * - light.css: Light theme semantic color tokens
- * - dark.css: Dark theme semantic color tokens
+ * - {plugin-id}/{variant}.css: Theme variant semantic tokens (with @font-face if provided)
  * - index.css: Main import file that loads all theme CSS
  *
  * @param config - Complete theme configuration with colors, spacing, typography, etc.
+ * @param options - Optional build options including @font-face CSS per plugin
  * @returns Object containing all generated CSS file contents
  * @throws {Error} If configuration is invalid or CSS generation fails
  */
-export function buildTheme(config: ThemeConfig): GeneratedFiles {
+export function buildTheme(
+  config: ThemeConfig,
+  options: BuildThemeOptions = {}
+): GeneratedFiles {
+  const { fontFaceByPlugin } = options;
   // Validate configuration
   if (!config.colors || Object.keys(config.colors).length === 0) {
     throw new Error(
@@ -198,6 +209,12 @@ export function buildTheme(config: ThemeConfig): GeneratedFiles {
 
     // Generate CSS files for each plugin's themes
     for (const [pluginId, variantNames] of themesByPlugin) {
+      // Generate fonts.css if plugin has font assets
+      const fontFaceCSS = fontFaceByPlugin?.get(pluginId);
+      if (fontFaceCSS) {
+        files[`${pluginId}/fonts.css`] = fontFaceCSS;
+      }
+
       for (const variantName of variantNames) {
         const themeTokens = config.themes[variantName];
         const cssContent = generateThemeCSS(
@@ -212,7 +229,11 @@ export function buildTheme(config: ThemeConfig): GeneratedFiles {
     }
 
     // Generate index file that imports all themes
-    files['index.css'] = generateIndexCSS(themesByPlugin);
+    // Include plugins with fonts so index.css can import fonts.css
+    const pluginsWithFonts = fontFaceByPlugin
+      ? new Set(fontFaceByPlugin.keys())
+      : undefined;
+    files['index.css'] = generateIndexCSS(themesByPlugin, pluginsWithFonts);
 
     return files;
   } catch (error) {

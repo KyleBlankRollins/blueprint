@@ -17,9 +17,11 @@
  */
 
 import { ThemeBase } from '../../builder/ThemeBase.js';
-import type { ThemeBuilderInterface, ThemeConfig } from '../../core/types.js';
-// Validation utilities can be imported when needed:
-// import { validateTheme } from '../../builder/validation.js';
+import type {
+  ThemeBuilderInterface,
+  ThemeConfig,
+  PluginAssetDefinition,
+} from '../../core/types.js';
 
 export class BlueprintCoreTheme extends ThemeBase {
   readonly id = 'blueprint-core';
@@ -31,6 +33,35 @@ export class BlueprintCoreTheme extends ThemeBase {
   readonly license = 'MIT';
   readonly tags = ['core', 'theme', 'light', 'dark', 'wada-sanzo'];
   readonly homepage = 'https://github.com/blueprint/blueprint';
+
+  /**
+   * Bundle Figtree variable font for self-hosted typography.
+   * Figtree is a friendly geometric sans-serif by Erik Kennedy.
+   */
+  getAssets(): PluginAssetDefinition[] {
+    return [
+      {
+        type: 'font',
+        path: 'fonts/Figtree-VariableFont_wght.ttf',
+        family: 'Figtree',
+        weight: '300 900', // Variable font weight range
+        style: 'normal',
+        display: 'swap',
+      },
+      {
+        type: 'font',
+        path: 'fonts/Figtree-Italic-VariableFont_wght.ttf',
+        family: 'Figtree',
+        weight: '300 900', // Variable font weight range
+        style: 'normal',
+        display: 'swap',
+      },
+      {
+        type: 'other',
+        path: 'fonts/Figtree-LICENSE.txt',
+      },
+    ];
+  }
 
   register(builder: ThemeBuilderInterface): void {
     // Light theme variant with Wada Sanzo-inspired colors
@@ -66,13 +97,13 @@ export class BlueprintCoreTheme extends ThemeBase {
       focus: 'oklch(0.40 0.08 233.4)',
       backdrop: 'oklch(0 0 0 / 0.6)',
 
-      // Typography
+      // Typography - Figtree as primary with system fallbacks
       fontFamily:
-        '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+        'Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
       fontFamilyMono:
         '"SF Mono", Monaco, "Cascadia Code", "Courier New", monospace',
       fontFamilyHeading:
-        '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+        'Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
 
       // Border radius
       borderRadius: '4px',
@@ -121,13 +152,13 @@ export class BlueprintCoreTheme extends ThemeBase {
       focus: 'oklch(0.26 0.07 233.4)',
       backdrop: 'oklch(0 0 0 / 0.6)',
 
-      // Typography
+      // Typography - Figtree as primary with system fallbacks
       fontFamily:
-        '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+        'Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
       fontFamilyMono:
         '"SF Mono", Monaco, "Cascadia Code", "Courier New", monospace',
       fontFamilyHeading:
-        '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+        'Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
 
       // Border radius
       borderRadius: '4px',
