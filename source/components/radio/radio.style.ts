@@ -136,4 +136,27 @@ export const radioStyles = css`
     opacity: 0.5;
     cursor: not-allowed;
   }
+
+  /* Touch target size: ensure 44x44px minimum on touch devices */
+  @media (pointer: coarse) {
+    .radio {
+      min-height: 44px;
+      padding: var(--bp-spacing-xs) 0;
+    }
+
+    .radio__circle {
+      position: relative;
+    }
+
+    /* Expand touch target with pseudo-element */
+    .radio__circle::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+    }
+  }
 `;

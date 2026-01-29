@@ -147,4 +147,27 @@ export const checkboxStyles = css`
     background-color: var(--bp-color-error);
     border-color: var(--bp-color-error);
   }
+
+  /* Touch target size: ensure 44x44px minimum on touch devices */
+  @media (pointer: coarse) {
+    .checkbox {
+      min-height: 44px;
+      padding: var(--bp-spacing-xs) 0;
+    }
+
+    .checkbox__checkmark {
+      position: relative;
+    }
+
+    /* Expand touch target with pseudo-element */
+    .checkbox__checkmark::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+    }
+  }
 `;

@@ -3,7 +3,8 @@
     "allow": [
       "Bash(npm run build:cli:*)",
       "Bash(npm test:*)",
-      "Bash(npm run test:*)"
+      "Bash(npm run test:*)",
+      "WebFetch(domain:www.learnui.design)"
     ]
   }
 }

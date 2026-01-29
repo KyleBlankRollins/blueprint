@@ -152,4 +152,12 @@ export const paginationStyles = css`
   .pagination--large {
     gap: var(--bp-spacing-md);
   }
+
+  /* Touch target size: ensure 44x44px minimum on touch devices */
+  @media (pointer: coarse) {
+    .pagination__button {
+      min-width: 44px;
+      min-height: 44px;
+    }
+  }
 `;

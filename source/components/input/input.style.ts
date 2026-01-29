@@ -147,4 +147,11 @@ export const inputStyles = css`
   .input-message--error {
     color: var(--bp-color-error);
   }
+
+  /* iOS zoom prevention: ensure 16px minimum on touch devices */
+  @media (max-width: 768px) {
+    .input--sm {
+      font-size: 16px;
+    }
+  }
 `;

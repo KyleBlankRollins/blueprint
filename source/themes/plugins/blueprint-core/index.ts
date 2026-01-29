@@ -51,7 +51,7 @@ export class BlueprintCoreTheme extends ThemeBase {
       {
         type: 'font',
         path: 'fonts/Figtree-Italic-VariableFont_wght.ttf',
-        family: 'Figtree',
+        family: 'Figtree-Italic',
         weight: '300 900', // Variable font weight range
         style: 'normal',
         display: 'swap',
@@ -76,7 +76,7 @@ export class BlueprintCoreTheme extends ThemeBase {
       // Text - Gray neutral scale
       text: 'oklch(0.25 0.01 240.0)',
       textStrong: 'oklch(0.00 0.00 0.0)',
-      textMuted: 'oklch(0.55 0.02 240.0)',
+      textMuted: 'oklch(0.50 0.02 240.0)', // Darkened from 0.55 for WCAG AA 4.5:1 contrast
       textInverse: 'oklch(0.89 0.01 91.4)',
 
       // Primary - Vanderpoel Blue (deep, sophisticated blue)
@@ -134,22 +134,23 @@ export class BlueprintCoreTheme extends ThemeBase {
       textMuted: 'oklch(0.75 0.02 91.4)',
       textInverse: 'oklch(0.25 0.01 240.0)',
 
-      // Primary - Lighter Vanderpoel Blue for dark backgrounds
-      primary: 'oklch(0.26 0.07 233.4)',
-      primaryHover: 'oklch(0.28 0.05 233.4)',
-      primaryActive: 'oklch(0.32 0.03 233.4)',
+      // Primary - Brighter Vanderpoel Blue for visibility on dark backgrounds
+      // Updated from L=26% to L=48% per UI audit (was nearly invisible)
+      primary: 'oklch(0.48 0.12 233.4)',
+      primaryHover: 'oklch(0.44 0.10 233.4)',
+      primaryActive: 'oklch(0.40 0.08 233.4)',
 
       // Semantic (lighter shades for dark backgrounds)
       success: 'oklch(0.36 0.10 145.0)',
-      warning: 'oklch(0.51 0.13 64.5)',
+      warning: 'oklch(0.45 0.11 64.5)', // Slightly darker for dark theme
       error: 'oklch(0.36 0.12 25.0)',
-      info: 'oklch(0.26 0.07 233.4)',
+      info: 'oklch(0.48 0.12 233.4)', // Match primary
 
       // UI Elements
       border: 'oklch(0.35 0.02 240.0)',
       borderStrong: 'oklch(0.45 0.02 240.0)',
       borderWidth: '1px',
-      focus: 'oklch(0.26 0.07 233.4)',
+      focus: 'oklch(0.55 0.15 233.4)', // Brighter for visibility
       backdrop: 'oklch(0 0 0 / 0.6)',
 
       // Typography - Figtree as primary with system fallbacks

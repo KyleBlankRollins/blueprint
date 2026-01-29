@@ -20,10 +20,7 @@ import {
   sanitizeFontFamily,
 } from '../fontFaceGenerator.js';
 import { ThemeBase } from '../ThemeBase.js';
-import type {
-  PluginAssetDefinition,
-  ThemeBuilderInterface,
-} from '../../core/types.js';
+import type { PluginAssetDefinition } from '../../core/types.js';
 
 // Test plugin with font assets
 class TestPluginWithFonts extends ThemeBase {
@@ -47,7 +44,7 @@ class TestPluginWithFonts extends ThemeBase {
     ];
   }
 
-  register(_builder: ThemeBuilderInterface): void {
+  register(): void {
     // No-op for testing
   }
 }
@@ -57,7 +54,7 @@ class TestPluginNoAssets extends ThemeBase {
   readonly id = 'no-assets-plugin';
   readonly version = '1.0.0';
 
-  register(_builder: ThemeBuilderInterface): void {
+  register(): void {
     // No-op for testing
   }
 }

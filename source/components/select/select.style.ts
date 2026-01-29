@@ -176,4 +176,15 @@ export const selectStyles = css`
     cursor: not-allowed;
     background-color: var(--bp-color-surface-subdued);
   }
+
+  /* iOS zoom prevention: ensure 16px minimum on touch devices */
+  @media (max-width: 768px) {
+    .select--small .select-trigger {
+      font-size: 16px;
+    }
+
+    .select--small .select-option {
+      font-size: 16px;
+    }
+  }
 `;

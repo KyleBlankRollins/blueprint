@@ -260,4 +260,11 @@ export const numberInputStyles = css`
   .number-input__message--warning {
     color: var(--bp-color-warning);
   }
+
+  /* iOS zoom prevention: ensure 16px minimum on touch devices */
+  @media (max-width: 768px) {
+    .number-input--small .number-input__input {
+      font-size: 16px;
+    }
+  }
 `;

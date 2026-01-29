@@ -168,4 +168,11 @@ export const textareaStyles = css`
   .textarea-message--error {
     color: var(--bp-color-error);
   }
+
+  /* iOS zoom prevention: ensure 16px minimum on touch devices */
+  @media (max-width: 768px) {
+    .textarea--sm {
+      font-size: 16px;
+    }
+  }
 `;

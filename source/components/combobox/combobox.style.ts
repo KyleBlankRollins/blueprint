@@ -273,4 +273,11 @@ export const comboboxStyles = css`
   input[type='hidden'] {
     display: none;
   }
+
+  /* iOS zoom prevention: ensure 16px minimum on touch devices */
+  @media (max-width: 768px) {
+    .combobox--small .combobox__input {
+      font-size: 16px;
+    }
+  }
 `;

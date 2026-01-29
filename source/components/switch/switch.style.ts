@@ -128,4 +128,27 @@ export const switchStyles = css`
     background-color: var(--bp-color-error);
     border-color: var(--bp-color-error);
   }
+
+  /* Touch target size: ensure 44x44px minimum on touch devices */
+  @media (pointer: coarse) {
+    .switch {
+      min-height: 44px;
+      padding: var(--bp-spacing-xs) 0;
+    }
+
+    .switch__track {
+      position: relative;
+    }
+
+    /* Expand touch target with pseudo-element */
+    .switch__track::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      min-width: 44px;
+      min-height: 44px;
+    }
+  }
 `;

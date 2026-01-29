@@ -177,4 +177,24 @@ export const tagStyles = css`
     cursor: not-allowed;
     opacity: 0.5;
   }
+
+  /* Touch target size: ensure 44x44px minimum on touch devices */
+  @media (pointer: coarse) {
+    .tag__close {
+      position: relative;
+      min-width: 24px;
+      min-height: 24px;
+    }
+
+    /* Expand touch target with pseudo-element */
+    .tag__close::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+    }
+  }
 `;
