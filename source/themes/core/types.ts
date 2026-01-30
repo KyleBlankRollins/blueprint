@@ -78,11 +78,38 @@ export interface SemanticTokens<TColorRef = ColorRef | string> {
   primaryHover: TColorRef;
   primaryActive: TColorRef;
 
+  // Secondary actions
+  secondary: TColorRef;
+  secondaryHover: TColorRef;
+
+  // Link colors
+  link: TColorRef;
+  linkHover: TColorRef;
+  linkVisited: TColorRef;
+
   // Semantic states
   success: TColorRef;
+  successHover: TColorRef;
+  successBg: TColorRef;
   warning: TColorRef;
+  warningHover: TColorRef;
+  warningBg: TColorRef;
   error: TColorRef;
+  errorHover: TColorRef;
+  errorBg: TColorRef;
   info: TColorRef;
+  infoHover: TColorRef;
+  infoBg: TColorRef;
+
+  // Interactive state overlays
+  hoverOverlay: TColorRef;
+  activeOverlay: TColorRef;
+  selectedBg: TColorRef;
+
+  // Input-specific
+  placeholder: TColorRef;
+  inputBg: TColorRef;
+  inputBorder: TColorRef;
 
   // UI elements
   border: TColorRef;
@@ -391,7 +418,9 @@ export interface GenericAssetDefinition {
 /**
  * Union type for all asset definitions
  */
-export type PluginAssetDefinition = FontAssetDefinition | GenericAssetDefinition;
+export type PluginAssetDefinition =
+  | FontAssetDefinition
+  | GenericAssetDefinition;
 
 /**
  * Resolved asset with full paths (internal use during build)

@@ -61,6 +61,10 @@ export const DEFAULT_TYPOGRAPHY = {
     normal: 1.5,
     relaxed: 1.625,
     loose: 2,
+    // Heading-specific line heights (tighter for larger sizes)
+    'heading-sm': 1.3,
+    'heading-md': 1.25,
+    'heading-lg': 1.2,
   },
   fontWeights: {
     light: 300,

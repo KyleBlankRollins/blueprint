@@ -84,11 +84,38 @@ export class BlueprintCoreTheme extends ThemeBase {
       primaryHover: 'oklch(0.36 0.10 233.4)',
       primaryActive: 'oklch(0.32 0.12 233.4)',
 
-      // Semantic colors
+      // Secondary - Neutral gray for secondary actions
+      secondary: 'oklch(0.55 0.02 240.0)',
+      secondaryHover: 'oklch(0.50 0.02 240.0)',
+
+      // Link colors
+      link: 'oklch(0.40 0.08 233.4)', // Same as primary
+      linkHover: 'oklch(0.36 0.10 233.4)',
+      linkVisited: 'oklch(0.45 0.08 280.0)', // Purple tint
+
+      // Semantic colors with hover and background variants
       success: 'oklch(0.55 0.13 145.0)',
+      successHover: 'oklch(0.50 0.15 145.0)',
+      successBg: 'oklch(0.95 0.05 145.0)',
       warning: 'oklch(0.51 0.13 64.5)',
+      warningHover: 'oklch(0.46 0.15 64.5)',
+      warningBg: 'oklch(0.95 0.05 64.5)',
       error: 'oklch(0.55 0.15 25.0)',
+      errorHover: 'oklch(0.50 0.17 25.0)',
+      errorBg: 'oklch(0.95 0.05 25.0)',
       info: 'oklch(0.40 0.08 233.4)',
+      infoHover: 'oklch(0.36 0.10 233.4)',
+      infoBg: 'oklch(0.95 0.03 233.4)',
+
+      // Interactive state overlays
+      hoverOverlay: 'oklch(0 0 0 / 0.05)',
+      activeOverlay: 'oklch(0 0 0 / 0.1)',
+      selectedBg: 'oklch(0.95 0.03 233.4)', // Light primary tint
+
+      // Input-specific tokens
+      placeholder: 'oklch(0.50 0.02 240.0)', // Same as textMuted
+      inputBg: 'oklch(0.89 0.01 91.4)', // Same as background
+      inputBorder: 'oklch(0.75 0.02 91.4)', // Same as border
 
       // UI Elements
       border: 'oklch(0.75 0.02 91.4)',
@@ -140,11 +167,38 @@ export class BlueprintCoreTheme extends ThemeBase {
       primaryHover: 'oklch(0.44 0.10 233.4)',
       primaryActive: 'oklch(0.40 0.08 233.4)',
 
+      // Secondary - Neutral gray for secondary actions
+      secondary: 'oklch(0.65 0.02 240.0)',
+      secondaryHover: 'oklch(0.70 0.02 240.0)',
+
+      // Link colors
+      link: 'oklch(0.48 0.12 233.4)', // Same as primary
+      linkHover: 'oklch(0.44 0.10 233.4)',
+      linkVisited: 'oklch(0.55 0.10 280.0)', // Purple tint (lighter for dark bg)
+
       // Semantic (lighter shades for dark backgrounds)
       success: 'oklch(0.36 0.10 145.0)',
+      successHover: 'oklch(0.40 0.12 145.0)',
+      successBg: 'oklch(0.20 0.04 145.0)',
       warning: 'oklch(0.45 0.11 64.5)', // Slightly darker for dark theme
+      warningHover: 'oklch(0.50 0.13 64.5)',
+      warningBg: 'oklch(0.20 0.04 64.5)',
       error: 'oklch(0.36 0.12 25.0)',
+      errorHover: 'oklch(0.40 0.14 25.0)',
+      errorBg: 'oklch(0.20 0.04 25.0)',
       info: 'oklch(0.48 0.12 233.4)', // Match primary
+      infoHover: 'oklch(0.44 0.10 233.4)',
+      infoBg: 'oklch(0.20 0.03 233.4)',
+
+      // Interactive state overlays
+      hoverOverlay: 'oklch(1 0 0 / 0.05)', // White overlay for dark theme
+      activeOverlay: 'oklch(1 0 0 / 0.1)',
+      selectedBg: 'oklch(0.25 0.04 233.4)', // Dark primary tint
+
+      // Input-specific tokens
+      placeholder: 'oklch(0.75 0.02 91.4)', // Same as textMuted
+      inputBg: 'oklch(0.15 0.01 240.0)', // Same as background
+      inputBorder: 'oklch(0.35 0.02 240.0)', // Same as border
 
       // UI Elements
       border: 'oklch(0.35 0.02 240.0)',

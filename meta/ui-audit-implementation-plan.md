@@ -108,76 +108,71 @@ This plan organizes all fixes from the Blueprint Component UI Audit into actiona
 
 ---
 
-## Phase 2: Theme Token Improvements (Medium Priority)
+## Phase 2: Theme Token Improvements (Medium Priority) ✅ COMPLETED
 
 **Estimated effort:** 1-2 days
 **Impact:** Consistency, design system coherence
+**Status:** Completed January 29, 2026
 
-### 2.1 Semantic Spacing Scale Adjustment
+### 2.1 Semantic Spacing Scale Adjustment ⏸️ DEFERRED
 
 **Problem:** Semantic spacing is too tight (md = 8px, should be 16px)
-**Files to modify:**
+**Status:** DEFERRED - HIGH RISK change that affects all 42 components. Requires visual review of entire component library before implementing.
 
-- [ ] `source/themes/light.css`
-- [ ] `source/themes/dark.css`
-
-**New values:**
-
-| Token              | Current | New  |
-| ------------------ | ------- | ---- |
-| `--bp-spacing-2xs` | 2px     | 4px  |
-| `--bp-spacing-xs`  | 4px     | 8px  |
-| `--bp-spacing-sm`  | 6px     | 12px |
-| `--bp-spacing-md`  | 8px     | 16px |
-| `--bp-spacing-lg`  | 12px    | 24px |
-| `--bp-spacing-xl`  | 20px    | 32px |
-| `--bp-spacing-2xl` | 32px    | 48px |
-
-**⚠️ Impact:** This will affect ALL components using semantic spacing. Requires visual review of each component after change.
+| Token              | Current | Proposed |
+| ------------------ | ------- | -------- |
+| `--bp-spacing-2xs` | 2px     | 4px      |
+| `--bp-spacing-xs`  | 4px     | 8px      |
+| `--bp-spacing-sm`  | 6px     | 12px     |
+| `--bp-spacing-md`  | 8px     | 16px     |
+| `--bp-spacing-lg`  | 12px    | 24px     |
+| `--bp-spacing-xl`  | 20px    | 32px     |
+| `--bp-spacing-2xl` | 32px    | 48px     |
 
 ---
 
-### 2.2 Add Missing Semantic Tokens
+### 2.2 Add Missing Semantic Tokens ✅
 
-**Files to modify:**
+**Files modified:**
 
-- [ ] `source/themes/light.css`
-- [ ] `source/themes/dark.css`
+- [x] `source/themes/core/types.ts` (SemanticTokens interface)
+- [x] `source/themes/generator/generateCSS.ts` (colorTokens list)
+- [x] `source/themes/plugins/blueprint-core/index.ts` (light and dark values)
+- [x] `source/themes/builder/defaults.ts` (heading line heights)
 
-**Tokens to add:**
+**New tokens added:**
 
 ```css
+/* Secondary actions */
+--bp-color-secondary, --bp-color-secondary-hover
+
 /* Link colors */
---bp-color-link: var(--bp-color-primary);
---bp-color-link-hover: var(--bp-color-primary-hover);
---bp-color-link-visited: oklch(0.45 0.08 280); /* Purple tint */
+--bp-color-link, --bp-color-link-hover, --bp-color-link-visited
 
-/* Secondary/Tertiary actions */
---bp-color-secondary: oklch(0.5 0.02 240);
---bp-color-secondary-hover: oklch(0.45 0.02 240);
-
-/* Interactive state overlays */
---bp-color-hover-overlay: oklch(0 0 0 / 0.05);
---bp-color-active-overlay: oklch(0 0 0 / 0.1);
---bp-color-selected-bg: oklch(0.95 0.03 233.4);
+/* Semantic hover states */
+--bp-color-success-hover, --bp-color-warning-hover, --bp-color-error-hover, --bp-color-info-hover
 
 /* Semantic backgrounds */
---bp-color-success-bg: oklch(0.95 0.05 145);
---bp-color-warning-bg: oklch(0.95 0.05 64.5);
---bp-color-error-bg: oklch(0.95 0.05 25);
---bp-color-info-bg: oklch(0.95 0.03 233.4);
+--bp-color-success-bg, --bp-color-warning-bg, --bp-color-error-bg, --bp-color-info-bg
+
+/* Interactive overlays */
+--bp-color-hover-overlay, --bp-color-active-overlay, --bp-color-selected-bg
 
 /* Input-specific */
---bp-color-placeholder: var(--bp-color-text-muted);
---bp-color-input-bg: var(--bp-color-background);
---bp-color-input-border: var(--bp-color-border);
+--bp-color-placeholder, --bp-color-input-bg, --bp-color-input-border
+
+/* Heading line heights */
+--bp-line-height-heading-sm: 1.3
+--bp-line-height-heading-md: 1.25
+--bp-line-height-heading-lg: 1.2
 ```
 
 ---
 
-### 2.3 Dark Theme Warning Color Adjustment
+### 2.3 Dark Theme Warning Color Adjustment ✅
 
 **Problem:** Warning color unchanged between themes, may be too bright in dark mode
+**Status:** Completed in Phase 1.2
 **Files to modify:**
 
 - [ ] `source/themes/dark.css`
@@ -194,15 +189,14 @@ This plan organizes all fixes from the Blueprint Component UI Audit into actiona
 
 ---
 
-### 2.4 Add Heading Line Height Tokens
+### 2.4 Add Heading Line Height Tokens ✅
 
 **Problem:** Large headings need tighter line-height
-**Files to modify:**
+**Files modified:**
 
-- [ ] `source/themes/light.css`
-- [ ] `source/themes/dark.css`
+- [x] `source/themes/builder/defaults.ts`
 
-**Tokens to add:**
+**Tokens added:**
 
 ```css
 --bp-line-height-heading-lg: 1.2; /* For 3xl, 4xl */
