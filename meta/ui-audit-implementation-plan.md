@@ -114,20 +114,24 @@ This plan organizes all fixes from the Blueprint Component UI Audit into actiona
 **Impact:** Consistency, design system coherence
 **Status:** Completed January 29, 2026
 
-### 2.1 Semantic Spacing Scale Adjustment ⏸️ DEFERRED
+### 2.1 Semantic Spacing Scale Adjustment ✅
 
 **Problem:** Semantic spacing is too tight (md = 8px, should be 16px)
-**Status:** DEFERRED - HIGH RISK change that affects all 42 components. Requires visual review of entire component library before implementing.
+**Status:** COMPLETED - January 29, 2026
+**Files modified:**
 
-| Token              | Current | Proposed |
-| ------------------ | ------- | -------- |
-| `--bp-spacing-2xs` | 2px     | 4px      |
-| `--bp-spacing-xs`  | 4px     | 8px      |
-| `--bp-spacing-sm`  | 6px     | 12px     |
-| `--bp-spacing-md`  | 8px     | 16px     |
-| `--bp-spacing-lg`  | 12px    | 24px     |
-| `--bp-spacing-xl`  | 20px    | 32px     |
-| `--bp-spacing-2xl` | 32px    | 48px     |
+- [x] `source/themes/builder/defaults.ts` (DEFAULT_SPACING.semantic indexes)
+- [x] `source/themes/generated/utilities.css` (regenerated)
+
+| Token              | Before | After |
+| ------------------ | ------ | ----- |
+| `--bp-spacing-2xs` | 2px    | 4px   |
+| `--bp-spacing-xs`  | 4px    | 8px   |
+| `--bp-spacing-sm`  | 6px    | 12px  |
+| `--bp-spacing-md`  | 8px    | 16px  |
+| `--bp-spacing-lg`  | 12px   | 24px  |
+| `--bp-spacing-xl`  | 20px   | 32px  |
+| `--bp-spacing-2xl` | 32px   | 48px  |
 
 ---
 
@@ -206,124 +210,79 @@ This plan organizes all fixes from the Blueprint Component UI Audit into actiona
 
 ---
 
-## Phase 3: Component Behavior Fixes (Medium Priority)
+## Phase 3: Component Behavior Fixes (Medium Priority) ✅ COMPLETED
 
 **Estimated effort:** 2-3 days
 **Impact:** Layout stability, polish
+**Status:** Completed January 29, 2026
 
-### 3.1 Remove Layout-Shifting Hover Effects
+### 3.1 Remove Layout-Shifting Hover Effects ✅
 
 **Problem:** `translateY(-2px)` on hover causes layout reflow
-**Files to modify:**
+**Files modified:**
 
-- [ ] `source/components/button/bp-button.style.ts`
-- [ ] `source/components/card/bp-card.style.ts`
+- [x] `source/components/button/button.style.ts`
+- [x] `source/components/card/card.style.ts`
 
-**Before:**
+**Changes:**
 
-```css
-:host(:hover) {
-  transform: translateY(-2px);
-  box-shadow: var(--bp-shadow-md);
-}
-```
-
-**After:**
-
-```css
-:host(:hover) {
-  box-shadow: var(--bp-shadow-md);
-  /* Remove translateY - use shadow alone for hover feedback */
-}
-```
+- Removed `transform: translateY()` from hover states
+- Button now uses `box-shadow` alone for hover feedback
+- Card hover effects use shadow elevation changes only
+- Added `box-shadow: inset` on button `:active` for pressed state
 
 ---
 
-### 3.2 Fix Tabs Active State Layout Shift
+### 3.2 Fix Tabs Active State Layout Shift ✅
 
 **Problem:** Active tab uses `translateY(1px)` causing layout shift
-**Files to modify:**
+**Files modified:**
 
-- [ ] `source/components/tabs/bp-tabs.style.ts`
+- [x] `source/components/tabs/tabs.style.ts`
 
-**Before:**
+**Changes:**
 
-```css
-:host([active]) {
-  transform: translateY(1px);
-}
-```
-
-**After:**
-
-```css
-:host([active]) {
-  /* Use visual indicators without transform */
-  border-bottom-color: var(--bp-color-primary);
-  color: var(--bp-color-primary);
-}
-```
+- Replaced `transform: translateY(1px)` with `opacity: 0.8` for active state
+- No layout shift on tab press
 
 ---
 
-### 3.3 Use Dedicated Hover Color Tokens
+### 3.3 Use Dedicated Hover Color Tokens ✅
 
 **Problem:** Button uses `filter: brightness(1.1)` instead of dedicated hover tokens
-**Files to modify:**
+**Files modified:**
 
-- [ ] `source/components/button/bp-button.style.ts`
+- [x] `source/components/button/button.style.ts`
 
-**Before:**
+**Changes:**
 
-```css
-:host(:hover) {
-  filter: brightness(1.1);
-}
-```
-
-**After:**
-
-```css
-:host([variant='primary']:hover) {
-  background-color: var(--bp-color-primary-hover);
-}
-:host([variant='success']:hover) {
-  background-color: var(--bp-color-success-hover);
-}
-/* ... etc for each variant */
-```
-
-**Prerequisite:** Add hover tokens for success, warning, error variants to theme files.
+- `success:hover` now uses `var(--bp-color-success-hover)`
+- `error:hover` now uses `var(--bp-color-error-hover)`
+- `warning:hover` now uses `var(--bp-color-warning-hover)`
+- `info:hover` now uses `var(--bp-color-info-hover)`
+- Removed all `filter: brightness(1.1)` usage
 
 ---
 
-### 3.4 Move Hardcoded JS Values to CSS Variables
+### 3.4 Move Hardcoded JS Values to CSS Variables ⏭️ SKIPPED
 
 **Problem:** Tooltip delays and dropdown distances are hardcoded in JS
-**Files to modify:**
+**Status:** SKIPPED BY DESIGN
 
-- [ ] `source/themes/light.css` / `source/themes/dark.css` (add tokens)
-- [ ] `source/components/tooltip/bp-tooltip.ts`
-- [ ] `source/components/dropdown/bp-dropdown.ts`
-- [ ] `source/components/popover/bp-popover.ts`
+**Rationale:** The tooltip, dropdown, and popover components already expose `delay` and `distance` as properties (e.g., `<bp-tooltip delay="300">`). This is the idiomatic approach for web components, giving consumers direct control. Reading CSS custom properties would add complexity without benefit.
 
-**New tokens:**
+---
 
-```css
---bp-tooltip-show-delay: 200ms;
---bp-tooltip-hide-delay: 100ms;
---bp-dropdown-offset: 4px;
---bp-popover-offset: 8px;
-```
+### Bonus: 4.6 Card Line Height Token ✅
 
-**JS implementation:**
+**Problem:** Card body used hardcoded `line-height: 1.6`
+**Files modified:**
 
-```typescript
-// Read from CSS custom property
-const showDelay = parseInt(
-  getComputedStyle(this).getPropertyValue('--bp-tooltip-show-delay') || '200'
-);
-```
+- [x] `source/components/card/card.style.ts`
+
+**Changes:**
+
+- Changed to `line-height: var(--bp-line-height-relaxed)`
 
 ---
 

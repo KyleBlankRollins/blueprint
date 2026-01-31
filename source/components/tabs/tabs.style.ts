@@ -133,7 +133,7 @@ export const tabsStyles = css`
   }
 
   .tab:active:not(.tab--disabled) {
-    transform: translateY(1px);
+    opacity: 0.8;
   }
 
   /* Underline variant */

@@ -8,7 +8,9 @@ import type { ThemeConfig } from '../core/types.js';
 export const DEFAULT_SPACING = {
   base: 4,
   scale: [0, 0.5, 1, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24],
-  semantic: { '2xs': 1, xs: 2, sm: 3, md: 4, lg: 6, xl: 8, '2xl': 10 },
+  // Semantic spacing indexes point into the scale array above
+  // 2xs=4px, xs=8px, sm=12px, md=16px, lg=24px, xl=32px, 2xl=48px
+  semantic: { '2xs': 2, xs: 4, sm: 6, md: 7, lg: 9, xl: 10, '2xl': 12 },
 };
 
 export const DEFAULT_RADIUS = {

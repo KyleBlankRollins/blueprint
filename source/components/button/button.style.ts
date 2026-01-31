@@ -87,7 +87,6 @@ export const buttonStyles = css`
 
   /* States */
   .button:hover:not(:disabled) {
-    transform: translateY(calc(-1 * var(--bp-spacing-0-5)));
     box-shadow: var(--bp-shadow-md);
   }
 
@@ -96,19 +95,19 @@ export const buttonStyles = css`
   }
 
   .button--success:hover:not(:disabled) {
-    filter: brightness(1.1);
+    background: var(--bp-color-success-hover);
   }
 
   .button--error:hover:not(:disabled) {
-    filter: brightness(1.1);
+    background: var(--bp-color-error-hover);
   }
 
   .button--warning:hover:not(:disabled) {
-    filter: brightness(1.1);
+    background: var(--bp-color-warning-hover);
   }
 
   .button--info:hover:not(:disabled) {
-    filter: brightness(1.1);
+    background: var(--bp-color-info-hover);
   }
 
   .button--secondary:hover:not(:disabled) {
@@ -117,7 +116,7 @@ export const buttonStyles = css`
   }
 
   .button:active:not(:disabled) {
-    transform: translateY(0);
+    box-shadow: inset 0 2px 4px oklch(0 0 0 / 0.15);
   }
 
   .button--primary:active:not(:disabled) {

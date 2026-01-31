@@ -20,7 +20,7 @@ export const cardStyles = css`
   .card-body {
     padding: var(--bp-spacing-lg);
     font-size: var(--bp-font-size-base);
-    line-height: 1.6;
+    line-height: var(--bp-line-height-relaxed);
     color: var(--bp-color-text);
   }
 
@@ -73,19 +73,16 @@ export const cardStyles = css`
   .card--default.card--clickable:hover {
     box-shadow: var(--bp-shadow-md);
     border-color: var(--bp-color-border-strong);
-    transform: translateY(calc(-1 * var(--bp-spacing-2xs)));
   }
 
   .card--outlined.card--hoverable:hover,
   .card--outlined.card--clickable:hover {
     box-shadow: var(--bp-shadow-md);
-    transform: translateY(calc(-1 * var(--bp-spacing-2xs)));
   }
 
   .card--elevated.card--hoverable:hover,
   .card--elevated.card--clickable:hover {
     box-shadow: var(--bp-shadow-xl);
-    transform: translateY(calc(-1 * var(--bp-spacing-xs)));
   }
 
   .card--clickable {
@@ -99,7 +96,6 @@ export const cardStyles = css`
   }
 
   .card--clickable:active {
-    transform: translateY(calc(-1 * var(--bp-spacing-2xs) / 2));
     box-shadow: var(--bp-shadow-sm);
   }
 `;
