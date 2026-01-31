@@ -93,8 +93,8 @@ export const numberInputStyles = css`
   }
 
   .number-input__button:focus-visible {
-    outline: 2px solid var(--bp-color-focus);
-    outline-offset: 2px;
+    outline: var(--bp-focus-width) var(--bp-focus-style) var(--bp-color-focus);
+    outline-offset: var(--bp-focus-offset);
     z-index: 1;
   }
 

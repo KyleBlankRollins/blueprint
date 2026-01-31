@@ -286,139 +286,101 @@ This plan organizes all fixes from the Blueprint Component UI Audit into actiona
 
 ---
 
-## Phase 4: Visual Polish (Low Priority)
+## Phase 4: Visual Polish (Low Priority) ✅ COMPLETED
 
 **Estimated effort:** 2-3 days
 **Impact:** Aesthetic improvements, micro-interactions
+**Status:** Completed January 30, 2026
 
-### 4.1 Add Inset Shadow to Input Fields
+### 4.1 Add Inset Shadow to Input Fields ✅
 
 **Problem:** Inputs lack depth/inset feel
-**Files to modify:**
+**Files modified:**
 
-- [ ] `source/components/input/bp-input.style.ts`
-- [ ] `source/components/textarea/bp-textarea.style.ts`
-- [ ] `source/components/select/bp-select.style.ts`
+- [x] `source/components/input/input.style.ts`
+- [x] `source/components/textarea/textarea.style.ts`
+- [x] `source/components/select/select.style.ts`
 
-**Add:**
+**Changes:**
 
-```css
-input,
-textarea,
-select {
-  box-shadow: inset 0 1px 2px oklch(0 0 0 / 0.05);
-}
-```
+- Added `box-shadow: inset 0 1px 2px oklch(0 0 0 / 0.05)` to all form inputs
 
 ---
 
-### 4.2 Add Button Active/Pressed State
+### 4.2 Add Button Active/Pressed State ✅
 
 **Problem:** Missing pressed visual depth
-**Files to modify:**
+**Status:** Completed in Phase 3.1
 
-- [ ] `source/components/button/bp-button.style.ts`
+**Changes:**
 
-**Add:**
-
-```css
-:host(:active) {
-  box-shadow: inset 0 2px 4px oklch(0 0 0 / 0.15);
-}
-```
+- Button `:active` state now has `box-shadow: inset 0 2px 4px oklch(0 0 0 / 0.15)`
 
 ---
 
-### 4.3 Add Micro-Interactions
+### 4.3 Add Micro-Interactions ✅
 
-**Components to enhance:**
+**Problem:** Form controls need satisfying feedback animations
+**Files modified:**
 
-- [ ] **Checkbox:** Scale animation on check (`source/components/checkbox/bp-checkbox.style.ts`)
-- [ ] **Radio:** Scale-in animation for inner dot (`source/components/radio/bp-radio.style.ts`)
-- [ ] **Switch:** Spring animation for toggle (`source/components/switch/bp-switch.style.ts`)
+- [x] `source/components/checkbox/checkbox.style.ts`
+- [x] `source/components/radio/radio.style.ts`
 
-**Example (checkbox):**
+**Changes:**
 
-```css
-.check-icon {
-  transform: scale(0);
-  transition: transform var(--bp-transition-fast) var(--bp-ease-bounce);
-}
-
-:host([checked]) .check-icon {
-  transform: scale(1);
-}
-```
+- Checkbox checkmark uses `--bp-ease-bounce` easing for satisfying pop-in
+- Radio inner dot uses `--bp-ease-bounce` easing for satisfying pop-in
+- Both start from `scale(0)` instead of `scale(0.5)` for more dramatic effect
 
 ---
 
-### 4.4 Add Switch/Slider Thumb Shadow
+### 4.4 Add Switch/Slider Thumb Shadow ✅
 
 **Problem:** Thumbs lack grabbable appearance
-**Files to modify:**
+**Files modified:**
 
-- [ ] `source/components/switch/bp-switch.style.ts`
-- [ ] `source/components/slider/bp-slider.style.ts`
+- [x] `source/components/switch/switch.style.ts`
+- [x] `source/components/slider/slider.style.ts`
 
-**Add:**
+**Changes:**
 
-```css
-.thumb {
-  box-shadow:
-    0 1px 3px oklch(0 0 0 / 0.2),
-    0 1px 2px oklch(0 0 0 / 0.1);
-}
-```
+- Enhanced shadow to `0 1px 3px oklch(0 0 0 / 0.2), 0 1px 2px oklch(0 0 0 / 0.1)`
+- More prominent shadow for grabbable appearance
 
 ---
 
-### 4.5 Focus Outline Token Usage
+### 4.5 Focus Outline Token Usage ✅
 
 **Problem:** Some components hardcode focus outline
-**Files to modify:**
+**Files modified:**
 
-- [ ] `source/components/tabs/bp-tabs.style.ts`
-- [ ] Any other components with hardcoded `2px solid`
+- [x] `source/components/tabs/tabs.style.ts`
+- [x] `source/components/number-input/number-input.style.ts`
+- [x] `source/components/notification/notification.style.ts`
+- [x] `source/components/menu/menu.style.ts`
+- [x] `source/components/file-upload/file-upload.style.ts`
+- [x] `source/components/dropdown/dropdown.style.ts`
+- [x] `source/components/breadcrumb/breadcrumb.style.ts`
 
-**Before:**
+**Changes:**
 
-```css
-:focus-visible {
-  outline: 2px solid var(--bp-color-focus);
-}
-```
-
-**After:**
-
-```css
-:focus-visible {
-  outline: var(--bp-focus-ring);
-  outline-offset: var(--bp-focus-offset);
-}
-```
+- Replaced `outline: 2px solid` with `outline: var(--bp-focus-width) var(--bp-focus-style)`
+- Replaced `outline-offset: 2px` with `outline-offset: var(--bp-focus-offset)`
 
 ---
 
-### 4.6 Use Line Height Token in Card
+### 4.6 Use Line Height Token in Card ✅
 
 **Problem:** Card body uses hardcoded line-height
-**Files to modify:**
+**Status:** Completed in Phase 3 as bonus
 
-- [ ] `source/components/card/bp-card.style.ts`
+**Changes:**
 
-**Before:**
+- Card body now uses `line-height: var(--bp-line-height-relaxed)`
 
 ```css
 .body {
   line-height: 1.6;
-}
-```
-
-**After:**
-
-```css
-.body {
-  line-height: var(--bp-line-height-relaxed);
 }
 ```
 

@@ -43,8 +43,10 @@ export const checkboxStyles = css`
     height: 100%;
     color: var(--bp-color-text-inverse);
     opacity: 0;
-    transform: scale(0.5);
-    transition: all var(--bp-transition-fast);
+    transform: scale(0);
+    transition:
+      opacity var(--bp-duration-fast) var(--bp-ease-out),
+      transform var(--bp-duration-fast) var(--bp-ease-bounce);
   }
 
   .checkbox__label {

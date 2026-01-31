@@ -34,6 +34,7 @@ export const inputStyles = css`
     border: var(--bp-border-width) solid var(--bp-color-border);
     border-radius: var(--bp-border-radius-md);
     padding: var(--bp-spacing-sm) var(--bp-spacing-md);
+    box-shadow: inset 0 1px 2px oklch(0 0 0 / 0.05);
     transition:
       border-color var(--bp-transition-fast),
       box-shadow var(--bp-transition-fast);

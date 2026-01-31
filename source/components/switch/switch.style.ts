@@ -38,7 +38,9 @@ export const switchStyles = css`
     background-color: var(--bp-color-text-inverse);
     border-radius: 50%;
     transition: transform var(--bp-transition-fast);
-    box-shadow: var(--bp-shadow-sm);
+    box-shadow:
+      0 1px 3px oklch(0 0 0 / 0.2),
+      0 1px 2px oklch(0 0 0 / 0.1);
   }
 
   .switch__label {

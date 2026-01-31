@@ -75,8 +75,8 @@ export const menuStyles = css`
 
   .menu-item:focus-visible:not(.menu-item--disabled) {
     background-color: var(--bp-color-surface);
-    outline: 2px solid var(--bp-color-primary);
-    outline-offset: 2px;
+    outline: var(--bp-focus-width) var(--bp-focus-style) var(--bp-color-primary);
+    outline-offset: var(--bp-focus-offset);
   }
 
   .menu-item:active:not(.menu-item--disabled) {

@@ -25,6 +25,7 @@ export const selectStyles = css`
     line-height: var(--bp-line-height-normal);
     color: var(--bp-color-text);
     cursor: pointer;
+    box-shadow: inset 0 1px 2px oklch(0 0 0 / 0.05);
     transition:
       border-color var(--bp-transition-fast),
       box-shadow var(--bp-transition-fast);

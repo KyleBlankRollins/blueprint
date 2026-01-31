@@ -63,7 +63,9 @@ export const sliderStyles = css`
     background-color: var(--bp-color-surface-elevated);
     border: var(--bp-border-width) solid var(--bp-color-primary);
     border-radius: var(--bp-border-radius-full);
-    box-shadow: var(--bp-shadow-sm);
+    box-shadow:
+      0 1px 3px oklch(0 0 0 / 0.2),
+      0 1px 2px oklch(0 0 0 / 0.1);
     transform: translateX(-50%);
     cursor: grab;
     transition:
