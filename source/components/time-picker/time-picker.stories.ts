@@ -33,7 +33,7 @@ const meta: Meta = {
     },
     size: {
       control: 'select',
-      options: ['small', 'medium', 'large'],
+      options: ['sm', 'md', 'lg'],
       description: 'Visual size of the time picker',
     },
     format: {
@@ -79,19 +79,13 @@ export const Format24Hour: Story = {
 
 export const SmallSize: Story = {
   render: () => html`
-    <bp-time-picker
-      size="small"
-      placeholder="Small time picker"
-    ></bp-time-picker>
+    <bp-time-picker size="sm" placeholder="Small time picker"></bp-time-picker>
   `,
 };
 
 export const LargeSize: Story = {
   render: () => html`
-    <bp-time-picker
-      size="large"
-      placeholder="Large time picker"
-    ></bp-time-picker>
+    <bp-time-picker size="lg" placeholder="Large time picker"></bp-time-picker>
   `,
 };
 

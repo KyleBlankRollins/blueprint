@@ -3,7 +3,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { datePickerStyles } from './date-picker.style.js';
 
-export type DatePickerSize = 'small' | 'medium' | 'large';
+export type DatePickerSize = 'sm' | 'md' | 'lg';
 
 /**
  * A calendar-based date picker component.
@@ -52,7 +52,7 @@ export class BpDatePicker extends LitElement {
     this.placeholder = 'Select date...';
     this.disabled = false;
     this.required = false;
-    this.size = 'medium';
+    this.size = 'md';
     this.min = '';
     this.max = '';
     this.firstDayOfWeek = '0';
@@ -241,6 +241,19 @@ export class BpDatePicker extends LitElement {
 
   private parseDate(value: string): Date | null {
     if (!value) return null;
+    // Parse YYYY-MM-DD format in local timezone to avoid UTC offset issues
+    const match = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (match) {
+      const [, year, month, day] = match;
+      const date = new Date(
+        parseInt(year, 10),
+        parseInt(month, 10) - 1,
+        parseInt(day, 10)
+      );
+      date.setHours(0, 0, 0, 0);
+      return date;
+    }
+    // Fallback for other formats
     const date = new Date(value);
     if (isNaN(date.getTime())) {
       console.warn(

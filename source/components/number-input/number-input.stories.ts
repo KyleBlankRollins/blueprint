@@ -49,7 +49,7 @@ const meta: Meta = {
     },
     size: {
       control: 'select',
-      options: ['small', 'medium', 'large'],
+      options: ['sm', 'md', 'lg'],
       description: 'Input size variant',
     },
     variant: {
@@ -137,21 +137,13 @@ export const Sizes: Story = {
     <div
       style="display: flex; flex-direction: column; gap: 16px; max-width: 300px;"
     >
+      <bp-number-input size="sm" label="Small" .value=${10}></bp-number-input>
       <bp-number-input
-        size="small"
-        label="Small"
-        .value=${10}
-      ></bp-number-input>
-      <bp-number-input
-        size="medium"
+        size="md"
         label="Medium (default)"
         .value=${20}
       ></bp-number-input>
-      <bp-number-input
-        size="large"
-        label="Large"
-        .value=${30}
-      ></bp-number-input>
+      <bp-number-input size="lg" label="Large" .value=${30}></bp-number-input>
     </div>
   `,
 };

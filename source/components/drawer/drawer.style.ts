@@ -43,7 +43,7 @@ export const drawerStyles = css`
     display: flex;
     flex-direction: column;
     background-color: var(--bp-color-surface);
-    box-shadow: var(--bp-shadow-lg);
+    box-shadow: var(--bp-shadow-xl);
     transition: transform var(--bp-transition-base) ease-out;
     overflow: hidden;
   }
@@ -103,15 +103,15 @@ export const drawerStyles = css`
   }
 
   /* Sizes - horizontal (width) */
-  .drawer--horizontal.drawer--small .panel {
+  .drawer--horizontal.drawer--sm .panel {
     width: calc(var(--bp-spacing-24) * 3);
   }
 
-  .drawer--horizontal.drawer--medium .panel {
+  .drawer--horizontal.drawer--md .panel {
     width: calc(var(--bp-spacing-24) * 4 + var(--bp-spacing-16));
   }
 
-  .drawer--horizontal.drawer--large .panel {
+  .drawer--horizontal.drawer--lg .panel {
     width: var(--bp-breakpoint-sm);
   }
 
@@ -120,15 +120,15 @@ export const drawerStyles = css`
   }
 
   /* Sizes - vertical (height) */
-  .drawer--vertical.drawer--small .panel {
+  .drawer--vertical.drawer--sm .panel {
     height: calc(var(--bp-spacing-24) * 2);
   }
 
-  .drawer--vertical.drawer--medium .panel {
+  .drawer--vertical.drawer--md .panel {
     height: calc(var(--bp-spacing-24) * 3 + var(--bp-spacing-8));
   }
 
-  .drawer--vertical.drawer--large .panel {
+  .drawer--vertical.drawer--lg .panel {
     height: calc(var(--bp-spacing-24) * 5);
   }
 

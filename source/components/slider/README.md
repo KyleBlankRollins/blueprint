@@ -8,7 +8,7 @@ A slider component for selecting numeric values within a range. Supports keyboar
 - **Keyboard navigation** - Arrow keys, Home/End, PageUp/PageDown
 - **Value display** - Optional current value display with custom formatting
 - **Tick marks** - Optional visual tick marks at step intervals
-- **Size variants** - Small, medium, and large sizes
+- **Size variants** - sm, md, and lg sizes
 - **Accessibility** - Full ARIA slider pattern with screen reader support
 - **Form integration** - Hidden input for form submission
 - **Touch support** - Works on touch devices
@@ -33,19 +33,19 @@ A slider component for selecting numeric values within a range. Supports keyboar
 
 ### Properties
 
-| Property      | Type                             | Default    | Description                                  |
-| ------------- | -------------------------------- | ---------- | -------------------------------------------- |
-| `value`       | `number`                         | `0`        | Current value of the slider                  |
-| `min`         | `number`                         | `0`        | Minimum value                                |
-| `max`         | `number`                         | `100`      | Maximum value                                |
-| `step`        | `number`                         | `1`        | Step increment                               |
-| `name`        | `string`                         | `''`       | Name attribute for form association          |
-| `label`       | `string`                         | `''`       | Label text for the slider                    |
-| `disabled`    | `boolean`                        | `false`    | Whether the slider is disabled               |
-| `size`        | `'small' \| 'medium' \| 'large'` | `'medium'` | Size variant                                 |
-| `showValue`   | `boolean`                        | `false`    | Whether to show the current value            |
-| `showTicks`   | `boolean`                        | `false`    | Whether to show tick marks at step intervals |
-| `formatValue` | `(value: number) => string`      | `String`   | Format function for displaying the value     |
+| Property      | Type                        | Default  | Description                                  |
+| ------------- | --------------------------- | -------- | -------------------------------------------- |
+| `value`       | `number`                    | `0`      | Current value of the slider                  |
+| `min`         | `number`                    | `0`      | Minimum value                                |
+| `max`         | `number`                    | `100`    | Maximum value                                |
+| `step`        | `number`                    | `1`      | Step increment                               |
+| `name`        | `string`                    | `''`     | Name attribute for form association          |
+| `label`       | `string`                    | `''`     | Label text for the slider                    |
+| `disabled`    | `boolean`                   | `false`  | Whether the slider is disabled               |
+| `size`        | `'sm' \| 'md' \| 'lg'`      | `'md'`   | Size variant                                 |
+| `showValue`   | `boolean`                   | `false`  | Whether to show the current value            |
+| `showTicks`   | `boolean`                   | `false`  | Whether to show tick marks at step intervals |
+| `formatValue` | `(value: number) => string` | `String` | Format function for displaying the value     |
 
 ### Events
 

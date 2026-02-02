@@ -62,7 +62,7 @@ describe('bp-table', () => {
     expect(element.columns).toEqual([]);
     expect(element.rows).toEqual([]);
     expect(element.variant).toBe('default');
-    expect(element.size).toBe('medium');
+    expect(element.size).toBe('md');
     expect(element.selectable).toBe(false);
     expect(element.multiSelect).toBe(false);
     expect(element.selectedRows).toEqual([]);
@@ -82,11 +82,11 @@ describe('bp-table', () => {
   });
 
   it('should set property: size', async () => {
-    element.size = 'large';
+    element.size = 'lg';
     await element.updateComplete;
-    expect(element.size).toBe('large');
+    expect(element.size).toBe('lg');
     const table = element.shadowRoot?.querySelector('.table');
-    expect(table?.classList.contains('table--large')).toBe(true);
+    expect(table?.classList.contains('table--lg')).toBe(true);
   });
 
   it('should set property: selectable', async () => {
@@ -446,7 +446,7 @@ describe('bp-table', () => {
   it('should validate size from attribute', async () => {
     element.setAttribute('size', 'invalid');
     await element.updateComplete;
-    expect(element.size).toBe('medium');
+    expect(element.size).toBe('md');
   });
 
   // Keyboard navigation tests

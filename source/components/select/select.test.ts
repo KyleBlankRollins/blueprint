@@ -34,7 +34,7 @@ describe('bp-select', () => {
     expect(element.placeholder).toBe('Select an option');
     expect(element.disabled).toBe(false);
     expect(element.required).toBe(false);
-    expect(element.size).toBe('medium');
+    expect(element.size).toBe('md');
   });
 
   // Properties
@@ -69,9 +69,9 @@ describe('bp-select', () => {
   });
 
   it('should set property: size', async () => {
-    element.size = 'large';
+    element.size = 'lg';
     await element.updateComplete;
-    expect(element.size).toBe('large');
+    expect(element.size).toBe('lg');
   });
 
   // Attributes
@@ -94,9 +94,9 @@ describe('bp-select', () => {
   });
 
   it('should reflect size attribute to DOM', async () => {
-    element.size = 'small';
+    element.size = 'sm';
     await element.updateComplete;
-    expect(element.getAttribute('size')).toBe('small');
+    expect(element.getAttribute('size')).toBe('sm');
   });
 
   // Events
@@ -196,26 +196,26 @@ describe('bp-select', () => {
 
   // Sizes
   it('should apply small size styles', async () => {
-    element.size = 'small';
+    element.size = 'sm';
     await element.updateComplete;
 
-    const select = element.shadowRoot?.querySelector('.select--small');
+    const select = element.shadowRoot?.querySelector('.select--sm');
     expect(select).toBeTruthy();
   });
 
   it('should apply medium size styles', async () => {
-    element.size = 'medium';
+    element.size = 'md';
     await element.updateComplete;
 
-    const select = element.shadowRoot?.querySelector('.select--medium');
+    const select = element.shadowRoot?.querySelector('.select--md');
     expect(select).toBeTruthy();
   });
 
   it('should apply large size styles', async () => {
-    element.size = 'large';
+    element.size = 'lg';
     await element.updateComplete;
 
-    const select = element.shadowRoot?.querySelector('.select--large');
+    const select = element.shadowRoot?.querySelector('.select--lg');
     expect(select).toBeTruthy();
   });
 

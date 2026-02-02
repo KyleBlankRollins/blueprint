@@ -85,7 +85,7 @@ A data table component with sorting, row selection, and multiple visual variants
 | `columns`      | `TableColumn[]`                        | `[]`        | Array of column definitions  |
 | `rows`         | `TableRow[]`                           | `[]`        | Array of row data objects    |
 | `variant`      | `'default' \| 'striped' \| 'bordered'` | `'default'` | Visual variant               |
-| `size`         | `'small' \| 'medium' \| 'large'`       | `'medium'`  | Size variant                 |
+| `size`         | `'sm' \| 'md' \| 'lg'`                 | `'md'`      | Size variant                 |
 | `selectable`   | `boolean`                              | `false`     | Whether rows can be selected |
 | `multiSelect`  | `boolean`                              | `false`     | Allow multiple row selection |
 | `selectedRows` | `(string \| number)[]`                 | `[]`        | Array of selected row IDs    |

@@ -4,6 +4,8 @@ import { switchStyles } from './switch.style.js';
 import { live } from 'lit/directives/live.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
+export type SwitchSize = 'sm' | 'md' | 'lg';
+
 /**
  * A toggle switch component for binary on/off states with form integration.
  *
@@ -57,7 +59,7 @@ export class BpSwitch extends LitElement {
    * The size of the switch
    */
   @property({ type: String, reflect: true })
-  declare size: 'sm' | 'md' | 'lg';
+  declare size: SwitchSize;
 
   /**
    * Whether the switch has an error state

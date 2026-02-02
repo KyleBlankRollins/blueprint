@@ -84,7 +84,7 @@ describe('bp-breadcrumb', () => {
   describe('Default Values', () => {
     it('should have correct default property values', () => {
       expect(element.items).toEqual([]);
-      expect(element.size).toBe('medium');
+      expect(element.size).toBe('md');
       expect(element.separator).toBe('slash');
       expect(element.ariaLabel).toBe('Breadcrumb');
       expect(element.collapseOnMobile).toBe(false);
@@ -94,7 +94,7 @@ describe('bp-breadcrumb', () => {
     it('should have default size class applied', async () => {
       await element.updateComplete;
       const nav = element.shadowRoot?.querySelector('nav');
-      expect(nav?.classList.contains('breadcrumb--medium')).toBe(true);
+      expect(nav?.classList.contains('breadcrumb--md')).toBe(true);
     });
 
     it('should have default separator class applied', async () => {
@@ -119,11 +119,11 @@ describe('bp-breadcrumb', () => {
     });
 
     it('should set property: size', async () => {
-      element.size = 'large';
+      element.size = 'lg';
       await element.updateComplete;
 
       const nav = element.shadowRoot?.querySelector('nav');
-      expect(nav?.classList.contains('breadcrumb--large')).toBe(true);
+      expect(nav?.classList.contains('breadcrumb--lg')).toBe(true);
     });
 
     it('should set property: separator', async () => {
@@ -187,9 +187,9 @@ describe('bp-breadcrumb', () => {
   // Attribute tests
   describe('Attributes', () => {
     it('should reflect size attribute', async () => {
-      element.size = 'small';
+      element.size = 'sm';
       await element.updateComplete;
-      expect(element.getAttribute('size')).toBe('small');
+      expect(element.getAttribute('size')).toBe('sm');
     });
 
     it('should reflect separator attribute', async () => {

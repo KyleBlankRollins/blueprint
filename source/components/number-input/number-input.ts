@@ -6,7 +6,7 @@ import { numberInputStyles } from './number-input.style.js';
 /**
  * Size variants for the number input
  */
-export type NumberInputSize = 'small' | 'medium' | 'large';
+export type NumberInputSize = 'sm' | 'md' | 'lg';
 
 /**
  * Validation variant for the number input
@@ -121,7 +121,7 @@ export class BpNumberInput extends LitElement {
     this.disabled = false;
     this.required = false;
     this.readonly = false;
-    this.size = 'medium';
+    this.size = 'md';
     this.variant = 'default';
     this.message = '';
     this.precision = undefined;

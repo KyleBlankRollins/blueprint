@@ -9,7 +9,7 @@ A composable menu system for displaying lists of actions or options. Includes th
 - **Submenu Support** - Indicate nested menus with `hasSubmenu` property
 - **Keyboard Shortcuts** - Display shortcut hints with `shortcut` property
 - **Icon Support** - Prefix and suffix slots for icons and custom content
-- **Size Variants** - Small, medium, and large sizes
+- **Size Variants** - sm, md, and lg sizes
 - **Disabled States** - Disable individual menu items
 - **Fully Accessible** - Proper ARIA roles and keyboard support
 
@@ -93,7 +93,7 @@ A composable menu system for displaying lists of actions or options. Includes th
 ### Small Size
 
 ```html
-<bp-menu size="small">
+<bp-menu size="sm">
   <bp-menu-item value="option1">Option 1</bp-menu-item>
   <bp-menu-item value="option2">Option 2</bp-menu-item>
 </bp-menu>
@@ -112,9 +112,9 @@ menu.addEventListener('bp-menu-select', (e) => {
 
 ### bp-menu Properties
 
-| Property | Type     | Default  | Description |
-| -------- | -------- | -------- | ----------- | ---------- | ------------------------------- |
-| `size`   | `'small' | 'medium' | 'large'`    | `'medium'` | Size variant for all menu items |
+| Property | Type  | Default | Description |
+| -------- | ----- | ------- | ----------- | ------ | ------------------------------- |
+| `size`   | `'sm' | 'md'    | 'lg'`       | `'md'` | Size variant for all menu items |
 
 ### bp-menu Events
 
@@ -124,14 +124,14 @@ menu.addEventListener('bp-menu-select', (e) => {
 
 ### bp-menu-item Properties
 
-| Property     | Type      | Default  | Description                                  |
-| ------------ | --------- | -------- | -------------------------------------------- | ---------- | ------------------------------------ |
-| `value`      | `string`  | `''`     | Value associated with this menu item         |
-| `disabled`   | `boolean` | `false`  | Whether the item is disabled                 |
-| `selected`   | `boolean` | `false`  | Whether the item is selected/active          |
-| `hasSubmenu` | `boolean` | `false`  | Whether the item has a submenu (shows arrow) |
-| `shortcut`   | `string`  | `''`     | Keyboard shortcut hint to display            |
-| `size`       | `'small'  | 'medium' | 'large'`                                     | `'medium'` | Size variant (inherited from parent) |
+| Property     | Type      | Default | Description                                  |
+| ------------ | --------- | ------- | -------------------------------------------- | ------ | ------------------------------------ |
+| `value`      | `string`  | `''`    | Value associated with this menu item         |
+| `disabled`   | `boolean` | `false` | Whether the item is disabled                 |
+| `selected`   | `boolean` | `false` | Whether the item is selected/active          |
+| `hasSubmenu` | `boolean` | `false` | Whether the item has a submenu (shows arrow) |
+| `shortcut`   | `string`  | `''`    | Keyboard shortcut hint to display            |
+| `size`       | `'sm'     | 'md'    | 'lg'`                                        | `'md'` | Size variant (inherited from parent) |
 
 ### bp-menu-item Events
 

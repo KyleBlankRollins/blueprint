@@ -65,7 +65,7 @@ describe('bp-time-picker', () => {
     expect(element.placeholder).toBe('Select time');
     expect(element.disabled).toBe(false);
     expect(element.required).toBe(false);
-    expect(element.size).toBe('medium');
+    expect(element.size).toBe('md');
     expect(element.format).toBe('12');
     expect(element.step).toBe(15);
   });
@@ -102,9 +102,9 @@ describe('bp-time-picker', () => {
   });
 
   it('should set property: size', async () => {
-    element.size = 'large';
+    element.size = 'lg';
     await element.updateComplete;
-    expect(element.size).toBe('large');
+    expect(element.size).toBe('lg');
   });
 
   it('should set property: format', async () => {
@@ -204,11 +204,11 @@ describe('bp-time-picker', () => {
   });
 
   it('should reflect size attribute to DOM', async () => {
-    element.size = 'small';
+    element.size = 'sm';
     await element.updateComplete;
 
     const picker = element.shadowRoot?.querySelector('.time-picker');
-    expect(picker?.classList.contains('time-picker--small')).toBe(true);
+    expect(picker?.classList.contains('time-picker--sm')).toBe(true);
   });
 
   it('should reflect value attribute to DOM', async () => {
@@ -273,26 +273,26 @@ describe('bp-time-picker', () => {
 
   // Sizes
   it('should apply small size styles', async () => {
-    element.size = 'small';
+    element.size = 'sm';
     await element.updateComplete;
 
     const picker = element.shadowRoot?.querySelector('.time-picker');
-    expect(picker?.classList.contains('time-picker--small')).toBe(true);
+    expect(picker?.classList.contains('time-picker--sm')).toBe(true);
   });
 
   it('should apply large size styles', async () => {
-    element.size = 'large';
+    element.size = 'lg';
     await element.updateComplete;
 
     const picker = element.shadowRoot?.querySelector('.time-picker');
-    expect(picker?.classList.contains('time-picker--large')).toBe(true);
+    expect(picker?.classList.contains('time-picker--lg')).toBe(true);
   });
 
   it('should apply medium size styles by default', async () => {
     await element.updateComplete;
 
     const picker = element.shadowRoot?.querySelector('.time-picker');
-    expect(picker?.classList.contains('time-picker--medium')).toBe(true);
+    expect(picker?.classList.contains('time-picker--md')).toBe(true);
   });
 
   // Interactions

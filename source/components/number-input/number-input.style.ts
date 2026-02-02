@@ -134,38 +134,38 @@ export const numberInputStyles = css`
   }
 
   /* Size variants */
-  .number-input--small .number-input__input {
+  .number-input--sm .number-input__input {
     font-size: var(--bp-font-size-sm);
     padding: var(--bp-spacing-xs) var(--bp-spacing-sm);
   }
 
-  .number-input--small .number-input__button {
+  .number-input--sm .number-input__button {
     width: var(--bp-spacing-8);
   }
 
-  .number-input--small .number-input__button-icon {
+  .number-input--sm .number-input__button-icon {
     font-size: var(--bp-font-size-base);
   }
 
-  .number-input--medium .number-input__input {
+  .number-input--md .number-input__input {
     font-size: var(--bp-font-size-base);
     padding: var(--bp-spacing-sm) var(--bp-spacing-md);
   }
 
-  .number-input--medium .number-input__button {
+  .number-input--md .number-input__button {
     width: var(--bp-spacing-10);
   }
 
-  .number-input--large .number-input__input {
+  .number-input--lg .number-input__input {
     font-size: var(--bp-font-size-lg);
     padding: var(--bp-spacing-md) var(--bp-spacing-lg);
   }
 
-  .number-input--large .number-input__button {
+  .number-input--lg .number-input__button {
     width: var(--bp-spacing-12);
   }
 
-  .number-input--large .number-input__button-icon {
+  .number-input--lg .number-input__button-icon {
     font-size: var(--bp-font-size-xl);
   }
 
@@ -263,7 +263,7 @@ export const numberInputStyles = css`
 
   /* iOS zoom prevention: ensure 16px minimum on touch devices */
   @media (max-width: 768px) {
-    .number-input--small .number-input__input {
+    .number-input--sm .number-input__input {
       font-size: 16px;
     }
   }

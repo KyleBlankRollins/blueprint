@@ -11,7 +11,7 @@ const meta: Meta = {
     open: { control: 'boolean' },
     size: {
       control: 'select',
-      options: ['small', 'medium', 'large'],
+      options: ['sm', 'md', 'lg'],
     },
     ariaLabelledby: { control: 'text' },
   },
@@ -23,7 +23,7 @@ type Story = StoryObj;
 export const Default: Story = {
   args: {
     open: true,
-    size: 'medium',
+    size: 'md',
   },
   render: (args) => html`
     <bp-modal .open=${args.open} .size=${args.size}>
@@ -47,7 +47,7 @@ export const Default: Story = {
 export const Small: Story = {
   args: {
     open: true,
-    size: 'small',
+    size: 'sm',
   },
   render: (args) => html`
     <bp-modal .open=${args.open} .size=${args.size}>
@@ -63,7 +63,7 @@ export const Small: Story = {
 export const Large: Story = {
   args: {
     open: true,
-    size: 'large',
+    size: 'lg',
   },
   render: (args) => html`
     <bp-modal .open=${args.open} .size=${args.size}>
@@ -94,7 +94,7 @@ export const Large: Story = {
 export const WithForm: Story = {
   args: {
     open: true,
-    size: 'medium',
+    size: 'md',
   },
   render: (args) => html`
     <bp-modal .open=${args.open} .size=${args.size}>
@@ -151,7 +151,7 @@ export const WithForm: Story = {
 export const NoFooter: Story = {
   args: {
     open: true,
-    size: 'medium',
+    size: 'md',
   },
   render: (args) => html`
     <bp-modal .open=${args.open} .size=${args.size}>
@@ -168,7 +168,7 @@ export const NoFooter: Story = {
 export const LongContent: Story = {
   args: {
     open: true,
-    size: 'medium',
+    size: 'md',
   },
   render: (args) => html`
     <bp-modal .open=${args.open} .size=${args.size}>

@@ -4,7 +4,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { comboboxStyles } from './combobox.style.js';
 
-export type ComboboxSize = 'small' | 'medium' | 'large';
+export type ComboboxSize = 'sm' | 'md' | 'lg';
 export type ComboboxVariant =
   | 'default'
   | 'success'
@@ -64,7 +64,7 @@ export class BpCombobox extends LitElement {
     this.placeholder = 'Search or select...';
     this.disabled = false;
     this.required = false;
-    this.size = 'medium';
+    this.size = 'md';
     this.variant = 'default';
     this.allowCustomValue = false;
   }

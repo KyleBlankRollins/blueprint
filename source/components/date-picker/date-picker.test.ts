@@ -49,7 +49,7 @@ describe('bp-date-picker', () => {
     expect(element.placeholder).toBe('Select date...');
     expect(element.disabled).toBe(false);
     expect(element.required).toBe(false);
-    expect(element.size).toBe('medium');
+    expect(element.size).toBe('md');
     expect(element.min).toBe('');
     expect(element.max).toBe('');
     expect(element.firstDayOfWeek).toBe('0');
@@ -81,11 +81,11 @@ describe('bp-date-picker', () => {
   });
 
   it('should set property: size', async () => {
-    element.size = 'large';
+    element.size = 'lg';
     await element.updateComplete;
-    expect(element.size).toBe('large');
+    expect(element.size).toBe('lg');
     const picker = element.shadowRoot?.querySelector('.date-picker');
-    expect(picker?.classList.contains('date-picker--large')).toBe(true);
+    expect(picker?.classList.contains('date-picker--lg')).toBe(true);
   });
 
   // Events
@@ -260,11 +260,7 @@ describe('bp-date-picker', () => {
 
   // Sizes
   it('should apply size variant classes', async () => {
-    const sizes: Array<'small' | 'medium' | 'large'> = [
-      'small',
-      'medium',
-      'large',
-    ];
+    const sizes: Array<'sm' | 'md' | 'lg'> = ['sm', 'md', 'lg'];
 
     for (const size of sizes) {
       element.size = size;

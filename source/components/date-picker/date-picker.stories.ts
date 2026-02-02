@@ -33,7 +33,7 @@ const meta: Meta = {
     },
     size: {
       control: 'select',
-      options: ['small', 'medium', 'large'],
+      options: ['sm', 'md', 'lg'],
       description: 'Visual size of the date picker',
     },
     min: {
@@ -82,19 +82,13 @@ export const WithMinMax: Story = {
 
 export const SmallSize: Story = {
   render: () => html`
-    <bp-date-picker
-      size="small"
-      placeholder="Small date picker"
-    ></bp-date-picker>
+    <bp-date-picker size="sm" placeholder="Small date picker"></bp-date-picker>
   `,
 };
 
 export const LargeSize: Story = {
   render: () => html`
-    <bp-date-picker
-      size="large"
-      placeholder="Large date picker"
-    ></bp-date-picker>
+    <bp-date-picker size="lg" placeholder="Large date picker"></bp-date-picker>
   `,
 };
 

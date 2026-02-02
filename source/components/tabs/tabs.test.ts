@@ -57,7 +57,7 @@ describe('bp-tabs', () => {
     it('should have correct default property values', () => {
       expect(element.value).toBe('');
       expect(element.tabs).toEqual([]);
-      expect(element.size).toBe('medium');
+      expect(element.size).toBe('md');
       expect(element.variant).toBe('default');
       expect(element.placement).toBe('top');
       expect(element.disabled).toBe(false);
@@ -94,11 +94,11 @@ describe('bp-tabs', () => {
     });
 
     it('should set property: size', async () => {
-      element.size = 'large';
+      element.size = 'lg';
       await element.updateComplete;
 
       const container = element.shadowRoot?.querySelector('.tabs');
-      expect(container?.classList.contains('tabs--large')).toBe(true);
+      expect(container?.classList.contains('tabs--lg')).toBe(true);
     });
 
     it('should set property: variant', async () => {
@@ -153,9 +153,9 @@ describe('bp-tabs', () => {
     });
 
     it('should reflect size attribute', async () => {
-      element.size = 'small';
+      element.size = 'sm';
       await element.updateComplete;
-      expect(element.getAttribute('size')).toBe('small');
+      expect(element.getAttribute('size')).toBe('sm');
     });
 
     it('should reflect variant attribute', async () => {

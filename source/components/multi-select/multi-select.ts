@@ -4,7 +4,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { multiSelectStyles } from './multi-select.style.js';
 
-export type MultiSelectSize = 'small' | 'medium' | 'large';
+export type MultiSelectSize = 'sm' | 'md' | 'lg';
 export type MultiSelectVariant =
   | 'default'
   | 'success'
@@ -62,7 +62,7 @@ export class BpMultiSelect extends LitElement {
     this.placeholder = 'Select options';
     this.disabled = false;
     this.required = false;
-    this.size = 'medium';
+    this.size = 'md';
     this.variant = 'default';
     this.maxSelections = 0;
     this.clearable = true;

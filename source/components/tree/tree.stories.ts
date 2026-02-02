@@ -85,7 +85,7 @@ const meta: Meta = {
   argTypes: {
     size: {
       control: 'select',
-      options: ['small', 'medium', 'large'],
+      options: ['sm', 'md', 'lg'],
       description: 'Size variant',
     },
     selectable: {
@@ -108,7 +108,7 @@ type Story = StoryObj;
 
 export const Default: Story = {
   args: {
-    size: 'medium',
+    size: 'md',
     selectable: true,
     multiSelect: false,
     showLines: false,
@@ -128,7 +128,7 @@ export const Default: Story = {
 
 export const WithLines: Story = {
   args: {
-    size: 'medium',
+    size: 'md',
     showLines: true,
   },
   render: (args) => html`
@@ -152,7 +152,7 @@ export const ExpandedByDefault: Story = {
 
 export const Small: Story = {
   args: {
-    size: 'small',
+    size: 'sm',
   },
   render: (args) => html`
     <bp-tree
@@ -165,7 +165,7 @@ export const Small: Story = {
 
 export const Large: Story = {
   args: {
-    size: 'large',
+    size: 'lg',
   },
   render: (args) => html`
     <bp-tree

@@ -155,17 +155,17 @@ export const tableStyles = css`
   }
 
   /* Sizes */
-  .table--small .cell {
+  .table--sm .cell {
     padding: var(--bp-spacing-1) var(--bp-spacing-3);
     font-size: var(--bp-font-size-xs);
   }
 
-  .table--medium .cell {
+  .table--md .cell {
     padding: var(--bp-spacing-3) var(--bp-spacing-4);
     font-size: var(--bp-font-size-sm);
   }
 
-  .table--large .cell {
+  .table--lg .cell {
     padding: var(--bp-spacing-4) var(--bp-spacing-5);
     font-size: var(--bp-font-size-base);
   }

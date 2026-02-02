@@ -4,7 +4,7 @@ import { drawerStyles } from './drawer.style.js';
 import '../icon/icon.js';
 
 export type DrawerPlacement = 'left' | 'right' | 'top' | 'bottom';
-export type DrawerSize = 'small' | 'medium' | 'large' | 'full';
+export type DrawerSize = 'sm' | 'md' | 'lg' | 'full';
 
 /**
  * A slide-in panel component that can appear from any edge of the viewport.
@@ -52,10 +52,8 @@ export class BpDrawer extends LitElement {
     reflect: true,
     converter: {
       fromAttribute: (value: string | null) => {
-        const valid = ['small', 'medium', 'large', 'full'];
-        return value && valid.includes(value)
-          ? (value as DrawerSize)
-          : 'medium';
+        const valid = ['sm', 'md', 'lg', 'full'];
+        return value && valid.includes(value) ? (value as DrawerSize) : 'md';
       },
     },
   })
@@ -100,7 +98,7 @@ export class BpDrawer extends LitElement {
     super();
     this.open = false;
     this.placement = 'left';
-    this.size = 'medium';
+    this.size = 'md';
     this.showClose = true;
     this.closeOnBackdrop = true;
     this.closeOnEscape = true;

@@ -35,7 +35,7 @@ describe('bp-multi-select', () => {
     expect(element.placeholder).toBe('Select options');
     expect(element.disabled).toBe(false);
     expect(element.required).toBe(false);
-    expect(element.size).toBe('medium');
+    expect(element.size).toBe('md');
     expect(element.variant).toBe('default');
     expect(element.maxSelections).toBe(0);
     expect(element.clearable).toBe(true);
@@ -92,11 +92,11 @@ describe('bp-multi-select', () => {
   });
 
   it('should set property: size', async () => {
-    element.size = 'large';
+    element.size = 'lg';
     await element.updateComplete;
-    expect(element.size).toBe('large');
+    expect(element.size).toBe('lg');
     const multiSelect = element.shadowRoot?.querySelector('.multi-select');
-    expect(multiSelect?.classList.contains('multi-select--large')).toBe(true);
+    expect(multiSelect?.classList.contains('multi-select--lg')).toBe(true);
   });
 
   it('should set property: maxSelections', async () => {
@@ -247,11 +247,7 @@ describe('bp-multi-select', () => {
 
   // Sizes
   it('should apply size variant classes', async () => {
-    const sizes: Array<'small' | 'medium' | 'large'> = [
-      'small',
-      'medium',
-      'large',
-    ];
+    const sizes: Array<'sm' | 'md' | 'lg'> = ['sm', 'md', 'lg'];
 
     for (const size of sizes) {
       element.size = size;

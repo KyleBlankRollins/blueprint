@@ -5,7 +5,7 @@ A custom dropdown select component that provides an accessible and styleable alt
 ## Features
 
 - Native-like select behavior with enhanced styling
-- 3 size variants (small, medium, large)
+- 3 size variants (sm, md, lg)
 - Keyboard navigation support (Enter, Space, Escape, Arrow keys)
 - Form integration with hidden native select
 - ARIA-compliant for screen readers
@@ -31,12 +31,12 @@ A custom dropdown select component that provides an accessible and styleable alt
 </bp-select>
 
 <!-- Different sizes -->
-<bp-select size="small">
+<bp-select size="sm">
   <option value="1">Small Select</option>
   <option value="2">Option 2</option>
 </bp-select>
 
-<bp-select size="large">
+<bp-select size="lg">
   <option value="1">Large Select</option>
   <option value="2">Option 2</option>
 </bp-select>
@@ -73,9 +73,9 @@ A custom dropdown select component that provides an accessible and styleable alt
 | `placeholder` | `string`     | `'Select an option'` | Placeholder text when no value is selected |
 | `disabled`    | `boolean`    | `false`              | Whether the select is disabled             |
 | `required`    | `boolean`    | `false`              | Whether the select is required             |
-| `size`        | `SelectSize` | `'medium'`           | Size variant of the select                 |
+| `size`        | `SelectSize` | `'md'`               | Size variant of the select                 |
 
-**SelectSize:** `'small' | 'medium' | 'large'`
+**SelectSize:** `'sm' | 'md' | 'lg'`
 
 ### Events
 

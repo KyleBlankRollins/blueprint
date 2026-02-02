@@ -64,12 +64,12 @@ export class BpTree extends LitElement {
     reflect: true,
     converter: {
       fromAttribute: (value: string | null) => {
-        const valid = ['small', 'medium', 'large'];
-        return value && valid.includes(value) ? value : 'medium';
+        const valid = ['sm', 'md', 'lg'];
+        return value && valid.includes(value) ? value : 'md';
       },
     },
   })
-  declare size: 'small' | 'medium' | 'large';
+  declare size: 'sm' | 'md' | 'lg';
 
   /** Selected node IDs when multiSelect is true */
   @state() private selectedIds: string[] = [];
@@ -84,7 +84,7 @@ export class BpTree extends LitElement {
     this.multiSelect = false;
     this.showLines = false;
     this.selectable = true;
-    this.size = 'medium';
+    this.size = 'md';
   }
 
   /**

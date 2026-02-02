@@ -37,7 +37,7 @@ const meta: Meta = {
     },
     size: {
       control: 'select',
-      options: ['small', 'medium', 'large'],
+      options: ['sm', 'md', 'lg'],
       description: 'Size variant',
     },
     showValue: {
@@ -63,7 +63,7 @@ export const Default: Story = {
     name: '',
     label: '',
     disabled: false,
-    size: 'medium',
+    size: 'md',
     showValue: false,
     showTicks: false,
   },
@@ -108,7 +108,7 @@ export const WithTicks: Story = {
 export const SmallSize: Story = {
   args: {
     ...Default.args,
-    size: 'small',
+    size: 'sm',
     label: 'Small Slider',
     showValue: true,
   },
@@ -118,7 +118,7 @@ export const SmallSize: Story = {
 export const LargeSize: Story = {
   args: {
     ...Default.args,
-    size: 'large',
+    size: 'lg',
     label: 'Large Slider',
     showValue: true,
   },

@@ -233,37 +233,37 @@ export const datePickerStyles = css`
   }
 
   /* Sizes */
-  .date-picker--small .date-picker__input {
+  .date-picker--sm .date-picker__input {
     padding: var(--bp-spacing-xs) var(--bp-spacing-sm);
     padding-right: var(--bp-spacing-xl);
     font-size: var(--bp-font-size-sm);
   }
 
-  .date-picker--small .date-picker__indicator {
+  .date-picker--sm .date-picker__indicator {
     right: var(--bp-spacing-xs);
     width: var(--bp-spacing-md);
     height: var(--bp-spacing-md);
   }
 
-  .date-picker--small .date-picker__clear {
+  .date-picker--sm .date-picker__clear {
     right: var(--bp-spacing-xl);
     width: var(--bp-spacing-md);
     height: var(--bp-spacing-md);
   }
 
-  .date-picker--large .date-picker__input {
+  .date-picker--lg .date-picker__input {
     padding: var(--bp-spacing-md) var(--bp-spacing-lg);
     padding-right: var(--bp-spacing-24);
     font-size: var(--bp-font-size-lg);
   }
 
-  .date-picker--large .date-picker__indicator {
+  .date-picker--lg .date-picker__indicator {
     right: var(--bp-spacing-md);
     width: var(--bp-spacing-xl);
     height: var(--bp-spacing-xl);
   }
 
-  .date-picker--large .date-picker__clear {
+  .date-picker--lg .date-picker__clear {
     right: var(--bp-spacing-24);
     width: var(--bp-spacing-xl);
     height: var(--bp-spacing-xl);

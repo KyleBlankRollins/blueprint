@@ -40,11 +40,13 @@ import type {
   HeadingWeight,
 } from './components/heading/heading.js';
 import type { IconName, IconSize, IconColor } from './components/icon/icon.js';
+import type { InputSize } from './components/input/input.js';
 import type {
   LinkVariant,
   LinkUnderline,
   LinkSize,
 } from './components/link/link.js';
+import type { MenuSize } from './components/menu/menu.js';
 import type { ModalSize } from './components/modal/modal.js';
 import type {
   MultiSelectOption,
@@ -60,6 +62,7 @@ import type {
   ProgressSize,
 } from './components/progress/progress.js';
 import type { SelectSize } from './components/select/select.js';
+import type { NumberInputSize } from './components/number-input/number-input.js';
 import type { SliderSize } from './components/slider/slider.js';
 import type {
   SpinnerSize,
@@ -71,6 +74,7 @@ import type {
   TabsPlacement,
   TabItem,
 } from './components/tabs/tabs.js';
+import type { SwitchSize } from './components/switch/switch.js';
 import type { TextSize, TextWeight } from './components/text/text.js';
 import type {
   TimePickerSize,
@@ -266,7 +270,7 @@ interface BpInputProps extends BaseHTMLAttributes {
   disabled?: BooleanAttr;
   readonly?: BooleanAttr;
   required?: BooleanAttr;
-  size?: StringAttr<'small' | 'medium' | 'large'>;
+  size?: StringAttr<InputSize>;
   name?: string;
   autocomplete?: string;
   pattern?: string;
@@ -288,7 +292,7 @@ interface BpLinkProps extends BaseHTMLAttributes {
 }
 
 interface BpMenuProps extends BaseHTMLAttributes {
-  size?: StringAttr<'small' | 'medium' | 'large'>;
+  size?: StringAttr<MenuSize>;
 }
 
 interface BpModalProps extends BaseHTMLAttributes {
@@ -325,7 +329,7 @@ interface BpNumberInputProps extends BaseHTMLAttributes {
   placeholder?: string;
   disabled?: BooleanAttr;
   readonly?: BooleanAttr;
-  size?: StringAttr<'small' | 'medium' | 'large'>;
+  size?: StringAttr<NumberInputSize>;
 }
 
 interface BpPaginationProps extends BaseHTMLAttributes {
@@ -403,7 +407,7 @@ interface BpSwitchProps extends BaseHTMLAttributes {
   name?: string;
   value?: string;
   required?: BooleanAttr;
-  size?: StringAttr<'small' | 'medium' | 'large'>;
+  size?: StringAttr<SwitchSize>;
   label?: string;
 }
 

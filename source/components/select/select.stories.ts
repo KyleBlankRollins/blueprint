@@ -29,7 +29,7 @@ const meta: Meta = {
     },
     size: {
       control: 'select',
-      options: ['small', 'medium', 'large'],
+      options: ['sm', 'md', 'lg'],
       description: 'Size variant of the select',
     },
   },
@@ -41,7 +41,7 @@ type Story = StoryObj;
 export const Default: Story = {
   args: {
     placeholder: 'Select an option',
-    size: 'medium',
+    size: 'md',
   },
   render: (args) => html`
     <bp-select
@@ -50,7 +50,7 @@ export const Default: Story = {
       .placeholder=${args.placeholder || 'Select an option'}
       ?disabled=${args.disabled}
       ?required=${args.required}
-      .size=${args.size || 'medium'}
+      .size=${args.size || 'md'}
     >
       <option value="react">React</option>
       <option value="vue">Vue</option>
@@ -64,13 +64,13 @@ export const WithValue: Story = {
   args: {
     value: 'vue',
     placeholder: 'Select a framework',
-    size: 'medium',
+    size: 'md',
   },
   render: (args) => html`
     <bp-select
       .value=${args.value || ''}
       .placeholder=${args.placeholder || 'Select an option'}
-      .size=${args.size || 'medium'}
+      .size=${args.size || 'md'}
     >
       <option value="react">React</option>
       <option value="vue">Vue</option>
@@ -84,13 +84,13 @@ export const Disabled: Story = {
   args: {
     value: 'react',
     disabled: true,
-    size: 'medium',
+    size: 'md',
   },
   render: (args) => html`
     <bp-select
       .value=${args.value || ''}
       ?disabled=${args.disabled}
-      .size=${args.size || 'medium'}
+      .size=${args.size || 'md'}
     >
       <option value="react">React</option>
       <option value="vue">Vue</option>
@@ -103,13 +103,13 @@ export const Required: Story = {
   args: {
     placeholder: 'Select a country (required)',
     required: true,
-    size: 'medium',
+    size: 'md',
   },
   render: (args) => html`
     <bp-select
       .placeholder=${args.placeholder || 'Select an option'}
       ?required=${args.required}
-      .size=${args.size || 'medium'}
+      .size=${args.size || 'md'}
       name="country"
     >
       <option value="us">United States</option>
@@ -127,7 +127,7 @@ export const Sizes: Story = {
         <label style="display: block; margin-bottom: 8px; font-weight: 500;">
           Small
         </label>
-        <bp-select size="small" placeholder="Small select">
+        <bp-select size="sm" placeholder="Small select">
           <option value="1">Option 1</option>
           <option value="2">Option 2</option>
           <option value="3">Option 3</option>
@@ -138,7 +138,7 @@ export const Sizes: Story = {
         <label style="display: block; margin-bottom: 8px; font-weight: 500;">
           Medium (default)
         </label>
-        <bp-select size="medium" placeholder="Medium select">
+        <bp-select size="md" placeholder="Medium select">
           <option value="1">Option 1</option>
           <option value="2">Option 2</option>
           <option value="3">Option 3</option>
@@ -149,7 +149,7 @@ export const Sizes: Story = {
         <label style="display: block; margin-bottom: 8px; font-weight: 500;">
           Large
         </label>
-        <bp-select size="large" placeholder="Large select">
+        <bp-select size="lg" placeholder="Large select">
           <option value="1">Option 1</option>
           <option value="2">Option 2</option>
           <option value="3">Option 3</option>
@@ -162,12 +162,12 @@ export const Sizes: Story = {
 export const LongOptionList: Story = {
   args: {
     placeholder: 'Select a country',
-    size: 'medium',
+    size: 'md',
   },
   render: (args) => html`
     <bp-select
       .placeholder=${args.placeholder || 'Select an option'}
-      .size=${args.size || 'medium'}
+      .size=${args.size || 'md'}
     >
       <option value="us">United States</option>
       <option value="ca">Canada</option>
@@ -196,13 +196,13 @@ export const LongOptionList: Story = {
 export const WithEventHandling: Story = {
   args: {
     placeholder: 'Select a color',
-    size: 'medium',
+    size: 'md',
   },
   render: (args) => html`
     <div>
       <bp-select
         .placeholder=${args.placeholder || 'Select an option'}
-        .size=${args.size || 'medium'}
+        .size=${args.size || 'md'}
         @bp-change=${(e: CustomEvent) => {
           const { value, label, previousValue } = e.detail;
           console.log('Select changed:', { value, label, previousValue });

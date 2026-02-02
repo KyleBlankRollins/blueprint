@@ -256,24 +256,24 @@ export const multiSelectStyles = css`
   }
 
   /* Sizes */
-  .multi-select--small .multi-select__control {
+  .multi-select--sm .multi-select__control {
     min-height: var(--bp-spacing-8);
     padding: var(--bp-spacing-2xs) var(--bp-spacing-xs);
     font-size: var(--bp-font-size-sm);
   }
 
-  .multi-select--small .multi-select__tag {
+  .multi-select--sm .multi-select__tag {
     padding: var(--bp-spacing-0-5) var(--bp-spacing-2xs);
     font-size: var(--bp-font-size-xs);
   }
 
-  .multi-select--large .multi-select__control {
+  .multi-select--lg .multi-select__control {
     min-height: var(--bp-spacing-12);
     padding: var(--bp-spacing-sm) var(--bp-spacing-md);
     font-size: var(--bp-font-size-lg);
   }
 
-  .multi-select--large .multi-select__tag {
+  .multi-select--lg .multi-select__tag {
     padding: var(--bp-spacing-xs) var(--bp-spacing-sm);
     font-size: var(--bp-font-size-base);
   }

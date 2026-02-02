@@ -70,7 +70,7 @@ A tabs component for organizing content into tabbed sections with full keyboard 
 | ----------- | --------------- | ----------- | --------------------------------------------------------------- |
 | `value`     | `string`        | `''`        | The ID of the currently selected tab                            |
 | `tabs`      | `TabItem[]`     | `[]`        | Array of tab items (id, label, disabled, icon, closable)        |
-| `size`      | `TabsSize`      | `'medium'`  | Size of the tabs: `'small'` \| `'medium'` \| `'large'`          |
+| `size`      | `TabsSize`      | `'md'`      | Size of the tabs: `'sm'` \| `'md'` \| `'lg'`                    |
 | `variant`   | `TabsVariant`   | `'default'` | Visual style: `'default'` \| `'pills'` \| `'underline'`         |
 | `placement` | `TabsPlacement` | `'top'`     | Position: `'top'` \| `'bottom'` \| `'start'` \| `'end'`         |
 | `disabled`  | `boolean`       | `false`     | Whether all tabs are disabled                                   |

@@ -12,7 +12,7 @@ A calendar-based date picker component that allows users to select dates through
 - ✅ **First Day of Week** - Configurable starting day (Sunday or Monday)
 - ✅ **Accessibility** - ARIA grid pattern with keyboard navigation and screen reader support
 - ✅ **Form Integration** - Works seamlessly with standard HTML forms
-- ✅ **Size Variants** - Small, medium (default), and large sizes
+- ✅ **Size Variants** - sm, md (default), and lg sizes
 - ✅ **Design Tokens** - Fully themeable using CSS custom properties
 
 ## Usage
@@ -48,9 +48,9 @@ A calendar-based date picker component that allows users to select dates through
 ### Different Sizes
 
 ```html
-<bp-date-picker size="small" placeholder="Small date picker"></bp-date-picker>
-<bp-date-picker size="medium" placeholder="Medium date picker"></bp-date-picker>
-<bp-date-picker size="large" placeholder="Large date picker"></bp-date-picker>
+<bp-date-picker size="sm" placeholder="Small date picker"></bp-date-picker>
+<bp-date-picker size="md" placeholder="Medium date picker"></bp-date-picker>
+<bp-date-picker size="lg" placeholder="Large date picker"></bp-date-picker>
 ```
 
 ### Week Starting Monday
@@ -94,18 +94,18 @@ A calendar-based date picker component that allows users to select dates through
 
 ### Properties
 
-| Property         | Type                             | Default           | Description                                  |
-| ---------------- | -------------------------------- | ----------------- | -------------------------------------------- |
-| `value`          | `string`                         | `''`              | Selected date in YYYY-MM-DD format           |
-| `name`           | `string`                         | `''`              | Form field name for form submissions         |
-| `label`          | `string`                         | `''`              | Accessible label for screen readers          |
-| `placeholder`    | `string`                         | `'Select a date'` | Placeholder text shown when no date selected |
-| `disabled`       | `boolean`                        | `false`           | Disables the date picker                     |
-| `required`       | `boolean`                        | `false`           | Marks the field as required for forms        |
-| `size`           | `'small' \| 'medium' \| 'large'` | `'medium'`        | Visual size of the date picker               |
-| `min`            | `string`                         | `''`              | Minimum selectable date in YYYY-MM-DD format |
-| `max`            | `string`                         | `''`              | Maximum selectable date in YYYY-MM-DD format |
-| `firstDayOfWeek` | `0 \| 1`                         | `0`               | First day of week (0 = Sunday, 1 = Monday)   |
+| Property         | Type                   | Default           | Description                                  |
+| ---------------- | ---------------------- | ----------------- | -------------------------------------------- |
+| `value`          | `string`               | `''`              | Selected date in YYYY-MM-DD format           |
+| `name`           | `string`               | `''`              | Form field name for form submissions         |
+| `label`          | `string`               | `''`              | Accessible label for screen readers          |
+| `placeholder`    | `string`               | `'Select a date'` | Placeholder text shown when no date selected |
+| `disabled`       | `boolean`              | `false`           | Disables the date picker                     |
+| `required`       | `boolean`              | `false`           | Marks the field as required for forms        |
+| `size`           | `'sm' \| 'md' \| 'lg'` | `'md'`            | Visual size of the date picker               |
+| `min`            | `string`               | `''`              | Minimum selectable date in YYYY-MM-DD format |
+| `max`            | `string`               | `''`              | Maximum selectable date in YYYY-MM-DD format |
+| `firstDayOfWeek` | `0 \| 1`               | `0`               | First day of week (0 = Sunday, 1 = Monday)   |
 
 ### Events
 

@@ -10,7 +10,7 @@ A searchable dropdown with autocomplete functionality, allowing users to filter 
 - ✅ **Clear Button** - Quick value clearing when input has content
 - ✅ **Accessibility** - ARIA attributes, keyboard navigation, screen reader support
 - ✅ **Form Integration** - Works seamlessly with standard HTML forms
-- ✅ **Size Variants** - Small, medium (default), and large sizes
+- ✅ **Size Variants** - sm, md (default), and lg sizes
 - ✅ **Design Tokens** - Fully themeable using CSS custom properties
 
 ## Usage
@@ -37,9 +37,9 @@ A searchable dropdown with autocomplete functionality, allowing users to filter 
 ### Different Sizes
 
 ```html
-<bp-combobox size="small" placeholder="Small combobox"></bp-combobox>
-<bp-combobox size="medium" placeholder="Medium combobox"></bp-combobox>
-<bp-combobox size="large" placeholder="Large combobox"></bp-combobox>
+<bp-combobox size="sm" placeholder="Small combobox"></bp-combobox>
+<bp-combobox size="md" placeholder="Medium combobox"></bp-combobox>
+<bp-combobox size="lg" placeholder="Large combobox"></bp-combobox>
 ```
 
 ### In Forms
@@ -82,16 +82,16 @@ combobox.addEventListener('bp-change', (e) => {
 
 ### Properties
 
-| Property           | Type                             | Default                 | Description                                                                       |
-| ------------------ | -------------------------------- | ----------------------- | --------------------------------------------------------------------------------- |
-| `value`            | `string`                         | `''`                    | The current value of the combobox                                                 |
-| `name`             | `string`                         | `''`                    | Name attribute for form submission                                                |
-| `placeholder`      | `string`                         | `'Search or select...'` | Placeholder text when no value is selected                                        |
-| `disabled`         | `boolean`                        | `false`                 | Whether the combobox is disabled                                                  |
-| `required`         | `boolean`                        | `false`                 | Whether the combobox is required                                                  |
-| `size`             | `'small' \| 'medium' \| 'large'` | `'medium'`              | Size variant of the combobox                                                      |
-| `variant`          | `ComboboxVariant`                | `'default'`             | Validation variant: `'default'`, `'success'`, `'error'`, `'warning'`, or `'info'` |
-| `allowCustomValue` | `boolean`                        | `false`                 | Whether to allow free-form input (not just from the options list)                 |
+| Property           | Type                   | Default                 | Description                                                                       |
+| ------------------ | ---------------------- | ----------------------- | --------------------------------------------------------------------------------- |
+| `value`            | `string`               | `''`                    | The current value of the combobox                                                 |
+| `name`             | `string`               | `''`                    | Name attribute for form submission                                                |
+| `placeholder`      | `string`               | `'Search or select...'` | Placeholder text when no value is selected                                        |
+| `disabled`         | `boolean`              | `false`                 | Whether the combobox is disabled                                                  |
+| `required`         | `boolean`              | `false`                 | Whether the combobox is required                                                  |
+| `size`             | `'sm' \| 'md' \| 'lg'` | `'md'`                  | Size variant of the combobox                                                      |
+| `variant`          | `ComboboxVariant`      | `'default'`             | Validation variant: `'default'`, `'success'`, `'error'`, `'warning'`, or `'info'` |
+| `allowCustomValue` | `boolean`              | `false`                 | Whether to allow free-form input (not just from the options list)                 |
 
 ### Events
 

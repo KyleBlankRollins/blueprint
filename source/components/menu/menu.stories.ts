@@ -9,7 +9,7 @@ const meta: Meta = {
   argTypes: {
     size: {
       control: 'select',
-      options: ['small', 'medium', 'large'],
+      options: ['sm', 'md', 'lg'],
       description: 'Size variant for menu items',
     },
   },
@@ -20,7 +20,7 @@ type Story = StoryObj;
 
 export const Default: Story = {
   args: {
-    size: 'medium',
+    size: 'md',
   },
   render: (args) => html`
     <bp-menu .size=${args.size}>
@@ -33,7 +33,7 @@ export const Default: Story = {
 
 export const WithDividers: Story = {
   args: {
-    size: 'medium',
+    size: 'md',
   },
   render: (args) => html`
     <bp-menu .size=${args.size}>
@@ -50,7 +50,7 @@ export const WithDividers: Story = {
 
 export const WithShortcuts: Story = {
   args: {
-    size: 'medium',
+    size: 'md',
   },
   render: (args) => html`
     <bp-menu .size=${args.size}>
@@ -66,7 +66,7 @@ export const WithShortcuts: Story = {
 
 export const WithSubmenus: Story = {
   args: {
-    size: 'medium',
+    size: 'md',
   },
   render: (args) => html`
     <bp-menu .size=${args.size}>
@@ -81,7 +81,7 @@ export const WithSubmenus: Story = {
 
 export const WithDisabledItems: Story = {
   args: {
-    size: 'medium',
+    size: 'md',
   },
   render: (args) => html`
     <bp-menu .size=${args.size}>
@@ -96,7 +96,7 @@ export const WithDisabledItems: Story = {
 };
 export const WithSelectedItem: Story = {
   args: {
-    size: 'medium',
+    size: 'md',
   },
   render: (args) => html`
     <bp-menu .size=${args.size}>
@@ -110,7 +110,7 @@ export const WithSelectedItem: Story = {
 
 export const Small: Story = {
   args: {
-    size: 'small',
+    size: 'sm',
   },
   render: (args) => html`
     <bp-menu .size=${args.size}>
@@ -123,7 +123,7 @@ export const Small: Story = {
 
 export const Large: Story = {
   args: {
-    size: 'large',
+    size: 'lg',
   },
   render: (args) => html`
     <bp-menu .size=${args.size}>

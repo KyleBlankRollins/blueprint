@@ -386,44 +386,67 @@ This plan organizes all fixes from the Blueprint Component UI Audit into actiona
 
 ---
 
-## Phase 5: Consistency Standardization (Low Priority)
+## Phase 5: Consistency Standardization (Low Priority) ✅ COMPLETED
 
 **Estimated effort:** 1-2 days
 **Impact:** Developer experience, maintainability
+**Status:** Completed January 30, 2026
 
-### 5.1 Standardize Size Naming Convention
+### 5.1 Standardize Size Naming Convention ✅
 
 **Problem:** Mixed conventions: `sm/md/lg`, `small/medium/large`, `xs/sm/base/lg/xl`
-**Decision needed:** Choose ONE convention and apply everywhere
+**Decision:** `sm | md | lg` (with `xs`, `xl`, `2xl`, and `full` where applicable)
 
-**Recommended:** `xs | sm | md | lg | xl | 2xl`
+**Components migrated from `'small' | 'medium' | 'large'` to `'sm' | 'md' | 'lg'`:**
 
-**Files to audit and update:**
+| Component    | Tests |
+| ------------ | ----- |
+| slider       | 46    |
+| tabs         | 66    |
+| table        | 41    |
+| select       | 43    |
+| modal        | 27    |
+| drawer       | 51    |
+| date-picker  | 45    |
+| time-picker  | 45    |
+| combobox     | 35    |
+| multi-select | 37    |
+| number-input | 53    |
+| breadcrumb   | 59    |
+| tree         | 45    |
+| menu         | 40    |
 
-- [ ] All component `.ts` files with size props
-- [ ] All component `.style.ts` files with size selectors
-- [ ] Update Storybook stories for consistency
+**Files updated per component:**
+
+- Component `.ts` - Type definition and default value
+- Component `.style.ts` - CSS class selectors
+- Component `.test.ts` - Test assertions
+- Component `.stories.ts` - Storybook options
+- Component `README.md` - Documentation
+
+**Additional updates:**
+
+- [x] Added `MenuSize` type export to `source/components/menu/menu.ts`
+- [x] Added `SwitchSize` type export to `source/components/switch/switch.ts`
+- [x] Updated `source/jsx.d.ts` with proper type imports
 
 ---
 
-### 5.2 Shadow Elevation Consistency
+### 5.2 Shadow Elevation Consistency ✅
 
-**Ensure consistent usage:**
+**Audit results:**
 
-| State                   | Shadow Token     |
-| ----------------------- | ---------------- |
-| Resting                 | `--bp-shadow-sm` |
-| Hover                   | `--bp-shadow-md` |
-| Elevated (dropdowns)    | `--bp-shadow-lg` |
-| High elevation (modals) | `--bp-shadow-xl` |
+| Component    | Token            | Status              |
+| ------------ | ---------------- | ------------------- |
+| dropdown     | `--bp-shadow-lg` | ✅ Correct          |
+| popover      | `--bp-shadow-lg` | ✅ Correct          |
+| modal        | `--bp-shadow-xl` | ✅ Correct          |
+| drawer       | `--bp-shadow-xl` | ✅ Updated (was lg) |
+| notification | `--bp-shadow-lg` | ✅ Correct          |
 
-**Files to audit:**
+**Files modified:**
 
-- [ ] `source/components/dropdown/bp-dropdown.style.ts`
-- [ ] `source/components/popover/bp-popover.style.ts`
-- [ ] `source/components/modal/bp-modal.style.ts`
-- [ ] `source/components/drawer/bp-drawer.style.ts`
-- [ ] `source/components/notification/bp-notification.style.ts`
+- [x] `source/components/drawer/drawer.style.ts` - Changed from `--bp-shadow-lg` to `--bp-shadow-xl`
 
 ---
 
@@ -469,8 +492,8 @@ This plan organizes all fixes from the Blueprint Component UI Audit into actiona
 
 ### Phase 5 (Consistency)
 
-- [ ] 5.1 Size naming convention
-- [ ] 5.2 Shadow elevation consistency
+- [x] 5.1 Size naming convention
+- [x] 5.2 Shadow elevation consistency
 
 ### Post-Implementation
 

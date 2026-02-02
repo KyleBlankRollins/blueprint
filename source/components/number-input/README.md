@@ -10,7 +10,7 @@ A number input component with increment/decrement buttons for precise numeric va
 - **Step increment** - Configurable step size for precise control
 - **Precision formatting** - Display fixed decimal places
 - **Validation variants** - Success, error, warning states
-- **Size variants** - Small, medium, and large sizes
+- **Size variants** - sm, md, and lg sizes
 - **Optional buttons** - Hide buttons for manual input only
 - **Form integration** - Works with native form submission
 - **Accessibility** - Full ARIA support and keyboard navigation
@@ -59,7 +59,7 @@ A number input component with increment/decrement buttons for precise numeric va
 | `disabled`    | `boolean`                                        | `false`     | Whether the input is disabled             |
 | `required`    | `boolean`                                        | `false`     | Whether the input is required             |
 | `readonly`    | `boolean`                                        | `false`     | Whether the input is readonly             |
-| `size`        | `'small' \| 'medium' \| 'large'`                 | `'medium'`  | Size variant                              |
+| `size`        | `'sm' \| 'md' \| 'lg'`                           | `'md'`      | Size variant                              |
 | `variant`     | `'default' \| 'success' \| 'error' \| 'warning'` | `'default'` | Validation variant                        |
 | `message`     | `string`                                         | `''`        | Help or error message to display          |
 | `precision`   | `number \| undefined`                            | `undefined` | Number of decimal places to display       |

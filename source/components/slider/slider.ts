@@ -6,7 +6,7 @@ import { sliderStyles } from './slider.style.js';
 /**
  * Size variants for the slider
  */
-export type SliderSize = 'small' | 'medium' | 'large';
+export type SliderSize = 'sm' | 'md' | 'lg';
 
 /**
  * A slider component for selecting numeric values within a range.
@@ -102,7 +102,7 @@ export class BpSlider extends LitElement {
     this.name = '';
     this.label = '';
     this.disabled = false;
-    this.size = 'medium';
+    this.size = 'md';
     this.showValue = false;
     this.showTicks = false;
     this.formatValue = (value: number) => String(value);

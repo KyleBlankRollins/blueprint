@@ -17,7 +17,7 @@ const meta: Meta = {
     },
     size: {
       control: 'select',
-      options: ['small', 'medium', 'large'],
+      options: ['sm', 'md', 'lg'],
       description: 'Size variant of the combobox',
     },
     variant: {
@@ -72,7 +72,7 @@ export const WithCustomValues: Story = {
 
 export const SmallSize: Story = {
   render: () => html`
-    <bp-combobox size="small" placeholder="Small combobox">
+    <bp-combobox size="sm" placeholder="Small combobox">
       <option value="1">Option 1</option>
       <option value="2">Option 2</option>
       <option value="3">Option 3</option>
@@ -82,7 +82,7 @@ export const SmallSize: Story = {
 
 export const LargeSize: Story = {
   render: () => html`
-    <bp-combobox size="large" placeholder="Large combobox">
+    <bp-combobox size="lg" placeholder="Large combobox">
       <option value="1">Option 1</option>
       <option value="2">Option 2</option>
       <option value="3">Option 3</option>

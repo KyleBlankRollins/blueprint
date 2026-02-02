@@ -118,32 +118,32 @@ export const selectStyles = css`
   }
 
   /* Sizes */
-  .select--small .select-trigger {
+  .select--sm .select-trigger {
     padding: var(--bp-spacing-xs) var(--bp-spacing-sm);
     font-size: var(--bp-font-size-sm);
   }
 
-  .select--small .select-option {
+  .select--sm .select-option {
     padding: var(--bp-spacing-xs) var(--bp-spacing-sm);
     font-size: var(--bp-font-size-sm);
   }
 
-  .select--medium .select-trigger {
+  .select--md .select-trigger {
     padding: var(--bp-spacing-sm) var(--bp-spacing-md);
     font-size: var(--bp-font-size-base);
   }
 
-  .select--medium .select-option {
+  .select--md .select-option {
     padding: var(--bp-spacing-sm) var(--bp-spacing-md);
     font-size: var(--bp-font-size-base);
   }
 
-  .select--large .select-trigger {
+  .select--lg .select-trigger {
     padding: var(--bp-spacing-md) var(--bp-spacing-lg);
     font-size: var(--bp-font-size-lg);
   }
 
-  .select--large .select-option {
+  .select--lg .select-option {
     padding: var(--bp-spacing-md) var(--bp-spacing-lg);
     font-size: var(--bp-font-size-lg);
   }
@@ -180,11 +180,11 @@ export const selectStyles = css`
 
   /* iOS zoom prevention: ensure 16px minimum on touch devices */
   @media (max-width: 768px) {
-    .select--small .select-trigger {
+    .select--sm .select-trigger {
       font-size: 16px;
     }
 
-    .select--small .select-option {
+    .select--sm .select-option {
       font-size: 16px;
     }
   }

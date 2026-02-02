@@ -21,7 +21,7 @@ const meta: Meta = {
     },
     size: {
       control: 'select',
-      options: ['small', 'medium', 'large'],
+      options: ['sm', 'md', 'lg'],
       description: 'Size variant of the multi-select',
     },
     variant: {
@@ -81,7 +81,7 @@ export const MaxSelections: Story = {
 
 export const SmallSize: Story = {
   render: () => html`
-    <bp-multi-select size="small" placeholder="Small">
+    <bp-multi-select size="sm" placeholder="Small">
       <option value="1">Option 1</option>
       <option value="2">Option 2</option>
       <option value="3">Option 3</option>
@@ -91,7 +91,7 @@ export const SmallSize: Story = {
 
 export const LargeSize: Story = {
   render: () => html`
-    <bp-multi-select size="large" placeholder="Large">
+    <bp-multi-select size="lg" placeholder="Large">
       <option value="1">Option 1</option>
       <option value="2">Option 2</option>
       <option value="3">Option 3</option>

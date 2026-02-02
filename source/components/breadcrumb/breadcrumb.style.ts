@@ -130,32 +130,32 @@ export const breadcrumbStyles = css`
   }
 
   /* Sizes */
-  .breadcrumb--small {
+  .breadcrumb--sm {
     font-size: var(--bp-font-size-sm);
     line-height: var(--bp-line-height-tight);
   }
 
-  .breadcrumb--small .separator__icon {
+  .breadcrumb--sm .separator__icon {
     width: var(--bp-spacing-sm);
     height: var(--bp-spacing-sm);
   }
 
-  .breadcrumb--medium {
+  .breadcrumb--md {
     font-size: var(--bp-font-size-base);
     line-height: var(--bp-line-height-normal);
   }
 
-  .breadcrumb--medium .separator__icon {
+  .breadcrumb--md .separator__icon {
     width: var(--bp-spacing-md);
     height: var(--bp-spacing-md);
   }
 
-  .breadcrumb--large {
+  .breadcrumb--lg {
     font-size: var(--bp-font-size-lg);
     line-height: var(--bp-line-height-normal);
   }
 
-  .breadcrumb--large .separator__icon {
+  .breadcrumb--lg .separator__icon {
     width: var(--bp-spacing-lg);
     height: var(--bp-spacing-lg);
   }

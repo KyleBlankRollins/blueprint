@@ -4,7 +4,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { selectStyles } from './select.style.js';
 
-export type SelectSize = 'small' | 'medium' | 'large';
+export type SelectSize = 'sm' | 'md' | 'lg';
 
 @customElement('bp-select')
 export class BpSelect extends LitElement {
@@ -44,7 +44,7 @@ export class BpSelect extends LitElement {
     this.placeholder = 'Select an option';
     this.disabled = false;
     this.required = false;
-    this.size = 'medium';
+    this.size = 'md';
   }
 
   connectedCallback() {

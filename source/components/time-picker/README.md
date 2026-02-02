@@ -11,7 +11,7 @@ A time picker component with dropdown time selection supporting both 12-hour and
 - ✅ **Clear Functionality** - Easy-to-use clear button when value is set
 - ✅ **Accessibility** - Full ARIA support with listbox pattern
 - ✅ **Form Integration** - Works seamlessly with standard HTML forms
-- ✅ **Size Variants** - Small, medium (default), and large sizes
+- ✅ **Size Variants** - sm, md (default), and lg sizes
 - ✅ **Design Tokens** - Fully themeable using CSS custom properties
 
 ## Usage
@@ -37,9 +37,9 @@ A time picker component with dropdown time selection supporting both 12-hour and
 ### Different Sizes
 
 ```html
-<bp-time-picker size="small" placeholder="Small"></bp-time-picker>
-<bp-time-picker size="medium" placeholder="Medium"></bp-time-picker>
-<bp-time-picker size="large" placeholder="Large"></bp-time-picker>
+<bp-time-picker size="sm" placeholder="Small"></bp-time-picker>
+<bp-time-picker size="md" placeholder="Medium"></bp-time-picker>
+<bp-time-picker size="lg" placeholder="Large"></bp-time-picker>
 ```
 
 ### Custom Time Intervals
@@ -87,17 +87,17 @@ A time picker component with dropdown time selection supporting both 12-hour and
 
 ### Properties
 
-| Property      | Type                             | Default         | Description                                      |
-| ------------- | -------------------------------- | --------------- | ------------------------------------------------ |
-| `value`       | `string`                         | `''`            | Selected time (format: "HH:MM AM/PM" or "HH:MM") |
-| `name`        | `string`                         | `''`            | Form field name for form submissions             |
-| `label`       | `string`                         | `''`            | Accessible label for screen readers              |
-| `placeholder` | `string`                         | `'Select time'` | Placeholder text shown when no time selected     |
-| `disabled`    | `boolean`                        | `false`         | Disables the time picker                         |
-| `required`    | `boolean`                        | `false`         | Marks the field as required for forms            |
-| `size`        | `'small' \| 'medium' \| 'large'` | `'medium'`      | Visual size of the time picker                   |
-| `format`      | `'12' \| '24'`                   | `'12'`          | Time format (12-hour or 24-hour)                 |
-| `step`        | `number`                         | `15`            | Time interval in minutes (e.g., 15, 30, 60)      |
+| Property      | Type                   | Default         | Description                                      |
+| ------------- | ---------------------- | --------------- | ------------------------------------------------ |
+| `value`       | `string`               | `''`            | Selected time (format: "HH:MM AM/PM" or "HH:MM") |
+| `name`        | `string`               | `''`            | Form field name for form submissions             |
+| `label`       | `string`               | `''`            | Accessible label for screen readers              |
+| `placeholder` | `string`               | `'Select time'` | Placeholder text shown when no time selected     |
+| `disabled`    | `boolean`              | `false`         | Disables the time picker                         |
+| `required`    | `boolean`              | `false`         | Marks the field as required for forms            |
+| `size`        | `'sm' \| 'md' \| 'lg'` | `'md'`          | Visual size of the time picker                   |
+| `format`      | `'12' \| '24'`         | `'12'`          | Time format (12-hour or 24-hour)                 |
+| `step`        | `number`               | `15`            | Time interval in minutes (e.g., 15, 30, 60)      |
 
 ### Events
 

@@ -30,22 +30,22 @@ describe('bp-menu', () => {
 
   // Default Values
   it('should have correct default property values', () => {
-    expect(element.size).toBe('medium');
+    expect(element.size).toBe('md');
   });
 
   // Sizes
   it('should apply small size styles', async () => {
-    element.size = 'small';
+    element.size = 'sm';
     await element.updateComplete;
     const menu = element.shadowRoot!.querySelector('.menu');
-    expect(menu?.classList.contains('menu--small')).toBe(true);
+    expect(menu?.classList.contains('menu--sm')).toBe(true);
   });
 
   it('should apply large size styles', async () => {
-    element.size = 'large';
+    element.size = 'lg';
     await element.updateComplete;
     const menu = element.shadowRoot!.querySelector('.menu');
-    expect(menu?.classList.contains('menu--large')).toBe(true);
+    expect(menu?.classList.contains('menu--lg')).toBe(true);
   });
 
   // CSS Parts
@@ -256,7 +256,7 @@ describe('bp-menu-item', () => {
     expect(element.disabled).toBe(false);
     expect(element.selected).toBe(false);
     expect(element.hasSubmenu).toBe(false);
-    expect(element.size).toBe('medium');
+    expect(element.size).toBe('md');
     expect(element.shortcut).toBe('');
   });
 
@@ -297,17 +297,17 @@ describe('bp-menu-item', () => {
 
   // Sizes
   it('should apply small size class', async () => {
-    element.size = 'small';
+    element.size = 'sm';
     await element.updateComplete;
     const menuItem = element.shadowRoot!.querySelector('.menu-item');
-    expect(menuItem?.classList.contains('menu-item--small')).toBe(true);
+    expect(menuItem?.classList.contains('menu-item--sm')).toBe(true);
   });
 
   it('should apply large size class', async () => {
-    element.size = 'large';
+    element.size = 'lg';
     await element.updateComplete;
     const menuItem = element.shadowRoot!.querySelector('.menu-item');
-    expect(menuItem?.classList.contains('menu-item--large')).toBe(true);
+    expect(menuItem?.classList.contains('menu-item--lg')).toBe(true);
   });
 
   // CSS Parts

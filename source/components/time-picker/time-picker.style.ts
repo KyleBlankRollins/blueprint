@@ -115,31 +115,31 @@ export const timePickerStyles = css`
   }
 
   /* Sizes */
-  .time-picker--small .input {
+  .time-picker--sm .input {
     padding: var(--bp-spacing-xs) var(--bp-spacing-sm);
     padding-right: var(--bp-spacing-xl);
     font-size: var(--bp-font-size-sm);
   }
 
-  .time-picker--small .icon {
+  .time-picker--sm .icon {
     font-size: var(--bp-font-size-base);
   }
 
-  .time-picker--small .clear-button {
+  .time-picker--sm .clear-button {
     right: var(--bp-spacing-lg);
   }
 
-  .time-picker--large .input {
+  .time-picker--lg .input {
     padding: var(--bp-spacing-md) var(--bp-spacing-lg);
     padding-right: var(--bp-spacing-24);
     font-size: var(--bp-font-size-lg);
   }
 
-  .time-picker--large .icon {
+  .time-picker--lg .icon {
     font-size: var(--bp-font-size-xl);
   }
 
-  .time-picker--large .clear-button {
+  .time-picker--lg .clear-button {
     right: var(--bp-spacing-2xl);
   }
 

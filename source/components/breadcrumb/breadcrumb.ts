@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { breadcrumbStyles } from './breadcrumb.style.js';
 
-export type BreadcrumbSize = 'small' | 'medium' | 'large';
+export type BreadcrumbSize = 'sm' | 'md' | 'lg';
 export type BreadcrumbSeparator = 'slash' | 'chevron' | 'arrow' | 'dot';
 
 /**
@@ -85,7 +85,7 @@ export class BpBreadcrumb extends LitElement {
   constructor() {
     super();
     this.items = [];
-    this.size = 'medium';
+    this.size = 'md';
     this.separator = 'slash';
     this.ariaLabel = 'Breadcrumb';
     this.collapseOnMobile = false;

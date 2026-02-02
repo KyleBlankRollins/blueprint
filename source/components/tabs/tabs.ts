@@ -8,7 +8,7 @@ import {
 import { classMap } from 'lit/directives/class-map.js';
 import { tabsStyles } from './tabs.style.js';
 
-export type TabsSize = 'small' | 'medium' | 'large';
+export type TabsSize = 'sm' | 'md' | 'lg';
 export type TabsVariant = 'default' | 'pills' | 'underline';
 export type TabsPlacement = 'top' | 'bottom' | 'start' | 'end';
 
@@ -103,7 +103,7 @@ export class BpTabs extends LitElement {
     super();
     this.value = '';
     this.tabs = [];
-    this.size = 'medium';
+    this.size = 'md';
     this.variant = 'default';
     this.placement = 'top';
     this.disabled = false;

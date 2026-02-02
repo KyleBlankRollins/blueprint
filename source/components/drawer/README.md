@@ -5,7 +5,7 @@ A slide-in panel component that can appear from any edge of the viewport. Suppor
 ## Features
 
 - Slide in from left, right, top, or bottom edges
-- Multiple size options (small, medium, large, full)
+- Multiple size options (sm, md, lg, full)
 - Overlay mode with backdrop and focus trapping
 - Inline mode for persistent sidebars in document flow
 - Automatic body scroll lock in overlay mode
@@ -54,7 +54,7 @@ A slide-in panel component that can appear from any edge of the viewport. Suppor
 
 ```html
 <div style="display: flex;">
-  <bp-drawer inline placement="left" size="small">
+  <bp-drawer inline placement="left" size="sm">
     <h3 slot="header">Sidebar</h3>
     <nav>
       <a href="/">Dashboard</a>
@@ -107,17 +107,17 @@ drawer.addEventListener('bp-close', (e) => {
 
 ### Properties
 
-| Property          | Type                                       | Default    | Description                                                       |
-| ----------------- | ------------------------------------------ | ---------- | ----------------------------------------------------------------- |
-| `open`            | `boolean`                                  | `false`    | Whether the drawer is open                                        |
-| `placement`       | `'left' \| 'right' \| 'top' \| 'bottom'`   | `'left'`   | Which edge the drawer slides in from                              |
-| `size`            | `'small' \| 'medium' \| 'large' \| 'full'` | `'medium'` | Size of the drawer (width for left/right, height for top/bottom)  |
-| `showClose`       | `boolean`                                  | `true`     | Whether to show the close button                                  |
-| `closeOnBackdrop` | `boolean`                                  | `true`     | Whether clicking the backdrop closes the drawer                   |
-| `closeOnEscape`   | `boolean`                                  | `true`     | Whether pressing Escape closes the drawer                         |
-| `showBackdrop`    | `boolean`                                  | `true`     | Whether to show the backdrop overlay                              |
-| `label`           | `string`                                   | `''`       | Accessible label for the drawer                                   |
-| `inline`          | `boolean`                                  | `false`    | Renders as inline sidebar (always visible, part of document flow) |
+| Property          | Type                                     | Default  | Description                                                       |
+| ----------------- | ---------------------------------------- | -------- | ----------------------------------------------------------------- |
+| `open`            | `boolean`                                | `false`  | Whether the drawer is open                                        |
+| `placement`       | `'left' \| 'right' \| 'top' \| 'bottom'` | `'left'` | Which edge the drawer slides in from                              |
+| `size`            | `'sm' \| 'md' \| 'lg' \| 'full'`         | `'md'`   | Size of the drawer (width for left/right, height for top/bottom)  |
+| `showClose`       | `boolean`                                | `true`   | Whether to show the close button                                  |
+| `closeOnBackdrop` | `boolean`                                | `true`   | Whether clicking the backdrop closes the drawer                   |
+| `closeOnEscape`   | `boolean`                                | `true`   | Whether pressing Escape closes the drawer                         |
+| `showBackdrop`    | `boolean`                                | `true`   | Whether to show the backdrop overlay                              |
+| `label`           | `string`                                 | `''`     | Accessible label for the drawer                                   |
+| `inline`          | `boolean`                                | `false`  | Renders as inline sidebar (always visible, part of document flow) |
 
 ### Methods
 

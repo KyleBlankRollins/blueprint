@@ -35,7 +35,7 @@ describe('bp-combobox', () => {
     expect(element.placeholder).toBe('Search or select...');
     expect(element.disabled).toBe(false);
     expect(element.required).toBe(false);
-    expect(element.size).toBe('medium');
+    expect(element.size).toBe('md');
     expect(element.variant).toBe('default');
     expect(element.allowCustomValue).toBe(false);
   });
@@ -246,11 +246,7 @@ describe('bp-combobox', () => {
 
   // Sizes
   it('should apply size variant classes', async () => {
-    const sizes: Array<'small' | 'medium' | 'large'> = [
-      'small',
-      'medium',
-      'large',
-    ];
+    const sizes: Array<'sm' | 'md' | 'lg'> = ['sm', 'md', 'lg'];
 
     for (const size of sizes) {
       element.size = size;

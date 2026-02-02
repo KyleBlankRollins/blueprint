@@ -33,7 +33,7 @@ describe('bp-number-input', () => {
     expect(element.disabled).toBe(false);
     expect(element.required).toBe(false);
     expect(element.readonly).toBe(false);
-    expect(element.size).toBe('medium');
+    expect(element.size).toBe('md');
     expect(element.variant).toBe('default');
     expect(element.message).toBe('');
     expect(element.hideButtons).toBe(false);
@@ -105,11 +105,11 @@ describe('bp-number-input', () => {
   });
 
   it('should set property: size', async () => {
-    element.size = 'large';
+    element.size = 'lg';
     await element.updateComplete;
-    expect(element.size).toBe('large');
+    expect(element.size).toBe('lg');
     const wrapper = element.shadowRoot?.querySelector('.number-input');
-    expect(wrapper?.classList.contains('number-input--large')).toBe(true);
+    expect(wrapper?.classList.contains('number-input--lg')).toBe(true);
   });
 
   it('should set property: variant', async () => {
@@ -147,25 +147,25 @@ describe('bp-number-input', () => {
   });
 
   // Size variants
-  it('should apply small size styles', async () => {
-    element.size = 'small';
+  it('should apply sm size styles', async () => {
+    element.size = 'sm';
     await element.updateComplete;
     const wrapper = element.shadowRoot?.querySelector('.number-input');
-    expect(wrapper?.classList.contains('number-input--small')).toBe(true);
+    expect(wrapper?.classList.contains('number-input--sm')).toBe(true);
   });
 
-  it('should apply medium size styles', async () => {
-    element.size = 'medium';
+  it('should apply md size styles', async () => {
+    element.size = 'md';
     await element.updateComplete;
     const wrapper = element.shadowRoot?.querySelector('.number-input');
-    expect(wrapper?.classList.contains('number-input--medium')).toBe(true);
+    expect(wrapper?.classList.contains('number-input--md')).toBe(true);
   });
 
-  it('should apply large size styles', async () => {
-    element.size = 'large';
+  it('should apply lg size styles', async () => {
+    element.size = 'lg';
     await element.updateComplete;
     const wrapper = element.shadowRoot?.querySelector('.number-input');
-    expect(wrapper?.classList.contains('number-input--large')).toBe(true);
+    expect(wrapper?.classList.contains('number-input--lg')).toBe(true);
   });
 
   // Variant tests

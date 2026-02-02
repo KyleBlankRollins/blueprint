@@ -140,44 +140,44 @@ export const treeStyles = css`
   }
 
   /* Sizes */
-  .tree--small {
+  .tree--sm {
     font-size: var(--bp-font-size-sm);
   }
 
-  .tree--small .node-content {
+  .tree--sm .node-content {
     padding: var(--bp-spacing-1) var(--bp-spacing-2);
     padding-left: calc(
       var(--bp-spacing-2) + var(--node-level, 0) * var(--bp-spacing-4)
     );
   }
 
-  .tree--small .node-toggle {
+  .tree--sm .node-toggle {
     width: var(--bp-spacing-4);
     height: var(--bp-spacing-4);
   }
 
-  .tree--small .toggle-icon {
+  .tree--sm .toggle-icon {
     width: var(--bp-spacing-3);
     height: var(--bp-spacing-3);
   }
 
-  .tree--large {
+  .tree--lg {
     font-size: var(--bp-font-size-lg);
   }
 
-  .tree--large .node-content {
+  .tree--lg .node-content {
     padding: var(--bp-spacing-3) var(--bp-spacing-4);
     padding-left: calc(
       var(--bp-spacing-4) + var(--node-level, 0) * var(--bp-spacing-6)
     );
   }
 
-  .tree--large .node-toggle {
+  .tree--lg .node-toggle {
     width: var(--bp-spacing-6);
     height: var(--bp-spacing-6);
   }
 
-  .tree--large .toggle-icon {
+  .tree--lg .toggle-icon {
     width: var(--bp-spacing-5);
     height: var(--bp-spacing-5);
   }

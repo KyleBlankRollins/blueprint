@@ -4,7 +4,7 @@ Dialog overlay component for displaying content in a layer above the main page.
 
 ## Features
 
-- Multiple size variants: small, medium, large
+- Multiple size variants: sm, md, lg
 - Backdrop overlay that blocks page interaction
 - Built-in close button with icon
 - ESC key support to close modal
@@ -20,7 +20,7 @@ Dialog overlay component for displaying content in a layer above the main page.
 ## Usage
 
 ```html
-<bp-modal open size="medium">
+<bp-modal open size="md">
   <h2 slot="header">Modal Title</h2>
   <p>This is the modal body content.</p>
   <div slot="footer">
@@ -51,11 +51,11 @@ modal.addEventListener('bp-close', () => {
 
 ### Properties
 
-| Property         | Type                             | Default    | Description                                    |
-| ---------------- | -------------------------------- | ---------- | ---------------------------------------------- |
-| `open`           | `boolean`                        | `false`    | Whether the modal is currently displayed       |
-| `size`           | `'small' \| 'medium' \| 'large'` | `'medium'` | Size variant of the modal                      |
-| `ariaLabelledby` | `string`                         | `''`       | ID of element that labels the modal (for a11y) |
+| Property         | Type                   | Default | Description                                    |
+| ---------------- | ---------------------- | ------- | ---------------------------------------------- |
+| `open`           | `boolean`              | `false` | Whether the modal is currently displayed       |
+| `size`           | `'sm' \| 'md' \| 'lg'` | `'md'`  | Size variant of the modal                      |
+| `ariaLabelledby` | `string`               | `''`    | ID of element that labels the modal (for a11y) |
 
 ### Events
 
@@ -154,7 +154,7 @@ bp-modal::part(backdrop) {
 ### Confirmation Dialog
 
 ```html
-<bp-modal open size="small">
+<bp-modal open size="sm">
   <h2 slot="header">Confirm Action</h2>
   <p>Are you sure you want to delete this item?</p>
   <div slot="footer">
@@ -167,7 +167,7 @@ bp-modal::part(backdrop) {
 ### Form Modal
 
 ```html
-<bp-modal open size="medium">
+<bp-modal open size="md">
   <h2 slot="header">Edit Profile</h2>
   <form>
     <bp-input label="Name" value="John Doe"></bp-input>
@@ -184,7 +184,7 @@ bp-modal::part(backdrop) {
 ### Information Modal (No Footer)
 
 ```html
-<bp-modal open size="medium">
+<bp-modal open size="md">
   <h2 slot="header">About</h2>
   <p>This application was built with Blueprint components.</p>
   <p>Version 1.0.0</p>

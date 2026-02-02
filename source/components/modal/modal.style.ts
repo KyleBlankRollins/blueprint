@@ -139,17 +139,17 @@ export const modalStyles = css`
   }
 
   /* Sizes */
-  .modal-dialog--small {
+  .modal-dialog--sm {
     width: 90%;
     max-width: calc(var(--bp-spacing-24) * 4 + var(--bp-spacing-16));
   }
 
-  .modal-dialog--medium {
+  .modal-dialog--md {
     width: 90%;
     max-width: var(--bp-breakpoint-sm);
   }
 
-  .modal-dialog--large {
+  .modal-dialog--lg {
     width: 90%;
     max-width: var(--bp-breakpoint-md);
   }

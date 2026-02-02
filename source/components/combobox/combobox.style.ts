@@ -194,21 +194,21 @@ export const comboboxStyles = css`
   }
 
   /* Sizes */
-  .combobox--small .combobox__input {
+  .combobox--sm .combobox__input {
     padding: var(--bp-spacing-2xs) var(--bp-spacing-xs);
     font-size: var(--bp-font-size-sm);
   }
 
-  .combobox--small .combobox__indicators {
+  .combobox--sm .combobox__indicators {
     padding-right: var(--bp-spacing-xs);
   }
 
-  .combobox--large .combobox__input {
+  .combobox--lg .combobox__input {
     padding: var(--bp-spacing-md) var(--bp-spacing-lg);
     font-size: var(--bp-font-size-lg);
   }
 
-  .combobox--large .combobox__indicators {
+  .combobox--lg .combobox__indicators {
     padding-right: var(--bp-spacing-md);
   }
 
@@ -276,7 +276,7 @@ export const comboboxStyles = css`
 
   /* iOS zoom prevention: ensure 16px minimum on touch devices */
   @media (max-width: 768px) {
-    .combobox--small .combobox__input {
+    .combobox--sm .combobox__input {
       font-size: 16px;
     }
   }

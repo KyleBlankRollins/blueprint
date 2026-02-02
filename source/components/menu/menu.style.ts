@@ -22,11 +22,11 @@ export const menuStyles = css`
   }
 
   /* Menu Sizes */
-  .menu--small {
+  .menu--sm {
     min-width: 160px;
   }
 
-  .menu--large {
+  .menu--lg {
     min-width: 280px;
   }
 
@@ -56,13 +56,13 @@ export const menuStyles = css`
   }
 
   /* Menu Item Sizes */
-  .menu-item--small {
+  .menu-item--sm {
     padding: var(--bp-spacing-sm) var(--bp-spacing-sm);
     min-height: 36px;
     font-size: var(--bp-font-size-sm);
   }
 
-  .menu-item--large {
+  .menu-item--lg {
     padding: var(--bp-spacing-md) var(--bp-spacing-lg);
     min-height: 48px;
     font-size: var(--bp-font-size-lg);

@@ -45,7 +45,7 @@ describe('bp-drawer', () => {
   it('should have correct default property values', () => {
     expect(element.open).toBe(false);
     expect(element.placement).toBe('left');
-    expect(element.size).toBe('medium');
+    expect(element.size).toBe('md');
     expect(element.showClose).toBe(true);
     expect(element.closeOnBackdrop).toBe(true);
     expect(element.closeOnEscape).toBe(true);
@@ -72,11 +72,11 @@ describe('bp-drawer', () => {
   });
 
   it('should set property: size', async () => {
-    element.size = 'large';
+    element.size = 'lg';
     await element.updateComplete;
-    expect(element.size).toBe('large');
+    expect(element.size).toBe('lg');
     const drawer = element.shadowRoot?.querySelector('.drawer');
-    expect(drawer?.classList.contains('drawer--large')).toBe(true);
+    expect(drawer?.classList.contains('drawer--lg')).toBe(true);
   });
 
   it('should set property: showClose', async () => {
@@ -128,7 +128,7 @@ describe('bp-drawer', () => {
   it('should validate size from attribute', async () => {
     element.setAttribute('size', 'invalid');
     await element.updateComplete;
-    expect(element.size).toBe('medium');
+    expect(element.size).toBe('md');
   });
 
   // Method tests

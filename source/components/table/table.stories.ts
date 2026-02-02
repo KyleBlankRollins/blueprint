@@ -60,7 +60,7 @@ const meta: Meta = {
     },
     size: {
       control: 'select',
-      options: ['small', 'medium', 'large'],
+      options: ['sm', 'md', 'lg'],
       description: 'Size variant affecting padding and font size',
     },
     selectable: {
@@ -92,7 +92,7 @@ type Story = StoryObj;
 export const Default: Story = {
   args: {
     variant: 'default',
-    size: 'medium',
+    size: 'md',
     selectable: false,
     multiSelect: false,
     hoverable: true,
@@ -117,7 +117,7 @@ export const Default: Story = {
 export const Striped: Story = {
   args: {
     variant: 'striped',
-    size: 'medium',
+    size: 'md',
     hoverable: true,
   },
   render: (args) => html`
@@ -134,7 +134,7 @@ export const Striped: Story = {
 export const Bordered: Story = {
   args: {
     variant: 'bordered',
-    size: 'medium',
+    size: 'md',
     hoverable: true,
   },
   render: (args) => html`
@@ -151,7 +151,7 @@ export const Bordered: Story = {
 export const Small: Story = {
   args: {
     variant: 'default',
-    size: 'small',
+    size: 'sm',
     hoverable: true,
   },
   render: (args) => html`
@@ -168,7 +168,7 @@ export const Small: Story = {
 export const Large: Story = {
   args: {
     variant: 'default',
-    size: 'large',
+    size: 'lg',
     hoverable: true,
   },
   render: (args) => html`
@@ -185,7 +185,7 @@ export const Large: Story = {
 export const Selectable: Story = {
   args: {
     variant: 'default',
-    size: 'medium',
+    size: 'md',
     selectable: true,
     multiSelect: false,
     hoverable: true,
@@ -207,7 +207,7 @@ export const Selectable: Story = {
 export const MultiSelect: Story = {
   args: {
     variant: 'default',
-    size: 'medium',
+    size: 'md',
     selectable: true,
     multiSelect: true,
     hoverable: true,
@@ -262,7 +262,7 @@ export const StickyHeader: Story = {
 export const Loading: Story = {
   args: {
     variant: 'default',
-    size: 'medium',
+    size: 'md',
     loading: true,
   },
   render: (args) => html`

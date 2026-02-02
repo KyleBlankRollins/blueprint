@@ -3,7 +3,7 @@ import { customElement, property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { modalStyles } from './modal.style.js';
 
-export type ModalSize = 'small' | 'medium' | 'large';
+export type ModalSize = 'sm' | 'md' | 'lg';
 
 @customElement('bp-modal')
 export class BpModal extends LitElement {
@@ -31,7 +31,7 @@ export class BpModal extends LitElement {
   constructor() {
     super();
     this.open = false;
-    this.size = 'medium';
+    this.size = 'md';
     this.ariaLabelledby = '';
   }
 

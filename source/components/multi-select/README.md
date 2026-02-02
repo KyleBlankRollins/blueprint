@@ -8,7 +8,7 @@ A dropdown component for selecting multiple options with tag-based display of se
 - Keyboard navigation (Arrow keys, Enter, Escape)
 - Maximum selection limit support
 - Clearable with "clear all" button
-- Three size variants (small, medium, large)
+- Three size variants (sm, md, lg)
 - Fully accessible with ARIA attributes
 - Form integration with hidden inputs
 - Customizable via CSS parts
@@ -40,11 +40,11 @@ A dropdown component for selecting multiple options with tag-based display of se
 </bp-multi-select>
 
 <!-- Different sizes -->
-<bp-multi-select size="small" placeholder="Small">
+<bp-multi-select size="sm" placeholder="Small">
   <option value="1">Option 1</option>
 </bp-multi-select>
 
-<bp-multi-select size="large" placeholder="Large">
+<bp-multi-select size="lg" placeholder="Large">
   <option value="1">Option 1</option>
 </bp-multi-select>
 
@@ -79,7 +79,7 @@ A dropdown component for selecting multiple options with tag-based display of se
 | `placeholder`   | `string`             | `'Select options'` | Placeholder text when no values are selected                                      |
 | `disabled`      | `boolean`            | `false`            | Whether the multi-select is disabled                                              |
 | `required`      | `boolean`            | `false`            | Whether the multi-select is required                                              |
-| `size`          | `MultiSelectSize`    | `'medium'`         | Size variant: `'small'`, `'medium'`, or `'large'`                                 |
+| `size`          | `MultiSelectSize`    | `'md'`             | Size variant: `'sm'`, `'md'`, or `'lg'`                                           |
 | `variant`       | `MultiSelectVariant` | `'default'`        | Validation variant: `'default'`, `'success'`, `'error'`, `'warning'`, or `'info'` |
 | `maxSelections` | `number`             | `0`                | Maximum number of selections allowed (0 = unlimited)                              |
 | `clearable`     | `boolean`            | `true`             | Whether to show a clear all button                                                |

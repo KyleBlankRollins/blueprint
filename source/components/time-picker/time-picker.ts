@@ -3,7 +3,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { timePickerStyles } from './time-picker.style.js';
 
-export type TimePickerSize = 'small' | 'medium' | 'large';
+export type TimePickerSize = 'sm' | 'md' | 'lg';
 export type TimeFormat = '12' | '24';
 
 /**
@@ -46,7 +46,7 @@ export class BpTimePicker extends LitElement {
     this.placeholder = 'Select time';
     this.disabled = false;
     this.required = false;
-    this.size = 'medium';
+    this.size = 'md';
     this.format = '12';
     this.step = 15; // 15-minute intervals by default
   }

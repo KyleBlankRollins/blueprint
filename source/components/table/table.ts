@@ -6,7 +6,7 @@ import { tableStyles } from './table.style.js';
 import '../icon/icon.js';
 
 export type TableVariant = 'default' | 'striped' | 'bordered';
-export type TableSize = 'small' | 'medium' | 'large';
+export type TableSize = 'sm' | 'md' | 'lg';
 export type TableSortDirection = 'asc' | 'desc' | 'none';
 
 /**
@@ -111,10 +111,10 @@ export class BpTable extends LitElement {
     reflect: true,
     converter: {
       fromAttribute: (value: string | null) => {
-        const valid: TableSize[] = ['small', 'medium', 'large'];
+        const valid: TableSize[] = ['sm', 'md', 'lg'];
         return value && valid.includes(value as TableSize)
           ? (value as TableSize)
-          : 'medium';
+          : 'md';
       },
     },
   })
@@ -151,7 +151,7 @@ export class BpTable extends LitElement {
     this.columns = [];
     this.rows = [];
     this.variant = 'default';
-    this.size = 'medium';
+    this.size = 'md';
     this.selectable = false;
     this.multiSelect = false;
     this.selectedRows = [];

@@ -5,7 +5,7 @@ A breadcrumb navigation component showing the user's location in a hierarchy.
 ## Features
 
 - **Multiple separators** - Slash, chevron, arrow, and dot separator styles
-- **Size variants** - Small, medium, and large sizes
+- **Size variants** - sm, md, and lg sizes
 - **Collapsible** - Automatically collapse middle items with ellipsis when `maxItems` is set
 - **Keyboard accessible** - Full keyboard navigation support
 - **Icon support** - Optional icons for each breadcrumb item
@@ -59,7 +59,7 @@ A breadcrumb navigation component showing the user's location in a hierarchy.
 | Property           | Type                                       | Default        | Description                                            |
 | ------------------ | ------------------------------------------ | -------------- | ------------------------------------------------------ |
 | `items`            | `BreadcrumbItem[]`                         | `[]`           | Array of breadcrumb items                              |
-| `size`             | `'small' \| 'medium' \| 'large'`           | `'medium'`     | Size of the breadcrumb                                 |
+| `size`             | `'sm' \| 'md' \| 'lg'`                     | `'md'`         | Size of the breadcrumb                                 |
 | `separator`        | `'slash' \| 'chevron' \| 'arrow' \| 'dot'` | `'slash'`      | Separator style between items                          |
 | `ariaLabel`        | `string`                                   | `'Breadcrumb'` | Accessible label for the navigation landmark           |
 | `collapseOnMobile` | `boolean`                                  | `false`        | Whether to collapse middle items on small screens      |

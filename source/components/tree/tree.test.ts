@@ -77,16 +77,16 @@ describe('bp-tree', () => {
     expect(element.multiSelect).toBe(false);
     expect(element.showLines).toBe(false);
     expect(element.selectable).toBe(true);
-    expect(element.size).toBe('medium');
+    expect(element.size).toBe('md');
   });
 
   // Property tests
   it('should set property: size', async () => {
-    element.size = 'large';
+    element.size = 'lg';
     await element.updateComplete;
-    expect(element.size).toBe('large');
+    expect(element.size).toBe('lg');
     const tree = element.shadowRoot?.querySelector('.tree');
-    expect(tree?.classList.contains('tree--large')).toBe(true);
+    expect(tree?.classList.contains('tree--lg')).toBe(true);
   });
 
   it('should set property: showLines', async () => {
@@ -468,7 +468,7 @@ describe('bp-tree', () => {
   it('should validate size from attribute', async () => {
     element.setAttribute('size', 'invalid');
     await element.updateComplete;
-    expect(element.size).toBe('medium');
+    expect(element.size).toBe('md');
   });
 
   // Disabled node interaction tests

@@ -103,32 +103,32 @@ export const sliderStyles = css`
   }
 
   /* Size variants */
-  .slider--small .slider__track {
+  .slider--sm .slider__track {
     height: var(--bp-spacing-1);
   }
 
-  .slider--small .slider__thumb {
+  .slider--sm .slider__thumb {
     width: var(--bp-spacing-3);
     height: var(--bp-spacing-3);
     top: calc(var(--bp-spacing-1) / 2);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
 
-  .slider--medium .slider__track {
+  .slider--md .slider__track {
     height: var(--bp-spacing-1-5);
   }
 
-  .slider--medium .slider__thumb {
+  .slider--md .slider__thumb {
     width: var(--bp-spacing-4);
     height: var(--bp-spacing-4);
     top: calc(var(--bp-spacing-1-5) / 2);
   }
 
-  .slider--large .slider__track {
+  .slider--lg .slider__track {
     height: var(--bp-spacing-2);
   }
 
-  .slider--large .slider__thumb {
+  .slider--lg .slider__thumb {
     width: var(--bp-spacing-5);
     height: var(--bp-spacing-5);
     top: calc(var(--bp-spacing-2) / 2);

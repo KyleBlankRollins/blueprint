@@ -44,22 +44,22 @@ describe('bp-modal', () => {
   });
 
   describe('Variants', () => {
-    it('should set property: size to small', async () => {
-      element.size = 'small';
+    it('should set property: size to sm', async () => {
+      element.size = 'sm';
       element.open = true;
       await element.updateComplete;
 
       const dialog = element.shadowRoot?.querySelector('.modal-dialog');
-      expect(dialog?.className).toContain('modal-dialog--small');
+      expect(dialog?.className).toContain('modal-dialog--sm');
     });
 
-    it('should set property: size to large', async () => {
-      element.size = 'large';
+    it('should set property: size to lg', async () => {
+      element.size = 'lg';
       element.open = true;
       await element.updateComplete;
 
       const dialog = element.shadowRoot?.querySelector('.modal-dialog');
-      expect(dialog?.className).toContain('modal-dialog--large');
+      expect(dialog?.className).toContain('modal-dialog--lg');
     });
   });
 
@@ -68,8 +68,8 @@ describe('bp-modal', () => {
       expect(element.open).toBe(false);
     });
 
-    it('should have default size "medium"', () => {
-      expect(element.size).toBe('medium');
+    it('should have default size "md"', () => {
+      expect(element.size).toBe('md');
     });
   });
 

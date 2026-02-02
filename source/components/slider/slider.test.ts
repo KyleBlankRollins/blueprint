@@ -30,7 +30,7 @@ describe('bp-slider', () => {
     expect(element.name).toBe('');
     expect(element.label).toBe('');
     expect(element.disabled).toBe(false);
-    expect(element.size).toBe('medium');
+    expect(element.size).toBe('md');
     expect(element.showValue).toBe(false);
     expect(element.showTicks).toBe(false);
   });
@@ -112,11 +112,11 @@ describe('bp-slider', () => {
   });
 
   it('should set property: size', async () => {
-    element.size = 'large';
+    element.size = 'lg';
     await element.updateComplete;
-    expect(element.size).toBe('large');
+    expect(element.size).toBe('lg');
     const slider = element.shadowRoot?.querySelector('.slider');
-    expect(slider?.classList.contains('slider--large')).toBe(true);
+    expect(slider?.classList.contains('slider--lg')).toBe(true);
   });
 
   it('should set property: showValue', async () => {

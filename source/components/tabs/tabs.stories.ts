@@ -43,7 +43,7 @@ const meta: Meta = {
     },
     size: {
       control: 'select',
-      options: ['small', 'medium', 'large'],
+      options: ['sm', 'md', 'lg'],
       description: 'The size of the tabs',
     },
     variant: {
@@ -74,7 +74,7 @@ export const Default: Story = {
   args: {
     tabs: defaultTabs,
     value: 'overview',
-    size: 'medium',
+    size: 'md',
     variant: 'default',
     placement: 'top',
     disabled: false,
@@ -134,7 +134,7 @@ export const Sizes: Story = {
     <div style="display: flex; flex-direction: column; gap: 2rem;">
       <div>
         <h4>Small</h4>
-        <bp-tabs .tabs=${defaultTabs} value="overview" size="small">
+        <bp-tabs .tabs=${defaultTabs} value="overview" size="sm">
           <div data-tab-id="overview">Overview content</div>
           <div data-tab-id="features">Features content</div>
           <div data-tab-id="reviews">Reviews content</div>
@@ -143,7 +143,7 @@ export const Sizes: Story = {
       </div>
       <div>
         <h4>Medium (default)</h4>
-        <bp-tabs .tabs=${defaultTabs} value="overview" size="medium">
+        <bp-tabs .tabs=${defaultTabs} value="overview" size="md">
           <div data-tab-id="overview">Overview content</div>
           <div data-tab-id="features">Features content</div>
           <div data-tab-id="reviews">Reviews content</div>
@@ -152,7 +152,7 @@ export const Sizes: Story = {
       </div>
       <div>
         <h4>Large</h4>
-        <bp-tabs .tabs=${defaultTabs} value="overview" size="large">
+        <bp-tabs .tabs=${defaultTabs} value="overview" size="lg">
           <div data-tab-id="overview">Overview content</div>
           <div data-tab-id="features">Features content</div>
           <div data-tab-id="reviews">Reviews content</div>

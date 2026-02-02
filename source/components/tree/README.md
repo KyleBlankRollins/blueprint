@@ -7,7 +7,7 @@ A hierarchical tree component for displaying nested data structures like file sy
 - **Hierarchical Display**: Render nested tree structures with unlimited depth
 - **Expand/Collapse**: Toggle visibility of child nodes with smooth animations
 - **Selection**: Single or multi-select mode with visual feedback
-- **Sizes**: Small, medium, and large size variants
+- **Sizes**: sm, md, and lg size variants
 - **Connecting Lines**: Optional visual lines between parent and child nodes
 - **Keyboard Navigation**: Full keyboard support with arrow keys
 - **Accessibility**: Complete ARIA tree pattern implementation
@@ -76,15 +76,15 @@ tree.clearSelection();
 
 ### Properties
 
-| Property      | Type                             | Default    | Description                   |
-| ------------- | -------------------------------- | ---------- | ----------------------------- |
-| `nodes`       | `TreeNode[]`                     | `[]`       | Array of tree node objects    |
-| `selectedId`  | `string \| null`                 | `null`     | Currently selected node ID    |
-| `expandedIds` | `string[]`                       | `[]`       | Array of expanded node IDs    |
-| `multiSelect` | `boolean`                        | `false`    | Allow multiple selections     |
-| `showLines`   | `boolean`                        | `false`    | Show connecting lines         |
-| `selectable`  | `boolean`                        | `true`     | Whether nodes can be selected |
-| `size`        | `'small' \| 'medium' \| 'large'` | `'medium'` | Size variant                  |
+| Property      | Type                   | Default | Description                   |
+| ------------- | ---------------------- | ------- | ----------------------------- |
+| `nodes`       | `TreeNode[]`           | `[]`    | Array of tree node objects    |
+| `selectedId`  | `string \| null`       | `null`  | Currently selected node ID    |
+| `expandedIds` | `string[]`             | `[]`    | Array of expanded node IDs    |
+| `multiSelect` | `boolean`              | `false` | Allow multiple selections     |
+| `showLines`   | `boolean`              | `false` | Show connecting lines         |
+| `selectable`  | `boolean`              | `true`  | Whether nodes can be selected |
+| `size`        | `'sm' \| 'md' \| 'lg'` | `'md'`  | Size variant                  |
 
 ### TreeNode Interface
 

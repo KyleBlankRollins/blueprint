@@ -2,6 +2,8 @@ import { LitElement, html, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { menuStyles } from './menu.style.js';
 
+export type MenuSize = 'sm' | 'md' | 'lg';
+
 /**
  * A menu container component for displaying a list of actions or options.
  *
@@ -14,7 +16,7 @@ import { menuStyles } from './menu.style.js';
 @customElement('bp-menu')
 export class BpMenu extends LitElement {
   /** Size variant for all menu items */
-  @property({ type: String }) declare size: 'small' | 'medium' | 'large';
+  @property({ type: String }) declare size: MenuSize;
 
   /** Current focused item index for keyboard navigation */
   @state() private focusedIndex = -1;
@@ -23,7 +25,7 @@ export class BpMenu extends LitElement {
 
   constructor() {
     super();
-    this.size = 'medium';
+    this.size = 'md';
   }
 
   private handleFocusIn = (event: FocusEvent) => {
@@ -136,7 +138,7 @@ export class BpMenuItem extends LitElement {
   @property({ type: Boolean }) declare hasSubmenu: boolean;
 
   /** Size variant (inherited from parent menu) */
-  @property({ type: String }) declare size: 'small' | 'medium' | 'large';
+  @property({ type: String }) declare size: MenuSize;
 
   /** Keyboard shortcut hint to display */
   @property({ type: String }) declare shortcut: string;
@@ -149,7 +151,7 @@ export class BpMenuItem extends LitElement {
     this.disabled = false;
     this.selected = false;
     this.hasSubmenu = false;
-    this.size = 'medium';
+    this.size = 'md';
     this.shortcut = '';
   }
 

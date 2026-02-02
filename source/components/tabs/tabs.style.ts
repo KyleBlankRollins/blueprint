@@ -103,19 +103,19 @@ export const tabsStyles = css`
   }
 
   /* Sizes */
-  .tabs--small .tab {
+  .tabs--sm .tab {
     padding: var(--bp-spacing-xs) var(--bp-spacing-sm);
     font-size: var(--bp-font-size-sm);
     line-height: var(--bp-line-height-tight);
   }
 
-  .tabs--medium .tab {
+  .tabs--md .tab {
     padding: var(--bp-spacing-sm) var(--bp-spacing-md);
     font-size: var(--bp-font-size-base);
     line-height: var(--bp-line-height-normal);
   }
 
-  .tabs--large .tab {
+  .tabs--lg .tab {
     padding: var(--bp-spacing-md) var(--bp-spacing-lg);
     font-size: var(--bp-font-size-lg);
     line-height: var(--bp-line-height-normal);
