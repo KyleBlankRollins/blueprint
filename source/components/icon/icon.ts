@@ -4,6 +4,24 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { iconStyles } from './icon.style.js';
 import { getIcon, type IconName } from './icons/registry.generated.js';
 
+export type IconSize =
+  | 'xs'
+  | 'sm'
+  | 'md'
+  | 'lg'
+  | 'xl'
+  | '2xl'
+  | '3xl'
+  | '4xl'
+  | 'full';
+export type IconColor =
+  | 'default'
+  | 'primary'
+  | 'success'
+  | 'warning'
+  | 'error'
+  | 'muted';
+
 /**
  * Icon component - SVG icon wrapper with size variants
  *
@@ -36,21 +54,15 @@ export class BpIcon extends LitElement {
 
   /**
    * Size variant of the icon
-   * @type {'xs' | 'sm' | 'md' | 'lg' | 'xl'}
+   * @type {IconSize}
    */
-  @property({ type: String }) declare size: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  @property({ type: String, reflect: true }) declare size: IconSize;
 
   /**
    * Color variant of the icon
-   * @type {'default' | 'primary' | 'success' | 'warning' | 'error' | 'muted'}
+   * @type {IconColor}
    */
-  @property({ type: String }) declare color:
-    | 'default'
-    | 'primary'
-    | 'success'
-    | 'warning'
-    | 'error'
-    | 'muted';
+  @property({ type: String }) declare color: IconColor;
 
   /**
    * ARIA label for accessibility

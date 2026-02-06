@@ -33,6 +33,7 @@ describe('bp-card', () => {
     expect(element.hoverable).toBe(false);
     expect(element.clickable).toBe(false);
     expect(element.noPadding).toBe(false);
+    expect(element.direction).toBe('vertical');
   });
 
   // Properties
@@ -60,6 +61,12 @@ describe('bp-card', () => {
     expect(element.noPadding).toBe(true);
   });
 
+  it('should set property: direction', async () => {
+    element.direction = 'horizontal';
+    await element.updateComplete;
+    expect(element.direction).toBe('horizontal');
+  });
+
   // Attributes
   it('should reflect variant attribute to DOM', async () => {
     element.variant = 'outlined';
@@ -83,6 +90,12 @@ describe('bp-card', () => {
     element.noPadding = true;
     await element.updateComplete;
     expect(element.hasAttribute('nopadding')).toBe(true);
+  });
+
+  it('should reflect direction attribute to DOM', async () => {
+    element.direction = 'horizontal';
+    await element.updateComplete;
+    expect(element.getAttribute('direction')).toBe('horizontal');
   });
 
   // Events
@@ -221,6 +234,12 @@ describe('bp-card', () => {
     expect(media).toBeTruthy();
   });
 
+  it('should expose content part for styling', async () => {
+    await element.updateComplete;
+    const content = element.shadowRoot?.querySelector('[part="content"]');
+    expect(content).toBeTruthy();
+  });
+
   // Variants
   it('should apply default variant styles', async () => {
     element.variant = 'default';
@@ -279,6 +298,61 @@ describe('bp-card', () => {
 
     const body = element.shadowRoot?.querySelector('.card-body--no-padding');
     expect(body).toBeTruthy();
+  });
+
+  // Direction / horizontal layout
+  it('should render card-content wrapper', async () => {
+    await element.updateComplete;
+    const content = element.shadowRoot?.querySelector('.card-content');
+    expect(content).toBeTruthy();
+  });
+
+  it('should not apply horizontal class when direction is vertical', async () => {
+    element.direction = 'vertical';
+    await element.updateComplete;
+
+    const content = element.shadowRoot?.querySelector(
+      '.card-content--horizontal'
+    );
+    expect(content).toBeFalsy();
+  });
+
+  it('should apply horizontal class when direction is horizontal', async () => {
+    element.direction = 'horizontal';
+    await element.updateComplete;
+
+    const content = element.shadowRoot?.querySelector(
+      '.card-content--horizontal'
+    );
+    expect(content).toBeTruthy();
+  });
+
+  it('should contain media slot inside card-content', async () => {
+    await element.updateComplete;
+    const content = element.shadowRoot?.querySelector('.card-content');
+    const mediaSlot = content?.querySelector('slot[name="media"]');
+    expect(mediaSlot).toBeTruthy();
+  });
+
+  it('should contain card-body inside card-content', async () => {
+    await element.updateComplete;
+    const content = element.shadowRoot?.querySelector('.card-content');
+    const body = content?.querySelector('.card-body');
+    expect(body).toBeTruthy();
+  });
+
+  it('should keep header slot outside card-content', async () => {
+    await element.updateComplete;
+    const content = element.shadowRoot?.querySelector('.card-content');
+    const headerSlot = content?.querySelector('slot[name="header"]');
+    expect(headerSlot).toBeFalsy();
+  });
+
+  it('should keep footer slot outside card-content', async () => {
+    await element.updateComplete;
+    const content = element.shadowRoot?.querySelector('.card-content');
+    const footerSlot = content?.querySelector('slot[name="footer"]');
+    expect(footerSlot).toBeFalsy();
   });
 
   // Accessibility

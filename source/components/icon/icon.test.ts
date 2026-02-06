@@ -82,6 +82,42 @@ describe('bp-icon', () => {
     expect(icon?.className).toContain('icon--xl');
   });
 
+  it('should set property: size to 2xl', async () => {
+    element.size = '2xl';
+    await element.updateComplete;
+    expect(element.size).toBe('2xl');
+
+    const icon = element.shadowRoot?.querySelector('.icon');
+    expect(icon?.className).toContain('icon--2xl');
+  });
+
+  it('should set property: size to 3xl', async () => {
+    element.size = '3xl';
+    await element.updateComplete;
+    expect(element.size).toBe('3xl');
+
+    const icon = element.shadowRoot?.querySelector('.icon');
+    expect(icon?.className).toContain('icon--3xl');
+  });
+
+  it('should set property: size to 4xl', async () => {
+    element.size = '4xl';
+    await element.updateComplete;
+    expect(element.size).toBe('4xl');
+
+    const icon = element.shadowRoot?.querySelector('.icon');
+    expect(icon?.className).toContain('icon--4xl');
+  });
+
+  it('should set property: size to full', async () => {
+    element.size = 'full';
+    await element.updateComplete;
+    expect(element.size).toBe('full');
+
+    const icon = element.shadowRoot?.querySelector('.icon');
+    expect(icon?.className).toContain('icon--full');
+  });
+
   // Properties - Color
   it('should set property: color to default', async () => {
     element.color = 'default';
@@ -302,6 +338,30 @@ describe('bp-icon', () => {
 
     const icon = element.shadowRoot?.querySelector('.icon');
     expect(icon?.classList.contains('icon--xl')).toBe(true);
+  });
+
+  it('should apply 2xl size styles', async () => {
+    element.size = '2xl';
+    await element.updateComplete;
+
+    const icon = element.shadowRoot?.querySelector('.icon');
+    expect(icon?.classList.contains('icon--2xl')).toBe(true);
+  });
+
+  it('should apply 3xl size styles', async () => {
+    element.size = '3xl';
+    await element.updateComplete;
+
+    const icon = element.shadowRoot?.querySelector('.icon');
+    expect(icon?.classList.contains('icon--3xl')).toBe(true);
+  });
+
+  it('should apply 4xl size styles', async () => {
+    element.size = '4xl';
+    await element.updateComplete;
+
+    const icon = element.shadowRoot?.querySelector('.icon');
+    expect(icon?.classList.contains('icon--4xl')).toBe(true);
   });
 
   // Color variants (visual verification)

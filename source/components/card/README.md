@@ -52,20 +52,36 @@ A versatile card component for organizing and displaying content with optional h
 <bp-card variant="outlined" hoverable>
   <p>This card shows a hover effect</p>
 </bp-card>
+
+<!-- Horizontal layout with image on the left -->
+<bp-card direction="horizontal" variant="elevated">
+  <img
+    slot="media"
+    src="thumbnail.jpg"
+    alt="Thumbnail"
+    style="width: 200px; object-fit: cover;"
+  />
+  <div slot="header">Article Title</div>
+  <p>Content sits beside the media in horizontal mode.</p>
+  <div slot="footer">2 min read</div>
+</bp-card>
 ```
 
 ## API
 
 ### Properties
 
-| Property    | Type          | Default     | Description                                                                 |
-| ----------- | ------------- | ----------- | --------------------------------------------------------------------------- |
-| `variant`   | `CardVariant` | `'default'` | Visual variant of the card                                                  |
-| `hoverable` | `boolean`     | `false`     | Whether the card should display a hover effect                              |
-| `clickable` | `boolean`     | `false`     | Whether the card is clickable (shows pointer cursor and emits click events) |
-| `noPadding` | `boolean`     | `false`     | Whether to remove default padding from the card body                        |
+| Property    | Type            | Default      | Description                                                                 |
+| ----------- | --------------- | ------------ | --------------------------------------------------------------------------- |
+| `variant`   | `CardVariant`   | `'default'`  | Visual variant of the card                                                  |
+| `hoverable` | `boolean`       | `false`      | Whether the card should display a hover effect                              |
+| `clickable` | `boolean`       | `false`      | Whether the card is clickable (shows pointer cursor and emits click events) |
+| `noPadding` | `boolean`       | `false`      | Whether to remove default padding from the card body                        |
+| `direction` | `CardDirection` | `'vertical'` | Layout direction for the content area (media + body)                        |
 
 **CardVariant**: `'default' | 'outlined' | 'elevated'`
+
+**CardDirection**: `'vertical' | 'horizontal'`
 
 ### Events
 
@@ -84,13 +100,14 @@ A versatile card component for organizing and displaying content with optional h
 
 ### CSS Parts
 
-| Part     | Description                |
-| -------- | -------------------------- |
-| `card`   | The main card container    |
-| `header` | The header slot container  |
-| `body`   | The body content container |
-| `footer` | The footer slot container  |
-| `media`  | The media slot container   |
+| Part      | Description                              |
+| --------- | ---------------------------------------- |
+| `card`    | The main card container                  |
+| `header`  | The header slot container                |
+| `content` | The content area wrapping media and body |
+| `body`    | The body content container               |
+| `footer`  | The footer slot container                |
+| `media`   | The media slot container                 |
 
 ## Design Tokens Used
 

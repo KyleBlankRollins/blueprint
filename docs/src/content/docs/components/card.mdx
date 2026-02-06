@@ -93,16 +93,57 @@ import 'blueprint/components/card';
 <bp-card hoverable>...</bp-card> <bp-card clickable>...</bp-card>
 ```
 
+### Horizontal Layout
+
+Use `direction="horizontal"` to place media beside the body content. Header and footer remain full-width.
+
+<ComponentPreview>
+  <bp-card direction="horizontal" variant="elevated">
+    <img slot="media" src="https://placecats.com/250/200" alt="A cat" style="width: 250px; height: 200px; object-fit: cover;" />
+    <bp-heading level="4" size="md">Horizontal Card</bp-heading>
+    <bp-text>Content sits next to the image when the direction is set to horizontal. This is useful for article previews, product listings, or any layout that benefits from a side-by-side arrangement.</bp-text>
+  </bp-card>
+</ComponentPreview>
+
+```html
+<bp-card direction="horizontal" variant="elevated">
+  <img slot="media" src="https://placecats.com/250/200" alt="A cat" style="width: 250px; object-fit: cover;" />
+  <bp-heading level="4" size="md">Horizontal Card</bp-heading>
+  <bp-text>Content sits next to the image.</bp-text>
+</bp-card>
+```
+
+### Horizontal with Header and Footer
+
+<ComponentPreview>
+  <bp-card direction="horizontal" variant="outlined">
+    <img slot="media" src="https://placecats.com/200/180" alt="Another cat" style="width: 200px; height: 180px; object-fit: cover;" />
+    <div slot="header">Featured Article</div>
+    <bp-text>The header and footer span the full width while the media and body are arranged side by side.</bp-text>
+    <div slot="footer">5 min read</div>
+  </bp-card>
+</ComponentPreview>
+
+```html
+<bp-card direction="horizontal" variant="outlined">
+  <img slot="media" src="image.jpg" alt="..." style="width: 200px; object-fit: cover;" />
+  <div slot="header">Featured Article</div>
+  <bp-text>Body content here.</bp-text>
+  <div slot="footer">5 min read</div>
+</bp-card>
+```
+
 ## API Reference
 
 ### Properties
 
-| Property    | Type                                    | Default     | Description             |
-| ----------- | --------------------------------------- | ----------- | ----------------------- |
-| `variant`   | `'default' \| 'outlined' \| 'elevated'` | `'default'` | Visual style variant    |
-| `hoverable` | `boolean`                               | `false`     | Adds hover effect       |
-| `clickable` | `boolean`                               | `false`     | Makes card interactive  |
-| `noPadding` | `boolean`                               | `false`     | Removes default padding |
+| Property    | Type                                    | Default      | Description                              |
+| ----------- | --------------------------------------- | ------------ | ---------------------------------------- |
+| `variant`   | `'default' \| 'outlined' \| 'elevated'` | `'default'`  | Visual style variant                     |
+| `hoverable` | `boolean`                               | `false`      | Adds hover effect                        |
+| `clickable` | `boolean`                               | `false`      | Makes card interactive                   |
+| `noPadding` | `boolean`                               | `false`      | Removes default padding                  |
+| `direction` | `'vertical' \| 'horizontal'`            | `'vertical'` | Layout direction for the content area    |
 
 ### Slots
 
@@ -121,12 +162,14 @@ import 'blueprint/components/card';
 
 ### CSS Parts
 
-| Part      | Description           |
-| --------- | --------------------- |
-| `card`    | The card container    |
-| `header`  | The header section    |
-| `content` | The main content area |
-| `footer`  | The footer section    |
+| Part      | Description                            |
+| --------- | -------------------------------------- |
+| `card`    | The card container                     |
+| `header`  | The header section                     |
+| `content` | The content area wrapping media + body |
+| `body`    | The body content area                  |
+| `media`   | The media slot container               |
+| `footer`  | The footer section                     |
 
 ## Accessibility
 

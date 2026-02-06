@@ -16,7 +16,7 @@ import type {
   AvatarStatus,
 } from './components/avatar/avatar.js';
 import type { ButtonVariant, ButtonSize } from './components/button/button.js';
-import type { CardVariant } from './components/card/card.js';
+import type { CardVariant, CardDirection } from './components/card/card.js';
 import type {
   ComboboxOption,
   ComboboxSize,
@@ -178,6 +178,7 @@ interface BpCardProps extends BaseHTMLAttributes {
   hoverable?: BooleanAttr;
   clickable?: BooleanAttr;
   noPadding?: BooleanAttr;
+  direction?: StringAttr<CardDirection>;
 }
 
 interface BpCheckboxProps extends BaseHTMLAttributes {

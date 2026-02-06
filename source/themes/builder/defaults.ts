@@ -79,6 +79,17 @@ export const DEFAULT_TYPOGRAPHY = {
 
 export const DEFAULT_FOCUS = { width: 2, offset: 2, style: 'solid' } as const;
 
+export const DEFAULT_ICON_SIZES = {
+  xs: 12,
+  sm: 16,
+  md: 20,
+  lg: 24,
+  xl: 32,
+  '2xl': 40,
+  '3xl': 48,
+  '4xl': 64,
+};
+
 export const DEFAULT_Z_INDEX = {
   base: 0,
   dropdown: 1000,
@@ -131,6 +142,7 @@ export function createDefaultThemeConfig(): Omit<
     radius: DEFAULT_RADIUS,
     motion: DEFAULT_MOTION,
     typography: DEFAULT_TYPOGRAPHY,
+    iconSizes: DEFAULT_ICON_SIZES,
     focus: DEFAULT_FOCUS,
     zIndex: DEFAULT_Z_INDEX,
     opacity: DEFAULT_OPACITY,

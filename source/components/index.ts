@@ -5,7 +5,7 @@
 export { BpButton } from './button/button.js';
 export { BpInput } from './input/input.js';
 export { BpBadge } from './badge/badge.js';
-export { BpIcon } from './icon/icon.js';
+export { BpIcon, type IconSize, type IconColor } from './icon/icon.js';
 export {
   BpSpinner,
   type SpinnerSize,
@@ -42,7 +42,7 @@ export {
   type ProgressVariant,
   type ProgressSize,
 } from './progress/progress.js';
-export { BpCard, type CardVariant } from './card/card.js';
+export { BpCard, type CardVariant, type CardDirection } from './card/card.js';
 export { BpAlert, type AlertVariant } from './alert/alert.js';
 export { BpSelect, type SelectSize } from './select/select.js';
 export { BpTextarea } from './textarea/textarea.js';

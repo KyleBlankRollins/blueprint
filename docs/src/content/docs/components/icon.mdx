@@ -34,6 +34,9 @@ import 'blueprint/components/icon';
     <bp-icon name="check" size="md"></bp-icon>
     <bp-icon name="check" size="lg"></bp-icon>
     <bp-icon name="check" size="xl"></bp-icon>
+    <bp-icon name="check" size="2xl"></bp-icon>
+    <bp-icon name="check" size="3xl"></bp-icon>
+    <bp-icon name="check" size="4xl"></bp-icon>
   </div>
 </ComponentPreview>
 
@@ -43,6 +46,25 @@ import 'blueprint/components/icon';
 <bp-icon name="check" size="md"></bp-icon>
 <bp-icon name="check" size="lg"></bp-icon>
 <bp-icon name="check" size="xl"></bp-icon>
+<bp-icon name="check" size="2xl"></bp-icon>
+<bp-icon name="check" size="3xl"></bp-icon>
+<bp-icon name="check" size="4xl"></bp-icon>
+```
+
+### Full Size
+
+The `full` size makes the icon expand to fill its container, useful for placing icons inside cards or other layout elements.
+
+<ComponentPreview>
+  <div style="width: 64px; height: 64px; border: 1px dashed var(--bp-color-border); border-radius: var(--bp-border-radius-md);">
+    <bp-icon name="check" size="full" color="primary"></bp-icon>
+  </div>
+</ComponentPreview>
+
+```html
+<div style="width: 64px; height: 64px;">
+  <bp-icon name="check" size="full" color="primary"></bp-icon>
+</div>
 ```
 
 ### Colors
@@ -137,7 +159,7 @@ You can provide custom SVG content via the default slot:
 | Property     | Type                                                                     | Default     | Description                         |
 | ------------ | ------------------------------------------------------------------------ | ----------- | ----------------------------------- |
 | `name`       | `IconName`                                                               | `''`        | Name of the icon from the library   |
-| `size`       | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'`                                   | `'md'`      | Size of the icon                    |
+| `size`       | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl' \| '3xl' \| '4xl' \| 'full'` | `'md'`      | Size of the icon                    |
 | `color`      | `'default' \| 'primary' \| 'success' \| 'warning' \| 'error' \| 'muted'` | `'default'` | Color variant                       |
 | `aria-label` | `string`                                                                 | `''`        | Accessible label for screen readers |
 

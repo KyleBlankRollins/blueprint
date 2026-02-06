@@ -13,13 +13,16 @@ import {
   buildTheme,
   validateThemeContrast,
   generateAllColorScales,
-  collectPluginAssets,
-  copyPluginAssets,
   generateFontFaceCSSForPlugin,
-  formatBytes,
-  getAssetsTotalSize,
   type ContrastViolation,
 } from '../../themes/builder/index.js';
+// Import Node.js-only utilities directly (not from barrel export)
+import { collectPluginAssets } from '../../themes/builder/assetCollector.js';
+import {
+  copyPluginAssets,
+  formatBytes,
+  getAssetsTotalSize,
+} from '../../themes/builder/assetCopier.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const BYTES_PER_KB = 1024;
@@ -81,7 +84,10 @@ export async function generateTheme(
 
   // Collect plugin assets
   console.log('📦 Collecting plugin assets...');
-  const resolvedAssets = await collectPluginAssets(themeBasePlugins, pluginsDir);
+  const resolvedAssets = await collectPluginAssets(
+    themeBasePlugins,
+    pluginsDir
+  );
 
   if (resolvedAssets.length > 0) {
     console.log(

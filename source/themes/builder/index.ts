@@ -42,17 +42,13 @@ export {
   createDefaultThemeConfig,
 } from './defaults.js';
 
-// Export asset utilities
-export {
-  collectPluginAssets,
-  filterAssetsByPlugin,
-  getPluginIdsFromAssets,
-} from './assetCollector.js';
-export {
-  copyPluginAssets,
-  getAssetsTotalSize,
-  formatBytes,
-} from './assetCopier.js';
+// NOTE: Node.js-only utilities (assetCollector, assetCopier) are NOT exported here
+// to avoid browser compatibility issues. Import them directly from:
+// - './assetCollector.js' for collectPluginAssets, filterAssetsByPlugin, getPluginIdsFromAssets
+// - './assetCopier.js' for copyPluginAssets, getAssetsTotalSize, formatBytes
+// These are used by CLI commands only.
+
+// Export font-face CSS generation (browser-safe)
 export {
   generateFontFaceCSS,
   generateFontFaceCSSForPlugin,
@@ -104,6 +100,7 @@ import {
   generateRadiusCSS,
   generateMotionCSS,
   generateTypographyCSS,
+  generateIconSizeCSS,
   generateUtilityCSS,
   generateReducedMotionCSS,
   generateHighContrastCSS,
@@ -129,6 +126,7 @@ function generateUtilitiesFile(config: ThemeConfig): string {
     generateRadiusCSS(config),
     generateMotionCSS(config),
     generateTypographyCSS(config),
+    generateIconSizeCSS(config),
     generateUtilityCSS(config),
     generateReducedMotionCSS(),
     generateHighContrastCSS(config),

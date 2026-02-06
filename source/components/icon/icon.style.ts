@@ -9,6 +9,12 @@ export const iconStyles = css`
     vertical-align: middle;
   }
 
+  :host([size='full']) {
+    display: flex;
+    width: 100%;
+    height: 100%;
+  }
+
   .icon {
     display: inline-flex;
     align-items: center;
@@ -17,6 +23,7 @@ export const iconStyles = css`
     color: var(--bp-color-text);
   }
 
+  .icon svg,
   .icon ::slotted(svg) {
     width: 100%;
     height: 100%;
@@ -51,27 +58,47 @@ export const iconStyles = css`
 
   /* Size variants */
   .icon--xs {
-    width: var(--bp-font-size-xs);
-    height: var(--bp-font-size-xs);
+    width: var(--bp-icon-size-xs);
+    height: var(--bp-icon-size-xs);
   }
 
   .icon--sm {
-    width: var(--bp-font-size-sm);
-    height: var(--bp-font-size-sm);
+    width: var(--bp-icon-size-sm);
+    height: var(--bp-icon-size-sm);
   }
 
   .icon--md {
-    width: var(--bp-font-size-lg);
-    height: var(--bp-font-size-lg);
+    width: var(--bp-icon-size-md);
+    height: var(--bp-icon-size-md);
   }
 
   .icon--lg {
-    width: var(--bp-font-size-2xl);
-    height: var(--bp-font-size-2xl);
+    width: var(--bp-icon-size-lg);
+    height: var(--bp-icon-size-lg);
   }
 
   .icon--xl {
-    width: var(--bp-font-size-3xl);
-    height: var(--bp-font-size-3xl);
+    width: var(--bp-icon-size-xl);
+    height: var(--bp-icon-size-xl);
+  }
+
+  .icon--2xl {
+    width: var(--bp-icon-size-2xl);
+    height: var(--bp-icon-size-2xl);
+  }
+
+  .icon--3xl {
+    width: var(--bp-icon-size-3xl);
+    height: var(--bp-icon-size-3xl);
+  }
+
+  .icon--4xl {
+    width: var(--bp-icon-size-4xl);
+    height: var(--bp-icon-size-4xl);
+  }
+
+  .icon--full {
+    width: 100%;
+    height: 100%;
   }
 `;

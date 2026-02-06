@@ -20,14 +20,14 @@ import Header from '../components/Header.astro';
 
         <div class="hero-actions">
           <bp-button
-            size="large"
+            size="lg"
             onclick="window.location.href='/getting-started/introduction'"
           >
             Get Started
           </bp-button>
           <bp-button
             variant="secondary"
-            size="large"
+            size="lg"
             onclick="window.location.href='/components/button'"
           >
             View Components
@@ -65,8 +65,9 @@ import Header from '../components/Header.astro';
       </bp-heading>
 
       <div class="feature-grid">
-        <bp-card hoverable>
-          <bp-icon name="puzzle" size="xl" color="primary"></bp-icon>
+        <bp-card direction="horizontal" hoverable>
+          <bp-icon slot="media" name="versions" size="4xl" color="primary"
+          ></bp-icon>
           <bp-heading level="3" size="lg">Framework Agnostic</bp-heading>
           <bp-text variant="muted">
             Built as native web components. Works with React, Vue, Angular,
@@ -74,8 +75,9 @@ import Header from '../components/Header.astro';
           </bp-text>
         </bp-card>
 
-        <bp-card hoverable>
-          <bp-icon name="color-palette" size="xl" color="primary"></bp-icon>
+        <bp-card direction="horizontal" hoverable>
+          <bp-icon slot="media" name="browser" size="4xl" color="primary"
+          ></bp-icon>
           <bp-heading level="3" size="lg">Fully Themeable</bp-heading>
           <bp-text variant="muted">
             Comprehensive design token system with CSS custom properties. Create
@@ -83,8 +85,9 @@ import Header from '../components/Header.astro';
           </bp-text>
         </bp-card>
 
-        <bp-card hoverable>
-          <bp-icon name="check-circle" size="xl" color="primary"></bp-icon>
+        <bp-card direction="horizontal" hoverable>
+          <bp-icon slot="media" name="check-circle" size="4xl" color="primary"
+          ></bp-icon>
           <bp-heading level="3" size="lg">Accessible</bp-heading>
           <bp-text variant="muted">
             Built with accessibility in mind. ARIA attributes, keyboard
@@ -92,8 +95,9 @@ import Header from '../components/Header.astro';
           </bp-text>
         </bp-card>
 
-        <bp-card hoverable>
-          <bp-icon name="grid" size="xl" color="primary"></bp-icon>
+        <bp-card direction="horizontal" hoverable>
+          <bp-icon slot="media" name="grid" size="4xl" color="primary"
+          ></bp-icon>
           <bp-heading level="3" size="lg">40+ Components</bp-heading>
           <bp-text variant="muted">
             From buttons to data tables, modals to date pickers. Everything you
@@ -171,6 +175,7 @@ npm install path/to/blueprint/blueprint-0.1.0.tgz</code></pre>
     display: flex;
     gap: 1rem;
     align-items: center;
+    margin: 1em 0;
   }
 
   .features {
@@ -182,7 +187,7 @@ npm install path/to/blueprint/blueprint-0.1.0.tgz</code></pre>
 
   .feature-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 1.5rem;
   }
 

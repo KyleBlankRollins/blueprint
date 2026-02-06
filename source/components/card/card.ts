@@ -4,6 +4,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { cardStyles } from './card.style.js';
 
 export type CardVariant = 'default' | 'outlined' | 'elevated';
+export type CardDirection = 'vertical' | 'horizontal';
 
 /**
  * A versatile card component for organizing and displaying content.
@@ -11,7 +12,7 @@ export type CardVariant = 'default' | 'outlined' | 'elevated';
  * @slot - Default slot for card body content
  * @slot header - Optional header section
  * @slot footer - Optional footer section
- * @slot media - Optional media section (typically at the top)
+ * @slot media - Optional media section (images, illustrations, etc.)
  *
  * @fires bp-click - Fired when clickable card is clicked
  */
@@ -37,6 +38,13 @@ export class BpCard extends LitElement {
    */
   @property({ type: Boolean, reflect: true }) declare noPadding: boolean;
 
+  /**
+   * Layout direction for the card content (media + body area).
+   * 'vertical' stacks media above body, 'horizontal' places them side by side.
+   * Header and footer are unaffected and remain full-width.
+   */
+  @property({ type: String, reflect: true }) declare direction: CardDirection;
+
   static styles = [cardStyles];
 
   constructor() {
@@ -45,6 +53,7 @@ export class BpCard extends LitElement {
     this.hoverable = false;
     this.clickable = false;
     this.noPadding = false;
+    this.direction = 'vertical';
   }
 
   private handleClick(event: MouseEvent) {
@@ -77,13 +86,20 @@ export class BpCard extends LitElement {
         tabindex=${ifDefined(this.clickable ? '0' : undefined)}
         @keydown=${this.clickable ? this.handleKeydown : undefined}
       >
-        <slot name="media" part="media"></slot>
         <slot name="header" part="header"></slot>
         <div
-          class="card-body ${this.noPadding ? 'card-body--no-padding' : ''}"
-          part="body"
+          class="card-content ${this.direction === 'horizontal'
+            ? 'card-content--horizontal'
+            : ''}"
+          part="content"
         >
-          <slot></slot>
+          <slot name="media" part="media"></slot>
+          <div
+            class="card-body ${this.noPadding ? 'card-body--no-padding' : ''}"
+            part="body"
+          >
+            <slot></slot>
+          </div>
         </div>
         <slot name="footer" part="footer"></slot>
       </div>

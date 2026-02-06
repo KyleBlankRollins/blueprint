@@ -10,6 +10,7 @@ export {
   generateRadiusCSS,
   generateMotionCSS,
   generateTypographyCSS,
+  generateIconSizeCSS,
   generateUtilityCSS,
   generateReducedMotionCSS,
   generateHighContrastCSS,

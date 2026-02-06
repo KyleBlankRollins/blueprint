@@ -34,6 +34,7 @@ const FOCUS_PREFIX = `${TOKEN_PREFIX}-focus`;
 const Z_INDEX_PREFIX = `${TOKEN_PREFIX}-z`;
 const OPACITY_PREFIX = `${TOKEN_PREFIX}-opacity`;
 const BREAKPOINT_PREFIX = `${TOKEN_PREFIX}-breakpoint`;
+const ICON_SIZE_PREFIX = `${TOKEN_PREFIX}-icon-size`;
 
 // Accessibility constants
 const REDUCED_MOTION_DURATION = '0.01ms';
@@ -384,6 +385,20 @@ export function generateTypographyCSS(config: ThemeConfig): string {
     }
   }
 
+  css += '}\n';
+  return css;
+}
+
+/**\n * Generate icon size tokens CSS\n *\n * @param config - Theme configuration\n * @returns CSS string with icon size tokens\n */
+export function generateIconSizeCSS(config: ThemeConfig): string {
+  if (!config.iconSizes || Object.keys(config.iconSizes).length === 0) {
+    return '';
+  }
+
+  let css = '\n/* Icon size tokens */\n:root {\n';
+  for (const [name, value] of Object.entries(config.iconSizes)) {
+    css += `  --${ICON_SIZE_PREFIX}-${name}: ${value}px;\n`;
+  }
   css += '}\n';
   return css;
 }

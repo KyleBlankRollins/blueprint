@@ -25,6 +25,12 @@ const meta: Meta = {
       control: 'boolean',
       description: 'Whether to remove default padding from the card body',
     },
+    direction: {
+      control: 'select',
+      options: ['vertical', 'horizontal'],
+      description:
+        'Layout direction for the card content area (media + body). Header and footer remain full-width.',
+    },
   },
 };
 
@@ -37,6 +43,7 @@ export const Default: Story = {
     hoverable: false,
     clickable: false,
     noPadding: false,
+    direction: 'vertical',
   },
   render: (args) => html`
     <bp-card
@@ -44,6 +51,7 @@ export const Default: Story = {
       ?hoverable=${args.hoverable}
       ?clickable=${args.clickable}
       ?noPadding=${args.noPadding}
+      .direction=${args.direction}
     >
       <div slot="header">Card Title</div>
       <p>This is a basic card with header and body content.</p>
@@ -203,6 +211,72 @@ export const ProductCard: Story = {
         <div slot="footer" style="display: flex; gap: 8px;">
           <button style="flex: 1;">Add to Cart</button>
         </div>
+      </bp-card>
+    </div>
+  `,
+};
+
+export const Horizontal: Story = {
+  render: () => html`
+    <div style="max-width: 600px;">
+      <bp-card direction="horizontal" variant="elevated">
+        <img
+          slot="media"
+          src="https://picsum.photos/200/200"
+          alt="Sample image"
+          style="width: 200px; height: 200px; object-fit: cover;"
+        />
+        <div slot="header">Horizontal Card</div>
+        <p>
+          This card uses a horizontal layout with an image on the left and
+          content on the right. Header and footer remain full-width.
+        </p>
+        <div slot="footer">Published Jan 2026</div>
+      </bp-card>
+    </div>
+  `,
+};
+
+export const HorizontalWithVariants: Story = {
+  render: () => html`
+    <div
+      style="display: flex; flex-direction: column; gap: 24px; max-width: 600px;"
+    >
+      <bp-card direction="horizontal" variant="default">
+        <div
+          slot="media"
+          style="width: 150px; min-height: 120px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 32px;"
+        >
+          📰
+        </div>
+        <p style="margin: 0;">
+          <strong>Default variant</strong> — Image on the left with body text on
+          the right.
+        </p>
+      </bp-card>
+      <bp-card direction="horizontal" variant="outlined">
+        <div
+          slot="media"
+          style="width: 150px; min-height: 120px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 32px;"
+        >
+          🎨
+        </div>
+        <p style="margin: 0;">
+          <strong>Outlined variant</strong> — Great for list-style content with
+          thumbnails.
+        </p>
+      </bp-card>
+      <bp-card direction="horizontal" variant="elevated" hoverable>
+        <div
+          slot="media"
+          style="width: 150px; min-height: 120px; background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); display: flex; align-items: center; justify-content: center; font-size: 32px;"
+        >
+          ✨
+        </div>
+        <p style="margin: 0;">
+          <strong>Elevated + hoverable</strong> — Interactive horizontal card
+          with hover effect.
+        </p>
       </bp-card>
     </div>
   `,

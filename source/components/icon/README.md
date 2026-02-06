@@ -4,7 +4,7 @@
 
 - Built-in icon library with **430 icons** from [System UI Icons](https://www.systemuicons.com/)
 - Named icons via `name` property or custom SVG via slot
-- Multiple size variants (xs, sm, md, lg, xl)
+- Multiple size variants (xs, sm, md, lg, xl, 2xl, 3xl, 4xl, full)
 - Color variants for semantic states (primary, success, warning, error, muted)
 - Accessible with ARIA label support
 - Automatic role assignment based on context
@@ -25,6 +25,11 @@
 
 <!-- With size variant -->
 <bp-icon name="info" size="lg" color="primary"></bp-icon>
+
+<!-- Full size to fill container -->
+<div style="width: 64px; height: 64px;">
+  <bp-icon name="heart" size="full" color="error"></bp-icon>
+</div>
 
 <!-- With accessibility label -->
 <bp-icon
@@ -78,12 +83,12 @@ The generator automatically:
 
 ### Properties
 
-| Property    | Type                                                                     | Default     | Description                                                          |
-| ----------- | ------------------------------------------------------------------------ | ----------- | -------------------------------------------------------------------- |
-| `name`      | `IconName \| ''`                                                         | `''`        | Name of icon from System UI Icons library (takes priority over slot) |
-| `size`      | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'`                                   | `'md'`      | Size variant of the icon                                             |
-| `color`     | `'default' \| 'primary' \| 'success' \| 'warning' \| 'error' \| 'muted'` | `'default'` | Color variant of the icon                                            |
-| `ariaLabel` | `string`                                                                 | `''`        | ARIA label for accessibility (sets role="img" when provided)         |
+| Property    | Type                                                                        | Default     | Description                                                          |
+| ----------- | --------------------------------------------------------------------------- | ----------- | -------------------------------------------------------------------- |
+| `name`      | `IconName \| ''`                                                            | `''`        | Name of icon from System UI Icons library (takes priority over slot) |
+| `size`      | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl' \| '3xl' \| '4xl' \| 'full'` | `'md'`      | Size variant of the icon                                             |
+| `color`     | `'default' \| 'primary' \| 'success' \| 'warning' \| 'error' \| 'muted'`    | `'default'` | Color variant of the icon                                            |
+| `ariaLabel` | `string`                                                                    | `''`        | ARIA label for accessibility (sets role="img" when provided)         |
 
 ### Events
 
@@ -112,13 +117,18 @@ This component does not emit any custom events.
 - `--bp-color-error` - Error variant color
 - `--bp-color-text-muted` - Muted variant color
 
-**Sizes (mapped to font sizes for consistent scaling):**
+**Sizes (dedicated icon size tokens):**
 
-- `--bp-font-size-xs` - Extra small size (12px)
-- `--bp-font-size-sm` - Small size (14px)
-- `--bp-font-size-lg` - Medium size (18px)
-- `--bp-font-size-2xl` - Large size (24px)
-- `--bp-font-size-3xl` - Extra large size (30px)
+- `--bp-icon-size-xs` - Extra small (12px)
+- `--bp-icon-size-sm` - Small (16px)
+- `--bp-icon-size-md` - Medium (20px) — default
+- `--bp-icon-size-lg` - Large (24px)
+- `--bp-icon-size-xl` - Extra large (32px)
+- `--bp-icon-size-2xl` - 2x large (40px)
+- `--bp-icon-size-3xl` - 3x large (48px)
+- `--bp-icon-size-4xl` - 4x large (64px)
+
+The `full` size variant uses `100%` width and height to fill its container.
 
 ## Accessibility
 

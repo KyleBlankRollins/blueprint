@@ -41,7 +41,7 @@ const meta: Meta = {
     },
     size: {
       control: 'select',
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
+      options: ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', 'full'],
       description: 'Size variant of the icon',
     },
     color: {
@@ -290,6 +290,46 @@ export const AllSizes: Story = {
       <bp-icon name="heart" size="md" color="error"></bp-icon>
       <bp-icon name="heart" size="lg" color="error"></bp-icon>
       <bp-icon name="heart" size="xl" color="error"></bp-icon>
+      <bp-icon name="heart" size="2xl" color="error"></bp-icon>
+      <bp-icon name="heart" size="3xl" color="error"></bp-icon>
+      <bp-icon name="heart" size="4xl" color="error"></bp-icon>
+    </div>
+  `,
+};
+
+export const FullSize: Story = {
+  render: () => html`
+    <div style="display: flex; gap: 24px; align-items: flex-start;">
+      <div style="text-align: center;">
+        <div
+          style="width: 48px; height: 48px; border: 2px dashed var(--bp-color-border); display: flex; align-items: center; justify-content: center;"
+        >
+          <bp-icon name="versions" size="full" color="primary"></bp-icon>
+        </div>
+        <div style="margin-top: 8px; font-size: 12px;">48x48 container</div>
+      </div>
+      <div style="text-align: center;">
+        <div
+          style="width: 64px; height: 64px; border: 2px dashed var(--bp-color-border); display: flex; align-items: center; justify-content: center;"
+        >
+          <bp-icon name="check-circle" size="full" color="success"></bp-icon>
+        </div>
+        <div style="margin-top: 8px; font-size: 12px;">64x64 container</div>
+      </div>
+      <div style="text-align: center;">
+        <div
+          style="width: 96px; height: 96px; border: 2px dashed var(--bp-color-border); display: flex; align-items: center; justify-content: center;"
+        >
+          <bp-icon name="heart" size="full" color="error"></bp-icon>
+        </div>
+        <div style="margin-top: 8px; font-size: 12px;">96x96 container</div>
+      </div>
+    </div>
+    <div
+      style="margin-top: 16px; font-size: 14px; color: var(--bp-color-text-muted);"
+    >
+      The 'full' size makes the icon fill 100% of its container's width and
+      height.
     </div>
   `,
 };

@@ -17,11 +17,29 @@ export const cardStyles = css`
       border-color var(--bp-transition-fast);
   }
 
+  /* Content layout (media + body wrapper) */
+  .card-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-content--horizontal {
+    flex-direction: row;
+  }
+
+  .card-content--horizontal ::slotted([slot='media']) {
+    width: auto;
+    max-width: 50%;
+    flex-shrink: 0;
+  }
+
   .card-body {
     padding: var(--bp-spacing-lg);
     font-size: var(--bp-font-size-base);
     line-height: var(--bp-line-height-relaxed);
     color: var(--bp-color-text);
+    flex: 1;
+    min-width: 0;
   }
 
   .card-body--no-padding {
@@ -48,7 +66,9 @@ export const cardStyles = css`
   }
 
   ::slotted([slot='media']) {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
   }
 

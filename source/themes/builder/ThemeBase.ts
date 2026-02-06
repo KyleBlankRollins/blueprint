@@ -196,6 +196,7 @@ import {
   DEFAULT_OPACITY,
   DEFAULT_BREAKPOINTS,
   DEFAULT_ACCESSIBILITY,
+  DEFAULT_ICON_SIZES,
 } from './defaults.js';
 
 /**
@@ -207,6 +208,7 @@ export interface DesignTokens {
   radius: Record<string, number>;
   motion: MotionConfig;
   typography: TypographyConfig;
+  iconSizes: Record<string, number>;
   focus: FocusConfig;
   zIndex: Record<string, number>;
   opacity: Record<string, number>;
@@ -265,6 +267,7 @@ export abstract class ThemeBase implements ThemePlugin {
     fontWeights: { ...DEFAULT_TYPOGRAPHY.fontWeights },
   };
   protected focus: FocusConfig = { ...DEFAULT_FOCUS };
+  protected iconSizes: Record<string, number> = { ...DEFAULT_ICON_SIZES };
   protected zIndex: Record<string, number> = { ...DEFAULT_Z_INDEX };
   protected opacity: Record<string, number> = { ...DEFAULT_OPACITY };
   protected breakpoints: Record<string, string> = { ...DEFAULT_BREAKPOINTS };
@@ -337,6 +340,7 @@ export abstract class ThemeBase implements ThemePlugin {
       radius: this.radius,
       motion: this.motion,
       typography: this.typography,
+      iconSizes: this.iconSizes,
       focus: this.focus,
       zIndex: this.zIndex,
       opacity: this.opacity,

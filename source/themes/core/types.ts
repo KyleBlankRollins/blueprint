@@ -346,6 +346,8 @@ export interface ThemeConfig {
   readonly motion: MotionConfig;
   /** Typography settings */
   readonly typography: TypographyConfig;
+  /** Icon size scale in pixels */
+  readonly iconSizes?: Record<string, number>;
   /** Focus indicator settings */
   readonly focus?: FocusConfig;
   /** Z-index scale */
