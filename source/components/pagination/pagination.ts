@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { repeat } from 'lit/directives/repeat.js';
 import { paginationStyles } from './pagination.style.js';
 
 /**
@@ -168,31 +169,34 @@ export class BpPagination extends LitElement {
               </button>
             `
           : ''}
-        ${pageNumbers.map((page) =>
-          page === 'ellipsis'
-            ? html`
-                <span
-                  class="pagination__ellipsis"
-                  part="button-ellipsis"
-                  aria-hidden="true"
-                  >…</span
-                >
-              `
-            : html`
-                <button
-                  class="pagination__button pagination__button--page ${page ===
-                  this.currentPage
-                    ? 'pagination__button--active'
-                    : ''}"
-                  part="button button-page"
-                  ?disabled=${this.disabled}
-                  @click=${() => this.handlePageChange(page)}
-                  aria-label="Page ${page}"
-                  aria-current=${page === this.currentPage ? 'page' : 'false'}
-                >
-                  ${page}
-                </button>
-              `
+        ${repeat(
+          pageNumbers,
+          (page, index) => (page === 'ellipsis' ? `ellipsis-${index}` : page),
+          (page) =>
+            page === 'ellipsis'
+              ? html`
+                  <span
+                    class="pagination__ellipsis"
+                    part="button-ellipsis"
+                    aria-hidden="true"
+                    >…</span
+                  >
+                `
+              : html`
+                  <button
+                    class="pagination__button pagination__button--page ${page ===
+                    this.currentPage
+                      ? 'pagination__button--active'
+                      : ''}"
+                    part="button button-page"
+                    ?disabled=${this.disabled}
+                    @click=${() => this.handlePageChange(page)}
+                    aria-label="Page ${page}"
+                    aria-current=${page === this.currentPage ? 'page' : 'false'}
+                  >
+                    ${page}
+                  </button>
+                `
         )}
         ${this.showPrevNext
           ? html`

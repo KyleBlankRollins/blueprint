@@ -1,7 +1,10 @@
 import { LitElement, html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { repeat } from 'lit/directives/repeat.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { breadcrumbStyles } from './breadcrumb.style.js';
+import type { IconName } from '../icon/icons/registry.generated.js';
 
 export type BreadcrumbSize = 'sm' | 'md' | 'lg';
 export type BreadcrumbSeparator = 'slash' | 'chevron' | 'arrow' | 'dot';
@@ -15,7 +18,7 @@ export interface BreadcrumbItem {
   /** URL for the breadcrumb link (omit for current page) */
   href?: string;
   /** Icon name to display before the label */
-  icon?: string;
+  icon?: IconName;
   /** Whether this is the current/active page */
   current?: boolean;
 }
@@ -93,7 +96,7 @@ export class BpBreadcrumb extends LitElement {
   }
 
   private handleItemClick(
-    event: MouseEvent,
+    _event: MouseEvent,
     item: BreadcrumbItem,
     index: number
   ) {
@@ -197,7 +200,7 @@ export class BpBreadcrumb extends LitElement {
               <span
                 class="text"
                 part="text"
-                aria-current=${isCurrent ? 'page' : nothing}
+                aria-current=${ifDefined(isCurrent ? 'page' : undefined)}
               >
                 ${item.icon
                   ? html`<bp-icon
@@ -277,22 +280,26 @@ export class BpBreadcrumb extends LitElement {
               ? html`
                   ${this.renderItem(visibleItems[0], 0, false)}
                   ${this.renderEllipsis(hiddenCount)}
-                  ${visibleItems
-                    .slice(1)
-                    .map((item, index) =>
+                  ${repeat(
+                    visibleItems.slice(1),
+                    (_item, index) => index,
+                    (item, index) =>
                       this.renderItem(
                         item,
                         this.items.length - visibleItems.length + 1 + index,
                         index === visibleItems.length - 2
                       )
-                    )}
+                  )}
                 `
-              : visibleItems.map((item, index) =>
-                  this.renderItem(
-                    item,
-                    index,
-                    index === visibleItems.length - 1
-                  )
+              : repeat(
+                  visibleItems,
+                  (_item, index) => index,
+                  (item, index) =>
+                    this.renderItem(
+                      item,
+                      index,
+                      index === visibleItems.length - 1
+                    )
                 )}
           </ol>
         </nav>
@@ -368,7 +375,7 @@ export class BpBreadcrumbItem extends LitElement {
               <span
                 class="text"
                 part="text"
-                aria-current=${this.current ? 'page' : nothing}
+                aria-current=${ifDefined(this.current ? 'page' : undefined)}
               >
                 <slot></slot>
               </span>

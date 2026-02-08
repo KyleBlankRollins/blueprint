@@ -92,7 +92,7 @@ describe('bp-date-picker', () => {
   it('should emit bp-change event when date selected', async () => {
     await element.updateComplete;
 
-    let changeEvent: CustomEvent | null = null;
+    let changeEvent: CustomEvent<Record<string, unknown>> | null = null;
     element.addEventListener('bp-change', (e) => {
       changeEvent = e as CustomEvent;
     });
@@ -114,14 +114,14 @@ describe('bp-date-picker', () => {
     await element.updateComplete;
 
     expect(changeEvent).toBeTruthy();
-    expect(changeEvent?.detail.value).toBeTruthy();
+    expect(changeEvent!.detail.value).toBeTruthy();
   });
 
   it('should emit bp-change event with previous value', async () => {
     element.value = '2026-01-01';
     await element.updateComplete;
 
-    let changeEvent: CustomEvent | null = null;
+    let changeEvent: CustomEvent<Record<string, unknown>> | null = null;
     element.addEventListener('bp-change', (e) => {
       changeEvent = e as CustomEvent;
     });
@@ -140,14 +140,14 @@ describe('bp-date-picker', () => {
     firstCurrentMonthDay?.click();
     await element.updateComplete;
 
-    expect(changeEvent?.detail.previousValue).toBe('2026-01-01');
+    expect(changeEvent!.detail.previousValue).toBe('2026-01-01');
   });
 
   it('should emit bp-change event when cleared', async () => {
     element.value = '2026-01-21';
     await element.updateComplete;
 
-    let changeEvent: CustomEvent | null = null;
+    let changeEvent: CustomEvent<Record<string, unknown>> | null = null;
     element.addEventListener('bp-change', (e) => {
       changeEvent = e as CustomEvent;
     });
@@ -159,13 +159,13 @@ describe('bp-date-picker', () => {
     await element.updateComplete;
 
     expect(changeEvent).toBeTruthy();
-    expect(changeEvent?.detail.value).toBe('');
+    expect(changeEvent!.detail.value).toBe('');
   });
 
   it('should dispatch bp-change with bubbles and composed flags', async () => {
     await element.updateComplete;
 
-    let capturedEvent: CustomEvent | null = null;
+    let capturedEvent: CustomEvent<Record<string, unknown>> | null = null;
     element.addEventListener('bp-change', (e) => {
       capturedEvent = e as CustomEvent;
     });
@@ -184,8 +184,8 @@ describe('bp-date-picker', () => {
     firstCurrentMonthDay?.click();
     await element.updateComplete;
 
-    expect(capturedEvent?.bubbles).toBe(true);
-    expect(capturedEvent?.composed).toBe(true);
+    expect(capturedEvent!.bubbles).toBe(true);
+    expect(capturedEvent!.composed).toBe(true);
   });
 
   // CSS Parts
@@ -651,7 +651,7 @@ describe('bp-date-picker', () => {
       '.date-picker__input'
     ) as HTMLInputElement;
 
-    let changeEvent: CustomEvent | null = null;
+    let changeEvent: CustomEvent<Record<string, unknown>> | null = null;
     element.addEventListener('bp-change', (e) => {
       changeEvent = e as CustomEvent;
     });

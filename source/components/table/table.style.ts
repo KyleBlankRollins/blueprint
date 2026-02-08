@@ -104,12 +104,13 @@ export const tableStyles = css`
     width: var(--bp-spacing-6);
     height: var(--bp-spacing-6);
     cursor: pointer;
-    accent-color: var(--bp-color-primary);
   }
 
   /* Row styles */
   .row {
     transition: background-color var(--bp-transition-fast);
+    content-visibility: auto;
+    contain-intrinsic-size: auto 48px;
   }
 
   .row--hoverable:hover {
@@ -160,14 +161,26 @@ export const tableStyles = css`
     font-size: var(--bp-font-size-xs);
   }
 
+  .table--sm .row {
+    contain-intrinsic-size: auto 36px;
+  }
+
   .table--md .cell {
     padding: var(--bp-spacing-3) var(--bp-spacing-4);
     font-size: var(--bp-font-size-sm);
   }
 
+  .table--md .row {
+    contain-intrinsic-size: auto 48px;
+  }
+
   .table--lg .cell {
     padding: var(--bp-spacing-4) var(--bp-spacing-5);
     font-size: var(--bp-font-size-base);
+  }
+
+  .table--lg .row {
+    contain-intrinsic-size: auto 56px;
   }
 
   /* Sticky header */

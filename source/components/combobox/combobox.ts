@@ -1,8 +1,10 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, nothing } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { comboboxStyles } from './combobox.style.js';
+import { debounce } from '../../utilities/debounce.js';
+import { memoizeOne } from '../../utilities/memoize.js';
 
 export type ComboboxSize = 'sm' | 'md' | 'lg';
 export type ComboboxVariant =
@@ -52,8 +54,39 @@ export class BpCombobox extends LitElement {
   /** Index of the focused option for keyboard navigation */
   @state() private focusedIndex = -1;
 
+  /** Cached filtered options to avoid recomputation on every render */
+  @state() private cachedFilteredOptions: ComboboxOption[] = [];
+
+  /** Cached options from slotted elements */
+  @state() private cachedOptions: ComboboxOption[] = [];
+
   /** Reference to the input element */
   @query('input[type="text"]') private inputElement!: HTMLInputElement;
+
+  /** Debounced filter computation for search input */
+  private debouncedFilter = debounce(() => {
+    this.cachedFilteredOptions = this.filterOptions(
+      this.cachedOptions,
+      this.searchText
+    );
+  }, 150);
+
+  /**
+   * Memoized filter computation.
+   * Returns cached result when options array and searchText are the same references.
+   */
+  private filterOptions = memoizeOne(
+    (options: ComboboxOption[], searchText: string): ComboboxOption[] => {
+      if (!searchText.trim()) {
+        return options;
+      }
+
+      const searchLower = searchText.toLowerCase();
+      return options.filter((option) =>
+        option.label.toLowerCase().includes(searchLower)
+      );
+    }
+  );
 
   static styles = [comboboxStyles];
 
@@ -71,14 +104,26 @@ export class BpCombobox extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    document.addEventListener('click', this.handleDocumentClick);
-    // Initialize search text with selected label
-    this.updateComplete.then(() => this.updateSearchText());
+    document.addEventListener('click', this.handleDocumentClick, {
+      passive: true,
+    });
+    // Initialize search text with selected label and populate cached filtered options
+    this.updateComplete.then(() => {
+      this.cachedOptions = this.getOptions();
+      this.updateSearchText();
+      this.cachedFilteredOptions = this.filterOptions(
+        this.cachedOptions,
+        this.searchText
+      );
+    });
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    document.removeEventListener('click', this.handleDocumentClick);
+    document.removeEventListener('click', this.handleDocumentClick, {
+      passive: true,
+    } as EventListenerOptions);
+    this.debouncedFilter.cancel();
   }
 
   private updateSearchText() {
@@ -87,7 +132,8 @@ export class BpCombobox extends LitElement {
       return;
     }
 
-    const options = this.getOptions();
+    const options =
+      this.cachedOptions.length > 0 ? this.cachedOptions : this.getOptions();
     const selectedOption = options.find((opt) => opt.value === this.value);
     if (selectedOption) {
       this.searchText = selectedOption.label;
@@ -103,8 +149,12 @@ export class BpCombobox extends LitElement {
   private closeDropdown() {
     this.isOpen = false;
     this.focusedIndex = -1;
-    // Restore the selected value's label
+    this.debouncedFilter.cancel();
     this.updateSearchText();
+    this.cachedFilteredOptions = this.filterOptions(
+      this.cachedOptions,
+      this.searchText
+    );
   }
 
   private getOptions(): ComboboxOption[] {
@@ -120,17 +170,23 @@ export class BpCombobox extends LitElement {
     }));
   }
 
+  /**
+   * Returns the cached filtered options for rendering and keyboard navigation.
+   */
   private getFilteredOptions(): ComboboxOption[] {
-    const allOptions = this.getOptions();
-    if (!this.searchText.trim()) {
-      return allOptions;
-    }
-
-    const searchLower = this.searchText.toLowerCase();
-    return allOptions.filter((option) =>
-      option.label.toLowerCase().includes(searchLower)
-    );
+    return this.cachedFilteredOptions;
   }
+
+  /**
+   * Handle slot changes by refreshing the cached options.
+   */
+  private handleSlotChange = () => {
+    this.cachedOptions = this.getOptions();
+    this.cachedFilteredOptions = this.filterOptions(
+      this.cachedOptions,
+      this.searchText
+    );
+  };
 
   private handleInputFocus = () => {
     if (this.disabled) return;
@@ -149,6 +205,9 @@ export class BpCombobox extends LitElement {
     this.searchText = target.value;
     this.isOpen = true;
     this.focusedIndex = -1;
+
+    // Debounce the filter computation for search input
+    this.debouncedFilter();
 
     // If allowCustomValue is true, update value immediately
     if (this.allowCustomValue) {
@@ -176,6 +235,11 @@ export class BpCombobox extends LitElement {
     this.searchText = option.label;
     this.isOpen = false;
     this.focusedIndex = -1;
+    this.debouncedFilter.cancel();
+    this.cachedFilteredOptions = this.filterOptions(
+      this.cachedOptions,
+      this.searchText
+    );
 
     // Dispatch change event
     this.dispatchEvent(
@@ -260,6 +324,11 @@ export class BpCombobox extends LitElement {
     const previousValue = this.value;
     this.value = '';
     this.searchText = '';
+    this.debouncedFilter.cancel();
+    this.cachedFilteredOptions = this.filterOptions(
+      this.cachedOptions,
+      this.searchText
+    );
 
     this.dispatchEvent(
       new CustomEvent('bp-change', {
@@ -275,8 +344,48 @@ export class BpCombobox extends LitElement {
     this.inputElement?.focus();
   };
 
-  render() {
+  private renderDropdown() {
     const filteredOptions = this.getFilteredOptions();
+
+    return html`
+      <div class="combobox__dropdown" id="listbox" part="dropdown">
+        <ul class="combobox__options" role="listbox">
+          ${filteredOptions.length === 0
+            ? html`<li
+                class="combobox__option combobox__option--empty"
+                role="option"
+              >
+                No results found
+              </li>`
+            : repeat(
+                filteredOptions,
+                (opt) => opt.value,
+                (opt, index) => {
+                  const isSelected = opt.value === this.value;
+                  const isFocused = index === this.focusedIndex;
+                  return html`
+                    <li
+                      class=${classMap({
+                        combobox__option: true,
+                        'combobox__option--selected': isSelected,
+                        'combobox__option--focused': isFocused,
+                      })}
+                      role="option"
+                      aria-selected=${isSelected}
+                      @click=${() => this.handleOptionClick(opt)}
+                      part="option ${isSelected ? 'option-selected' : ''}"
+                    >
+                      ${opt.label}
+                    </li>
+                  `;
+                }
+              )}
+        </ul>
+      </div>
+    `;
+  }
+
+  render() {
     const hasValue = Boolean(this.value || this.searchText);
 
     return html`
@@ -332,43 +441,10 @@ export class BpCombobox extends LitElement {
           </div>
         </div>
 
-        <div class="combobox__dropdown" id="listbox" part="dropdown">
-          <ul class="combobox__options" role="listbox">
-            ${filteredOptions.length === 0
-              ? html`<li
-                  class="combobox__option combobox__option--empty"
-                  role="option"
-                >
-                  No results found
-                </li>`
-              : repeat(
-                  filteredOptions,
-                  (opt) => opt.value,
-                  (opt, index) => {
-                    const isSelected = opt.value === this.value;
-                    const isFocused = index === this.focusedIndex;
-                    return html`
-                      <li
-                        class=${classMap({
-                          combobox__option: true,
-                          'combobox__option--selected': isSelected,
-                          'combobox__option--focused': isFocused,
-                        })}
-                        role="option"
-                        aria-selected=${isSelected}
-                        @click=${() => this.handleOptionClick(opt)}
-                        part="option ${isSelected ? 'option-selected' : ''}"
-                      >
-                        ${opt.label}
-                      </li>
-                    `;
-                  }
-                )}
-          </ul>
-        </div>
+        ${this.isOpen ? this.renderDropdown() : nothing}
 
         <!-- Hidden slot for options -->
-        <slot @slotchange=${() => this.requestUpdate()}></slot>
+        <slot @slotchange=${this.handleSlotChange}></slot>
 
         <!-- Hidden input for form submission -->
         ${this.name

@@ -10,5 +10,8 @@ export * from './components/index.js';
 // Export theme utilities
 export * from './themes/index.js';
 
+// Export performance utilities
+export * from './utilities/index.js';
+
 // Export JSX type declarations (for framework integration)
 export type { BlueprintElements } from './jsx.js';

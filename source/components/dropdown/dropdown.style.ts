@@ -42,6 +42,7 @@ export const dropdownStyles = css`
     transition:
       opacity var(--bp-transition-fast) var(--bp-ease-out),
       transform var(--bp-transition-fast) var(--bp-ease-out);
+    contain: layout style paint;
   }
 
   /* Placement: Bottom variants */

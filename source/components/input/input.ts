@@ -3,6 +3,7 @@ import { customElement, property, query } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
 import { inputStyles } from './input.style.js';
+import { debounce } from '../../utilities/debounce.js';
 
 export type InputVariant = 'default' | 'success' | 'error' | 'warning' | 'info';
 export type InputSize = 'sm' | 'md' | 'lg';
@@ -97,19 +98,30 @@ export class BpInput extends LitElement {
 
   @query('input') private inputElement?: HTMLInputElement;
 
+  private debouncedDispatchInput = debounce(
+    (value: string, originalEvent: InputEvent) => {
+      this.dispatchEvent(
+        new CustomEvent('bp-input', {
+          detail: { value, originalEvent },
+          bubbles: true,
+          composed: true,
+        })
+      );
+    },
+    150
+  );
+
   static styles = [inputStyles];
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.debouncedDispatchInput.cancel();
+  }
 
   private handleInput(e: InputEvent) {
     const target = e.target as HTMLInputElement;
     this.value = target.value;
-
-    this.dispatchEvent(
-      new CustomEvent('bp-input', {
-        detail: { value: this.value, originalEvent: e },
-        bubbles: true,
-        composed: true,
-      })
-    );
+    this.debouncedDispatchInput(this.value, e);
   }
 
   private handleChange(e: Event) {
@@ -136,6 +148,7 @@ export class BpInput extends LitElement {
   }
 
   private handleBlur(e: FocusEvent) {
+    this.debouncedDispatchInput.flush();
     this.dispatchEvent(
       new CustomEvent('bp-blur', {
         detail: { originalEvent: e },

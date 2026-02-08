@@ -2,6 +2,7 @@ import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { repeat } from 'lit/directives/repeat.js';
 import { selectStyles } from './select.style.js';
 
 export type SelectSize = 'sm' | 'md' | 'lg';
@@ -49,20 +50,22 @@ export class BpSelect extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    document.addEventListener('click', this.handleDocumentClick);
+    document.addEventListener('click', this.handleDocumentClick, {
+      passive: true,
+    });
     // Update selected label on initial load
     this.updateComplete.then(() => this.updateSelectedLabel());
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    document.removeEventListener('click', this.handleDocumentClick);
+    document.removeEventListener('click', this.handleDocumentClick, {
+      passive: true,
+    } as EventListenerOptions);
   }
 
   private handleSlotChange = () => {
-    // When slot content changes, update the component
     this.updateSelectedLabel();
-    this.requestUpdate();
   };
 
   private updateSelectedLabel() {
@@ -246,33 +249,37 @@ export class BpSelect extends LitElement {
       (el): el is globalThis.HTMLOptionElement => el.tagName === 'OPTION'
     );
 
-    return options.map((option, index) => {
-      const optionValue = option.value || option.textContent || '';
-      const optionLabel = option.textContent || '';
-      const isSelected = this.value === optionValue;
-      const isFocused = this.focusedIndex === index;
+    return repeat(
+      options,
+      (option) => option.value || option.textContent || '',
+      (option, index) => {
+        const optionValue = option.value || option.textContent || '';
+        const optionLabel = option.textContent || '';
+        const isSelected = this.value === optionValue;
+        const isFocused = this.focusedIndex === index;
 
-      if (isSelected && !this.selectedLabel) {
-        this.selectedLabel = optionLabel;
+        if (isSelected && !this.selectedLabel) {
+          this.selectedLabel = optionLabel;
+        }
+
+        return html`
+          <div
+            class="select-option ${isSelected
+              ? 'select-option--selected'
+              : ''} ${isFocused ? 'select-option--focused' : ''}"
+            part="option"
+            role="option"
+            aria-selected="${isSelected ? 'true' : 'false'}"
+            data-value="${optionValue}"
+            data-label="${optionLabel}"
+            tabindex="-1"
+            @click=${this.handleOptionClick}
+          >
+            ${optionLabel}
+          </div>
+        `;
       }
-
-      return html`
-        <div
-          class="select-option ${isSelected
-            ? 'select-option--selected'
-            : ''} ${isFocused ? 'select-option--focused' : ''}"
-          part="option"
-          role="option"
-          aria-selected="${isSelected ? 'true' : 'false'}"
-          data-value="${optionValue}"
-          data-label="${optionLabel}"
-          tabindex="-1"
-          @click=${this.handleOptionClick}
-        >
-          ${optionLabel}
-        </div>
-      `;
-    });
+    );
   };
 
   render() {

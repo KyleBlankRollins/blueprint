@@ -131,7 +131,6 @@ export class BpPopover extends LitElement {
   /** Whether the popover has footer slot content */
   @state() private hasFooter = false;
 
-  @query('.popover__panel') private panel!: HTMLElement;
   @query('.popover__trigger') private triggerElement!: HTMLElement;
 
   private showTimeout: number | null = null;
@@ -158,13 +157,17 @@ export class BpPopover extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-    document.addEventListener('click', this.handleDocumentClick);
+    document.addEventListener('click', this.handleDocumentClick, {
+      passive: true,
+    });
     document.addEventListener('keydown', this.handleDocumentKeydown);
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback();
-    document.removeEventListener('click', this.handleDocumentClick);
+    document.removeEventListener('click', this.handleDocumentClick, {
+      passive: true,
+    } as EventListenerOptions);
     document.removeEventListener('keydown', this.handleDocumentKeydown);
     this.clearTimeouts();
   }

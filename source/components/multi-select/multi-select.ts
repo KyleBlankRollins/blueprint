@@ -1,8 +1,9 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { multiSelectStyles } from './multi-select.style.js';
+import { memoizeOne } from '../../utilities/memoize.js';
 
 export type MultiSelectSize = 'sm' | 'md' | 'lg';
 export type MultiSelectVariant =
@@ -53,6 +54,23 @@ export class BpMultiSelect extends LitElement {
   /** Index of the focused option for keyboard navigation */
   @state() private focusedIndex = -1;
 
+  /** Cached options from slotted elements */
+  @state() private cachedOptions: MultiSelectOption[] = [];
+
+  /**
+   * Memoized label lookup map for efficient tag rendering.
+   * Only recomputes when cachedOptions reference changes.
+   */
+  private computeLabelMap = memoizeOne(
+    (options: MultiSelectOption[]): Map<string, string> => {
+      const map = new Map<string, string>();
+      for (const opt of options) {
+        map.set(opt.value, opt.label);
+      }
+      return map;
+    }
+  );
+
   static styles = [multiSelectStyles];
 
   constructor() {
@@ -70,12 +88,20 @@ export class BpMultiSelect extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    document.addEventListener('click', this.handleDocumentClick);
+    document.addEventListener('click', this.handleDocumentClick, {
+      passive: true,
+    });
+    // Initialize cached options after first render
+    this.updateComplete.then(() => {
+      this.cachedOptions = this.getOptions();
+    });
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    document.removeEventListener('click', this.handleDocumentClick);
+    document.removeEventListener('click', this.handleDocumentClick, {
+      passive: true,
+    } as EventListenerOptions);
   }
 
   private handleDocumentClick = (event: MouseEvent) => {
@@ -106,6 +132,13 @@ export class BpMultiSelect extends LitElement {
       label: option.textContent || '',
     }));
   }
+
+  /**
+   * Handle slot changes by refreshing the cached options.
+   */
+  private handleSlotChange = () => {
+    this.cachedOptions = this.getOptions();
+  };
 
   private isSelected(value: string): boolean {
     return this.value.includes(value);
@@ -168,7 +201,7 @@ export class BpMultiSelect extends LitElement {
   private handleKeyDown = (event: globalThis.KeyboardEvent) => {
     if (this.disabled) return;
 
-    const options = this.getOptions();
+    const options = this.cachedOptions;
 
     switch (event.key) {
       case 'Enter':
@@ -213,13 +246,58 @@ export class BpMultiSelect extends LitElement {
   };
 
   private getLabelForValue(value: string): string {
-    const options = this.getOptions();
-    const option = options.find((opt) => opt.value === value);
-    return option?.label || value;
+    const labelMap = this.computeLabelMap(this.cachedOptions);
+    return labelMap.get(value) || value;
+  }
+
+  private renderDropdown() {
+    const options = this.cachedOptions;
+
+    return html`
+      <div class="multi-select__dropdown" part="dropdown">
+        <ul
+          class="multi-select__options"
+          role="listbox"
+          aria-multiselectable="true"
+        >
+          ${options.length === 0
+            ? html`<li class="multi-select__option multi-select__option--empty">
+                No options available
+              </li>`
+            : repeat(
+                options,
+                (opt) => opt.value,
+                (opt, index) => {
+                  const selected = this.isSelected(opt.value);
+                  const focused = index === this.focusedIndex;
+                  return html`
+                    <li
+                      class=${classMap({
+                        'multi-select__option': true,
+                        'multi-select__option--selected': selected,
+                        'multi-select__option--focused': focused,
+                      })}
+                      role="option"
+                      aria-selected=${selected}
+                      @click=${() => this.handleOptionClick(opt)}
+                      part="option ${selected ? 'option-selected' : ''}"
+                    >
+                      <span class="multi-select__checkbox">
+                        ${selected ? '\u2713' : ''}
+                      </span>
+                      <span class="multi-select__option-label"
+                        >${opt.label}</span
+                      >
+                    </li>
+                  `;
+                }
+              )}
+        </ul>
+      </div>
+    `;
   }
 
   render() {
-    const options = this.getOptions();
     const hasSelection = this.value.length > 0;
 
     return html`
@@ -293,51 +371,10 @@ export class BpMultiSelect extends LitElement {
           </div>
         </div>
 
-        <div class="multi-select__dropdown" part="dropdown">
-          <ul
-            class="multi-select__options"
-            role="listbox"
-            aria-multiselectable="true"
-          >
-            ${options.length === 0
-              ? html`<li
-                  class="multi-select__option multi-select__option--empty"
-                >
-                  No options available
-                </li>`
-              : repeat(
-                  options,
-                  (opt) => opt.value,
-                  (opt, index) => {
-                    const selected = this.isSelected(opt.value);
-                    const focused = index === this.focusedIndex;
-                    return html`
-                      <li
-                        class=${classMap({
-                          'multi-select__option': true,
-                          'multi-select__option--selected': selected,
-                          'multi-select__option--focused': focused,
-                        })}
-                        role="option"
-                        aria-selected=${selected}
-                        @click=${() => this.handleOptionClick(opt)}
-                        part="option ${selected ? 'option-selected' : ''}"
-                      >
-                        <span class="multi-select__checkbox">
-                          ${selected ? '✓' : ''}
-                        </span>
-                        <span class="multi-select__option-label"
-                          >${opt.label}</span
-                        >
-                      </li>
-                    `;
-                  }
-                )}
-          </ul>
-        </div>
+        ${this.isOpen ? this.renderDropdown() : nothing}
 
         <!-- Hidden slot for options -->
-        <slot @slotchange=${() => this.requestUpdate()}></slot>
+        <slot @slotchange=${this.handleSlotChange}></slot>
 
         <!-- Hidden inputs for form submission -->
         ${this.value.map(

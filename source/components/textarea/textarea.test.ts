@@ -273,6 +273,7 @@ describe('bp-textarea', () => {
 
   // Events
   it('should emit bp-input event on input', async () => {
+    vi.useFakeTimers();
     await element.updateComplete;
     const textarea = element.shadowRoot?.querySelector(
       'textarea'
@@ -282,9 +283,11 @@ describe('bp-textarea', () => {
 
     textarea.value = 'test';
     textarea.dispatchEvent(new InputEvent('input', { bubbles: true }));
+    vi.advanceTimersByTime(150);
 
     expect(listener).toHaveBeenCalled();
     expect(listener.mock.calls[0][0].detail.value).toBe('test');
+    vi.useRealTimers();
   });
 
   it('should emit bp-change event on change', async () => {

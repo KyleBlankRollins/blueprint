@@ -686,3 +686,55 @@ Since we target modern browsers only, these APIs are available:
 ---
 
 *This audit focuses on runtime performance optimizations. For bundle size and load performance, see build configuration and tree-shaking documentation.*
+
+---
+
+## Addendum: Implementation Notes (February 2026)
+
+All optimizations from this audit have been implemented. Three required test updates because they changed observable component behavior. Each is documented below with design rationale.
+
+### A.1 Lazy Rendering of Closed Dropdowns (Audit 3.2)
+
+**Components:** `bp-combobox`, `bp-multi-select`
+
+Dropdown content is only rendered to the DOM when the component is open (`${this.isOpen ? this.renderDropdown() : nothing}`). When closed, the dropdown subtree does not exist in the shadow DOM at all.
+
+**Design implication:** Code that queries dropdown internals (e.g., `shadowRoot.querySelector('[role="listbox"]')`) must first open the component. Tests were updated to click the trigger before asserting on dropdown structure.
+
+**Combined with CSS containment:** When open, the dropdown panel also has `contain: layout style paint` applied via the style file, so the browser isolates its rendering from the rest of the page.
+
+---
+
+### A.2 Debounced Custom Event Dispatch on `bp-input` / `bp-textarea` (Audit 2.1)
+
+**Behavior:** The `bp-input` custom event is dispatched on a 150ms trailing-edge debounce. The native input value binding (`this.value`) still updates synchronously on every keystroke. On blur, the debounce is flushed so the final value is always emitted before `bp-blur`.
+
+**Design rationale:** High-frequency `bp-input` events during rapid typing cause unnecessary downstream work (validation, API calls, re-renders in parent components). Debouncing at the component level provides the ideal default. Consumers that genuinely need per-keystroke events can listen to the native `input` event on the inner element instead.
+
+**Test pattern:** Tests that assert on `bp-input` dispatch use `vi.useFakeTimers()` and advance by 150ms:
+```typescript
+vi.useFakeTimers();
+input.dispatchEvent(new InputEvent('input', { bubbles: true }));
+vi.advanceTimersByTime(150);
+expect(listener).toHaveBeenCalled();
+vi.useRealTimers();
+```
+
+---
+
+### A.3 Debounced Filter Computation in `bp-combobox` (Audit 2.1)
+
+**Behavior:** The combobox's filter computation is debounced by 150ms during search input. The `searchText` property and the open state update immediately (so the input feels responsive), but the filtered options list updates after a 150ms pause in typing. Direct actions (selecting an option, clearing, closing) cancel the debounce and refresh the filter synchronously.
+
+**Combined with memoization:** The underlying filter function uses `memoizeOne`, so even when the debounce fires, it only recomputes if `(options, searchText)` actually changed. The two techniques are complementary: debounce reduces how often the filter is called, memoization ensures each call is a no-op when inputs haven't changed.
+
+**Test pattern:** Filter tests use fake timers and advance past the debounce:
+```typescript
+vi.useFakeTimers();
+input.value = 'ap';
+input.dispatchEvent(new Event('input', { bubbles: true }));
+vi.advanceTimersByTime(150);
+await element.updateComplete;
+expect(options?.length).toBe(2);
+vi.useRealTimers();
+```

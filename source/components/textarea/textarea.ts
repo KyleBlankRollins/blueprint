@@ -3,6 +3,7 @@ import { customElement, property, query } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
 import { textareaStyles } from './textarea.style.js';
+import { debounce } from '../../utilities/debounce.js';
 
 /**
  * Visual variant that affects the textarea border color and validation state
@@ -131,6 +132,19 @@ export class BpTextarea extends LitElement {
 
   @query('textarea') private textareaElement?: HTMLTextAreaElement;
 
+  private debouncedDispatchInput = debounce(
+    (value: string, originalEvent: InputEvent) => {
+      this.dispatchEvent(
+        new CustomEvent('bp-input', {
+          detail: { value, originalEvent },
+          bubbles: true,
+          composed: true,
+        })
+      );
+    },
+    150
+  );
+
   static styles = [textareaStyles];
 
   constructor() {
@@ -145,17 +159,15 @@ export class BpTextarea extends LitElement {
     this.spellcheck = true;
   }
 
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.debouncedDispatchInput.cancel();
+  }
+
   private handleInput(event: InputEvent): void {
     const target = event.target as HTMLTextAreaElement;
     this.value = target.value;
-
-    this.dispatchEvent(
-      new CustomEvent('bp-input', {
-        detail: { value: this.value, originalEvent: event },
-        bubbles: true,
-        composed: true,
-      })
-    );
+    this.debouncedDispatchInput(this.value, event);
   }
 
   private handleChange(event: Event): void {
@@ -182,6 +194,7 @@ export class BpTextarea extends LitElement {
   }
 
   private handleBlur(event: FocusEvent): void {
+    this.debouncedDispatchInput.flush();
     this.dispatchEvent(
       new CustomEvent('bp-blur', {
         detail: { originalEvent: event },

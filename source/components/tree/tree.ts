@@ -1,7 +1,9 @@
 import { LitElement, html, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { repeat } from 'lit/directives/repeat.js';
 import { treeStyles } from './tree.style.js';
+import { memoizeOne } from '../../utilities/memoize.js';
 import '../icon/icon.js';
 
 /**
@@ -74,6 +76,21 @@ export class BpTree extends LitElement {
   /** Selected node IDs when multiSelect is true */
   @state() private selectedIds: string[] = [];
 
+  /**
+   * Memoized computation of expanded IDs as a Set for O(1) lookups.
+   * Only recomputes when expandedIds reference changes.
+   */
+  private computeExpandedSet = memoizeOne(
+    (expandedIds: string[]): Set<string> => new Set(expandedIds)
+  );
+
+  /**
+   * Get the memoized expanded set for fast lookups during rendering.
+   */
+  private get expandedSet(): Set<string> {
+    return this.computeExpandedSet(this.expandedIds);
+  }
+
   static styles = [treeStyles];
 
   constructor() {
@@ -94,7 +111,7 @@ export class BpTree extends LitElement {
    * @param nodeId - The ID of the node to expand
    */
   expand(nodeId: string): void {
-    if (!this.expandedIds.includes(nodeId)) {
+    if (!this.expandedSet.has(nodeId)) {
       this.expandedIds = [...this.expandedIds, nodeId];
       const node = this.findNode(nodeId, this.nodes);
       if (node) {
@@ -116,7 +133,7 @@ export class BpTree extends LitElement {
    * @param nodeId - The ID of the node to collapse
    */
   collapse(nodeId: string): void {
-    if (this.expandedIds.includes(nodeId)) {
+    if (this.expandedSet.has(nodeId)) {
       this.expandedIds = this.expandedIds.filter((id) => id !== nodeId);
       const node = this.findNode(nodeId, this.nodes);
       if (node) {
@@ -138,7 +155,7 @@ export class BpTree extends LitElement {
    * @param nodeId - The ID of the node to toggle
    */
   toggle(nodeId: string): void {
-    if (this.expandedIds.includes(nodeId)) {
+    if (this.expandedSet.has(nodeId)) {
       this.collapse(nodeId);
     } else {
       this.expand(nodeId);
@@ -309,7 +326,7 @@ export class BpTree extends LitElement {
    */
   private handleKeyDown(event: KeyboardEvent, node: TreeNode): void {
     const hasChildren = node.children && node.children.length > 0;
-    const isExpanded = this.expandedIds.includes(node.id);
+    const isExpanded = this.expandedSet.has(node.id);
 
     switch (event.key) {
       case 'Enter':
@@ -358,7 +375,7 @@ export class BpTree extends LitElement {
    */
   private renderNode(node: TreeNode, level: number = 0): unknown {
     const hasChildren = node.children && node.children.length > 0;
-    const isExpanded = this.expandedIds.includes(node.id);
+    const isExpanded = this.expandedSet.has(node.id);
     const isSelected = this.isSelected(node.id);
 
     return html`
@@ -405,8 +422,10 @@ export class BpTree extends LitElement {
         ${hasChildren && isExpanded
           ? html`
               <div class="node-children" part="node-children" role="group">
-                ${node.children!.map((child) =>
-                  this.renderNode(child, level + 1)
+                ${repeat(
+                  node.children!,
+                  (child) => child.id,
+                  (child) => this.renderNode(child, level + 1)
                 )}
               </div>
             `
@@ -426,7 +445,11 @@ export class BpTree extends LitElement {
         aria-multiselectable=${ifDefined(this.multiSelect ? 'true' : undefined)}
       >
         ${hasNodes
-          ? this.nodes.map((node) => this.renderNode(node, 0))
+          ? repeat(
+              this.nodes,
+              (node) => node.id,
+              (node) => this.renderNode(node, 0)
+            )
           : html`<slot></slot>`}
       </div>
     `;

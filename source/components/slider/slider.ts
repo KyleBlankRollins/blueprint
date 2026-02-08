@@ -1,7 +1,9 @@
 import { LitElement, html, nothing } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { repeat } from 'lit/directives/repeat.js';
 import { sliderStyles } from './slider.style.js';
+import { throttle } from '../../utilities/throttle.js';
 
 /**
  * Size variants for the slider
@@ -88,8 +90,15 @@ export class BpSlider extends LitElement {
    */
   @state() private isDragging = false;
 
-  @query('.slider__thumb') private thumbElement!: HTMLElement;
   @query('.slider__track') private trackElement!: HTMLElement;
+
+  /** Cached track bounding rect during drag to avoid repeated layout queries */
+  private cachedTrackRect: DOMRect | null = null;
+
+  /** Throttled position update for frame-aligned drag handling */
+  private throttledUpdatePosition = throttle((clientX: number) => {
+    this.updateValueFromPosition(clientX);
+  }, 16);
 
   static styles = [sliderStyles];
 
@@ -106,6 +115,12 @@ export class BpSlider extends LitElement {
     this.showValue = false;
     this.showTicks = false;
     this.formatValue = (value: number) => String(value);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.throttledUpdatePosition.cancel();
+    this.cachedTrackRect = null;
   }
 
   /**
@@ -147,12 +162,14 @@ export class BpSlider extends LitElement {
   }
 
   /**
-   * Update value from a position on the track
+   * Update value from a position on the track.
+   * Uses cached bounding rect during drag for performance.
    */
   private updateValueFromPosition(clientX: number): void {
     if (!this.trackElement || this.disabled) return;
 
-    const rect = this.trackElement.getBoundingClientRect();
+    const rect =
+      this.cachedTrackRect || this.trackElement.getBoundingClientRect();
     const percentage = Math.max(
       0,
       Math.min(1, (clientX - rect.left) / rect.width)
@@ -180,13 +197,17 @@ export class BpSlider extends LitElement {
     event.preventDefault();
 
     this.isDragging = true;
+    // Cache the track rect at drag start to avoid repeated layout queries
+    this.cachedTrackRect = this.trackElement?.getBoundingClientRect() ?? null;
     this.updateValueFromPosition(event.clientX);
 
     const handleMouseMove = (moveEvent: MouseEvent) => {
-      this.updateValueFromPosition(moveEvent.clientX);
+      this.throttledUpdatePosition(moveEvent.clientX);
     };
 
     const handleMouseUp = () => {
+      this.throttledUpdatePosition.cancel();
+      this.cachedTrackRect = null;
       this.isDragging = false;
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
@@ -211,15 +232,19 @@ export class BpSlider extends LitElement {
     event.preventDefault();
 
     this.isDragging = true;
+    // Cache the track rect at drag start to avoid repeated layout queries
+    this.cachedTrackRect = this.trackElement?.getBoundingClientRect() ?? null;
     const touch = event.touches[0];
     this.updateValueFromPosition(touch.clientX);
 
     const handleTouchMove = (moveEvent: globalThis.TouchEvent) => {
       const moveTouch = moveEvent.touches[0];
-      this.updateValueFromPosition(moveTouch.clientX);
+      this.throttledUpdatePosition(moveTouch.clientX);
     };
 
     const handleTouchEnd = () => {
+      this.throttledUpdatePosition.cancel();
+      this.cachedTrackRect = null;
       this.isDragging = false;
       document.removeEventListener('touchmove', handleTouchMove);
       document.removeEventListener('touchend', handleTouchEnd);
@@ -330,7 +355,9 @@ export class BpSlider extends LitElement {
             ${this.showTicks
               ? html`
                   <div class="slider__ticks">
-                    ${this.tickPositions.map(
+                    ${repeat(
+                      this.tickPositions,
+                      (pos) => pos,
                       (pos) =>
                         html`<div
                           class="slider__tick"

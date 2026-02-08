@@ -130,7 +130,7 @@ describe('bp-multi-select', () => {
     element.appendChild(option1);
     await element.updateComplete;
 
-    let changeEvent: CustomEvent | null = null;
+    let changeEvent: CustomEvent<Record<string, unknown>> | null = null;
     element.addEventListener('bp-change', (e) => {
       changeEvent = e as CustomEvent;
     });
@@ -150,7 +150,7 @@ describe('bp-multi-select', () => {
     await element.updateComplete;
 
     expect(changeEvent).toBeTruthy();
-    expect(changeEvent?.detail.value).toEqual(['opt1']);
+    expect(changeEvent!.detail.value).toEqual(['opt1']);
   });
 
   it('should emit bp-change event with previous value', async () => {
@@ -161,7 +161,7 @@ describe('bp-multi-select', () => {
     element.appendChild(option2);
     await element.updateComplete;
 
-    let changeEvent: CustomEvent | null = null;
+    let changeEvent: CustomEvent<Record<string, unknown>> | null = null;
     element.addEventListener('bp-change', (e) => {
       changeEvent = e as CustomEvent;
     });
@@ -178,8 +178,8 @@ describe('bp-multi-select', () => {
     optionEl.click();
     await element.updateComplete;
 
-    expect(changeEvent?.detail.previousValue).toEqual(['opt1']);
-    expect(changeEvent?.detail.value).toEqual(['opt1', 'opt2']);
+    expect(changeEvent!.detail.previousValue).toEqual(['opt1']);
+    expect(changeEvent!.detail.value).toEqual(['opt1', 'opt2']);
   });
 
   // Event composition
@@ -190,7 +190,7 @@ describe('bp-multi-select', () => {
     element.appendChild(option);
     await element.updateComplete;
 
-    let capturedEvent: CustomEvent | null = null;
+    let capturedEvent: CustomEvent<Record<string, unknown>> | null = null;
     element.addEventListener('bp-change', (e) => {
       capturedEvent = e as CustomEvent;
     });
@@ -207,8 +207,8 @@ describe('bp-multi-select', () => {
     optionEl.click();
     await element.updateComplete;
 
-    expect(capturedEvent?.bubbles).toBe(true);
-    expect(capturedEvent?.composed).toBe(true);
+    expect(capturedEvent!.bubbles).toBe(true);
+    expect(capturedEvent!.composed).toBe(true);
   });
 
   // CSS Parts
@@ -219,6 +219,11 @@ describe('bp-multi-select', () => {
   });
 
   it('should expose dropdown part for styling', async () => {
+    await element.updateComplete;
+    const control = element.shadowRoot?.querySelector(
+      '.multi-select__control'
+    ) as HTMLElement;
+    control.click();
     await element.updateComplete;
     const dropdown = element.shadowRoot?.querySelector('[part~="dropdown"]');
     expect(dropdown).toBeTruthy();
@@ -409,13 +414,13 @@ describe('bp-multi-select', () => {
     );
     (options?.[0] as HTMLElement)?.click();
     await element.updateComplete;
-    (options[1] as HTMLElement).click();
+    (options![1] as HTMLElement).click();
     await element.updateComplete;
 
     expect(element.value).toEqual(['opt1', 'opt2']);
 
     // Try to select third - should be prevented
-    (options[2] as HTMLElement).click();
+    (options![2] as HTMLElement).click();
     await element.updateComplete;
 
     expect(element.value).toEqual(['opt1', 'opt2']);
@@ -483,6 +488,11 @@ describe('bp-multi-select', () => {
 
   it('should have role listbox on options container', async () => {
     await element.updateComplete;
+    const control = element.shadowRoot?.querySelector(
+      '.multi-select__control'
+    ) as HTMLElement;
+    control.click();
+    await element.updateComplete;
     const optionsList = element.shadowRoot?.querySelector(
       '.multi-select__options'
     );
@@ -490,6 +500,11 @@ describe('bp-multi-select', () => {
   });
 
   it('should have aria-multiselectable on listbox', async () => {
+    await element.updateComplete;
+    const control = element.shadowRoot?.querySelector(
+      '.multi-select__control'
+    ) as HTMLElement;
+    control.click();
     await element.updateComplete;
     const optionsList = element.shadowRoot?.querySelector(
       '.multi-select__options'

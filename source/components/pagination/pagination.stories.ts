@@ -11,56 +11,56 @@ const meta: Meta = {
       control: 'number',
       description: 'Current page number (1-indexed)',
       table: {
-        defaultValue: { summary: 1 },
+        defaultValue: { summary: '1' },
       },
     },
     totalPages: {
       control: 'number',
       description: 'Total number of pages',
       table: {
-        defaultValue: { summary: 1 },
+        defaultValue: { summary: '1' },
       },
     },
     siblingCount: {
       control: 'number',
       description: 'Number of page buttons to show around the current page',
       table: {
-        defaultValue: { summary: 1 },
+        defaultValue: { summary: '1' },
       },
     },
     boundaryCount: {
       control: 'number',
       description: 'Number of page buttons to show at the start and end',
       table: {
-        defaultValue: { summary: 1 },
+        defaultValue: { summary: '1' },
       },
     },
     showFirstLast: {
       control: 'boolean',
       description: 'Show first/last page buttons',
       table: {
-        defaultValue: { summary: true },
+        defaultValue: { summary: 'true' },
       },
     },
     showPrevNext: {
       control: 'boolean',
       description: 'Show previous/next page buttons',
       table: {
-        defaultValue: { summary: true },
+        defaultValue: { summary: 'true' },
       },
     },
     showInfo: {
       control: 'boolean',
       description: 'Show page info text (e.g., "Page 1 of 10")',
       table: {
-        defaultValue: { summary: false },
+        defaultValue: { summary: 'false' },
       },
     },
     disabled: {
       control: 'boolean',
       description: 'Disable all pagination controls',
       table: {
-        defaultValue: { summary: false },
+        defaultValue: { summary: 'false' },
       },
     },
     size: {

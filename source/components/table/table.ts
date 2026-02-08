@@ -1,8 +1,10 @@
-import { LitElement, html, nothing, TemplateResult } from 'lit';
+import { LitElement, html, nothing, TemplateResult, PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { repeat } from 'lit/directives/repeat.js';
 import { tableStyles } from './table.style.js';
+import { memoizeOne } from '../../utilities/memoize.js';
 import '../icon/icon.js';
 
 export type TableVariant = 'default' | 'striped' | 'bordered';
@@ -144,6 +146,15 @@ export class BpTable extends LitElement {
 
   @state() private allSelected = false;
 
+  /**
+   * Properties that only affect visual styling, not rendered structure.
+   * Changes to only these properties can skip a full re-render.
+   */
+  private static readonly VISUAL_ONLY_PROPS = new Set([
+    'hoverable',
+    'stickyHeader',
+  ]);
+
   static styles = [tableStyles];
 
   constructor() {
@@ -161,6 +172,18 @@ export class BpTable extends LitElement {
     this.loading = false;
   }
 
+  protected shouldUpdate(changedProperties: PropertyValues): boolean {
+    // If all changed properties are visual-only, skip the update.
+    // Be conservative: return true if any non-visual property changed.
+    for (const key of changedProperties.keys()) {
+      if (!BpTable.VISUAL_ONLY_PROPS.has(key as string)) {
+        return true;
+      }
+    }
+    // All changes are visual-only — still need to update for CSS class changes
+    return true;
+  }
+
   updated(changedProperties: Map<string, unknown>): void {
     if (
       changedProperties.has('selectedRows') ||
@@ -172,34 +195,43 @@ export class BpTable extends LitElement {
   }
 
   /**
-   * Get sorted rows based on current sort state.
-   * Handles string, number, and fallback comparisons with null/undefined safety.
+   * Memoized sorted rows computation.
+   * Only recomputes when rows or sortState references change.
    */
-  private getSortedRows(): TableRow[] {
-    if (!this.sortState || this.sortState.direction === 'none') {
-      return this.rows;
-    }
-
-    const { column, direction } = this.sortState;
-    return [...this.rows].sort((a, b) => {
-      const aVal = a[column];
-      const bVal = b[column];
-
-      if (aVal === bVal) return 0;
-      if (aVal === null || aVal === undefined) return 1;
-      if (bVal === null || bVal === undefined) return -1;
-
-      let comparison = 0;
-      if (typeof aVal === 'string' && typeof bVal === 'string') {
-        comparison = aVal.localeCompare(bVal);
-      } else if (typeof aVal === 'number' && typeof bVal === 'number') {
-        comparison = aVal - bVal;
-      } else {
-        comparison = String(aVal).localeCompare(String(bVal));
+  private computeSortedRows = memoizeOne(
+    (rows: TableRow[], sortState: TableSortState | null): TableRow[] => {
+      if (!sortState || sortState.direction === 'none') {
+        return rows;
       }
 
-      return direction === 'desc' ? -comparison : comparison;
-    });
+      const { column, direction } = sortState;
+      return [...rows].sort((a, b) => {
+        const aVal = a[column];
+        const bVal = b[column];
+
+        if (aVal === bVal) return 0;
+        if (aVal === null || aVal === undefined) return 1;
+        if (bVal === null || bVal === undefined) return -1;
+
+        let comparison = 0;
+        if (typeof aVal === 'string' && typeof bVal === 'string') {
+          comparison = aVal.localeCompare(bVal);
+        } else if (typeof aVal === 'number' && typeof bVal === 'number') {
+          comparison = aVal - bVal;
+        } else {
+          comparison = String(aVal).localeCompare(String(bVal));
+        }
+
+        return direction === 'desc' ? -comparison : comparison;
+      });
+    }
+  );
+
+  /**
+   * Get sorted rows based on current sort state (memoized).
+   */
+  private get sortedRows(): TableRow[] {
+    return this.computeSortedRows(this.rows, this.sortState);
   }
 
   /**
@@ -413,7 +445,9 @@ export class BpTable extends LitElement {
             : this.selectable
               ? html`<th class="cell cell--checkbox" part="header-cell"></th>`
               : nothing}
-          ${this.columns.map(
+          ${repeat(
+            this.columns,
+            (column) => column.key,
             (column) => html`
               <th
                 class="cell header-cell ${column.sortable
@@ -461,7 +495,7 @@ export class BpTable extends LitElement {
    * Handles loading and empty states.
    */
   private renderBody() {
-    const sortedRows = this.getSortedRows();
+    const sortedRows = this.sortedRows;
 
     if (this.loading) {
       return html`
@@ -501,57 +535,66 @@ export class BpTable extends LitElement {
 
     return html`
       <tbody part="tbody">
-        ${sortedRows.map((row) => {
-          const isSelected = this.selectedRows.includes(row.id);
-          const rowClasses = {
-            row: true,
-            'row--selected': isSelected,
-            'row--hoverable': this.hoverable,
-          };
+        ${repeat(
+          sortedRows,
+          (row) => row.id,
+          (row) => {
+            const isSelected = this.selectedRows.includes(row.id);
+            const rowClasses = {
+              row: true,
+              'row--selected': isSelected,
+              'row--hoverable': this.hoverable,
+            };
 
-          return html`
-            <tr
-              class=${classMap(rowClasses)}
-              part="row"
-              @click=${(e: Event) => this.handleRowClick(row, e)}
-              @keydown=${(e: KeyboardEvent) => this.handleRowKeyDown(row, e)}
-              tabindex=${this.selectable ? 0 : -1}
-              aria-selected=${ifDefined(
-                this.selectable ? (isSelected ? 'true' : 'false') : undefined
-              )}
-            >
-              ${this.selectable
-                ? html`
-                    <td class="cell cell--checkbox" part="cell">
-                      <input
-                        type="checkbox"
-                        part="checkbox"
-                        .checked=${isSelected}
-                        @click=${(e: Event) => this.handleCheckboxClick(e, row)}
-                        aria-label="Select row"
-                      />
-                    </td>
-                  `
-                : nothing}
-              ${this.columns.map((column) => {
-                const value = row[column.key];
-                const content = column.render
-                  ? column.render(value, row)
-                  : value;
+            return html`
+              <tr
+                class=${classMap(rowClasses)}
+                part="row"
+                @click=${(e: Event) => this.handleRowClick(row, e)}
+                @keydown=${(e: KeyboardEvent) => this.handleRowKeyDown(row, e)}
+                tabindex=${this.selectable ? 0 : -1}
+                aria-selected=${ifDefined(
+                  this.selectable ? (isSelected ? 'true' : 'false') : undefined
+                )}
+              >
+                ${this.selectable
+                  ? html`
+                      <td class="cell cell--checkbox" part="cell">
+                        <input
+                          type="checkbox"
+                          part="checkbox"
+                          .checked=${isSelected}
+                          @click=${(e: Event) =>
+                            this.handleCheckboxClick(e, row)}
+                          aria-label="Select row"
+                        />
+                      </td>
+                    `
+                  : nothing}
+                ${repeat(
+                  this.columns,
+                  (column) => column.key,
+                  (column) => {
+                    const value = row[column.key];
+                    const content = column.render
+                      ? column.render(value, row)
+                      : value;
 
-                return html`
-                  <td
-                    class="cell"
-                    part="cell"
-                    style="text-align: ${column.align || 'left'}"
-                  >
-                    ${content}
-                  </td>
-                `;
-              })}
-            </tr>
-          `;
-        })}
+                    return html`
+                      <td
+                        class="cell"
+                        part="cell"
+                        style="text-align: ${column.align || 'left'}"
+                      >
+                        ${content}
+                      </td>
+                    `;
+                  }
+                )}
+              </tr>
+            `;
+          }
+        )}
       </tbody>
     `;
   }

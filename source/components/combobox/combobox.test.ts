@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import './combobox.js';
 import type { BpCombobox } from './combobox.js';
 
@@ -82,7 +82,7 @@ describe('bp-combobox', () => {
     element.appendChild(option1);
     await element.updateComplete;
 
-    let changeEvent: CustomEvent | null = null;
+    let changeEvent: CustomEvent<Record<string, unknown>> | null = null;
     element.addEventListener('bp-change', (e) => {
       changeEvent = e as CustomEvent;
     });
@@ -102,8 +102,8 @@ describe('bp-combobox', () => {
     await element.updateComplete;
 
     expect(changeEvent).toBeTruthy();
-    expect(changeEvent?.detail.value).toBe('opt1');
-    expect(changeEvent?.detail.label).toBe('Option 1');
+    expect(changeEvent!.detail.value).toBe('opt1');
+    expect(changeEvent!.detail.label).toBe('Option 1');
   });
 
   it('should emit bp-change event with previous value', async () => {
@@ -114,7 +114,7 @@ describe('bp-combobox', () => {
     element.appendChild(option2);
     await element.updateComplete;
 
-    let changeEvent: CustomEvent | null = null;
+    let changeEvent: CustomEvent<Record<string, unknown>> | null = null;
     element.addEventListener('bp-change', (e) => {
       changeEvent = e as CustomEvent;
     });
@@ -131,15 +131,15 @@ describe('bp-combobox', () => {
     optionEl.click();
     await element.updateComplete;
 
-    expect(changeEvent?.detail.previousValue).toBe('opt1');
-    expect(changeEvent?.detail.value).toBe('opt2');
+    expect(changeEvent!.detail.previousValue).toBe('opt1');
+    expect(changeEvent!.detail.value).toBe('opt2');
   });
 
   it('should emit bp-change event when custom value entered and allowCustomValue is true', async () => {
     element.allowCustomValue = true;
     await element.updateComplete;
 
-    let changeEvent: CustomEvent | null = null;
+    let changeEvent: CustomEvent<Record<string, unknown>> | null = null;
     element.addEventListener('bp-change', (e) => {
       changeEvent = e as CustomEvent;
     });
@@ -152,7 +152,7 @@ describe('bp-combobox', () => {
     await element.updateComplete;
 
     expect(changeEvent).toBeTruthy();
-    expect(changeEvent?.detail.value).toBe('custom text');
+    expect(changeEvent!.detail.value).toBe('custom text');
   });
 
   // Event composition
@@ -163,7 +163,7 @@ describe('bp-combobox', () => {
     element.appendChild(option);
     await element.updateComplete;
 
-    let capturedEvent: CustomEvent | null = null;
+    let capturedEvent: CustomEvent<Record<string, unknown>> | null = null;
     element.addEventListener('bp-change', (e) => {
       capturedEvent = e as CustomEvent;
     });
@@ -180,8 +180,8 @@ describe('bp-combobox', () => {
     optionEl.click();
     await element.updateComplete;
 
-    expect(capturedEvent?.bubbles).toBe(true);
-    expect(capturedEvent?.composed).toBe(true);
+    expect(capturedEvent!.bubbles).toBe(true);
+    expect(capturedEvent!.composed).toBe(true);
   });
 
   // CSS Parts
@@ -198,6 +198,11 @@ describe('bp-combobox', () => {
   });
 
   it('should expose dropdown part for styling', async () => {
+    await element.updateComplete;
+    const input = element.shadowRoot?.querySelector(
+      '.combobox__input'
+    ) as HTMLElement;
+    input.click();
     await element.updateComplete;
     const dropdown = element.shadowRoot?.querySelector('[part~="dropdown"]');
     expect(dropdown).toBeTruthy();
@@ -348,6 +353,7 @@ describe('bp-combobox', () => {
   });
 
   it('should filter options based on search text', async () => {
+    vi.useFakeTimers();
     const option1 = document.createElement('option');
     option1.value = 'apple';
     option1.textContent = 'Apple';
@@ -370,6 +376,7 @@ describe('bp-combobox', () => {
     ) as HTMLInputElement;
     input.value = 'ap';
     input.dispatchEvent(new Event('input', { bubbles: true }));
+    vi.advanceTimersByTime(150);
     await element.updateComplete;
 
     // Should only show Apple and Apricot
@@ -377,9 +384,11 @@ describe('bp-combobox', () => {
       '.combobox__option:not(.combobox__option--empty)'
     );
     expect(options?.length).toBe(2);
+    vi.useRealTimers();
   });
 
   it('should show "No results found" when filter returns no matches', async () => {
+    vi.useFakeTimers();
     const option = document.createElement('option');
     option.value = 'test';
     option.textContent = 'Test Option';
@@ -391,6 +400,7 @@ describe('bp-combobox', () => {
     ) as HTMLInputElement;
     input.value = 'xyz';
     input.dispatchEvent(new Event('input', { bubbles: true }));
+    vi.advanceTimersByTime(150);
     await element.updateComplete;
 
     const emptyOption = element.shadowRoot?.querySelector(
@@ -398,6 +408,7 @@ describe('bp-combobox', () => {
     );
     expect(emptyOption).toBeTruthy();
     expect(emptyOption?.textContent?.trim()).toBe('No results found');
+    vi.useRealTimers();
   });
 
   it('should update input text when option is selected', async () => {
@@ -483,6 +494,11 @@ describe('bp-combobox', () => {
   });
 
   it('should have role listbox on options container', async () => {
+    await element.updateComplete;
+    const input = element.shadowRoot?.querySelector(
+      '.combobox__input'
+    ) as HTMLElement;
+    input.click();
     await element.updateComplete;
     const optionsList = element.shadowRoot?.querySelector('.combobox__options');
     expect(optionsList?.getAttribute('role')).toBe('listbox');

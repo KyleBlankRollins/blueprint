@@ -66,6 +66,7 @@ export const selectStyles = css`
     z-index: var(--bp-z-dropdown);
     animation: slideDown 150ms ease-out;
     transform-origin: top;
+    contain: layout style paint;
   }
 
   @keyframes slideDown {

@@ -217,6 +217,7 @@ describe('bp-input', () => {
 
   // Events
   it('should emit bp-input event on input', async () => {
+    vi.useFakeTimers();
     await element.updateComplete;
     const input = element.shadowRoot?.querySelector(
       'input'
@@ -226,9 +227,11 @@ describe('bp-input', () => {
 
     input.value = 'test';
     input.dispatchEvent(new InputEvent('input', { bubbles: true }));
+    vi.advanceTimersByTime(150);
 
     expect(listener).toHaveBeenCalled();
     expect(listener.mock.calls[0][0].detail.value).toBe('test');
+    vi.useRealTimers();
   });
 
   it('should emit bp-change event on change', async () => {

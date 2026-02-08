@@ -325,7 +325,7 @@ export class BpDatePicker extends LitElement {
     return days;
   }
 
-  private checkValidity(): boolean {
+  public checkValidity(): boolean {
     // Check required validation
     if (this.required && !this.value) {
       return false;
@@ -485,9 +485,9 @@ export class BpDatePicker extends LitElement {
                     const dayClasses = {
                       'date-picker__day': true,
                       'date-picker__day--other-month': !isCurrentMonth,
-                      'date-picker__day--selected': isSelected,
+                      'date-picker__day--selected': !!isSelected,
                       'date-picker__day--today': isToday,
-                      'date-picker__day--focused': isFocused,
+                      'date-picker__day--focused': !!isFocused,
                       'date-picker__day--disabled': isDisabled,
                     };
 

@@ -1,5 +1,5 @@
 import { LitElement, html, nothing } from 'lit';
-import { customElement, property, state, query } from 'lit/decorators.js';
+import { customElement, property, query } from 'lit/decorators.js';
 import { dropdownStyles } from './dropdown.style.js';
 
 /**
@@ -52,9 +52,6 @@ export class BpDropdown extends LitElement {
   /** ARIA role for the dropdown panel */
   @property({ type: String }) declare panelRole: 'menu' | 'dialog' | 'listbox';
 
-  @state() private triggerWidth = 0;
-
-  @query('.dropdown__panel') private panel!: HTMLElement;
   @query('.dropdown__trigger') private triggerElement!: HTMLElement;
 
   private clickOutsideHandler = this.handleClickOutside.bind(this);
@@ -77,20 +74,24 @@ export class BpDropdown extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    document.addEventListener('click', this.clickOutsideHandler);
+    document.addEventListener('click', this.clickOutsideHandler, {
+      passive: true,
+    });
     document.addEventListener('keydown', this.keydownHandler);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    document.removeEventListener('click', this.clickOutsideHandler);
+    document.removeEventListener('click', this.clickOutsideHandler, {
+      passive: true,
+    } as EventListenerOptions);
     document.removeEventListener('keydown', this.keydownHandler);
   }
 
   updated(changedProperties: Map<string, unknown>) {
     super.updated(changedProperties);
     if (changedProperties.has('open') && this.open) {
-      this.updateTriggerWidth();
+      // Trigger width available via this.triggerElement.offsetWidth if needed
     }
   }
 
@@ -134,16 +135,6 @@ export class BpDropdown extends LitElement {
       this.hide();
     } else {
       this.show();
-    }
-  }
-
-  /**
-   * Updates the stored trigger width for positioning calculations.
-   * Called automatically when dropdown opens via updated() lifecycle.
-   */
-  private updateTriggerWidth() {
-    if (this.triggerElement) {
-      this.triggerWidth = this.triggerElement.offsetWidth;
     }
   }
 

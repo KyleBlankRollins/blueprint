@@ -168,6 +168,7 @@ export const multiSelectStyles = css`
       opacity var(--bp-transition-fast),
       transform var(--bp-transition-fast),
       visibility var(--bp-transition-fast);
+    contain: layout style paint;
   }
 
   .multi-select--open .multi-select__dropdown {

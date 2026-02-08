@@ -122,6 +122,7 @@ export const comboboxStyles = css`
       opacity var(--bp-transition-fast),
       transform var(--bp-transition-fast),
       visibility var(--bp-transition-fast);
+    contain: layout style paint;
   }
 
   .combobox--open .combobox__dropdown {

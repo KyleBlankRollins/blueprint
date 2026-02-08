@@ -112,6 +112,8 @@ export const treeStyles = css`
   /* Children container */
   .node-children {
     position: relative;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 200px;
   }
 
   /* Expanded state visual cue */

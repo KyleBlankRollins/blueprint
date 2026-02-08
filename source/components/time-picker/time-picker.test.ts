@@ -122,7 +122,7 @@ describe('bp-time-picker', () => {
   // Events
   it('should emit bp-change event when time selected', async () => {
     let eventFired = false;
-    let eventDetail: unknown;
+    let eventDetail: Record<string, unknown> | undefined;
 
     element.addEventListener('bp-change', (e) => {
       eventFired = true;
@@ -143,11 +143,11 @@ describe('bp-time-picker', () => {
     await element.updateComplete;
 
     expect(eventFired).toBe(true);
-    expect(eventDetail.value).toBeDefined();
+    expect(eventDetail!.value).toBeDefined();
   });
 
   it('should emit bp-change event with time details', async () => {
-    let eventDetail: { hours?: number; minutes?: number; value?: string };
+    let eventDetail: { hours?: number; minutes?: number; value?: string } | undefined;
 
     element.addEventListener('bp-change', (e) => {
       eventDetail = (e as CustomEvent).detail;
@@ -166,8 +166,8 @@ describe('bp-time-picker', () => {
     firstOption.click();
     await element.updateComplete;
 
-    expect(eventDetail.hours).toBeDefined();
-    expect(eventDetail.minutes).toBeDefined();
+    expect(eventDetail!.hours).toBeDefined();
+    expect(eventDetail!.minutes).toBeDefined();
   });
 
   it('should emit bp-change event when cleared', async () => {
@@ -175,7 +175,7 @@ describe('bp-time-picker', () => {
     await element.updateComplete;
 
     let eventFired = false;
-    let eventDetail: { value?: string };
+    let eventDetail: { value?: string } | undefined;
 
     element.addEventListener('bp-change', (e) => {
       eventFired = true;
@@ -189,7 +189,7 @@ describe('bp-time-picker', () => {
     await element.updateComplete;
 
     expect(eventFired).toBe(true);
-    expect(eventDetail.value).toBe('');
+    expect(eventDetail!.value).toBe('');
   });
 
   // Attributes

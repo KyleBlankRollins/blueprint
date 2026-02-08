@@ -139,10 +139,12 @@ export const accordionStyles = css`
     grid-template-rows: 0fr;
     overflow: hidden;
     transition: grid-template-rows var(--bp-transition-base);
+    content-visibility: hidden;
   }
 
   .item--expanded .item__content {
     grid-template-rows: 1fr;
+    content-visibility: visible;
   }
 
   .item__body {

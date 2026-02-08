@@ -6,7 +6,9 @@ import {
   queryAssignedElements,
 } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { repeat } from 'lit/directives/repeat.js';
 import { tabsStyles } from './tabs.style.js';
+import type { IconName } from '../icon/icons/registry.generated.js';
 
 export type TabsSize = 'sm' | 'md' | 'lg';
 export type TabsVariant = 'default' | 'pills' | 'underline';
@@ -23,7 +25,7 @@ export interface TabItem {
   /** Whether the tab is disabled */
   disabled?: boolean;
   /** Icon name to display before the label */
-  icon?: string;
+  icon?: IconName;
   /** Whether this tab can be closed */
   closable?: boolean;
 }
@@ -139,7 +141,6 @@ export class BpTabs extends LitElement {
     }
 
     this.updatePanelVisibility();
-    this.requestUpdate();
   };
 
   private getPanels(): HTMLElement[] {
@@ -354,7 +355,11 @@ export class BpTabs extends LitElement {
         aria-orientation=${isVertical ? 'vertical' : 'horizontal'}
       >
         <div class="tablist" part="tablist" role="tablist">
-          ${this.tabs.map((tab) => this.renderTab(tab))}
+          ${repeat(
+            this.tabs,
+            (tab) => tab.id,
+            (tab) => this.renderTab(tab)
+          )}
         </div>
         <div class="panels" part="panels">
           <slot @slotchange=${this.handleSlotChange}></slot>
