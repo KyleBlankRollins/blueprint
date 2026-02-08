@@ -23,6 +23,12 @@ A custom dropdown select component that provides an accessible and styleable alt
   <option value="3">Option 3</option>
 </bp-select>
 
+<!-- With label -->
+<bp-select label="Country" placeholder="Select a country">
+  <option value="us">United States</option>
+  <option value="uk">United Kingdom</option>
+</bp-select>
+
 <!-- With default value -->
 <bp-select value="2">
   <option value="1">Option 1</option>
@@ -66,14 +72,15 @@ A custom dropdown select component that provides an accessible and styleable alt
 
 ### Properties
 
-| Property      | Type         | Default              | Description                                |
-| ------------- | ------------ | -------------------- | ------------------------------------------ |
-| `value`       | `string`     | `''`                 | The current value of the select            |
-| `name`        | `string`     | `''`                 | Name attribute for form submission         |
-| `placeholder` | `string`     | `'Select an option'` | Placeholder text when no value is selected |
-| `disabled`    | `boolean`    | `false`              | Whether the select is disabled             |
-| `required`    | `boolean`    | `false`              | Whether the select is required             |
-| `size`        | `SelectSize` | `'md'`               | Size variant of the select                 |
+| Property      | Type         | Default              | Description                                   |
+| ------------- | ------------ | -------------------- | --------------------------------------------- |
+| `value`       | `string`     | `''`                 | The current value of the select               |
+| `name`        | `string`     | `''`                 | Name attribute for form submission            |
+| `label`       | `string`     | `''`                 | Visible label text displayed above the select |
+| `placeholder` | `string`     | `'Select an option'` | Placeholder text when no value is selected    |
+| `disabled`    | `boolean`    | `false`              | Whether the select is disabled                |
+| `required`    | `boolean`    | `false`              | Whether the select is required                |
+| `size`        | `SelectSize` | `'md'`               | Size variant of the select                    |
 
 **SelectSize:** `'sm' | 'md' | 'lg'`
 
@@ -93,6 +100,7 @@ A custom dropdown select component that provides an accessible and styleable alt
 
 | Part       | Description                   |
 | ---------- | ----------------------------- |
+| `label`    | The label element             |
 | `select`   | The select container          |
 | `trigger`  | The clickable trigger element |
 | `value`    | The displayed value text      |

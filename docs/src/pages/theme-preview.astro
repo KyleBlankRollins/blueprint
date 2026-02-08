@@ -14,14 +14,15 @@ import Header from '../components/Header.astro';
   <main class="theme-preview">
     <header class="preview-header">
       <div class="header-content">
-        <bp-heading level="1" size="2xl" weight="bold">Theme Preview</bp-heading>
+        <bp-heading level="1" size="2xl" weight="bold">Theme Preview</bp-heading
+        >
         <bp-text variant="muted">
           Preview Blueprint components with different theme variants.
         </bp-text>
       </div>
 
       <div class="controls">
-        <bp-select id="theme-selector" label="Theme" size="small">
+        <bp-select id="theme-selector" label="Theme" size="sm">
           <option value="light">Light</option>
           <option value="dark">Dark</option>
         </bp-select>
@@ -174,7 +175,8 @@ import Header from '../components/Header.astro';
             </div>
             <div class="component-card wide">
               <bp-text size="sm" weight="semibold">Pagination</bp-text>
-              <bp-pagination total="100" page="5" page-size="10"></bp-pagination>
+              <bp-pagination total="100" page="5" page-size="10"
+              ></bp-pagination>
             </div>
           </div>
         </section>
@@ -276,7 +278,8 @@ import Header from '../components/Header.astro';
       <!-- All themes view (side-by-side comparison) -->
       <div id="all-view" class="all-view" style="display: none;">
         <bp-text variant="muted">
-          Side-by-side theme comparison coming soon. Use the theme selector above to preview individual themes.
+          Side-by-side theme comparison coming soon. Use the theme selector
+          above to preview individual themes.
         </bp-text>
       </div>
     </div>
@@ -306,10 +309,13 @@ import Header from '../components/Header.astro';
   }
 
   // Theme selector handling
-  const themeSelector = document.getElementById('theme-selector') as HTMLSelectElement | null;
+  const themeSelector = document.getElementById(
+    'theme-selector'
+  ) as HTMLSelectElement | null;
   if (themeSelector) {
     // Set initial value
-    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    const currentTheme =
+      document.documentElement.getAttribute('data-theme') || 'light';
     themeSelector.value = currentTheme;
 
     // Listen for changes

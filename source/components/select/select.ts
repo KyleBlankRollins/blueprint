@@ -15,6 +15,9 @@ export class BpSelect extends LitElement {
   /** Name attribute for form submission */
   @property({ type: String }) declare name: string;
 
+  /** Visible label text displayed above the select */
+  @property({ type: String, reflect: true }) declare label: string;
+
   /** Placeholder text when no value is selected */
   @property({ type: String }) declare placeholder: string;
 
@@ -42,6 +45,7 @@ export class BpSelect extends LitElement {
     super();
     this.value = '';
     this.name = '';
+    this.label = '';
     this.placeholder = 'Select an option';
     this.disabled = false;
     this.required = false;
@@ -292,8 +296,20 @@ export class BpSelect extends LitElement {
 
     const displayLabel = this.selectedLabel || this.placeholder;
 
+    const labelId = this.label ? 'select-label' : undefined;
+
     return html`
       <div class=${classMap(selectClasses)} part="container">
+        ${this.label
+          ? html`
+              <label class="select-label" id="select-label" part="label">
+                ${this.label}
+                ${this.required
+                  ? html`<span class="select-required">*</span>`
+                  : ''}
+              </label>
+            `
+          : ''}
         <!-- Hidden input for form integration (using input instead of select to avoid Firefox conflict) -->
         <input
           type="hidden"
@@ -314,6 +330,7 @@ export class BpSelect extends LitElement {
           role="combobox"
           aria-expanded="${this.isOpen ? 'true' : 'false'}"
           aria-haspopup="listbox"
+          aria-labelledby="${ifDefined(labelId)}"
           aria-disabled="${this.disabled ? 'true' : 'false'}"
           aria-required="${this.required ? 'true' : 'false'}"
           tabindex="${this.disabled ? '-1' : '0'}"

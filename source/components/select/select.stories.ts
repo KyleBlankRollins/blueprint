@@ -15,6 +15,10 @@ const meta: Meta = {
       control: 'text',
       description: 'Name attribute for form submission',
     },
+    label: {
+      control: 'text',
+      description: 'Visible label text displayed above the select',
+    },
     placeholder: {
       control: 'text',
       description: 'Placeholder text when no value is selected',
@@ -47,6 +51,7 @@ export const Default: Story = {
     <bp-select
       .value=${args.value || ''}
       .name=${args.name || ''}
+      .label=${args.label || ''}
       .placeholder=${args.placeholder || 'Select an option'}
       ?disabled=${args.disabled}
       ?required=${args.required}
@@ -104,12 +109,14 @@ export const Required: Story = {
     placeholder: 'Select a country (required)',
     required: true,
     size: 'md',
+    label: 'Country',
   },
   render: (args) => html`
     <bp-select
       .placeholder=${args.placeholder || 'Select an option'}
       ?required=${args.required}
       .size=${args.size || 'md'}
+      .label=${args.label || ''}
       name="country"
     >
       <option value="us">United States</option>
@@ -124,10 +131,7 @@ export const Sizes: Story = {
   render: () => html`
     <div style="display: flex; flex-direction: column; gap: 16px;">
       <div>
-        <label style="display: block; margin-bottom: 8px; font-weight: 500;">
-          Small
-        </label>
-        <bp-select size="sm" placeholder="Small select">
+        <bp-select size="sm" placeholder="Small select" label="Small">
           <option value="1">Option 1</option>
           <option value="2">Option 2</option>
           <option value="3">Option 3</option>
@@ -135,10 +139,11 @@ export const Sizes: Story = {
       </div>
 
       <div>
-        <label style="display: block; margin-bottom: 8px; font-weight: 500;">
-          Medium (default)
-        </label>
-        <bp-select size="md" placeholder="Medium select">
+        <bp-select
+          size="md"
+          placeholder="Medium select"
+          label="Medium (default)"
+        >
           <option value="1">Option 1</option>
           <option value="2">Option 2</option>
           <option value="3">Option 3</option>
@@ -146,10 +151,7 @@ export const Sizes: Story = {
       </div>
 
       <div>
-        <label style="display: block; margin-bottom: 8px; font-weight: 500;">
-          Large
-        </label>
-        <bp-select size="lg" placeholder="Large select">
+        <bp-select size="lg" placeholder="Large select" label="Large">
           <option value="1">Option 1</option>
           <option value="2">Option 2</option>
           <option value="3">Option 3</option>
@@ -236,10 +238,12 @@ export const InForm: Story = {
       style="display: flex; flex-direction: column; gap: 16px; max-width: 400px;"
     >
       <div>
-        <label style="display: block; margin-bottom: 8px; font-weight: 500;">
-          Framework *
-        </label>
-        <bp-select name="framework" placeholder="Select a framework" required>
+        <bp-select
+          name="framework"
+          placeholder="Select a framework"
+          required
+          label="Framework"
+        >
           <option value="react">React</option>
           <option value="vue">Vue</option>
           <option value="angular">Angular</option>
@@ -248,13 +252,11 @@ export const InForm: Story = {
       </div>
 
       <div>
-        <label style="display: block; margin-bottom: 8px; font-weight: 500;">
-          Experience Level
-        </label>
         <bp-select
           name="level"
           placeholder="Select your level"
           value="intermediate"
+          label="Experience Level"
         >
           <option value="beginner">Beginner</option>
           <option value="intermediate">Intermediate</option>

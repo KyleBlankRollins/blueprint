@@ -31,6 +31,7 @@ describe('bp-select', () => {
   it('should have correct default property values', () => {
     expect(element.value).toBe('');
     expect(element.name).toBe('');
+    expect(element.label).toBe('');
     expect(element.placeholder).toBe('Select an option');
     expect(element.disabled).toBe(false);
     expect(element.required).toBe(false);
@@ -48,6 +49,56 @@ describe('bp-select', () => {
     element.name = 'test-select';
     await element.updateComplete;
     expect(element.name).toBe('test-select');
+  });
+
+  it('should set property: label', async () => {
+    element.label = 'Choose an option';
+    await element.updateComplete;
+    expect(element.label).toBe('Choose an option');
+  });
+
+  it('should render label element when label is set', async () => {
+    element.label = 'My Label';
+    await element.updateComplete;
+    const labelElement = element.shadowRoot?.querySelector('.select-label');
+    expect(labelElement).toBeTruthy();
+    expect(labelElement?.textContent?.trim()).toBe('My Label');
+  });
+
+  it('should not render label element when label is empty', async () => {
+    await element.updateComplete;
+    const labelElement = element.shadowRoot?.querySelector('.select-label');
+    expect(labelElement).toBeFalsy();
+  });
+
+  it('should show required indicator in label when required', async () => {
+    element.label = 'Required Field';
+    element.required = true;
+    await element.updateComplete;
+    const requiredIndicator =
+      element.shadowRoot?.querySelector('.select-required');
+    expect(requiredIndicator).toBeTruthy();
+    expect(requiredIndicator?.textContent).toBe('*');
+  });
+
+  it('should reflect label attribute to DOM', async () => {
+    element.label = 'Test Label';
+    await element.updateComplete;
+    expect(element.getAttribute('label')).toBe('Test Label');
+  });
+
+  it('should expose label part for styling', async () => {
+    element.label = 'Styled Label';
+    await element.updateComplete;
+    const labelPart = element.shadowRoot?.querySelector('[part="label"]');
+    expect(labelPart).toBeTruthy();
+  });
+
+  it('should set aria-labelledby on trigger when label is present', async () => {
+    element.label = 'My Label';
+    await element.updateComplete;
+    const trigger = element.shadowRoot?.querySelector('.select-trigger');
+    expect(trigger?.getAttribute('aria-labelledby')).toBe('select-label');
   });
 
   it('should set property: placeholder', async () => {

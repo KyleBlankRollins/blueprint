@@ -372,6 +372,7 @@ interface BpSelectProps extends BaseHTMLAttributes {
   required?: BooleanAttr;
   size?: StringAttr<SelectSize>;
   name?: string;
+  label?: string;
 }
 
 interface BpSkeletonProps extends BaseHTMLAttributes {

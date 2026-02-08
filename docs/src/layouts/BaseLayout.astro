@@ -11,13 +11,25 @@ const {
 ---
 
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <title>{title} | Blueprint</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Blocking inline script to prevent flash of wrong theme -->
+    <script is:inline>
+      (function () {
+        var savedTheme = localStorage.getItem('blueprint-theme');
+        var prefersDark = window.matchMedia(
+          '(prefers-color-scheme: dark)'
+        ).matches;
+        var theme = savedTheme || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
   </head>
   <body>
     <slot />
@@ -25,14 +37,6 @@ const {
     <!-- Load Blueprint components -->
     <script>
       import '../../../source/index.ts';
-
-      // Theme handling
-      const savedTheme = localStorage.getItem('blueprint-theme');
-      const prefersDark = window.matchMedia(
-        '(prefers-color-scheme: dark)'
-      ).matches;
-      const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
-      document.documentElement.setAttribute('data-theme', initialTheme);
 
       // Listen for theme changes
       window.addEventListener('theme-change', ((event: CustomEvent) => {

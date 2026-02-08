@@ -12,6 +12,21 @@ export const selectStyles = css`
     font-family: var(--bp-font-family);
   }
 
+  .select-label {
+    display: block;
+    font-family: var(--bp-font-family);
+    font-size: var(--bp-font-size-sm);
+    font-weight: var(--bp-font-weight-medium);
+    color: var(--bp-color-text);
+    line-height: var(--bp-line-height-normal);
+    margin-bottom: var(--bp-spacing-xs);
+  }
+
+  .select-required {
+    color: var(--bp-color-error);
+    margin-left: var(--bp-spacing-xs);
+  }
+
   .select-trigger {
     display: flex;
     align-items: center;
