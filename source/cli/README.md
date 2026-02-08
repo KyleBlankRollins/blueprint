@@ -186,6 +186,65 @@ Creates stories for:
 - All sizes (if `size` property exists)
 - Disabled state (if `disabled` property exists)
 
+**`bp generate jsx`**
+
+Auto-generates `source/jsx.d.ts` from component `@property()` declarations. This file provides JSX IntelliSense for Blueprint components in Astro, React, and Solid.
+
+```bash
+bp generate jsx
+```
+
+The generated file includes:
+
+- Type imports from each component file
+- A props interface per custom element (`BpButtonProps`, `BpDrawerProps`, etc.)
+- The `BlueprintElements` tag-name-to-props map
+- Namespace augmentations for Astro, React/global JSX, and Solid
+
+Options:
+
+- `--check` — Verify the checked-in file is up to date without modifying it (for CI)
+
+```bash
+# CI usage — exits 1 if the file would change
+bp generate jsx --check
+```
+
+There is also an npm script shortcut that builds the CLI first:
+
+```bash
+npm run generate:jsx
+```
+
+**How it works:**
+
+The generator is split into three modules in `source/cli/lib/component/`:
+
+| File               | Responsibility                                                                                              |
+| ------------------ | ----------------------------------------------------------------------------------------------------------- |
+| `jsxParser.ts`     | Discovers components and parses each `.ts` file with regex to extract tag names, properties, and type exports |
+| `jsxEmitter.ts`    | Takes parsed data and builds the complete `jsx.d.ts` string (imports, interfaces, element map, namespaces)   |
+| `generateJsx.ts`   | Thin orchestrator — calls parser, emitter, Prettier, then writes or compares                                 |
+
+The parser handles:
+
+- Multiple `@customElement` classes per file (e.g., `menu.ts` → 3 components)
+- Both `declare` and assignment-style property declarations
+- Filtering out `private` and `attribute: false` properties
+- Multi-line type declarations and decorator options
+
+The emitter maps Lit property types to JSX-friendly types:
+
+| Source type            | JSX prop type            |
+| ---------------------- | ------------------------ |
+| `boolean`              | `BooleanAttr`            |
+| `number`               | `NumberAttr`             |
+| `string`               | `string`                 |
+| `ButtonVariant` (alias)| `StringAttr<ButtonVariant>` |
+| `'a' \| 'b'` (union)  | `StringAttr<'a' \| 'b'>` |
+| `TableColumn[]`        | `TableColumn[]`          |
+| `SortState \| null`    | `SortState \| null`      |
+
 ### Documentation Management
 
 **`bp docs add <component-name>`**
@@ -264,6 +323,8 @@ bp list --detailed
 | `bp validate tokens <name>`    | Check for hardcoded values                                      |
 | `bp generate api <name>`       | Generate API documentation                                      |
 | `bp generate stories <name>`   | Generate Storybook stories                                      |
+| `bp generate jsx`              | Auto-generate JSX type declarations (`source/jsx.d.ts`)         |
+| `bp generate jsx --check`      | Verify JSX types are up to date (for CI)                        |
 | `bp docs add <name>`           | Create documentation page for component                         |
 | **Workflow Commands**          |                                                                 |
 | `bp create <name>`             | Create complete component (scaffold + stories + API + docs)     |
@@ -380,6 +441,24 @@ bp generate api button
 bp generate stories button
 ```
 
+### Keeping JSX Types in Sync
+
+After adding, changing, or removing component properties:
+
+```bash
+# Regenerate jsx.d.ts
+bp generate jsx
+
+# Or use the npm script (builds CLI first)
+npm run generate:jsx
+```
+
+In CI, verify the file is up to date:
+
+```bash
+bp generate jsx --check
+```
+
 ### Listing All Components
 
 ```bash
@@ -406,15 +485,17 @@ source/cli/
 ├── commands/             # Command implementations
 │   ├── scaffold.ts
 │   ├── validate.ts
-│   ├── generate.ts
+│   ├── generate.ts       # api, stories, and jsx subcommands
 │   └── docs.ts
 ├── lib/                  # Reusable logic
-│   ├── scaffold.ts
-│   ├── validateComponent.ts
-│   ├── validateTokens.ts
-│   ├── extractAPI.ts
-│   ├── generateStories.ts
-│   └── addToDocs.ts
+│   └── component/
+│       ├── extractAPI.ts      # Property/event extraction for API docs
+│       ├── generateStories.ts # Storybook story generation
+│       ├── jsxParser.ts       # Discovers components, parses @property() declarations
+│       ├── jsxEmitter.ts      # Builds jsx.d.ts content from parsed data
+│       ├── generateJsx.ts     # Orchestrator: parser → emitter → Prettier → write
+│       ├── scaffold.ts
+│       └── addToDocs.ts
 ├── templates/            # File templates
 │   ├── baseComponent.template
 │   ├── baseComponent.style.template

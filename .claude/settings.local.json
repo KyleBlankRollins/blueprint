@@ -7,7 +7,9 @@
       "WebFetch(domain:www.learnui.design)",
       "Bash(npm run build:*)",
       "Bash(npm run test:run:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(npx vitest run:*)",
+      "Bash(node dist/cli/index.js generate:*)"
     ]
   }
 }

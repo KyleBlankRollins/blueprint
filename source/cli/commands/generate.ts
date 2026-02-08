@@ -8,6 +8,7 @@ import {
   generateStories,
   isValidComponentName as isValidComponentNameStories,
 } from '../lib/component/generateStories.js';
+import { generateJsxDeclarations } from '../lib/component/generateJsx.js';
 import { error } from '../utils/logger.js';
 
 export function generateCommand(program: Command): void {
@@ -158,6 +159,39 @@ Common issues:
         );
       }
 
+      process.exit(0);
+    });
+
+  // Subcommand: generate jsx
+  generate
+    .command('jsx')
+    .description(
+      'Auto-generate JSX type declarations from component properties'
+    )
+    .option('--check', 'Verify jsx.d.ts is up to date without modifying it')
+    .action((options: { check?: boolean }) => {
+      const result = generateJsxDeclarations({ check: options.check });
+
+      if (!result.success) {
+        error('JSX generation failed');
+        result.errors.forEach((err: string) => console.log(`  ${err}`));
+        process.exit(1);
+      }
+
+      if (options.check) {
+        if (result.changed) {
+          error(
+            'jsx.d.ts is out of date. Run `npx bp generate jsx` to regenerate.'
+          );
+          process.exit(1);
+        }
+        console.log(`jsx.d.ts is up to date (${result.componentCount} components)`);
+        process.exit(0);
+      }
+
+      console.log(
+        `Generated jsx.d.ts with ${result.componentCount} components`
+      );
       process.exit(0);
     });
 }
