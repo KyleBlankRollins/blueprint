@@ -45,9 +45,9 @@ import Header from '../components/Header.astro';
             <div class="component-card">
               <bp-text size="sm" weight="semibold">Sizes</bp-text>
               <div class="component-row">
-                <bp-button size="small">Small</bp-button>
-                <bp-button size="medium">Medium</bp-button>
-                <bp-button size="large">Large</bp-button>
+                <bp-button size="sm">Small</bp-button>
+                <bp-button size="md">Medium</bp-button>
+                <bp-button size="lg">Large</bp-button>
               </div>
             </div>
             <div class="component-card">
@@ -129,7 +129,7 @@ import Header from '../components/Header.astro';
               <div class="component-row">
                 <bp-tag>Default</bp-tag>
                 <bp-tag removable>Removable</bp-tag>
-                <bp-tag variant="outline">Outline</bp-tag>
+                <bp-tag variant="outlined">Outline</bp-tag>
               </div>
             </div>
             <div class="component-card">
@@ -143,9 +143,9 @@ import Header from '../components/Header.astro';
             <div class="component-card">
               <bp-text size="sm" weight="semibold">Spinner</bp-text>
               <div class="component-row">
-                <bp-spinner size="small"></bp-spinner>
-                <bp-spinner size="medium"></bp-spinner>
-                <bp-spinner size="large"></bp-spinner>
+                <bp-spinner size="sm"></bp-spinner>
+                <bp-spinner size="md"></bp-spinner>
+                <bp-spinner size="lg"></bp-spinner>
               </div>
             </div>
           </div>
@@ -156,13 +156,16 @@ import Header from '../components/Header.astro';
           <div class="component-grid">
             <div class="component-card wide">
               <bp-text size="sm" weight="semibold">Tabs</bp-text>
-              <bp-tabs>
-                <bp-tab slot="tab">Tab 1</bp-tab>
-                <bp-tab slot="tab">Tab 2</bp-tab>
-                <bp-tab slot="tab">Tab 3</bp-tab>
-                <bp-tab-panel slot="panel">Content for Tab 1</bp-tab-panel>
-                <bp-tab-panel slot="panel">Content for Tab 2</bp-tab-panel>
-                <bp-tab-panel slot="panel">Content for Tab 3</bp-tab-panel>
+              <bp-tabs id="preview-tabs">
+                <div data-tab-id="tab1" style="padding: 1rem;">
+                  Content for Tab 1
+                </div>
+                <div data-tab-id="tab2" style="padding: 1rem;">
+                  Content for Tab 2
+                </div>
+                <div data-tab-id="tab3" style="padding: 1rem;">
+                  Content for Tab 3
+                </div>
               </bp-tabs>
             </div>
             <div class="component-card wide">
@@ -193,9 +196,9 @@ import Header from '../components/Header.astro';
             <div class="component-card">
               <bp-text size="sm" weight="semibold">Avatar</bp-text>
               <div class="component-row">
-                <bp-avatar size="small" initials="SM"></bp-avatar>
-                <bp-avatar size="medium" initials="MD"></bp-avatar>
-                <bp-avatar size="large" initials="LG"></bp-avatar>
+                <bp-avatar size="sm" initials="SM"></bp-avatar>
+                <bp-avatar size="md" initials="MD"></bp-avatar>
+                <bp-avatar size="lg" initials="LG"></bp-avatar>
               </div>
             </div>
             <div class="component-card">
@@ -286,6 +289,19 @@ import Header from '../components/Header.astro';
 </BaseLayout>
 
 <script>
+  // Initialize bp-tabs with tab data
+  customElements.whenDefined('bp-tabs').then(() => {
+    const previewTabs = document.getElementById('preview-tabs') as any;
+    if (previewTabs) {
+      previewTabs.tabs = [
+        { id: 'tab1', label: 'Tab 1' },
+        { id: 'tab2', label: 'Tab 2' },
+        { id: 'tab3', label: 'Tab 3' },
+      ];
+      previewTabs.value = 'tab1';
+    }
+  });
+
   // Parse query parameters
   const params = new URLSearchParams(window.location.search);
   const initialTheme = params.get('theme');
