@@ -9,16 +9,23 @@
  */
 
 // Import component types for type references
+import type { AccordionVariant } from './components/accordion/accordion.js';
 import type { AlertVariant } from './components/alert/alert.js';
 import type {
   AvatarSize,
   AvatarShape,
   AvatarStatus,
 } from './components/avatar/avatar.js';
+// Badge does not export type aliases; variant and size are inlined below.
+import type {
+  BreadcrumbItem,
+  BreadcrumbSize,
+} from './components/breadcrumb/breadcrumb.js';
 import type { ButtonVariant, ButtonSize } from './components/button/button.js';
 import type { CardVariant, CardDirection } from './components/card/card.js';
+import type { CheckboxSize } from './components/checkbox/checkbox.js';
+import type { ColorPickerSize } from './components/color-picker/color-picker.js';
 import type {
-  ComboboxOption,
   ComboboxSize,
   ComboboxVariant,
 } from './components/combobox/combobox.js';
@@ -39,8 +46,9 @@ import type {
   HeadingSize,
   HeadingWeight,
 } from './components/heading/heading.js';
-import type { IconName, IconSize, IconColor } from './components/icon/icon.js';
-import type { InputSize } from './components/input/input.js';
+import type { IconSize, IconColor } from './components/icon/icon.js';
+import type { IconName } from './components/icon/icons/registry.generated.js';
+import type { InputSize, InputVariant } from './components/input/input.js';
 import type {
   LinkVariant,
   LinkUnderline,
@@ -49,10 +57,13 @@ import type {
 import type { MenuSize } from './components/menu/menu.js';
 import type { ModalSize } from './components/modal/modal.js';
 import type {
-  MultiSelectOption,
   MultiSelectSize,
   MultiSelectVariant,
 } from './components/multi-select/multi-select.js';
+import type {
+  NumberInputSize,
+  NumberInputVariant,
+} from './components/number-input/number-input.js';
 import type {
   PopoverPlacement,
   PopoverTrigger,
@@ -61,26 +72,43 @@ import type {
   ProgressVariant,
   ProgressSize,
 } from './components/progress/progress.js';
+import type { RadioSize } from './components/radio/radio.js';
 import type { SelectSize } from './components/select/select.js';
-import type { NumberInputSize } from './components/number-input/number-input.js';
 import type { SliderSize } from './components/slider/slider.js';
 import type {
   SpinnerSize,
   SpinnerVariant,
 } from './components/spinner/spinner.js';
 import type {
+  StepperSize,
+  StepperOrientation,
+  Step,
+} from './components/stepper/stepper.js';
+import type { SwitchSize } from './components/switch/switch.js';
+import type {
   TabsSize,
   TabsVariant,
   TabsPlacement,
   TabItem,
 } from './components/tabs/tabs.js';
-import type { SwitchSize } from './components/switch/switch.js';
+import type {
+  TableVariant,
+  TableSize,
+  TableColumn,
+  TableRow,
+  TableSortState,
+} from './components/table/table.js';
 import type { TextSize, TextWeight } from './components/text/text.js';
+import type {
+  TextareaVariant,
+  TextareaSize,
+} from './components/textarea/textarea.js';
 import type {
   TimePickerSize,
   TimeFormat,
 } from './components/time-picker/time-picker.js';
 import type { TooltipPlacement } from './components/tooltip/tooltip.js';
+import type { TreeNode } from './components/tree/tree.js';
 
 /**
  * Common HTML attributes that all custom elements accept.
@@ -126,14 +154,23 @@ type NumberAttr<T extends number = number> = T | `${number}`;
 // =============================================================================
 
 interface BpAccordionProps extends BaseHTMLAttributes {
+  variant?: StringAttr<AccordionVariant>;
   multiple?: BooleanAttr;
-  bordered?: BooleanAttr;
+  expandedItems?: string[];
+  disabled?: BooleanAttr;
+}
+
+interface BpAccordionItemProps extends BaseHTMLAttributes {
+  itemId?: string;
+  header?: string;
+  expanded?: BooleanAttr;
+  disabled?: BooleanAttr;
 }
 
 interface BpAlertProps extends BaseHTMLAttributes {
   variant?: StringAttr<AlertVariant>;
   dismissible?: BooleanAttr;
-  icon?: string;
+  showIcon?: BooleanAttr;
 }
 
 interface BpAvatarProps extends BaseHTMLAttributes {
@@ -143,20 +180,25 @@ interface BpAvatarProps extends BaseHTMLAttributes {
   size?: StringAttr<AvatarSize>;
   shape?: StringAttr<AvatarShape>;
   status?: StringAttr<AvatarStatus>;
+  clickable?: BooleanAttr;
+  name?: string;
 }
 
 interface BpBadgeProps extends BaseHTMLAttributes {
   variant?: StringAttr<
-    'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'
+    'primary' | 'success' | 'error' | 'warning' | 'info' | 'neutral'
   >;
   size?: StringAttr<'sm' | 'md' | 'lg'>;
-  pill?: BooleanAttr;
   dot?: BooleanAttr;
 }
 
 interface BpBreadcrumbProps extends BaseHTMLAttributes {
+  items?: BreadcrumbItem[];
   separator?: string;
-  size?: StringAttr<'sm' | 'md' | 'lg'>;
+  size?: StringAttr<BreadcrumbSize>;
+  ariaLabel?: string;
+  collapseOnMobile?: BooleanAttr;
+  maxItems?: NumberAttr;
 }
 
 interface BpBreadcrumbItemProps extends BaseHTMLAttributes {
@@ -169,8 +211,6 @@ interface BpButtonProps extends BaseHTMLAttributes {
   size?: StringAttr<ButtonSize>;
   disabled?: BooleanAttr;
   type?: StringAttr<'button' | 'submit' | 'reset'>;
-  loading?: BooleanAttr;
-  fullWidth?: BooleanAttr;
 }
 
 interface BpCardProps extends BaseHTMLAttributes {
@@ -188,33 +228,46 @@ interface BpCheckboxProps extends BaseHTMLAttributes {
   name?: string;
   value?: string;
   required?: BooleanAttr;
-  label?: string;
+  size?: StringAttr<CheckboxSize>;
+  error?: BooleanAttr;
 }
 
 interface BpColorPickerProps extends BaseHTMLAttributes {
   value?: string;
-  disabled?: BooleanAttr;
   format?: StringAttr<'hex' | 'rgb' | 'hsl'>;
+  alpha?: BooleanAttr;
+  swatches?: string[];
+  inline?: BooleanAttr;
+  disabled?: BooleanAttr;
+  readonly?: BooleanAttr;
+  size?: StringAttr<ColorPickerSize>;
+  label?: string;
+  name?: string;
+  placeholder?: string;
 }
 
 interface BpComboboxProps extends BaseHTMLAttributes {
   value?: string;
-  options?: ComboboxOption[];
+  name?: string;
   placeholder?: string;
   disabled?: BooleanAttr;
+  required?: BooleanAttr;
   size?: StringAttr<ComboboxSize>;
   variant?: StringAttr<ComboboxVariant>;
-  multiple?: BooleanAttr;
+  allowCustomValue?: BooleanAttr;
 }
 
 interface BpDatePickerProps extends BaseHTMLAttributes {
   value?: string;
+  name?: string;
+  label?: string;
   placeholder?: string;
   disabled?: BooleanAttr;
+  required?: BooleanAttr;
   size?: StringAttr<DatePickerSize>;
   min?: string;
   max?: string;
-  format?: string;
+  firstDayOfWeek?: StringAttr<'0' | '1'>;
 }
 
 interface BpDividerProps extends BaseHTMLAttributes {
@@ -229,25 +282,40 @@ interface BpDrawerProps extends BaseHTMLAttributes {
   open?: BooleanAttr;
   placement?: StringAttr<DrawerPlacement>;
   size?: StringAttr<DrawerSize>;
-  header?: string;
-  closable?: BooleanAttr;
-  modal?: BooleanAttr;
+  showClose?: BooleanAttr;
+  closeOnBackdrop?: BooleanAttr;
+  closeOnEscape?: BooleanAttr;
+  showBackdrop?: BooleanAttr;
+  label?: string;
+  inline?: BooleanAttr;
 }
 
 interface BpDropdownProps extends BaseHTMLAttributes {
   open?: BooleanAttr;
-  trigger?: StringAttr<'click' | 'hover'>;
   placement?: string;
   disabled?: BooleanAttr;
+  closeOnClickOutside?: BooleanAttr;
+  closeOnEscape?: BooleanAttr;
+  closeOnSelect?: BooleanAttr;
+  distance?: NumberAttr;
+  arrow?: BooleanAttr;
+  panelRole?: StringAttr<'menu' | 'dialog' | 'listbox'>;
 }
 
 interface BpFileUploadProps extends BaseHTMLAttributes {
+  name?: string;
+  label?: string;
+  description?: string;
   accept?: string;
   multiple?: BooleanAttr;
   disabled?: BooleanAttr;
+  required?: BooleanAttr;
   maxSize?: NumberAttr;
   maxFiles?: NumberAttr;
   size?: StringAttr<'sm' | 'md' | 'lg'>;
+  variant?: StringAttr<'default' | 'success' | 'error' | 'warning'>;
+  message?: string;
+  showPreviews?: BooleanAttr;
 }
 
 interface BpHeadingProps extends BaseHTMLAttributes {
@@ -260,15 +328,19 @@ interface BpIconProps extends BaseHTMLAttributes {
   name?: StringAttr<IconName> | (string & {});
   size?: StringAttr<IconSize>;
   color?: StringAttr<IconColor>;
-  label?: string;
+  ariaLabel?: string;
 }
 
 interface BpInputProps extends BaseHTMLAttributes {
   type?: StringAttr<
     'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search'
   >;
+  variant?: StringAttr<InputVariant>;
   value?: string;
   placeholder?: string;
+  label?: string;
+  helperText?: string;
+  errorMessage?: string;
   disabled?: BooleanAttr;
   readonly?: BooleanAttr;
   required?: BooleanAttr;
@@ -278,9 +350,12 @@ interface BpInputProps extends BaseHTMLAttributes {
   pattern?: string;
   minlength?: NumberAttr;
   maxlength?: NumberAttr;
-  min?: string;
-  max?: string;
-  step?: string;
+  min?: NumberAttr;
+  max?: NumberAttr;
+  step?: NumberAttr;
+  inputmode?: StringAttr<
+    'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search'
+  >;
 }
 
 interface BpLinkProps extends BaseHTMLAttributes {
@@ -297,30 +372,51 @@ interface BpMenuProps extends BaseHTMLAttributes {
   size?: StringAttr<MenuSize>;
 }
 
+interface BpMenuItemProps extends BaseHTMLAttributes {
+  value?: string;
+  disabled?: BooleanAttr;
+  selected?: BooleanAttr;
+  hasSubmenu?: BooleanAttr;
+  size?: StringAttr<MenuSize>;
+  shortcut?: string;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+interface BpMenuDividerProps extends BaseHTMLAttributes {}
+
 interface BpModalProps extends BaseHTMLAttributes {
   open?: BooleanAttr;
   size?: StringAttr<ModalSize>;
-  header?: string;
-  closable?: BooleanAttr;
-  closeOnOverlayClick?: BooleanAttr;
-  closeOnEscape?: BooleanAttr;
+  ariaLabelledby?: string;
 }
 
 interface BpMultiSelectProps extends BaseHTMLAttributes {
   value?: string[];
-  options?: MultiSelectOption[];
+  name?: string;
   placeholder?: string;
   disabled?: BooleanAttr;
+  required?: BooleanAttr;
   size?: StringAttr<MultiSelectSize>;
   variant?: StringAttr<MultiSelectVariant>;
+  maxSelections?: NumberAttr;
+  clearable?: BooleanAttr;
 }
 
 interface BpNotificationProps extends BaseHTMLAttributes {
   variant?: StringAttr<'info' | 'success' | 'warning' | 'error'>;
+  open?: BooleanAttr;
+  closable?: BooleanAttr;
   title?: string;
   message?: string;
-  dismissible?: BooleanAttr;
   duration?: NumberAttr;
+  position?: StringAttr<
+    | 'top-left'
+    | 'top-center'
+    | 'top-right'
+    | 'bottom-left'
+    | 'bottom-center'
+    | 'bottom-right'
+  >;
 }
 
 interface BpNumberInputProps extends BaseHTMLAttributes {
@@ -328,10 +424,17 @@ interface BpNumberInputProps extends BaseHTMLAttributes {
   min?: NumberAttr;
   max?: NumberAttr;
   step?: NumberAttr;
+  name?: string;
+  label?: string;
   placeholder?: string;
   disabled?: BooleanAttr;
   readonly?: BooleanAttr;
+  required?: BooleanAttr;
   size?: StringAttr<NumberInputSize>;
+  variant?: StringAttr<NumberInputVariant>;
+  message?: string;
+  precision?: NumberAttr;
+  hideButtons?: BooleanAttr;
 }
 
 interface BpPaginationProps extends BaseHTMLAttributes {
@@ -350,7 +453,15 @@ interface BpPopoverProps extends BaseHTMLAttributes {
   open?: BooleanAttr;
   placement?: StringAttr<PopoverPlacement>;
   trigger?: StringAttr<PopoverTrigger>;
-  offset?: NumberAttr;
+  arrow?: BooleanAttr;
+  showClose?: BooleanAttr;
+  closeOnOutsideClick?: BooleanAttr;
+  closeOnEscape?: BooleanAttr;
+  distance?: NumberAttr;
+  showDelay?: NumberAttr;
+  hideDelay?: NumberAttr;
+  disabled?: BooleanAttr;
+  label?: string;
 }
 
 interface BpProgressProps extends BaseHTMLAttributes {
@@ -358,6 +469,7 @@ interface BpProgressProps extends BaseHTMLAttributes {
   max?: NumberAttr;
   variant?: StringAttr<ProgressVariant>;
   size?: StringAttr<ProgressSize>;
+  label?: string;
   indeterminate?: BooleanAttr;
   showValue?: BooleanAttr;
 }
@@ -368,7 +480,8 @@ interface BpRadioProps extends BaseHTMLAttributes {
   name?: string;
   value?: string;
   required?: BooleanAttr;
-  label?: string;
+  size?: StringAttr<RadioSize>;
+  error?: BooleanAttr;
 }
 
 interface BpSelectProps extends BaseHTMLAttributes {
@@ -382,11 +495,12 @@ interface BpSelectProps extends BaseHTMLAttributes {
 }
 
 interface BpSkeletonProps extends BaseHTMLAttributes {
-  variant?: StringAttr<'text' | 'circular' | 'rectangular'>;
+  variant?: StringAttr<'text' | 'circular' | 'rectangular' | 'rounded'>;
   width?: string;
   height?: string;
   size?: StringAttr<'sm' | 'md' | 'lg'>;
-  animation?: StringAttr<'pulse' | 'wave' | 'none'>;
+  animated?: BooleanAttr;
+  lines?: NumberAttr;
 }
 
 interface BpSliderProps extends BaseHTMLAttributes {
@@ -394,20 +508,30 @@ interface BpSliderProps extends BaseHTMLAttributes {
   min?: NumberAttr;
   max?: NumberAttr;
   step?: NumberAttr;
+  name?: string;
+  label?: string;
   disabled?: BooleanAttr;
   size?: StringAttr<SliderSize>;
   showValue?: BooleanAttr;
+  showTicks?: BooleanAttr;
 }
 
 interface BpSpinnerProps extends BaseHTMLAttributes {
   size?: StringAttr<SpinnerSize>;
   variant?: StringAttr<SpinnerVariant>;
+  label?: string;
 }
 
 interface BpStepperProps extends BaseHTMLAttributes {
-  activeStep?: NumberAttr;
-  orientation?: StringAttr<'horizontal' | 'vertical'>;
+  steps?: Step[];
+  currentStep?: NumberAttr;
+  orientation?: StringAttr<StepperOrientation>;
+  size?: StringAttr<StepperSize>;
   linear?: BooleanAttr;
+  disabled?: BooleanAttr;
+  hideLabels?: BooleanAttr;
+  clickable?: BooleanAttr;
+  showNavigation?: BooleanAttr;
 }
 
 interface BpSwitchProps extends BaseHTMLAttributes {
@@ -417,37 +541,45 @@ interface BpSwitchProps extends BaseHTMLAttributes {
   value?: string;
   required?: BooleanAttr;
   size?: StringAttr<SwitchSize>;
-  label?: string;
+  error?: BooleanAttr;
 }
 
 interface BpTableProps extends BaseHTMLAttributes {
-  striped?: BooleanAttr;
+  columns?: TableColumn[];
+  rows?: TableRow[];
+  variant?: StringAttr<TableVariant>;
+  size?: StringAttr<TableSize>;
+  selectable?: BooleanAttr;
+  multiSelect?: BooleanAttr;
+  selectedRows?: (string | number)[];
+  sortState?: TableSortState | null;
+  stickyHeader?: BooleanAttr;
   hoverable?: BooleanAttr;
-  bordered?: BooleanAttr;
-  compact?: BooleanAttr;
+  loading?: BooleanAttr;
 }
 
 interface BpTabsProps extends BaseHTMLAttributes {
   value?: string;
+  tabs?: TabItem[];
   size?: StringAttr<TabsSize>;
   variant?: StringAttr<TabsVariant>;
   placement?: StringAttr<TabsPlacement>;
-  tabs?: TabItem[];
+  disabled?: BooleanAttr;
+  manual?: BooleanAttr;
 }
 
 interface BpTabPanelProps extends BaseHTMLAttributes {
-  value?: string;
-  label?: string;
-  disabled?: BooleanAttr;
-  icon?: string;
+  tabId?: string;
 }
 
 interface BpTagProps extends BaseHTMLAttributes {
-  variant?: StringAttr<
-    'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'
-  >;
+  variant?: StringAttr<'solid' | 'outlined'>;
   size?: StringAttr<'sm' | 'md' | 'lg'>;
+  color?: StringAttr<
+    'primary' | 'success' | 'error' | 'warning' | 'info' | 'neutral'
+  >;
   removable?: BooleanAttr;
+  disabled?: BooleanAttr;
 }
 
 interface BpTextProps extends BaseHTMLAttributes {
@@ -469,8 +601,13 @@ interface BpTextProps extends BaseHTMLAttributes {
 }
 
 interface BpTextareaProps extends BaseHTMLAttributes {
+  variant?: StringAttr<TextareaVariant>;
+  size?: StringAttr<TextareaSize>;
   value?: string;
   placeholder?: string;
+  label?: string;
+  helperText?: string;
+  errorMessage?: string;
   disabled?: BooleanAttr;
   readonly?: BooleanAttr;
   required?: BooleanAttr;
@@ -480,12 +617,18 @@ interface BpTextareaProps extends BaseHTMLAttributes {
   name?: string;
   minlength?: NumberAttr;
   maxlength?: NumberAttr;
+  autocomplete?: string;
+  spellcheck?: BooleanAttr;
+  wrap?: StringAttr<'soft' | 'hard'>;
 }
 
 interface BpTimePickerProps extends BaseHTMLAttributes {
   value?: string;
+  name?: string;
+  label?: string;
   placeholder?: string;
   disabled?: BooleanAttr;
+  required?: BooleanAttr;
   size?: StringAttr<TimePickerSize>;
   format?: StringAttr<TimeFormat>;
   step?: NumberAttr;
@@ -494,15 +637,18 @@ interface BpTimePickerProps extends BaseHTMLAttributes {
 interface BpTooltipProps extends BaseHTMLAttributes {
   content?: string;
   placement?: StringAttr<TooltipPlacement>;
-  trigger?: StringAttr<'hover' | 'click' | 'focus'>;
+  disabled?: BooleanAttr;
   delay?: NumberAttr;
 }
 
 interface BpTreeProps extends BaseHTMLAttributes {
+  nodes?: TreeNode[];
+  selectedId?: string | null;
+  expandedIds?: string[];
   selectable?: BooleanAttr;
   multiSelect?: BooleanAttr;
-  checkable?: BooleanAttr;
-  expandOnClick?: BooleanAttr;
+  showLines?: BooleanAttr;
+  size?: StringAttr<'sm' | 'md' | 'lg'>;
 }
 
 // =============================================================================
@@ -515,6 +661,7 @@ interface BpTreeProps extends BaseHTMLAttributes {
  */
 export interface BlueprintElements {
   'bp-accordion': BpAccordionProps;
+  'bp-accordion-item': BpAccordionItemProps;
   'bp-alert': BpAlertProps;
   'bp-avatar': BpAvatarProps;
   'bp-badge': BpBadgeProps;
@@ -535,6 +682,8 @@ export interface BlueprintElements {
   'bp-input': BpInputProps;
   'bp-link': BpLinkProps;
   'bp-menu': BpMenuProps;
+  'bp-menu-item': BpMenuItemProps;
+  'bp-menu-divider': BpMenuDividerProps;
   'bp-modal': BpModalProps;
   'bp-multi-select': BpMultiSelectProps;
   'bp-notification': BpNotificationProps;
