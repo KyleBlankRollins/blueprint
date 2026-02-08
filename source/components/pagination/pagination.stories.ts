@@ -65,10 +65,10 @@ const meta: Meta = {
     },
     size: {
       control: 'select',
-      options: ['small', 'medium', 'large'],
+      options: ['sm', 'md', 'lg'],
       description: 'Size variant',
       table: {
-        defaultValue: { summary: 'medium' },
+        defaultValue: { summary: 'md' },
       },
     },
   },
@@ -95,7 +95,7 @@ export const Default: Story = {
     showPrevNext: true,
     showInfo: false,
     disabled: false,
-    size: 'medium',
+    size: 'md',
   },
   render: (args) => html`
     <bp-pagination
@@ -124,7 +124,7 @@ export const Small: Story = {
     showPrevNext: true,
     showInfo: false,
     disabled: false,
-    size: 'small',
+    size: 'sm',
   },
 };
 
@@ -138,7 +138,7 @@ export const Medium: Story = {
     showPrevNext: true,
     showInfo: false,
     disabled: false,
-    size: 'medium',
+    size: 'md',
   },
 };
 
@@ -152,7 +152,7 @@ export const Large: Story = {
     showPrevNext: true,
     showInfo: false,
     disabled: false,
-    size: 'large',
+    size: 'lg',
   },
 };
 
@@ -166,7 +166,7 @@ export const WithEllipsis: Story = {
     showPrevNext: true,
     showInfo: true,
     disabled: false,
-    size: 'medium',
+    size: 'md',
   },
 };
 
@@ -180,7 +180,7 @@ export const Compact: Story = {
     showPrevNext: true,
     showInfo: true,
     disabled: false,
-    size: 'small',
+    size: 'sm',
   },
 };
 
@@ -194,6 +194,6 @@ export const Disabled: Story = {
     showPrevNext: true,
     showInfo: false,
     disabled: true,
-    size: 'medium',
+    size: 'md',
   },
 };

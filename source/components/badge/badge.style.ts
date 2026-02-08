@@ -52,21 +52,21 @@ export const badgeStyles = css`
   }
 
   /* Sizes */
-  .badge--small {
+  .badge--sm {
     padding: var(--bp-spacing-xs) var(--bp-spacing-xs);
     font-size: var(--bp-font-size-xs);
     min-width: var(--bp-spacing-5);
     height: var(--bp-spacing-5);
   }
 
-  .badge--medium {
+  .badge--md {
     padding: var(--bp-spacing-xs) var(--bp-spacing-sm);
     font-size: var(--bp-font-size-sm);
     min-width: var(--bp-spacing-6);
     height: var(--bp-spacing-6);
   }
 
-  .badge--large {
+  .badge--lg {
     padding: var(--bp-spacing-sm) var(--bp-spacing-md);
     font-size: var(--bp-font-size-base);
     min-width: var(--bp-spacing-8);
@@ -79,19 +79,19 @@ export const badgeStyles = css`
     border-radius: var(--bp-border-radius-full);
   }
 
-  .badge--dot.badge--small {
+  .badge--dot.badge--sm {
     width: var(--bp-spacing-2);
     height: var(--bp-spacing-2);
     min-width: var(--bp-spacing-2);
   }
 
-  .badge--dot.badge--medium {
+  .badge--dot.badge--md {
     width: var(--bp-spacing-3);
     height: var(--bp-spacing-3);
     min-width: var(--bp-spacing-3);
   }
 
-  .badge--dot.badge--large {
+  .badge--dot.badge--lg {
     width: var(--bp-spacing-4);
     height: var(--bp-spacing-4);
     min-width: var(--bp-spacing-4);

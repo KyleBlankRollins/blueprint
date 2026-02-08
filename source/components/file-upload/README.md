@@ -62,7 +62,7 @@ A file upload component with drag-and-drop support, file type validation, size l
 | `required`     | `boolean`                                        | `false`                                | Whether a file is required                                     |
 | `variant`      | `'default' \| 'success' \| 'error' \| 'warning'` | `'default'`                            | Visual variant for validation states                           |
 | `message`      | `string`                                         | `''`                                   | Helper or error message text                                   |
-| `size`         | `'small' \| 'medium' \| 'large'`                 | `'medium'`                             | Size variant                                                   |
+| `size`         | `'sm' \| 'md' \| 'lg'`                 | `'md'`                             | Size variant                                                   |
 | `showPreviews` | `boolean`                                        | `true`                                 | Whether to show file previews for images                       |
 
 ### Events

@@ -125,35 +125,35 @@ export const tagStyles = css`
   }
 
   /* Sizes */
-  .tag--small {
+  .tag--sm {
     padding: var(--bp-spacing-xs) var(--bp-spacing-sm);
     font-size: var(--bp-font-size-xs);
     height: var(--bp-spacing-6);
   }
 
-  .tag--small .tag__close {
+  .tag--sm .tag__close {
     width: var(--bp-spacing-4);
     height: var(--bp-spacing-4);
   }
 
-  .tag--medium {
+  .tag--md {
     padding: var(--bp-spacing-xs) var(--bp-spacing-md);
     font-size: var(--bp-font-size-sm);
     height: var(--bp-spacing-8);
   }
 
-  .tag--medium .tag__close {
+  .tag--md .tag__close {
     width: var(--bp-spacing-5);
     height: var(--bp-spacing-5);
   }
 
-  .tag--large {
+  .tag--lg {
     padding: var(--bp-spacing-sm) var(--bp-spacing-lg);
     font-size: var(--bp-font-size-base);
     height: var(--bp-spacing-10);
   }
 
-  .tag--large .tag__close {
+  .tag--lg .tag__close {
     width: var(--bp-spacing-6);
     height: var(--bp-spacing-6);
   }

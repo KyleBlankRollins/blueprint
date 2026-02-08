@@ -88,7 +88,7 @@ export class BpFileUpload extends LitElement {
   @property({ type: String }) declare message: string;
 
   /** Size variant */
-  @property({ type: String }) declare size: 'small' | 'medium' | 'large';
+  @property({ type: String }) declare size: 'sm' | 'md' | 'lg';
 
   /** Whether to show file previews for images */
   @property({ type: Boolean }) declare showPreviews: boolean;
@@ -117,7 +117,7 @@ export class BpFileUpload extends LitElement {
     this.required = false;
     this.variant = 'default';
     this.message = '';
-    this.size = 'medium';
+    this.size = 'md';
     this.showPreviews = true;
   }
 

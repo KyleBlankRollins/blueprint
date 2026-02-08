@@ -14,7 +14,7 @@ const meta: Meta = {
     },
     size: {
       control: 'select',
-      options: ['small', 'medium', 'large'],
+      options: ['sm', 'md', 'lg'],
       description: 'Size of the badge',
     },
     dot: {
@@ -30,7 +30,7 @@ type Story = StoryObj;
 export const Default: Story = {
   args: {
     variant: 'primary',
-    size: 'medium',
+    size: 'md',
     dot: false,
   },
   render: (args) => html`
@@ -58,9 +58,9 @@ export const AllVariants: Story = {
 export const AllSizes: Story = {
   render: () => html`
     <div style="display: flex; gap: 1rem; align-items: center;">
-      <bp-badge size="small">Small</bp-badge>
-      <bp-badge size="medium">Medium</bp-badge>
-      <bp-badge size="large">Large</bp-badge>
+      <bp-badge size="sm">Small</bp-badge>
+      <bp-badge size="md">Medium</bp-badge>
+      <bp-badge size="lg">Large</bp-badge>
     </div>
   `,
 };
@@ -68,9 +68,9 @@ export const AllSizes: Story = {
 export const CountBadges: Story = {
   render: () => html`
     <div style="display: flex; gap: 1rem; align-items: center;">
-      <bp-badge variant="primary" size="small">3</bp-badge>
-      <bp-badge variant="error" size="small">99+</bp-badge>
-      <bp-badge variant="success" size="medium">12</bp-badge>
+      <bp-badge variant="primary" size="sm">3</bp-badge>
+      <bp-badge variant="error" size="sm">99+</bp-badge>
+      <bp-badge variant="success" size="md">12</bp-badge>
     </div>
   `,
 };
@@ -79,15 +79,15 @@ export const DotIndicators: Story = {
   render: () => html`
     <div style="display: flex; gap: 1.5rem; align-items: center;">
       <div style="display: flex; align-items: center; gap: 0.5rem;">
-        <bp-badge variant="success" size="small" dot></bp-badge>
+        <bp-badge variant="success" size="sm" dot></bp-badge>
         <span>Online</span>
       </div>
       <div style="display: flex; align-items: center; gap: 0.5rem;">
-        <bp-badge variant="warning" size="medium" dot></bp-badge>
+        <bp-badge variant="warning" size="md" dot></bp-badge>
         <span>Away</span>
       </div>
       <div style="display: flex; align-items: center; gap: 0.5rem;">
-        <bp-badge variant="error" size="large" dot></bp-badge>
+        <bp-badge variant="error" size="lg" dot></bp-badge>
         <span>Offline</span>
       </div>
     </div>

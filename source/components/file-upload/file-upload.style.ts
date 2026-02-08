@@ -141,39 +141,39 @@ export const fileUploadStyles = css`
   }
 
   /* Size variants */
-  .file-upload__dropzone--small {
+  .file-upload__dropzone--sm {
     padding: var(--bp-spacing-lg);
     gap: var(--bp-spacing-xs);
   }
 
-  .file-upload__dropzone--small .file-upload__icon {
+  .file-upload__dropzone--sm .file-upload__icon {
     width: var(--bp-spacing-xl);
     height: var(--bp-spacing-xl);
   }
 
-  .file-upload__dropzone--small .file-upload__label {
+  .file-upload__dropzone--sm .file-upload__label {
     font-size: var(--bp-font-size-sm);
   }
 
-  .file-upload__dropzone--small .file-upload__description {
+  .file-upload__dropzone--sm .file-upload__description {
     font-size: var(--bp-font-size-xs);
   }
 
-  .file-upload__dropzone--medium {
+  .file-upload__dropzone--md {
     padding: var(--bp-spacing-xl);
   }
 
-  .file-upload__dropzone--large {
+  .file-upload__dropzone--lg {
     padding: var(--bp-spacing-2xl);
     gap: var(--bp-spacing-md);
   }
 
-  .file-upload__dropzone--large .file-upload__icon {
+  .file-upload__dropzone--lg .file-upload__icon {
     width: var(--bp-spacing-10);
     height: var(--bp-spacing-10);
   }
 
-  .file-upload__dropzone--large .file-upload__label {
+  .file-upload__dropzone--lg .file-upload__label {
     font-size: var(--bp-font-size-lg);
   }
 

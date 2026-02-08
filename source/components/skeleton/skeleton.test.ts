@@ -40,7 +40,7 @@ describe('bp-skeleton', () => {
     expect(element.height).toBe('');
     expect(element.animated).toBe(true);
     expect(element.lines).toBe(1);
-    expect(element.size).toBe('medium');
+    expect(element.size).toBe('md');
   });
 
   // Property tests
@@ -91,11 +91,11 @@ describe('bp-skeleton', () => {
   });
 
   it('should set property: size', async () => {
-    element.size = 'large';
+    element.size = 'lg';
     await element.updateComplete;
-    expect(element.size).toBe('large');
+    expect(element.size).toBe('lg');
     const skeleton = element.shadowRoot?.querySelector('.skeleton');
-    expect(skeleton?.classList.contains('skeleton--large')).toBe(true);
+    expect(skeleton?.classList.contains('skeleton--lg')).toBe(true);
   });
 
   // Attribute reflection tests

@@ -47,7 +47,7 @@ export class BpPagination extends LitElement {
   @property({ type: Boolean }) declare disabled: boolean;
 
   /** Size variant */
-  @property({ type: String }) declare size: 'small' | 'medium' | 'large';
+  @property({ type: String }) declare size: 'sm' | 'md' | 'lg';
 
   static styles = [paginationStyles];
 
@@ -61,7 +61,7 @@ export class BpPagination extends LitElement {
     this.showPrevNext = true;
     this.showInfo = false;
     this.disabled = false;
-    this.size = 'medium';
+    this.size = 'md';
   }
 
   private handlePageChange(newPage: number) {

@@ -40,7 +40,7 @@ A pagination component for navigating through multiple pages of content with cus
 ### Small Size
 
 ```html
-<bp-pagination currentPage="2" totalPages="8" size="small"></bp-pagination>
+<bp-pagination currentPage="2" totalPages="8" size="sm"></bp-pagination>
 ```
 
 ### Custom Sibling and Boundary Counts
@@ -78,7 +78,7 @@ pagination.addEventListener('bp-page-change', (e) => {
 | `showPrevNext`  | `boolean` | `true`   | Show previous/next page buttons                        |
 | `showInfo`      | `boolean` | `false`  | Show page info text (e.g., "Page 1 of 10")             |
 | `disabled`      | `boolean` | `false`  | Disable all pagination controls                        |
-| `size`          | `'small'  | 'medium' | 'large'`                                               | `medium` | Size variant |
+| `size`          | `'sm'  | 'md' | 'lg'`                                               | `medium` | Size variant |
 
 ### Events
 

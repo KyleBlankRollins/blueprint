@@ -28,7 +28,7 @@ A loading placeholder component that indicates content is being loaded. Skeleton
 ### Circular (Avatar Placeholder)
 
 ```html
-<bp-skeleton variant="circular" size="large"></bp-skeleton>
+<bp-skeleton variant="circular" size="lg"></bp-skeleton>
 ```
 
 ### Rectangular (Image Placeholder)
@@ -54,10 +54,10 @@ A loading placeholder component that indicates content is being loaded. Skeleton
 ```html
 <div class="card">
   <div class="card-header">
-    <bp-skeleton variant="circular" size="medium"></bp-skeleton>
+    <bp-skeleton variant="circular" size="md"></bp-skeleton>
     <div>
       <bp-skeleton variant="text" width="120px"></bp-skeleton>
-      <bp-skeleton variant="text" size="small" width="80px"></bp-skeleton>
+      <bp-skeleton variant="text" size="sm" width="80px"></bp-skeleton>
     </div>
   </div>
   <bp-skeleton variant="rectangular" height="150px"></bp-skeleton>
@@ -69,14 +69,14 @@ A loading placeholder component that indicates content is being loaded. Skeleton
 
 ### Properties
 
-| Property   | Type      | Default    | Description                                                 |
-| ---------- | --------- | ---------- | ----------------------------------------------------------- |
-| `variant`  | `string`  | `'text'`   | Shape variant: `text`, `circular`, `rectangular`, `rounded` |
-| `width`    | `string`  | `''`       | Custom width (any CSS value)                                |
-| `height`   | `string`  | `''`       | Custom height (any CSS value)                               |
-| `animated` | `boolean` | `true`     | Whether to show shimmer animation                           |
-| `lines`    | `number`  | `1`        | Number of lines (text variant only)                         |
-| `size`     | `string`  | `'medium'` | Size preset: `small`, `medium`, `large`                     |
+| Property   | Type      | Default  | Description                                                 |
+| ---------- | --------- | -------- | ----------------------------------------------------------- |
+| `variant`  | `string`  | `'text'` | Shape variant: `text`, `circular`, `rectangular`, `rounded` |
+| `width`    | `string`  | `''`     | Custom width (any CSS value)                                |
+| `height`   | `string`  | `''`     | Custom height (any CSS value)                               |
+| `animated` | `boolean` | `true`   | Whether to show shimmer animation                           |
+| `lines`    | `number`  | `1`      | Number of lines (text variant only)                         |
+| `size`     | `string`  | `'md'`   | Size preset: `sm`, `md`, `lg`                               |
 
 ### Variant Options
 
@@ -89,11 +89,11 @@ A loading placeholder component that indicates content is being loaded. Skeleton
 
 ### Size Presets
 
-| Size     | Text Height | Circular Size | Rectangular Height |
-| -------- | ----------- | ------------- | ------------------ |
-| `small`  | 12px        | 32px × 32px   | 40px               |
-| `medium` | 16px        | 40px × 40px   | 64px               |
-| `large`  | 24px        | 48px × 48px   | 96px               |
+| Size | Text Height | Circular Size | Rectangular Height |
+| ---- | ----------- | ------------- | ------------------ |
+| `sm` | 12px        | 32px × 32px   | 40px               |
+| `md` | 16px        | 40px × 40px   | 64px               |
+| `lg` | 24px        | 48px × 48px   | 96px               |
 
 ### Slots
 

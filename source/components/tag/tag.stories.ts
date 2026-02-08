@@ -14,7 +14,7 @@ const meta: Meta = {
     },
     size: {
       control: 'select',
-      options: ['small', 'medium', 'large'],
+      options: ['sm', 'md', 'lg'],
       description: 'Size of the tag',
     },
     color: {
@@ -39,7 +39,7 @@ type Story = StoryObj;
 export const Default: Story = {
   args: {
     variant: 'solid',
-    size: 'medium',
+    size: 'md',
     color: 'neutral',
     removable: false,
     disabled: false,
@@ -77,9 +77,9 @@ export const AllSizes: Story = {
     <div
       style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;"
     >
-      <bp-tag size="small">Small</bp-tag>
-      <bp-tag size="medium">Medium</bp-tag>
-      <bp-tag size="large">Large</bp-tag>
+      <bp-tag size="sm">Small</bp-tag>
+      <bp-tag size="md">Medium</bp-tag>
+      <bp-tag size="lg">Large</bp-tag>
     </div>
   `,
 };
@@ -141,9 +141,9 @@ export const MixedSizes: Story = {
     <div
       style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;"
     >
-      <bp-tag size="small" color="primary" removable>Small Tag</bp-tag>
-      <bp-tag size="medium" color="success" removable>Medium Tag</bp-tag>
-      <bp-tag size="large" color="info" removable>Large Tag</bp-tag>
+      <bp-tag size="sm" color="primary" removable>Small Tag</bp-tag>
+      <bp-tag size="md" color="success" removable>Medium Tag</bp-tag>
+      <bp-tag size="lg" color="info" removable>Large Tag</bp-tag>
     </div>
   `,
 };

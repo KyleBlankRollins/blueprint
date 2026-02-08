@@ -115,41 +115,41 @@ export const paginationStyles = css`
   }
 
   /* Sizes */
-  .pagination--small .pagination__button {
+  .pagination--sm .pagination__button {
     min-width: var(--bp-spacing-xl);
     height: var(--bp-spacing-xl);
     padding: var(--bp-spacing-2xs) var(--bp-spacing-xs);
     font-size: var(--bp-font-size-sm);
   }
 
-  .pagination--small .pagination__ellipsis {
+  .pagination--sm .pagination__ellipsis {
     min-width: var(--bp-spacing-xl);
     height: var(--bp-spacing-xl);
     font-size: var(--bp-font-size-sm);
   }
 
-  .pagination--small .pagination__info {
+  .pagination--sm .pagination__info {
     font-size: var(--bp-font-size-xs);
   }
 
-  .pagination--large .pagination__button {
+  .pagination--lg .pagination__button {
     min-width: var(--bp-spacing-10);
     height: var(--bp-spacing-10);
     padding: var(--bp-spacing-sm) var(--bp-spacing-md);
     font-size: var(--bp-font-size-lg);
   }
 
-  .pagination--large .pagination__ellipsis {
+  .pagination--lg .pagination__ellipsis {
     min-width: var(--bp-spacing-10);
     height: var(--bp-spacing-10);
     font-size: var(--bp-font-size-lg);
   }
 
-  .pagination--large .pagination__info {
+  .pagination--lg .pagination__info {
     font-size: var(--bp-font-size-base);
   }
 
-  .pagination--large {
+  .pagination--lg {
     gap: var(--bp-spacing-md);
   }
 

@@ -65,47 +65,47 @@ export const skeletonStyles = css`
   }
 
   /* Sizes for text variant */
-  .skeleton--text.skeleton--small {
+  .skeleton--text.skeleton--sm {
     height: var(--bp-spacing-3);
   }
 
-  .skeleton--text.skeleton--medium {
+  .skeleton--text.skeleton--md {
     height: var(--bp-spacing-4);
   }
 
-  .skeleton--text.skeleton--large {
+  .skeleton--text.skeleton--lg {
     height: var(--bp-spacing-6);
   }
 
   /* Sizes for circular variant */
-  .skeleton--circular.skeleton--small {
+  .skeleton--circular.skeleton--sm {
     width: var(--bp-spacing-8);
     height: var(--bp-spacing-8);
   }
 
-  .skeleton--circular.skeleton--medium {
+  .skeleton--circular.skeleton--md {
     width: var(--bp-spacing-10);
     height: var(--bp-spacing-10);
   }
 
-  .skeleton--circular.skeleton--large {
+  .skeleton--circular.skeleton--lg {
     width: var(--bp-spacing-12);
     height: var(--bp-spacing-12);
   }
 
   /* Sizes for rectangular/rounded variants */
-  .skeleton--rectangular.skeleton--small,
-  .skeleton--rounded.skeleton--small {
+  .skeleton--rectangular.skeleton--sm,
+  .skeleton--rounded.skeleton--sm {
     height: var(--bp-spacing-10);
   }
 
-  .skeleton--rectangular.skeleton--medium,
-  .skeleton--rounded.skeleton--medium {
+  .skeleton--rectangular.skeleton--md,
+  .skeleton--rounded.skeleton--md {
     height: var(--bp-spacing-16);
   }
 
-  .skeleton--rectangular.skeleton--large,
-  .skeleton--rounded.skeleton--large {
+  .skeleton--rectangular.skeleton--lg,
+  .skeleton--rounded.skeleton--lg {
     height: var(--bp-spacing-24);
   }
 

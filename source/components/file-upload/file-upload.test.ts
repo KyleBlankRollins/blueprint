@@ -34,7 +34,7 @@ describe('bp-file-upload', () => {
     expect(element.required).toBe(false);
     expect(element.variant).toBe('default');
     expect(element.message).toBe('');
-    expect(element.size).toBe('medium');
+    expect(element.size).toBe('md');
     expect(element.showPreviews).toBe(true);
   });
 
@@ -171,34 +171,34 @@ describe('bp-file-upload', () => {
 
   // Size tests
   it('should apply small size styles', async () => {
-    element.size = 'small';
+    element.size = 'sm';
     await element.updateComplete;
     const dropzone = element.shadowRoot?.querySelector(
       '.file-upload__dropzone'
     );
-    expect(dropzone?.classList.contains('file-upload__dropzone--small')).toBe(
+    expect(dropzone?.classList.contains('file-upload__dropzone--sm')).toBe(
       true
     );
   });
 
   it('should apply medium size styles', async () => {
-    element.size = 'medium';
+    element.size = 'md';
     await element.updateComplete;
     const dropzone = element.shadowRoot?.querySelector(
       '.file-upload__dropzone'
     );
-    expect(dropzone?.classList.contains('file-upload__dropzone--medium')).toBe(
+    expect(dropzone?.classList.contains('file-upload__dropzone--md')).toBe(
       true
     );
   });
 
   it('should apply large size styles', async () => {
-    element.size = 'large';
+    element.size = 'lg';
     await element.updateComplete;
     const dropzone = element.shadowRoot?.querySelector(
       '.file-upload__dropzone'
     );
-    expect(dropzone?.classList.contains('file-upload__dropzone--large')).toBe(
+    expect(dropzone?.classList.contains('file-upload__dropzone--lg')).toBe(
       true
     );
   });

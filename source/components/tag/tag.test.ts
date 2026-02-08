@@ -30,7 +30,7 @@ describe('bp-tag', () => {
   // Default Values
   it('should have correct default property values', () => {
     expect(element.variant).toBe('solid');
-    expect(element.size).toBe('medium');
+    expect(element.size).toBe('md');
     expect(element.color).toBe('neutral');
     expect(element.removable).toBe(false);
     expect(element.disabled).toBe(false);
@@ -46,11 +46,11 @@ describe('bp-tag', () => {
   });
 
   it('should set property: size', async () => {
-    element.size = 'large';
+    element.size = 'lg';
     await element.updateComplete;
-    expect(element.size).toBe('large');
+    expect(element.size).toBe('lg');
     const tag = element.shadowRoot?.querySelector('.tag');
-    expect(tag?.classList.contains('tag--large')).toBe(true);
+    expect(tag?.classList.contains('tag--lg')).toBe(true);
   });
 
   it('should set property: color', async () => {
@@ -85,9 +85,9 @@ describe('bp-tag', () => {
   });
 
   it('should reflect size attribute to DOM', async () => {
-    element.size = 'small';
+    element.size = 'sm';
     await element.updateComplete;
-    expect(element.getAttribute('size')).toBe('small');
+    expect(element.getAttribute('size')).toBe('sm');
   });
 
   it('should reflect color attribute to DOM', async () => {
@@ -280,24 +280,24 @@ describe('bp-tag', () => {
 
   // Size Tests
   it('should apply small size styles', async () => {
-    element.size = 'small';
+    element.size = 'sm';
     await element.updateComplete;
     const tag = element.shadowRoot?.querySelector('.tag');
-    expect(tag?.classList.contains('tag--small')).toBe(true);
+    expect(tag?.classList.contains('tag--sm')).toBe(true);
   });
 
   it('should apply medium size styles', async () => {
-    element.size = 'medium';
+    element.size = 'md';
     await element.updateComplete;
     const tag = element.shadowRoot?.querySelector('.tag');
-    expect(tag?.classList.contains('tag--medium')).toBe(true);
+    expect(tag?.classList.contains('tag--md')).toBe(true);
   });
 
   it('should apply large size styles', async () => {
-    element.size = 'large';
+    element.size = 'lg';
     await element.updateComplete;
     const tag = element.shadowRoot?.querySelector('.tag');
-    expect(tag?.classList.contains('tag--large')).toBe(true);
+    expect(tag?.classList.contains('tag--lg')).toBe(true);
   });
 
   // Content Slot

@@ -247,6 +247,7 @@ interface BpFileUploadProps extends BaseHTMLAttributes {
   disabled?: BooleanAttr;
   maxSize?: NumberAttr;
   maxFiles?: NumberAttr;
+  size?: StringAttr<'sm' | 'md' | 'lg'>;
 }
 
 interface BpHeadingProps extends BaseHTMLAttributes {
@@ -334,10 +335,15 @@ interface BpNumberInputProps extends BaseHTMLAttributes {
 }
 
 interface BpPaginationProps extends BaseHTMLAttributes {
-  total?: NumberAttr;
-  current?: NumberAttr;
-  pageSize?: NumberAttr;
+  currentPage?: NumberAttr;
+  totalPages?: NumberAttr;
+  siblingCount?: NumberAttr;
+  boundaryCount?: NumberAttr;
   showFirstLast?: BooleanAttr;
+  showPrevNext?: BooleanAttr;
+  showInfo?: BooleanAttr;
+  disabled?: BooleanAttr;
+  size?: StringAttr<'sm' | 'md' | 'lg'>;
 }
 
 interface BpPopoverProps extends BaseHTMLAttributes {
@@ -379,6 +385,7 @@ interface BpSkeletonProps extends BaseHTMLAttributes {
   variant?: StringAttr<'text' | 'circular' | 'rectangular'>;
   width?: string;
   height?: string;
+  size?: StringAttr<'sm' | 'md' | 'lg'>;
   animation?: StringAttr<'pulse' | 'wave' | 'none'>;
 }
 

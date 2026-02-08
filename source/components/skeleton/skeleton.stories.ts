@@ -30,7 +30,7 @@ const meta: Meta = {
     },
     size: {
       control: 'select',
-      options: ['small', 'medium', 'large'],
+      options: ['sm', 'md', 'lg'],
       description: 'Size preset',
     },
   },
@@ -46,7 +46,7 @@ export const Default: Story = {
     height: '',
     animated: true,
     lines: 1,
-    size: 'medium',
+    size: 'md',
   },
   render: (args) => html`
     <bp-skeleton
@@ -91,7 +91,7 @@ export const Circular: Story = {
   args: {
     ...Default.args,
     variant: 'circular',
-    size: 'large',
+    size: 'lg',
   },
   render: (args) => html`
     <bp-skeleton .variant=${args.variant} .size=${args.size}></bp-skeleton>
@@ -152,15 +152,15 @@ export const Sizes: Story = {
     >
       <div>
         <p style="margin: 0 0 8px; font-size: 14px; color: #666;">Small</p>
-        <bp-skeleton variant="text" size="small"></bp-skeleton>
+        <bp-skeleton variant="text" size="sm"></bp-skeleton>
       </div>
       <div>
         <p style="margin: 0 0 8px; font-size: 14px; color: #666;">Medium</p>
-        <bp-skeleton variant="text" size="medium"></bp-skeleton>
+        <bp-skeleton variant="text" size="md"></bp-skeleton>
       </div>
       <div>
         <p style="margin: 0 0 8px; font-size: 14px; color: #666;">Large</p>
-        <bp-skeleton variant="text" size="large"></bp-skeleton>
+        <bp-skeleton variant="text" size="lg"></bp-skeleton>
       </div>
     </div>
   `,
@@ -169,9 +169,9 @@ export const Sizes: Story = {
 export const CircularSizes: Story = {
   render: () => html`
     <div style="display: flex; gap: 16px; align-items: center;">
-      <bp-skeleton variant="circular" size="small"></bp-skeleton>
-      <bp-skeleton variant="circular" size="medium"></bp-skeleton>
-      <bp-skeleton variant="circular" size="large"></bp-skeleton>
+      <bp-skeleton variant="circular" size="sm"></bp-skeleton>
+      <bp-skeleton variant="circular" size="md"></bp-skeleton>
+      <bp-skeleton variant="circular" size="lg"></bp-skeleton>
     </div>
   `,
 };
@@ -182,15 +182,15 @@ export const CardPlaceholder: Story = {
       style="width: 300px; padding: 16px; border: 1px solid #e0e0e0; border-radius: 8px;"
     >
       <div style="display: flex; gap: 12px; margin-bottom: 16px;">
-        <bp-skeleton variant="circular" size="medium"></bp-skeleton>
+        <bp-skeleton variant="circular" size="md"></bp-skeleton>
         <div style="flex: 1;">
           <bp-skeleton
             variant="text"
-            size="medium"
+            size="md"
             width="120px"
             style="margin-bottom: 8px;"
           ></bp-skeleton>
-          <bp-skeleton variant="text" size="small" width="80px"></bp-skeleton>
+          <bp-skeleton variant="text" size="sm" width="80px"></bp-skeleton>
         </div>
       </div>
       <bp-skeleton
@@ -212,16 +212,16 @@ export const ListPlaceholder: Story = {
       ${[1, 2, 3].map(
         () => html`
           <div style="display: flex; gap: 12px; align-items: center;">
-            <bp-skeleton variant="circular" size="medium"></bp-skeleton>
+            <bp-skeleton variant="circular" size="md"></bp-skeleton>
             <div style="flex: 1;">
               <bp-skeleton
                 variant="text"
-                size="medium"
+                size="md"
                 style="margin-bottom: 4px;"
               ></bp-skeleton>
               <bp-skeleton
                 variant="text"
-                size="small"
+                size="sm"
                 width="60%"
               ></bp-skeleton>
             </div>

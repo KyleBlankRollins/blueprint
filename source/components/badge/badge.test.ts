@@ -31,7 +31,7 @@ describe('bp-badge', () => {
   // Default values tests
   it('should have correct default property values', () => {
     expect(element.variant).toBe('primary');
-    expect(element.size).toBe('medium');
+    expect(element.size).toBe('md');
     expect(element.dot).toBe(false);
   });
 
@@ -45,11 +45,11 @@ describe('bp-badge', () => {
   });
 
   it('should set property: size', async () => {
-    element.size = 'large';
+    element.size = 'lg';
     await element.updateComplete;
-    expect(element.size).toBe('large');
+    expect(element.size).toBe('lg');
     const badge = element.shadowRoot?.querySelector('.badge');
-    expect(badge?.classList.contains('badge--large')).toBe(true);
+    expect(badge?.classList.contains('badge--lg')).toBe(true);
   });
 
   it('should set property: dot', async () => {
@@ -68,9 +68,9 @@ describe('bp-badge', () => {
   });
 
   it('should reflect size attribute to DOM', async () => {
-    element.size = 'small';
+    element.size = 'sm';
     await element.updateComplete;
-    expect(element.getAttribute('size')).toBe('small');
+    expect(element.getAttribute('size')).toBe('sm');
   });
 
   it('should reflect dot attribute to DOM', async () => {
@@ -124,24 +124,24 @@ describe('bp-badge', () => {
 
   // Size tests
   it('should apply small size styles', async () => {
-    element.size = 'small';
+    element.size = 'sm';
     await element.updateComplete;
     const badge = element.shadowRoot?.querySelector('.badge');
-    expect(badge?.classList.contains('badge--small')).toBe(true);
+    expect(badge?.classList.contains('badge--sm')).toBe(true);
   });
 
   it('should apply medium size styles', async () => {
-    element.size = 'medium';
+    element.size = 'md';
     await element.updateComplete;
     const badge = element.shadowRoot?.querySelector('.badge');
-    expect(badge?.classList.contains('badge--medium')).toBe(true);
+    expect(badge?.classList.contains('badge--md')).toBe(true);
   });
 
   it('should apply large size styles', async () => {
-    element.size = 'large';
+    element.size = 'lg';
     await element.updateComplete;
     const badge = element.shadowRoot?.querySelector('.badge');
-    expect(badge?.classList.contains('badge--large')).toBe(true);
+    expect(badge?.classList.contains('badge--lg')).toBe(true);
   });
 
   // CSS Parts tests

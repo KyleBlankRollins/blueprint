@@ -45,7 +45,7 @@ export class BpSkeleton extends LitElement {
   declare lines: number;
 
   /** The size preset (affects default dimensions) */
-  @property({ type: String }) declare size: 'small' | 'medium' | 'large';
+  @property({ type: String }) declare size: 'sm' | 'md' | 'lg';
 
   static styles = [skeletonStyles];
 
@@ -56,7 +56,7 @@ export class BpSkeleton extends LitElement {
     this.height = '';
     this.animated = true;
     this.lines = 1;
-    this.size = 'medium';
+    this.size = 'md';
   }
 
   /**

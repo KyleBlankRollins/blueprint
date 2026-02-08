@@ -16,7 +16,7 @@ import { badgeStyles } from './badge.style.js';
  * ```html
  * <bp-badge>New</bp-badge>
  * <bp-badge variant="success">Active</bp-badge>
- * <bp-badge variant="error" size="small">3</bp-badge>
+ * <bp-badge variant="error" size="sm">3</bp-badge>
  * ```
  */
 @customElement('bp-badge')
@@ -36,13 +36,13 @@ export class BpBadge extends LitElement {
 
   /**
    * Size of the badge
-   * @type {'small' | 'medium' | 'large'}
-   * @default 'medium'
+   * @type {'sm' | 'md' | 'lg'}
+   * @default 'md'
    */
   @property({ type: String, reflect: true }) declare size:
-    | 'small'
-    | 'medium'
-    | 'large';
+    | 'sm'
+    | 'md'
+    | 'lg';
 
   /**
    * Whether the badge is a dot/pill shape (for count indicators)
@@ -56,7 +56,7 @@ export class BpBadge extends LitElement {
   constructor() {
     super();
     this.variant = 'primary';
-    this.size = 'medium';
+    this.size = 'md';
     this.dot = false;
   }
 

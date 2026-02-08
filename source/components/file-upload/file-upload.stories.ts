@@ -55,7 +55,7 @@ const meta: Meta = {
     },
     size: {
       control: 'select',
-      options: ['small', 'medium', 'large'],
+      options: ['sm', 'md', 'lg'],
       description: 'Size variant',
     },
     showPreviews: {
@@ -125,17 +125,17 @@ export const Sizes: Story = {
   render: () => html`
     <div style="display: flex; flex-direction: column; gap: 24px;">
       <bp-file-upload
-        size="small"
+        size="sm"
         label="Small size"
         description="Compact upload area"
       ></bp-file-upload>
       <bp-file-upload
-        size="medium"
+        size="md"
         label="Medium size (default)"
         description="Standard upload area"
       ></bp-file-upload>
       <bp-file-upload
-        size="large"
+        size="lg"
         label="Large size"
         description="Prominent upload area for primary actions"
       ></bp-file-upload>

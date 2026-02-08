@@ -33,8 +33,8 @@ A compact status indicator for displaying counts, labels, and notifications.
 ### Count Indicators
 
 ```html
-<bp-badge variant="error" size="small">3</bp-badge>
-<bp-badge variant="primary" size="small">99+</bp-badge>
+<bp-badge variant="error" size="sm">3</bp-badge>
+<bp-badge variant="primary" size="sm">99+</bp-badge>
 ```
 
 ### Status Dots
@@ -47,9 +47,9 @@ A compact status indicator for displaying counts, labels, and notifications.
 ### Different Sizes
 
 ```html
-<bp-badge size="small">Small</bp-badge>
-<bp-badge size="medium">Medium</bp-badge>
-<bp-badge size="large">Large</bp-badge>
+<bp-badge size="sm">Small</bp-badge>
+<bp-badge size="md">Medium</bp-badge>
+<bp-badge size="lg">Large</bp-badge>
 ```
 
 ## API
@@ -59,7 +59,7 @@ A compact status indicator for displaying counts, labels, and notifications.
 | Property  | Type                                                                    | Default     | Description                        |
 | --------- | ----------------------------------------------------------------------- | ----------- | ---------------------------------- |
 | `variant` | `'primary' \| 'success' \| 'error' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Visual variant of the badge        |
-| `size`    | `'small' \| 'medium' \| 'large'`                                        | `'medium'`  | Size of the badge                  |
+| `size`    | `'sm' \| 'md' \| 'lg'`                                        | `'md'`  | Size of the badge                  |
 | `dot`     | `boolean`                                                               | `false`     | Display as a minimal dot indicator |
 
 ### Events

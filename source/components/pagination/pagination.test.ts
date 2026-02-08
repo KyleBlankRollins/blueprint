@@ -38,7 +38,7 @@ describe('bp-pagination', () => {
     expect(element.showPrevNext).toBe(true);
     expect(element.showInfo).toBe(false);
     expect(element.disabled).toBe(false);
-    expect(element.size).toBe('medium');
+    expect(element.size).toBe('md');
   });
 
   // Property Reactivity (DOM updates when properties change)
@@ -62,15 +62,15 @@ describe('bp-pagination', () => {
   });
 
   it('should update CSS class when size property changes', async () => {
-    element.size = 'small';
+    element.size = 'sm';
     await element.updateComplete;
     const nav = element.shadowRoot!.querySelector('nav');
-    expect(nav?.classList.contains('pagination--small')).toBe(true);
+    expect(nav?.classList.contains('pagination--sm')).toBe(true);
 
-    element.size = 'large';
+    element.size = 'lg';
     await element.updateComplete;
-    expect(nav?.classList.contains('pagination--large')).toBe(true);
-    expect(nav?.classList.contains('pagination--small')).toBe(false);
+    expect(nav?.classList.contains('pagination--lg')).toBe(true);
+    expect(nav?.classList.contains('pagination--sm')).toBe(false);
   });
 
   it('should update page info text when currentPage changes', async () => {

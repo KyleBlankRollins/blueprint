@@ -20,7 +20,7 @@ import '../icon/icon.js';
  * ```html
  * <bp-tag>Design</bp-tag>
  * <bp-tag variant="outlined" removable>TypeScript</bp-tag>
- * <bp-tag variant="success" size="small">Active</bp-tag>
+ * <bp-tag variant="success" size="sm">Active</bp-tag>
  * ```
  */
 @customElement('bp-tag')
@@ -36,13 +36,13 @@ export class BpTag extends LitElement {
 
   /**
    * Size of the tag
-   * @type {'small' | 'medium' | 'large'}
-   * @default 'medium'
+   * @type {'sm' | 'md' | 'lg'}
+   * @default 'md'
    */
   @property({ type: String, reflect: true }) declare size:
-    | 'small'
-    | 'medium'
-    | 'large';
+    | 'sm'
+    | 'md'
+    | 'lg';
 
   /**
    * Color scheme of the tag
@@ -76,7 +76,7 @@ export class BpTag extends LitElement {
   constructor() {
     super();
     this.variant = 'solid';
-    this.size = 'medium';
+    this.size = 'md';
     this.color = 'neutral';
     this.removable = false;
     this.disabled = false;
@@ -139,7 +139,7 @@ export class BpTag extends LitElement {
 
     // Map tag size to icon size (icons should be smaller)
     const iconSize =
-      this.size === 'small' ? 'xs' : this.size === 'large' ? 'sm' : 'xs';
+      this.size === 'sm' ? 'xs' : this.size === 'lg' ? 'sm' : 'xs';
 
     return html`
       <div

@@ -101,16 +101,16 @@ import 'blueprint/components/file-upload';
 
 <ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
-    <bp-file-upload size="small" label="Small uploader"></bp-file-upload>
-    <bp-file-upload size="medium" label="Medium uploader"></bp-file-upload>
-    <bp-file-upload size="large" label="Large uploader"></bp-file-upload>
+    <bp-file-upload size="sm" label="Small uploader"></bp-file-upload>
+    <bp-file-upload size="md" label="Medium uploader"></bp-file-upload>
+    <bp-file-upload size="lg" label="Large uploader"></bp-file-upload>
   </div>
 </ComponentPreview>
 
 ```html
-<bp-file-upload size="small" label="Small"></bp-file-upload>
-<bp-file-upload size="medium" label="Medium"></bp-file-upload>
-<bp-file-upload size="large" label="Large"></bp-file-upload>
+<bp-file-upload size="sm" label="Small"></bp-file-upload>
+<bp-file-upload size="md" label="Medium"></bp-file-upload>
+<bp-file-upload size="lg" label="Large"></bp-file-upload>
 ```
 
 ### Validation States
@@ -169,7 +169,7 @@ import 'blueprint/components/file-upload';
 | `required`     | `boolean`                                        | `false`                                | Whether a file is required                |
 | `variant`      | `'default' \| 'success' \| 'error' \| 'warning'` | `'default'`                            | Validation variant                        |
 | `message`      | `string`                                         | `''`                                   | Help or error message                     |
-| `size`         | `'small' \| 'medium' \| 'large'`                 | `'medium'`                             | Size variant                              |
+| `size`         | `'sm' \| 'md' \| 'lg'`                 | `'md'`                             | Size variant                              |
 | `showPreviews` | `boolean`                                        | `true`                                 | Show image previews                       |
 
 ### Methods
