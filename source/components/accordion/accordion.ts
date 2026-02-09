@@ -4,15 +4,12 @@ import { classMap } from 'lit/directives/class-map.js';
 import { accordionStyles } from './accordion.style.js';
 import '../icon/icon.js';
 
-export type AccordionVariant = 'default' | 'bordered' | 'separated';
-
 /**
  * A container component that groups accordion items.
  * Controls single or multiple expansion behavior.
  *
  * @element bp-accordion
  *
- * @property {AccordionVariant} variant - Visual style variant
  * @property {boolean} multiple - Whether multiple items can be expanded simultaneously
  * @property {string[]} expandedItems - Array of expanded item IDs
  * @property {boolean} disabled - Whether all items are disabled
@@ -26,21 +23,6 @@ export type AccordionVariant = 'default' | 'bordered' | 'separated';
  */
 @customElement('bp-accordion')
 export class BpAccordion extends LitElement {
-  /** Visual style variant */
-  @property({
-    type: String,
-    reflect: true,
-    converter: {
-      fromAttribute: (value: string | null) => {
-        const valid: AccordionVariant[] = ['default', 'bordered', 'separated'];
-        return value && valid.includes(value as AccordionVariant)
-          ? (value as AccordionVariant)
-          : 'default';
-      },
-    },
-  })
-  declare variant: AccordionVariant;
-
   /** Whether multiple items can be expanded simultaneously */
   @property({ type: Boolean, reflect: true }) declare multiple: boolean;
 
@@ -54,7 +36,6 @@ export class BpAccordion extends LitElement {
 
   constructor() {
     super();
-    this.variant = 'default';
     this.multiple = false;
     this.expandedItems = [];
     this.disabled = false;
@@ -122,6 +103,33 @@ export class BpAccordion extends LitElement {
     });
   }
 
+  /**
+   * Initializes expandedItems array from children with expanded attribute.
+   * Called on first render to respect items marked as expanded in HTML.
+   */
+  private initializeExpandedItems() {
+    const items = this.querySelectorAll('bp-accordion-item');
+    const expandedIds: string[] = [];
+
+    items.forEach((item) => {
+      const accordionItem = item as BpAccordionItem;
+      if (accordionItem.expanded && accordionItem.itemId) {
+        expandedIds.push(accordionItem.itemId);
+      }
+    });
+
+    if (expandedIds.length > 0) {
+      // In single mode, only keep the first expanded item
+      this.expandedItems = this.multiple ? expandedIds : [expandedIds[0]];
+    }
+  }
+
+  firstUpdated(): void {
+    // Initialize expanded items from children on first render
+    this.initializeExpandedItems();
+    this.updateChildItems();
+  }
+
   updated(changedProperties: Map<string, unknown>): void {
     if (
       changedProperties.has('expandedItems') ||
@@ -186,16 +194,28 @@ export class BpAccordion extends LitElement {
     this.updateChildItems();
   }
 
+  /**
+   * Handles slot changes - when children are added or removed.
+   * Initializes expanded state from new children.
+   */
+  private handleSlotChange() {
+    // Only initialize from children if expandedItems is empty
+    // Otherwise respect the parent's state
+    if (this.expandedItems.length === 0) {
+      this.initializeExpandedItems();
+    }
+    this.updateChildItems();
+  }
+
   render() {
     const classes = {
       accordion: true,
-      [`accordion--${this.variant}`]: true,
       'accordion--disabled': this.disabled,
     };
 
     return html`
       <div class=${classMap(classes)} part="accordion" role="presentation">
-        <slot @slotchange=${this.updateChildItems}></slot>
+        <slot @slotchange=${this.handleSlotChange}></slot>
       </div>
     `;
   }

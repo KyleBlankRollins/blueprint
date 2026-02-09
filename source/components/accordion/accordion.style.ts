@@ -11,39 +11,9 @@ export const accordionStyles = css`
     font-family: var(--bp-font-family);
     display: flex;
     flex-direction: column;
-  }
-
-  /* Default variant - items connected with borders */
-  .accordion--default {
     border: var(--bp-border-width) solid var(--bp-color-border);
     border-radius: var(--bp-border-radius);
     overflow: hidden;
-  }
-
-  /* Bordered variant - each item has its own border */
-  .accordion--bordered {
-    gap: 0;
-  }
-
-  .accordion--bordered ::slotted(bp-accordion-item) {
-    border: var(--bp-border-width) solid var(--bp-color-border);
-    border-radius: var(--bp-border-radius);
-    margin-bottom: var(--bp-spacing-2);
-  }
-
-  .accordion--bordered ::slotted(bp-accordion-item:last-child) {
-    margin-bottom: 0;
-  }
-
-  /* Separated variant - items with gaps and subtle backgrounds */
-  .accordion--separated {
-    gap: var(--bp-spacing-3);
-  }
-
-  .accordion--separated ::slotted(bp-accordion-item) {
-    background: var(--bp-color-surface);
-    border-radius: var(--bp-border-radius);
-    box-shadow: var(--bp-shadow-sm);
   }
 
   /* Disabled state */
@@ -54,14 +24,14 @@ export const accordionStyles = css`
 
   /* ===== ACCORDION ITEM ===== */
 
+  /* Separators between items */
+  :host(:not(:first-of-type)) {
+    border-top: var(--bp-border-width) solid var(--bp-color-border);
+  }
+
   .item {
     display: flex;
     flex-direction: column;
-  }
-
-  /* Item borders for default variant (handled by slotted styles in accordion) */
-  :host(:not(:last-of-type)) .item {
-    border-bottom: var(--bp-border-width) solid var(--bp-color-border);
   }
 
   /* Header button */

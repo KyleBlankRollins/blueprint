@@ -35,21 +35,12 @@ describe('bp-accordion', () => {
 
   // Default values tests
   it('should have correct default property values', () => {
-    expect(element.variant).toBe('default');
     expect(element.multiple).toBe(false);
     expect(element.expandedItems).toEqual([]);
     expect(element.disabled).toBe(false);
   });
 
   // Property tests
-  it('should set property: variant', async () => {
-    element.variant = 'bordered';
-    await element.updateComplete;
-    expect(element.variant).toBe('bordered');
-    const accordion = element.shadowRoot?.querySelector('.accordion');
-    expect(accordion?.classList.contains('accordion--bordered')).toBe(true);
-  });
-
   it('should set property: multiple', async () => {
     element.multiple = true;
     await element.updateComplete;
@@ -71,12 +62,6 @@ describe('bp-accordion', () => {
   });
 
   // Attribute tests
-  it('should reflect variant attribute when property changes', async () => {
-    element.variant = 'separated';
-    await element.updateComplete;
-    expect(element.getAttribute('variant')).toBe('separated');
-  });
-
   it('should reflect multiple attribute when property changes', async () => {
     element.multiple = true;
     await element.updateComplete;
@@ -271,12 +256,6 @@ describe('bp-accordion', () => {
   });
 
   // Validation tests
-  it('should fallback to default variant when invalid variant attribute provided', async () => {
-    element.setAttribute('variant', 'invalid-variant');
-    await element.updateComplete;
-    expect(element.variant).toBe('default');
-  });
-
   it('should handle expandedItems with IDs that do not match any items', async () => {
     element.expandedItems = ['non-existent-id'];
     element.innerHTML =

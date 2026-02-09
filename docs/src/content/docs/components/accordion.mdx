@@ -75,43 +75,6 @@ Allow multiple sections to be open simultaneously:
 </bp-accordion>
 ```
 
-### Variants
-
-<ComponentPreview>
-<div style="display: flex; flex-direction: column; gap: 2rem;">
-<bp-accordion variant="default">
-  <bp-accordion-item item-id="def1">
-    <span slot="header">Default Variant</span>
-    <p>Standard accordion styling.</p>
-  </bp-accordion-item>
-</bp-accordion>
-
-<bp-accordion variant="bordered">
-  <bp-accordion-item item-id="bord1">
-    <span slot="header">Bordered Variant</span>
-    <p>With visible borders.</p>
-  </bp-accordion-item>
-</bp-accordion>
-
-<bp-accordion variant="separated">
-  <bp-accordion-item item-id="sep1">
-    <span slot="header">Separated Variant</span>
-    <p>Items are visually separated.</p>
-  </bp-accordion-item>
-  <bp-accordion-item item-id="sep2">
-    <span slot="header">Another Item</span>
-    <p>With gaps between items.</p>
-  </bp-accordion-item>
-</bp-accordion>
-</div>
-</ComponentPreview>
-
-```html
-<bp-accordion variant="default">...</bp-accordion>
-<bp-accordion variant="bordered">...</bp-accordion>
-<bp-accordion variant="separated">...</bp-accordion>
-```
-
 ### Default Expanded
 
 <ComponentPreview>
@@ -199,12 +162,11 @@ accordion.collapseAll();
 
 ### bp-accordion Properties
 
-| Property        | Type                                     | Default     | Description                   |
-| --------------- | ---------------------------------------- | ----------- | ----------------------------- |
-| `variant`       | `'default' \| 'bordered' \| 'separated'` | `'default'` | Visual style variant          |
-| `multiple`      | `boolean`                                | `false`     | Allow multiple expanded items |
-| `expandedItems` | `string[]`                               | `[]`        | Array of expanded item IDs    |
-| `disabled`      | `boolean`                                | `false`     | Disable all items             |
+| Property        | Type       | Default | Description                   |
+| --------------- | ---------- | ------- | ----------------------------- |
+| `multiple`      | `boolean`  | `false` | Allow multiple expanded items |
+| `expandedItems` | `string[]` | `[]`    | Array of expanded item IDs    |
+| `disabled`      | `boolean`  | `false` | Disable all items             |
 
 ### bp-accordion Methods
 
@@ -224,11 +186,12 @@ accordion.collapseAll();
 
 ### bp-accordion-item Properties
 
-| Property   | Type      | Default | Description              |
-| ---------- | --------- | ------- | ------------------------ |
-| `itemId`   | `string`  | `''`    | Unique identifier        |
-| `expanded` | `boolean` | `false` | Whether item is expanded |
-| `disabled` | `boolean` | `false` | Whether item is disabled |
+| Property   | Type      | Default | Description                            |
+| ---------- | --------- | ------- | -------------------------------------- |
+| `itemId`   | `string`  | `''`    | Unique identifier                      |
+| `header`   | `string`  | `''`    | Header text (overridden by slot)       |
+| `expanded` | `boolean` | `false` | Whether item is expanded               |
+| `disabled` | `boolean` | `false` | Whether item is disabled               |
 
 ### Slots
 
@@ -247,21 +210,25 @@ accordion.collapseAll();
 
 ### CSS Parts
 
+#### bp-accordion
+
 | Part        | Description              |
 | ----------- | ------------------------ |
 | `accordion` | Main accordion container |
-| `item`      | Individual item wrapper  |
-| `header`    | Item header/trigger      |
-| `icon`      | Expand/collapse icon     |
-| `panel`     | Collapsible content area |
+
+#### bp-accordion-item
+
+| Part      | Description               |
+| --------- | ------------------------- |
+| `item`    | Individual item wrapper   |
+| `header`  | Item header/trigger       |
+| `icon`    | Expand/collapse icon      |
+| `content` | Collapsible content area  |
+| `body`    | Inner content container   |
 
 ### Keyboard Navigation
 
 - **Enter/Space**: Toggle focused item
-- **Arrow Down**: Focus next item header
-- **Arrow Up**: Focus previous item header
-- **Home**: Focus first item header
-- **End**: Focus last item header
 
 ### Accessibility
 
