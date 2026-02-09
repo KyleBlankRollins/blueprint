@@ -6,6 +6,41 @@ export const breadcrumbStyles = css`
     display: block;
   }
 
+  /* Separator variants - set custom properties on host to cross shadow boundaries */
+  :host([separator='slash']) {
+    --bp-breadcrumb-separator-content: '/';
+  }
+
+  :host([separator='chevron']) {
+    --bp-breadcrumb-separator-content: '›';
+    --bp-breadcrumb-separator-size: 1.2em;
+  }
+
+  :host([separator='arrow']) {
+    --bp-breadcrumb-separator-content: '→';
+  }
+
+  :host([separator='dot']) {
+    --bp-breadcrumb-separator-content: '•';
+    --bp-breadcrumb-separator-size: var(--bp-font-size-lg);
+  }
+
+  /* Size variants - set custom properties on host to cross shadow boundaries */
+  :host([size='sm']) {
+    --bp-breadcrumb-font-size: var(--bp-font-size-sm);
+    --bp-breadcrumb-line-height: var(--bp-line-height-tight);
+  }
+
+  :host([size='md']) {
+    --bp-breadcrumb-font-size: var(--bp-font-size-base);
+    --bp-breadcrumb-line-height: var(--bp-line-height-normal);
+  }
+
+  :host([size='lg']) {
+    --bp-breadcrumb-font-size: var(--bp-font-size-lg);
+    --bp-breadcrumb-line-height: var(--bp-line-height-normal);
+  }
+
   .breadcrumb {
     font-family: var(--bp-font-family);
   }
@@ -17,13 +52,15 @@ export const breadcrumbStyles = css`
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: var(--bp-spacing-xs);
+    gap: 0;
   }
 
   .item {
     display: inline-flex;
     align-items: center;
-    gap: var(--bp-spacing-xs);
+    gap: 0;
+    font-size: var(--bp-breadcrumb-font-size, var(--bp-font-size-base));
+    line-height: var(--bp-breadcrumb-line-height, var(--bp-line-height-normal));
   }
 
   .item__icon {
@@ -79,8 +116,19 @@ export const breadcrumbStyles = css`
     display: inline-flex;
     align-items: center;
     color: var(--bp-color-text-muted);
-    margin-left: var(--bp-spacing-xs);
+    margin: 0 var(--bp-spacing-2xs);
     user-select: none;
+  }
+
+  /* Hide separator on last item */
+  :host(:last-of-type) .separator {
+    display: none;
+  }
+
+  /* Separator content via ::before - uses custom properties from parent */
+  .separator::before {
+    content: var(--bp-breadcrumb-separator-content, '/');
+    font-size: var(--bp-breadcrumb-separator-size, inherit);
   }
 
   .separator__icon {

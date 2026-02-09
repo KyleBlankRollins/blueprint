@@ -19,19 +19,19 @@ import 'blueprint/components/breadcrumb';
 
 <ComponentPreview>
   <bp-breadcrumb>
-    <a href="#">Home</a>
-    <a href="#">Products</a>
-    <a href="#">Electronics</a>
-    <span>Laptops</span>
+    <bp-breadcrumb-item href="#">Home</bp-breadcrumb-item>
+    <bp-breadcrumb-item href="#">Products</bp-breadcrumb-item>
+    <bp-breadcrumb-item href="#">Electronics</bp-breadcrumb-item>
+    <bp-breadcrumb-item current>Laptops</bp-breadcrumb-item>
   </bp-breadcrumb>
 </ComponentPreview>
 
 ```html
 <bp-breadcrumb>
-  <a href="#">Home</a>
-  <a href="#">Products</a>
-  <a href="#">Electronics</a>
-  <span>Laptops</span>
+  <bp-breadcrumb-item href="#">Home</bp-breadcrumb-item>
+  <bp-breadcrumb-item href="#">Products</bp-breadcrumb-item>
+  <bp-breadcrumb-item href="#">Electronics</bp-breadcrumb-item>
+  <bp-breadcrumb-item current>Laptops</bp-breadcrumb-item>
 </bp-breadcrumb>
 ```
 
@@ -39,21 +39,21 @@ import 'blueprint/components/breadcrumb';
 
 <ComponentPreview>
   <bp-breadcrumb>
-    <a href="/">Home</a>
-    <a href="/products">Products</a>
-    <a href="/products/electronics">Electronics</a>
-    <a href="/products/electronics/laptops">Laptops</a>
-    <span>MacBook Pro</span>
+    <bp-breadcrumb-item href="/">Home</bp-breadcrumb-item>
+    <bp-breadcrumb-item href="/products">Products</bp-breadcrumb-item>
+    <bp-breadcrumb-item href="/products/electronics">Electronics</bp-breadcrumb-item>
+    <bp-breadcrumb-item href="/products/electronics/laptops">Laptops</bp-breadcrumb-item>
+    <bp-breadcrumb-item current>MacBook Pro</bp-breadcrumb-item>
   </bp-breadcrumb>
 </ComponentPreview>
 
 ```html
 <bp-breadcrumb>
-  <a href="/">Home</a>
-  <a href="/products">Products</a>
-  <a href="/products/electronics">Electronics</a>
-  <a href="/products/electronics/laptops">Laptops</a>
-  <span>MacBook Pro</span>
+  <bp-breadcrumb-item href="/">Home</bp-breadcrumb-item>
+  <bp-breadcrumb-item href="/products">Products</bp-breadcrumb-item>
+  <bp-breadcrumb-item href="/products/electronics">Electronics</bp-breadcrumb-item>
+  <bp-breadcrumb-item href="/products/electronics/laptops">Laptops</bp-breadcrumb-item>
+  <bp-breadcrumb-item current>MacBook Pro</bp-breadcrumb-item>
 </bp-breadcrumb>
 ```
 
@@ -62,30 +62,34 @@ import 'blueprint/components/breadcrumb';
 <ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
     <bp-breadcrumb separator="slash">
-      <a href="#">Home</a>
-      <a href="#">Category</a>
-      <span>Page</span>
+      <bp-breadcrumb-item href="#">Home</bp-breadcrumb-item>
+      <bp-breadcrumb-item href="#">Category</bp-breadcrumb-item>
+      <bp-breadcrumb-item current>Page</bp-breadcrumb-item>
     </bp-breadcrumb>
     <bp-breadcrumb separator="chevron">
-      <a href="#">Home</a>
-      <a href="#">Category</a>
-      <span>Page</span>
+      <bp-breadcrumb-item href="#">Home</bp-breadcrumb-item>
+      <bp-breadcrumb-item href="#">Category</bp-breadcrumb-item>
+      <bp-breadcrumb-item current>Page</bp-breadcrumb-item>
     </bp-breadcrumb>
     <bp-breadcrumb separator="arrow">
-      <a href="#">Home</a>
-      <a href="#">Category</a>
-      <span>Page</span>
+      <bp-breadcrumb-item href="#">Home</bp-breadcrumb-item>
+      <bp-breadcrumb-item href="#">Category</bp-breadcrumb-item>
+      <bp-breadcrumb-item current>Page</bp-breadcrumb-item>
     </bp-breadcrumb>
     <bp-breadcrumb separator="dot">
-      <a href="#">Home</a>
-      <a href="#">Category</a>
-      <span>Page</span>
+      <bp-breadcrumb-item href="#">Home</bp-breadcrumb-item>
+      <bp-breadcrumb-item href="#">Category</bp-breadcrumb-item>
+      <bp-breadcrumb-item current>Page</bp-breadcrumb-item>
     </bp-breadcrumb>
   </div>
 </ComponentPreview>
 
 ```html
-<bp-breadcrumb separator="slash">...</bp-breadcrumb>
+<bp-breadcrumb separator="slash">
+  <bp-breadcrumb-item href="#">Home</bp-breadcrumb-item>
+  <bp-breadcrumb-item href="#">Category</bp-breadcrumb-item>
+  <bp-breadcrumb-item current>Page</bp-breadcrumb-item>
+</bp-breadcrumb>
 <bp-breadcrumb separator="chevron">...</bp-breadcrumb>
 <bp-breadcrumb separator="arrow">...</bp-breadcrumb>
 <bp-breadcrumb separator="dot">...</bp-breadcrumb>
@@ -95,28 +99,28 @@ import 'blueprint/components/breadcrumb';
 
 <ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
-    <bp-breadcrumb size="small">
-      <a href="#">Home</a>
-      <a href="#">Category</a>
-      <span>Page</span>
+    <bp-breadcrumb size="sm">
+      <bp-breadcrumb-item href="#">Home</bp-breadcrumb-item>
+      <bp-breadcrumb-item href="#">Category</bp-breadcrumb-item>
+      <bp-breadcrumb-item current>Page</bp-breadcrumb-item>
     </bp-breadcrumb>
-    <bp-breadcrumb size="medium">
-      <a href="#">Home</a>
-      <a href="#">Category</a>
-      <span>Page</span>
+    <bp-breadcrumb size="md">
+      <bp-breadcrumb-item href="#">Home</bp-breadcrumb-item>
+      <bp-breadcrumb-item href="#">Category</bp-breadcrumb-item>
+      <bp-breadcrumb-item current>Page</bp-breadcrumb-item>
     </bp-breadcrumb>
-    <bp-breadcrumb size="large">
-      <a href="#">Home</a>
-      <a href="#">Category</a>
-      <span>Page</span>
+    <bp-breadcrumb size="lg">
+      <bp-breadcrumb-item href="#">Home</bp-breadcrumb-item>
+      <bp-breadcrumb-item href="#">Category</bp-breadcrumb-item>
+      <bp-breadcrumb-item current>Page</bp-breadcrumb-item>
     </bp-breadcrumb>
   </div>
 </ComponentPreview>
 
 ```html
-<bp-breadcrumb size="small">...</bp-breadcrumb>
-<bp-breadcrumb size="medium">...</bp-breadcrumb>
-<bp-breadcrumb size="large">...</bp-breadcrumb>
+<bp-breadcrumb size="sm">...</bp-breadcrumb>
+<bp-breadcrumb size="md">...</bp-breadcrumb>
+<bp-breadcrumb size="lg">...</bp-breadcrumb>
 ```
 
 ### Programmatic API
@@ -159,7 +163,7 @@ breadcrumb.items = [
 | Property           | Type                                       | Default        | Description                            |
 | ------------------ | ------------------------------------------ | -------------- | -------------------------------------- |
 | `items`            | `BreadcrumbItem[]`                         | `[]`           | Array of breadcrumb items              |
-| `size`             | `'small' \| 'medium' \| 'large'`           | `'medium'`     | Size of the breadcrumb                 |
+| `size`             | `'sm' \| 'md' \| 'lg'`                     | `'md'`         | Size of the breadcrumb                 |
 | `separator`        | `'slash' \| 'chevron' \| 'arrow' \| 'dot'` | `'slash'`      | Separator style between items          |
 | `aria-label`       | `string`                                   | `'Breadcrumb'` | Accessible label for navigation        |
 | `collapseOnMobile` | `boolean`                                  | `false`        | Collapse middle items on small screens |

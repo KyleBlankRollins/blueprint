@@ -257,7 +257,7 @@ export class BpBreadcrumb extends LitElement {
     const containerClasses = {
       breadcrumb: true,
       [`breadcrumb--${this.size}`]: true,
-      [`breadcrumb--${this.separator}`]: true,
+      [`breadcrumb--separator-${this.separator}`]: true,
       'breadcrumb--collapse-mobile': this.collapseOnMobile,
     };
 
@@ -380,6 +380,7 @@ export class BpBreadcrumbItem extends LitElement {
                 <slot></slot>
               </span>
             `}
+        <span class="separator" part="separator" aria-hidden="true"></span>
       </li>
     `;
   }
