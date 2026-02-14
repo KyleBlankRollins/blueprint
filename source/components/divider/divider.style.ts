@@ -35,15 +35,11 @@ export const dividerStyles = css`
     min-width: fit-content;
   }
 
-  .divider__content:not(:empty) {
+  .divider__content {
     font-weight: var(--bp-font-weight-semibold);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--bp-color-text-muted);
-  }
-
-  .divider__content:empty {
-    display: none;
   }
 
   /* Orientations */
@@ -92,19 +88,21 @@ export const dividerStyles = css`
 
   /* Variants */
   .divider__line--dashed {
-    border-style: dashed;
+    border-top-style: dashed;
   }
 
   .divider__line--dotted {
-    border-style: dotted;
+    border-top-style: dotted;
   }
 
   .divider--vertical .divider__line--dashed {
-    border-top-width: 0;
+    border-top-style: none;
+    border-left-style: dashed;
   }
 
   .divider--vertical .divider__line--dotted {
-    border-top-width: 0;
+    border-top-style: none;
+    border-left-style: dotted;
   }
 
   /* Color variants */

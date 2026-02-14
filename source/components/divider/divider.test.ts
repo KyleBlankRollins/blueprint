@@ -113,6 +113,7 @@ describe('bp-divider', () => {
   });
 
   it('should expose content part for styling', async () => {
+    element.textContent = 'Section';
     await element.updateComplete;
     const content = element.shadowRoot?.querySelector('[part="content"]');
     expect(content).toBeTruthy();
@@ -149,9 +150,18 @@ describe('bp-divider', () => {
   // Interactions
   it('should render content slot for horizontal divider', async () => {
     element.orientation = 'horizontal';
+    element.textContent = 'Section';
     await element.updateComplete;
     const content = element.shadowRoot?.querySelector('.divider__content');
     expect(content).toBeTruthy();
+  });
+
+  it('should not render content wrapper when no content is slotted', async () => {
+    element.orientation = 'horizontal';
+    element.textContent = '';
+    await element.updateComplete;
+    const content = element.shadowRoot?.querySelector('.divider__content');
+    expect(content).toBeFalsy();
   });
 
   it('should not render content slot for vertical divider', async () => {
@@ -161,11 +171,20 @@ describe('bp-divider', () => {
     expect(content).toBeFalsy();
   });
 
-  it('should render multiple lines for horizontal divider', async () => {
+  it('should render multiple lines for horizontal divider with content', async () => {
     element.orientation = 'horizontal';
+    element.textContent = 'Section';
     await element.updateComplete;
     const lines = element.shadowRoot?.querySelectorAll('.divider__line');
     expect(lines!.length).toBe(2);
+  });
+
+  it('should render single line for horizontal divider without content', async () => {
+    element.orientation = 'horizontal';
+    element.textContent = '';
+    await element.updateComplete;
+    const lines = element.shadowRoot?.querySelectorAll('.divider__line');
+    expect(lines!.length).toBe(1);
   });
 
   it('should render single line for vertical divider', async () => {

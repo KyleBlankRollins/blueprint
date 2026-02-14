@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { dividerStyles } from './divider.style.js';
 
@@ -50,6 +50,9 @@ export class BpDivider extends LitElement {
    */
   @property({ type: String, reflect: true }) declare weight: DividerWeight;
 
+  /** Whether the default slot has content. */
+  @property({ attribute: false }) declare hasContent: boolean;
+
   static styles = [dividerStyles];
 
   constructor() {
@@ -59,7 +62,20 @@ export class BpDivider extends LitElement {
     this.variant = 'solid';
     this.color = 'default';
     this.weight = 'thin';
+    this.hasContent = false;
   }
+
+  private handleSlotChange = (event: Event) => {
+    const slot = event.target as HTMLElement & {
+      assignedNodes: (options?: { flatten?: boolean }) => Node[];
+    };
+    const nodes = slot.assignedNodes({ flatten: true });
+    this.hasContent = nodes.some(
+      (node) =>
+        node.nodeType === Node.ELEMENT_NODE ||
+        (node.nodeType === Node.TEXT_NODE && node.textContent?.trim() !== '')
+    );
+  };
 
   render() {
     return html`
@@ -70,24 +86,23 @@ export class BpDivider extends LitElement {
         aria-orientation="${this.orientation}"
         part="divider"
       >
+        <span
+          class="divider__line divider__line--${this.variant}"
+          part="line"
+        ></span>
         ${this.orientation === 'horizontal'
           ? html`
-              <span
-                class="divider__line divider__line--${this.variant}"
-                part="line"
-              ></span>
-              <span class="divider__content" part="content">
-                <slot></slot>
-              </span>
-              <span
-                class="divider__line divider__line--${this.variant}"
-                part="line"
-              ></span>
+              ${this.hasContent
+                ? html`<span class="divider__content" part="content">
+                      <slot @slotchange=${this.handleSlotChange}></slot>
+                    </span>
+                    <span
+                      class="divider__line divider__line--${this.variant}"
+                      part="line"
+                    ></span>`
+                : html`<slot @slotchange=${this.handleSlotChange}></slot>`}
             `
-          : html`<span
-              class="divider__line divider__line--${this.variant}"
-              part="line"
-            ></span>`}
+          : nothing}
       </div>
     `;
   }
