@@ -217,15 +217,23 @@ describe('bp-card', () => {
   });
 
   it('should expose header part for styling', async () => {
+    const header = document.createElement('div');
+    header.slot = 'header';
+    header.textContent = 'Header';
+    element.appendChild(header);
     await element.updateComplete;
-    const header = element.shadowRoot?.querySelector('[part="header"]');
-    expect(header).toBeTruthy();
+    const headerPart = element.shadowRoot?.querySelector('[part="header"]');
+    expect(headerPart).toBeTruthy();
   });
 
   it('should expose footer part for styling', async () => {
+    const footer = document.createElement('div');
+    footer.slot = 'footer';
+    footer.textContent = 'Footer';
+    element.appendChild(footer);
     await element.updateComplete;
-    const footer = element.shadowRoot?.querySelector('[part="footer"]');
-    expect(footer).toBeTruthy();
+    const footerPart = element.shadowRoot?.querySelector('[part="footer"]');
+    expect(footerPart).toBeTruthy();
   });
 
   it('should expose media part for styling', async () => {

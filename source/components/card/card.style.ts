@@ -46,9 +46,8 @@ export const cardStyles = css`
     padding: 0;
   }
 
-  /* Slot styles */
-  ::slotted([slot='header']) {
-    display: block;
+  /* Header and footer container styles */
+  .card-header {
     padding: var(--bp-spacing-lg);
     border-bottom: var(--bp-border-width) solid var(--bp-color-border);
     font-weight: var(--bp-font-weight-semibold);
@@ -57,14 +56,14 @@ export const cardStyles = css`
     color: var(--bp-color-text-strong);
   }
 
-  ::slotted([slot='footer']) {
-    display: block;
+  .card-footer {
     padding: var(--bp-spacing-lg);
     border-top: var(--bp-border-width) solid var(--bp-color-border);
     font-size: var(--bp-font-size-sm);
     color: var(--bp-color-text-muted);
   }
 
+  /* Media slot styles */
   ::slotted([slot='media']) {
     display: flex;
     align-items: center;

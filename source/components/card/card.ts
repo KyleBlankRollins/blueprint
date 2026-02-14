@@ -5,7 +5,6 @@ import { cardStyles } from './card.style.js';
 
 export type CardVariant = 'default' | 'outlined' | 'elevated';
 export type CardDirection = 'vertical' | 'horizontal';
-
 /**
  * A versatile card component for organizing and displaying content.
  *
@@ -45,6 +44,14 @@ export class BpCard extends LitElement {
    */
   @property({ type: String, reflect: true }) declare direction: CardDirection;
 
+  /** Whether the header slot has assigned content */
+  @property({ type: Boolean, attribute: false })
+  private hasHeader = false;
+
+  /** Whether the footer slot has assigned content */
+  @property({ type: Boolean, attribute: false })
+  private hasFooter = false;
+
   static styles = [cardStyles];
 
   constructor() {
@@ -55,6 +62,28 @@ export class BpCard extends LitElement {
     this.noPadding = false;
     this.direction = 'vertical';
   }
+
+  /**
+   * Handles slot change events for the header slot.
+   * Updates hasHeader state to control header visibility.
+   */
+  private handleHeaderSlotChange = (event: Event): void => {
+    const slot = event.target as HTMLElement & {
+      assignedNodes: (options?: { flatten?: boolean }) => Node[];
+    };
+    this.hasHeader = slot.assignedNodes({ flatten: true }).length > 0;
+  };
+
+  /**
+   * Handles slot change events for the footer slot.
+   * Updates hasFooter state to control footer visibility.
+   */
+  private handleFooterSlotChange = (event: Event): void => {
+    const slot = event.target as HTMLElement & {
+      assignedNodes: (options?: { flatten?: boolean }) => Node[];
+    };
+    this.hasFooter = slot.assignedNodes({ flatten: true }).length > 0;
+  };
 
   private handleClick(event: MouseEvent) {
     if (!this.clickable) return;
@@ -86,7 +115,17 @@ export class BpCard extends LitElement {
         tabindex=${ifDefined(this.clickable ? '0' : undefined)}
         @keydown=${this.clickable ? this.handleKeydown : undefined}
       >
-        <slot name="header" part="header"></slot>
+        ${this.hasHeader
+          ? html`<div class="card-header" part="header">
+              <slot
+                name="header"
+                @slotchange=${this.handleHeaderSlotChange}
+              ></slot>
+            </div>`
+          : html`<slot
+              name="header"
+              @slotchange=${this.handleHeaderSlotChange}
+            ></slot>`}
         <div
           class="card-content ${this.direction === 'horizontal'
             ? 'card-content--horizontal'
@@ -101,7 +140,17 @@ export class BpCard extends LitElement {
             <slot></slot>
           </div>
         </div>
-        <slot name="footer" part="footer"></slot>
+        ${this.hasFooter
+          ? html`<div class="card-footer" part="footer">
+              <slot
+                name="footer"
+                @slotchange=${this.handleFooterSlotChange}
+              ></slot>
+            </div>`
+          : html`<slot
+              name="footer"
+              @slotchange=${this.handleFooterSlotChange}
+            ></slot>`}
       </div>
     `;
   }
