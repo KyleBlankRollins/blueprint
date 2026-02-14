@@ -20,7 +20,7 @@ export const colorPickerStyles = css`
   :host {
     /* Component-specific custom properties */
     /* stylelint-disable blueprint/no-hardcoded-values */
-    --color-picker-width: 280px;
+    --color-picker-width: 350px;
     --color-picker-area-height: 160px;
     --color-picker-swatch-size: var(--bp-spacing-lg);
     --color-picker-handle-size: var(--bp-spacing-md);
@@ -421,7 +421,7 @@ export const colorPickerStyles = css`
 
   .color-input {
     width: 100%;
-    padding: var(--bp-spacing-xs) var(--bp-spacing-sm);
+    padding: var(--bp-spacing-xs);
     font-family: var(--bp-font-family-mono);
     font-size: var(--bp-font-size-sm);
     background-color: var(--bp-color-surface);
