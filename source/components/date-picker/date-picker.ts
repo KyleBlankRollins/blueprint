@@ -501,7 +501,7 @@ export class BpDatePicker extends LitElement {
                         ?disabled=${isDisabled}
                         tabindex="-1"
                         role="gridcell"
-                        aria-selected=${isSelected}
+                        aria-selected=${!!isSelected}
                         aria-label=${date.toLocaleDateString()}
                       >
                         ${date.getDate()}

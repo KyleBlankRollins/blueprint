@@ -1,12 +1,6 @@
 import { css } from 'lit';
 
 export const datePickerStyles = css`
-  :host {
-    display: inline-block;
-    width: 100%;
-    max-width: var(--bp-spacing-2xl);
-  }
-
   /* Base */
   .date-picker {
     position: relative;
@@ -85,7 +79,7 @@ export const datePickerStyles = css`
 
   .date-picker__indicator {
     position: absolute;
-    right: var(--bp-spacing-sm);
+    right: var(--bp-spacing-md);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -101,12 +95,13 @@ export const datePickerStyles = css`
     top: calc(100% + var(--bp-spacing-xs));
     left: 0;
     z-index: var(--bp-z-dropdown);
-    width: 100%;
     min-width: var(--bp-spacing-2xl);
     padding: var(--bp-spacing-md);
     background-color: var(--bp-color-surface);
-    border: var(--bp-border-width) solid var(--bp-color-border);
     border-top: calc(var(--bp-border-width) * 2) solid var(--bp-color-primary);
+    border-right: var(--bp-border-width) solid var(--bp-color-border);
+    border-bottom: var(--bp-border-width) solid var(--bp-color-border);
+    border-left: var(--bp-border-width) solid var(--bp-color-border);
     border-radius: var(--bp-border-radius-md);
     box-shadow: var(--bp-shadow-md);
   }
@@ -251,6 +246,43 @@ export const datePickerStyles = css`
     height: var(--bp-spacing-md);
   }
 
+  .date-picker--sm .date-picker__calendar {
+    padding: var(--bp-spacing-sm);
+  }
+
+  .date-picker--sm .date-picker__nav-button {
+    width: var(--bp-spacing-lg);
+    height: var(--bp-spacing-lg);
+    font-size: var(--bp-font-size-lg);
+  }
+
+  .date-picker--sm .date-picker__month-year {
+    font-size: var(--bp-font-size-sm);
+  }
+
+  .date-picker--sm .date-picker__header {
+    margin-bottom: var(--bp-spacing-xs);
+  }
+
+  .date-picker--sm .date-picker__weekdays {
+    gap: var(--bp-spacing-2xs);
+    margin-bottom: var(--bp-spacing-2xs);
+  }
+
+  .date-picker--sm .date-picker__weekday {
+    padding: var(--bp-spacing-2xs);
+    font-size: var(--bp-font-size-xs);
+  }
+
+  .date-picker--sm .date-picker__days {
+    gap: var(--bp-spacing-2xs);
+  }
+
+  .date-picker--sm .date-picker__day {
+    padding: var(--bp-spacing-2xs);
+    font-size: var(--bp-font-size-xs);
+  }
+
   .date-picker--lg .date-picker__input {
     padding: var(--bp-spacing-md) var(--bp-spacing-lg);
     padding-right: var(--bp-spacing-24);
@@ -267,6 +299,43 @@ export const datePickerStyles = css`
     right: var(--bp-spacing-24);
     width: var(--bp-spacing-xl);
     height: var(--bp-spacing-xl);
+  }
+
+  .date-picker--lg .date-picker__calendar {
+    padding: var(--bp-spacing-lg);
+  }
+
+  .date-picker--lg .date-picker__nav-button {
+    width: var(--bp-spacing-2xl);
+    height: var(--bp-spacing-2xl);
+    font-size: var(--bp-font-size-2xl);
+  }
+
+  .date-picker--lg .date-picker__month-year {
+    font-size: var(--bp-font-size-lg);
+  }
+
+  .date-picker--lg .date-picker__header {
+    margin-bottom: var(--bp-spacing-md);
+  }
+
+  .date-picker--lg .date-picker__weekdays {
+    gap: var(--bp-spacing-sm);
+    margin-bottom: var(--bp-spacing-sm);
+  }
+
+  .date-picker--lg .date-picker__weekday {
+    padding: var(--bp-spacing-sm);
+    font-size: var(--bp-font-size-sm);
+  }
+
+  .date-picker--lg .date-picker__days {
+    gap: var(--bp-spacing-sm);
+  }
+
+  .date-picker--lg .date-picker__day {
+    padding: var(--bp-spacing-sm);
+    font-size: var(--bp-font-size-base);
   }
 
   /* States */
