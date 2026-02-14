@@ -1,6 +1,7 @@
 import { LitElement, html, nothing, PropertyValues } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { colorPickerStyles } from './color-picker.style.js';
+import { booleanConverter } from '../../utilities/boolean-converter.js';
 import {
   type ColorFormat,
   type HSVColor,
@@ -54,7 +55,8 @@ export class BpColorPicker extends LitElement {
   @property({ type: String }) declare format: ColorFormat;
 
   /** Enable alpha channel */
-  @property({ type: Boolean }) declare alpha: boolean;
+  @property({ converter: booleanConverter, reflect: true })
+  declare alpha: boolean;
 
   /** Predefined swatch colors */
   @property({ type: Array }) declare swatches: string[];

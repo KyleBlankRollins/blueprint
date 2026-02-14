@@ -1,6 +1,7 @@
 import { LitElement, html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { drawerStyles } from './drawer.style.js';
+import { booleanConverter } from '../../utilities/boolean-converter.js';
 import '../icon/icon.js';
 
 export type DrawerPlacement = 'left' | 'right' | 'top' | 'bottom';
@@ -60,19 +61,35 @@ export class BpDrawer extends LitElement {
   declare size: DrawerSize;
 
   /** Whether to show the close button */
-  @property({ type: Boolean, attribute: 'show-close' })
+  @property({
+    converter: booleanConverter,
+    attribute: 'show-close',
+    reflect: true,
+  })
   declare showClose: boolean;
 
   /** Whether clicking the backdrop closes the drawer */
-  @property({ type: Boolean, attribute: 'close-on-backdrop' })
+  @property({
+    converter: booleanConverter,
+    attribute: 'close-on-backdrop',
+    reflect: true,
+  })
   declare closeOnBackdrop: boolean;
 
   /** Whether pressing Escape closes the drawer */
-  @property({ type: Boolean, attribute: 'close-on-escape' })
+  @property({
+    converter: booleanConverter,
+    attribute: 'close-on-escape',
+    reflect: true,
+  })
   declare closeOnEscape: boolean;
 
   /** Whether to show the backdrop overlay */
-  @property({ type: Boolean, attribute: 'show-backdrop' })
+  @property({
+    converter: booleanConverter,
+    attribute: 'show-backdrop',
+    reflect: true,
+  })
   declare showBackdrop: boolean;
 
   /** Accessible label for the drawer */

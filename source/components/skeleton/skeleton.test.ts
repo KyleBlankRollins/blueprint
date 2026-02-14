@@ -109,10 +109,11 @@ describe('bp-skeleton', () => {
     element.animated = true;
     await element.updateComplete;
     expect(element.hasAttribute('animated')).toBe(true);
+    expect(element.getAttribute('animated')).not.toBe('false');
 
     element.animated = false;
     await element.updateComplete;
-    expect(element.hasAttribute('animated')).toBe(false);
+    expect(element.getAttribute('animated')).toBe('false');
   });
 
   // Multi-line text tests

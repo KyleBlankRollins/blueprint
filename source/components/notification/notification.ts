@@ -1,6 +1,7 @@
 import { LitElement, html, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { notificationStyles } from './notification.style.js';
+import { booleanConverter } from '../../utilities/boolean-converter.js';
 import '../icon/icon.js';
 
 /**
@@ -41,7 +42,8 @@ export class BpNotification extends LitElement {
   @property({ type: Boolean, reflect: true }) declare open: boolean;
 
   /** Whether the notification can be dismissed */
-  @property({ type: Boolean }) declare closable: boolean;
+  @property({ converter: booleanConverter, reflect: true })
+  declare closable: boolean;
 
   /** Duration in milliseconds before auto-close (0 = no auto-close) */
   @property({ type: Number }) declare duration: number;

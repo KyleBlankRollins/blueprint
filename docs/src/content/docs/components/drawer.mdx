@@ -79,15 +79,15 @@ import 'blueprint/components/drawer';
     <bp-button onclick="document.querySelector('#drawer-large').show()">Large</bp-button>
     <bp-button onclick="document.querySelector('#drawer-full').show()">Full</bp-button>
   </div>
-  <bp-drawer id="drawer-small" size="small" label="Small Drawer">
+  <bp-drawer id="drawer-small" size="sm" label="Small Drawer">
     <span slot="header">Small Drawer</span>
     <p>Narrow drawer width.</p>
   </bp-drawer>
-  <bp-drawer id="drawer-medium" size="medium" label="Medium Drawer">
+  <bp-drawer id="drawer-medium" size="md" label="Medium Drawer">
     <span slot="header">Medium Drawer</span>
     <p>Default drawer width.</p>
   </bp-drawer>
-  <bp-drawer id="drawer-large" size="large" label="Large Drawer">
+  <bp-drawer id="drawer-large" size="lg" label="Large Drawer">
     <span slot="header">Large Drawer</span>
     <p>Wide drawer width.</p>
   </bp-drawer>
@@ -98,9 +98,9 @@ import 'blueprint/components/drawer';
 </ComponentPreview>
 
 ```html
-<bp-drawer size="small">...</bp-drawer>
-<bp-drawer size="medium">...</bp-drawer>
-<bp-drawer size="large">...</bp-drawer>
+<bp-drawer size="sm">...</bp-drawer>
+<bp-drawer size="md">...</bp-drawer>
+<bp-drawer size="lg">...</bp-drawer>
 <bp-drawer size="full">...</bp-drawer>
 ```
 
@@ -181,7 +181,7 @@ import 'blueprint/components/drawer';
 | ----------------- | ------------------------------------------ | ---------- | ---------------------------- |
 | `open`            | `boolean`                                  | `false`    | Whether the drawer is open   |
 | `placement`       | `'left' \| 'right' \| 'top' \| 'bottom'`   | `'left'`   | Edge the drawer slides from  |
-| `size`            | `'small' \| 'medium' \| 'large' \| 'full'` | `'medium'` | Drawer size                  |
+| `size`            | `'sm' \| 'md' \| 'lg' \| 'full'`           | `'medium'` | Drawer size                  |
 | `showClose`       | `boolean`                                  | `true`     | Show close button            |
 | `closeOnBackdrop` | `boolean`                                  | `true`     | Close when clicking backdrop |
 | `closeOnEscape`   | `boolean`                                  | `true`     | Close when pressing Escape   |

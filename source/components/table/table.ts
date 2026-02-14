@@ -5,6 +5,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { tableStyles } from './table.style.js';
 import { memoizeOne } from '../../utilities/memoize.js';
+import { booleanConverter } from '../../utilities/boolean-converter.js';
 import '../icon/icon.js';
 
 export type TableVariant = 'default' | 'striped' | 'bordered';
@@ -139,7 +140,8 @@ export class BpTable extends LitElement {
   declare stickyHeader: boolean;
 
   /** Whether rows highlight on hover */
-  @property({ type: Boolean, reflect: true }) declare hoverable: boolean;
+  @property({ converter: booleanConverter, reflect: true })
+  declare hoverable: boolean;
 
   /** Whether the table is in loading state */
   @property({ type: Boolean, reflect: true }) declare loading: boolean;

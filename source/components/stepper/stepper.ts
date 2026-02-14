@@ -2,6 +2,7 @@ import { LitElement, html, nothing, PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { stepperStyles } from './stepper.style.js';
+import { booleanConverter } from '../../utilities/boolean-converter.js';
 
 /**
  * Step status
@@ -96,7 +97,8 @@ export class BpStepper extends LitElement {
   /**
    * Whether steps must be completed in order
    */
-  @property({ type: Boolean, reflect: true }) declare linear: boolean;
+  @property({ converter: booleanConverter, reflect: true })
+  declare linear: boolean;
 
   /**
    * Whether the entire stepper is disabled
@@ -112,12 +114,17 @@ export class BpStepper extends LitElement {
   /**
    * Whether completed steps are clickable to navigate back
    */
-  @property({ type: Boolean, reflect: true }) declare clickable: boolean;
+  @property({ converter: booleanConverter, reflect: true })
+  declare clickable: boolean;
 
   /**
    * Show built-in navigation buttons (Previous/Next)
    */
-  @property({ type: Boolean, reflect: true, attribute: 'show-navigation' })
+  @property({
+    converter: booleanConverter,
+    reflect: true,
+    attribute: 'show-navigation',
+  })
   declare showNavigation: boolean;
 
   /**

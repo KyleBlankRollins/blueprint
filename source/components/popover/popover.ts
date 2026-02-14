@@ -1,6 +1,7 @@
 import { LitElement, html, nothing } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { popoverStyles } from './popover.style.js';
+import { booleanConverter } from '../../utilities/boolean-converter.js';
 import '../icon/icon.js';
 
 export type PopoverPlacement =
@@ -101,11 +102,19 @@ export class BpPopover extends LitElement {
   declare showClose: boolean;
 
   /** Whether clicking outside closes the popover */
-  @property({ type: Boolean, attribute: 'close-on-outside-click' })
+  @property({
+    converter: booleanConverter,
+    attribute: 'close-on-outside-click',
+    reflect: true,
+  })
   declare closeOnOutsideClick: boolean;
 
   /** Whether pressing Escape closes the popover */
-  @property({ type: Boolean, attribute: 'close-on-escape' })
+  @property({
+    converter: booleanConverter,
+    attribute: 'close-on-escape',
+    reflect: true,
+  })
   declare closeOnEscape: boolean;
 
   /** Distance in pixels between the trigger and the panel */

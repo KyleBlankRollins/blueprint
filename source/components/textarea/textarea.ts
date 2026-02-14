@@ -4,6 +4,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
 import { textareaStyles } from './textarea.style.js';
 import { debounce } from '../../utilities/debounce.js';
+import { booleanConverter } from '../../utilities/boolean-converter.js';
 
 /**
  * Visual variant that affects the textarea border color and validation state
@@ -122,7 +123,8 @@ export class BpTextarea extends LitElement {
     | undefined;
 
   /** Whether to enable spellcheck */
-  @property({ type: Boolean, reflect: true }) declare spellcheck: boolean;
+  @property({ converter: booleanConverter, reflect: true })
+  declare spellcheck: boolean;
 
   /** Wrap attribute for text wrapping behavior */
   @property({ type: String, reflect: true }) declare wrap:

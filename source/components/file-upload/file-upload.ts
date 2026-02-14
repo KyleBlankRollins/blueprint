@@ -2,6 +2,7 @@ import { LitElement, html, nothing } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { fileUploadStyles } from './file-upload.style.js';
+import { booleanConverter } from '../../utilities/boolean-converter.js';
 
 /**
  * File information object returned in events
@@ -91,7 +92,8 @@ export class BpFileUpload extends LitElement {
   @property({ type: String }) declare size: 'sm' | 'md' | 'lg';
 
   /** Whether to show file previews for images */
-  @property({ type: Boolean }) declare showPreviews: boolean;
+  @property({ converter: booleanConverter, reflect: true })
+  declare showPreviews: boolean;
 
   /** Whether drag is currently over the drop zone */
   @state() private isDragOver = false;

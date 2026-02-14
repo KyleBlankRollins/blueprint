@@ -1,6 +1,7 @@
 import { LitElement, html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { skeletonStyles } from './skeleton.style.js';
+import { booleanConverter } from '../../utilities/boolean-converter.js';
 
 /**
  * A skeleton loading placeholder that indicates content is loading.
@@ -32,7 +33,8 @@ export class BpSkeleton extends LitElement {
   @property({ type: String }) declare height: string;
 
   /** Whether to animate the skeleton with a shimmer effect */
-  @property({ type: Boolean, reflect: true }) declare animated: boolean;
+  @property({ converter: booleanConverter, reflect: true })
+  declare animated: boolean;
 
   /** Number of lines to display (only for text variant) */
   @property({

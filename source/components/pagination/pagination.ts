@@ -2,6 +2,7 @@ import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { paginationStyles } from './pagination.style.js';
+import { booleanConverter } from '../../utilities/boolean-converter.js';
 
 /**
  * A pagination component for navigating through multiple pages of content.
@@ -35,10 +36,12 @@ export class BpPagination extends LitElement {
   @property({ type: Number }) declare boundaryCount: number;
 
   /** Show first/last page buttons */
-  @property({ type: Boolean }) declare showFirstLast: boolean;
+  @property({ converter: booleanConverter, reflect: true })
+  declare showFirstLast: boolean;
 
   /** Show previous/next page buttons */
-  @property({ type: Boolean }) declare showPrevNext: boolean;
+  @property({ converter: booleanConverter, reflect: true })
+  declare showPrevNext: boolean;
 
   /** Show page info text (e.g., "Page 1 of 10") */
   @property({ type: Boolean }) declare showInfo: boolean;
