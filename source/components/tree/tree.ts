@@ -52,10 +52,12 @@ export class BpTree extends LitElement {
   @property({ type: Array }) declare expandedIds: string[];
 
   /** Whether multiple nodes can be selected */
-  @property({ type: Boolean, reflect: true }) declare multiSelect: boolean;
+  @property({ type: Boolean, reflect: true, attribute: 'multi-select' })
+  declare multiSelect: boolean;
 
   /** Whether to show connecting lines between nodes */
-  @property({ type: Boolean, reflect: true }) declare showLines: boolean;
+  @property({ type: Boolean, reflect: true, attribute: 'show-lines' })
+  declare showLines: boolean;
 
   /** Whether nodes can be selected */
   @property({ type: Boolean, reflect: true }) declare selectable: boolean;
@@ -417,6 +419,14 @@ export class BpTree extends LitElement {
                 ></bp-icon>`
               : nothing}
           </span>
+          ${node.icon
+            ? html`<bp-icon
+                class="node-icon"
+                part="node-custom-icon"
+                name=${node.icon}
+                size="sm"
+              ></bp-icon>`
+            : nothing}
           <span class="node-label" part="node-label">${node.label}</span>
         </div>
         ${hasChildren && isExpanded

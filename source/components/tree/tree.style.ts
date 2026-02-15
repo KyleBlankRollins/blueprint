@@ -101,6 +101,12 @@ export const treeStyles = css`
     transform: rotate(90deg);
   }
 
+  /* Node custom icon */
+  .node-icon {
+    flex-shrink: 0;
+    color: var(--bp-color-text-muted);
+  }
+
   /* Node label */
   .node-label {
     flex: 1;

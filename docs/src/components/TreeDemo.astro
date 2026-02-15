@@ -19,7 +19,7 @@ interface Props {
   multiSelect?: boolean;
   showLines?: boolean;
   selectable?: boolean;
-  size?: 'small' | 'medium' | 'large';
+  size?: 'sm' | 'md' | 'lg';
 }
 
 const {
@@ -30,7 +30,7 @@ const {
   multiSelect = false,
   showLines = false,
   selectable = true,
-  size = 'medium',
+  size = 'md',
 } = Astro.props;
 
 const nodesJson = JSON.stringify(nodes);

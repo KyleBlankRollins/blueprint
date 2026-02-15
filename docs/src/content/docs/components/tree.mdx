@@ -75,14 +75,14 @@ tree.nodes = [
     {
       id: 'src',
       label: 'src',
-      icon: 'folder',
+      icon: 'folder-closed',
       children: [
-        { id: 'index', label: 'index.ts', icon: 'file' },
-        { id: 'app', label: 'app.ts', icon: 'file' },
+        { id: 'index', label: 'index.ts', icon: 'document' },
+        { id: 'app', label: 'app.ts', icon: 'document' },
       ],
     },
-    { id: 'package', label: 'package.json', icon: 'file' },
-    { id: 'readme', label: 'README.md', icon: 'file' },
+    { id: 'package', label: 'package.json', icon: 'document' },
+    { id: 'readme', label: 'README.md', icon: 'document' },
   ]}
 />
 </ComponentPreview>
@@ -93,14 +93,14 @@ tree.nodes = [
   {
     id: 'src',
     label: 'src',
-    icon: 'folder',
+    icon: 'folder-closed',
     children: [
-      { id: 'index', label: 'index.ts', icon: 'file' },
-      { id: 'app', label: 'app.ts', icon: 'file' },
+      { id: 'index', label: 'index.ts', icon: 'document' },
+      { id: 'app', label: 'app.ts', icon: 'document' },
     ],
   },
-  { id: 'package', label: 'package.json', icon: 'file' },
-  { id: 'readme', label: 'README.md', icon: 'file' },
+  { id: 'package', label: 'package.json', icon: 'document' },
+  { id: 'readme', label: 'README.md', icon: 'document' },
 ];
 ```
 
@@ -110,7 +110,7 @@ tree.nodes = [
 <div style="display: flex; gap: 2rem;">
 <TreeDemo
   id="tree-small"
-  size="small"
+  size="sm"
   nodes={[
     {
       id: 'folder1',
@@ -121,7 +121,7 @@ tree.nodes = [
 />
 <TreeDemo
   id="tree-medium"
-  size="medium"
+  size="md"
   nodes={[
     {
       id: 'folder2',
@@ -132,7 +132,7 @@ tree.nodes = [
 />
 <TreeDemo
   id="tree-large"
-  size="large"
+  size="lg"
   nodes={[
     {
       id: 'folder3',
@@ -145,9 +145,9 @@ tree.nodes = [
 </ComponentPreview>
 
 ```html
-<bp-tree size="small">...</bp-tree>
-<bp-tree size="medium">...</bp-tree>
-<bp-tree size="large">...</bp-tree>
+<bp-tree size="sm">...</bp-tree>
+<bp-tree size="md">...</bp-tree>
+<bp-tree size="lg">...</bp-tree>
 ```
 
 ### With Connecting Lines
@@ -392,7 +392,7 @@ tree.clearSelection();
 | `multiSelect` | `boolean`                        | `false`    | Enable multi-node selection |
 | `showLines`   | `boolean`                        | `false`    | Show connecting lines       |
 | `selectable`  | `boolean`                        | `true`     | Enable node selection       |
-| `size`        | `'small' \| 'medium' \| 'large'` | `'medium'` | Size variant                |
+| `size`        | `'sm' \| 'md' \| 'lg'`           | `'md'`     | Size variant                |
 
 ### TreeNode Interface
 
@@ -435,14 +435,15 @@ interface TreeNode {
 
 ### CSS Parts
 
-| Part            | Description            |
-| --------------- | ---------------------- |
-| `tree`          | Main tree container    |
-| `node`          | Individual tree node   |
-| `node-content`  | Clickable content area |
-| `node-icon`     | Expand/collapse icon   |
-| `node-label`    | Node label text        |
-| `node-children` | Container for children |
+| Part               | Description              |
+| ------------------ | ------------------------ |
+| `tree`             | Main tree container      |
+| `node`             | Individual tree node     |
+| `node-content`     | Clickable content area   |
+| `node-icon`        | Expand/collapse icon     |
+| `node-custom-icon` | Custom node icon         |
+| `node-label`       | Node label text          |
+| `node-children`    | Container for children   |
 
 ### Keyboard Navigation
 
