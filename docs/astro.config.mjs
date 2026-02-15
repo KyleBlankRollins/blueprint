@@ -18,6 +18,10 @@ export default defineConfig({
         allow: ['..'],
       },
     },
+    // Ensure imports from parent source/ resolve packages from docs/node_modules
+    resolve: {
+      dedupe: ['lit', '@lit/reactive-element', 'lit-element', 'lit-html'],
+    },
     esbuild: {
       // Enable TypeScript decorators
       tsconfigRaw: {
