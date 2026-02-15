@@ -74,7 +74,7 @@ import 'blueprint/components/modal';
 
 <ComponentPreview>
   <bp-button variant="danger" onclick="document.querySelector('#modal-confirm').open = true">Delete Item</bp-button>
-  <bp-modal id="modal-confirm" size="small">
+  <bp-modal id="modal-confirm" size="sm">
     <div slot="header">Confirm Delete</div>
     <p>Are you sure you want to delete this item? This action cannot be undone.</p>
     <div slot="footer">
@@ -85,7 +85,7 @@ import 'blueprint/components/modal';
 </ComponentPreview>
 
 ```html
-<bp-modal size="small">
+<bp-modal size="sm">
   <div slot="header">Confirm Delete</div>
   <p>Are you sure you want to delete this item?</p>
   <div slot="footer">
@@ -132,9 +132,9 @@ import 'blueprint/components/modal';
 
 <ComponentPreview>
   <bp-button onclick="document.querySelector('#modal-noheader').open = true">Alert Style</bp-button>
-  <bp-modal id="modal-noheader" size="small">
+  <bp-modal id="modal-noheader" size="sm">
     <div style="text-align: center; padding: 1rem;">
-      <bp-icon name="check-circle" size="48" style="color: var(--bp-color-success);"></bp-icon>
+      <bp-icon name="check-circle" size="4xl" style="color: var(--bp-color-success);"></bp-icon>
       <h3>Success!</h3>
       <p>Your changes have been saved successfully.</p>
       <bp-button onclick="document.querySelector('#modal-noheader').open = false">OK</bp-button>
@@ -143,9 +143,9 @@ import 'blueprint/components/modal';
 </ComponentPreview>
 
 ```html
-<bp-modal size="small">
+<bp-modal size="sm">
   <div style="text-align: center;">
-    <bp-icon name="check-circle" size="48"></bp-icon>
+    <bp-icon name="check-circle" size="4xl"></bp-icon>
     <h3>Success!</h3>
     <p>Your changes have been saved.</p>
     <bp-button>OK</bp-button>

@@ -104,7 +104,7 @@ table.rows = [
 <div style="display: flex; flex-direction: column; gap: 2rem;">
 <TableDemo
   id="table-small"
-  size="small"
+  size="sm"
   columns={[
     { key: 'name', label: 'Name' },
     { key: 'email', label: 'Email' },
@@ -116,7 +116,7 @@ table.rows = [
 />
 <TableDemo
   id="table-medium"
-  size="medium"
+  size="md"
   columns={[
     { key: 'name', label: 'Name' },
     { key: 'email', label: 'Email' },
@@ -128,7 +128,7 @@ table.rows = [
 />
 <TableDemo
   id="table-large"
-  size="large"
+  size="lg"
   columns={[
     { key: 'name', label: 'Name' },
     { key: 'email', label: 'Email' },
@@ -142,9 +142,9 @@ table.rows = [
 </ComponentPreview>
 
 ```html
-<bp-table size="small">...</bp-table>
-<bp-table size="medium">...</bp-table>
-<bp-table size="large">...</bp-table>
+<bp-table size="sm">...</bp-table>
+<bp-table size="md">...</bp-table>
+<bp-table size="lg">...</bp-table>
 ```
 
 ### Sortable Columns
@@ -239,7 +239,7 @@ table.columns = [
     label: '',
     render: (value, row) => {
       return html`
-        <bp-button size="small" variant="secondary">Edit</bp-button>
+        <bp-button size="sm" variant="secondary">Edit</bp-button>
       `;
     },
   },
@@ -320,7 +320,7 @@ table.columns = [
 <bp-table>
   <div slot="empty">
     <p>No data available</p>
-    <bp-button size="small">Add Item</bp-button>
+    <bp-button size="sm">Add Item</bp-button>
   </div>
 </bp-table>
 ```
