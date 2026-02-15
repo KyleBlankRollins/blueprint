@@ -50,24 +50,24 @@ import 'blueprint/components/modal';
     <bp-button onclick="document.querySelector('#modal-medium').open = true">Medium</bp-button>
     <bp-button onclick="document.querySelector('#modal-large').open = true">Large</bp-button>
   </div>
-  <bp-modal id="modal-small" size="small">
+  <bp-modal id="modal-small" size="sm">
     <div slot="header">Small Modal</div>
     <p>Compact modal for simple messages.</p>
   </bp-modal>
-  <bp-modal id="modal-medium" size="medium">
+  <bp-modal id="modal-medium" size="md">
     <div slot="header">Medium Modal</div>
     <p>Default modal size for forms and content.</p>
   </bp-modal>
-  <bp-modal id="modal-large" size="large">
+  <bp-modal id="modal-large" size="lg">
     <div slot="header">Large Modal</div>
     <p>Larger modal for complex content or wide layouts.</p>
   </bp-modal>
 </ComponentPreview>
 
 ```html
-<bp-modal size="small">...</bp-modal>
-<bp-modal size="medium">...</bp-modal>
-<bp-modal size="large">...</bp-modal>
+<bp-modal size="sm">...</bp-modal>
+<bp-modal size="md">...</bp-modal>
+<bp-modal size="lg">...</bp-modal>
 ```
 
 ### Confirmation Dialog
@@ -179,7 +179,7 @@ import 'blueprint/components/modal';
 | Property          | Type                             | Default    | Description                             |
 | ----------------- | -------------------------------- | ---------- | --------------------------------------- |
 | `open`            | `boolean`                        | `false`    | Whether the modal is open               |
-| `size`            | `'small' \| 'medium' \| 'large'` | `'medium'` | Modal size variant                      |
+| `size`            | `'sm' \| 'md' \| 'lg'`           | `'md'`.    | Modal size variant                      |
 | `aria-labelledby` | `string`                         | `''`       | ID of the element that labels the modal |
 
 ### Events

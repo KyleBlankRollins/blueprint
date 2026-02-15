@@ -4,6 +4,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { multiSelectStyles } from './multi-select.style.js';
 import { memoizeOne } from '../../utilities/memoize.js';
+import { booleanConverter } from '../../utilities/boolean-converter.js';
 
 export type MultiSelectSize = 'sm' | 'md' | 'lg';
 export type MultiSelectVariant =
@@ -43,10 +44,11 @@ export class BpMultiSelect extends LitElement {
   declare variant: MultiSelectVariant;
 
   /** Maximum number of selections allowed (0 = unlimited) */
-  @property({ type: Number }) declare maxSelections: number;
+  @property({ type: Number, attribute: 'max-selections' })
+  declare maxSelections: number;
 
   /** Whether to show a clear all button */
-  @property({ type: Boolean }) declare clearable: boolean;
+  @property({ converter: booleanConverter }) declare clearable: boolean;
 
   /** Whether the dropdown is currently open */
   @state() private isOpen = false;
@@ -91,9 +93,10 @@ export class BpMultiSelect extends LitElement {
     document.addEventListener('click', this.handleDocumentClick, {
       passive: true,
     });
-    // Initialize cached options after first render
+    // Initialize cached options and pre-selected values after first render
     this.updateComplete.then(() => {
       this.cachedOptions = this.getOptions();
+      this.initializeSelectedValues();
     });
   }
 
@@ -138,7 +141,29 @@ export class BpMultiSelect extends LitElement {
    */
   private handleSlotChange = () => {
     this.cachedOptions = this.getOptions();
+    this.initializeSelectedValues();
   };
+
+  /**
+   * Read the `selected` attribute from slotted <option> elements
+   * and set the initial value array if no values are already set.
+   */
+  private initializeSelectedValues() {
+    if (this.value.length > 0) return;
+
+    const slot = this.shadowRoot?.querySelector('slot');
+    const assignedElements = slot?.assignedElements() || [];
+    const selectedValues = assignedElements
+      .filter(
+        (el): el is globalThis.HTMLOptionElement =>
+          el.tagName === 'OPTION' && el.hasAttribute('selected')
+      )
+      .map((el) => el.value || el.textContent || '');
+
+    if (selectedValues.length > 0) {
+      this.value = selectedValues;
+    }
+  }
 
   private isSelected(value: string): boolean {
     return this.value.includes(value);
@@ -164,8 +189,11 @@ export class BpMultiSelect extends LitElement {
     let newValue: string[];
 
     if (this.isSelected(option.value)) {
-      // Deselect
+      // Deselect — but prevent removing the last item when not clearable
       newValue = this.value.filter((v) => v !== option.value);
+      if (!this.clearable && newValue.length === 0) {
+        return;
+      }
     } else {
       // Select (check max selections)
       if (this.maxSelections > 0 && this.value.length >= this.maxSelections) {
@@ -331,16 +359,18 @@ export class BpMultiSelect extends LitElement {
                       <span class="multi-select__tag-label">
                         ${this.getLabelForValue(v)}
                       </span>
-                      <button
-                        type="button"
-                        class="multi-select__tag-remove"
-                        @click=${(e: Event) => this.handleRemoveTag(v, e)}
-                        aria-label="Remove ${this.getLabelForValue(v)}"
-                        tabindex="-1"
-                        ?disabled=${this.disabled}
-                      >
-                        ×
-                      </button>
+                      ${this.clearable
+                        ? html`<button
+                            type="button"
+                            class="multi-select__tag-remove"
+                            @click=${(e: Event) => this.handleRemoveTag(v, e)}
+                            aria-label="Remove ${this.getLabelForValue(v)}"
+                            tabindex="-1"
+                            ?disabled=${this.disabled}
+                          >
+                            ×
+                          </button>`
+                        : nothing}
                     </span>
                   `
                 )

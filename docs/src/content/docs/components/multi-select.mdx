@@ -54,6 +54,8 @@ import 'blueprint/components/multi-select';
   <option value="js" selected>JavaScript</option>
   <option value="ts" selected>TypeScript</option>
   <option value="py">Python</option>
+  <option value="go">Go</option>
+  <option value="rust">Rust</option>
 </bp-multi-select>
 ```
 
@@ -61,15 +63,15 @@ import 'blueprint/components/multi-select';
 
 <ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
-    <bp-multi-select size="small" placeholder="Small">
+    <bp-multi-select size="sm" placeholder="Small">
       <option value="1">Option 1</option>
       <option value="2">Option 2</option>
     </bp-multi-select>
-    <bp-multi-select size="medium" placeholder="Medium">
+    <bp-multi-select size="md" placeholder="Medium">
       <option value="1">Option 1</option>
       <option value="2">Option 2</option>
     </bp-multi-select>
-    <bp-multi-select size="large" placeholder="Large">
+    <bp-multi-select size="lg" placeholder="Large">
       <option value="1">Option 1</option>
       <option value="2">Option 2</option>
     </bp-multi-select>
@@ -77,9 +79,9 @@ import 'blueprint/components/multi-select';
 </ComponentPreview>
 
 ```html
-<bp-multi-select size="small">...</bp-multi-select>
-<bp-multi-select size="medium">...</bp-multi-select>
-<bp-multi-select size="large">...</bp-multi-select>
+<bp-multi-select size="sm">...</bp-multi-select>
+<bp-multi-select size="md">...</bp-multi-select>
+<bp-multi-select size="lg">...</bp-multi-select>
 ```
 
 ### Maximum Selections
@@ -162,10 +164,10 @@ import 'blueprint/components/multi-select';
 | `placeholder`   | `string`                                                   | `'Select options'` | Placeholder text                          |
 | `disabled`      | `boolean`                                                  | `false`            | Whether the component is disabled         |
 | `required`      | `boolean`                                                  | `false`            | Whether selection is required             |
-| `size`          | `'small' \| 'medium' \| 'large'`                           | `'medium'`         | Size of the component                     |
+| `size`          | `'sm' \| 'md' \| 'lg'`                                    | `'md'`             | Size of the component                     |
 | `variant`       | `'default' \| 'success' \| 'error' \| 'warning' \| 'info'` | `'default'`        | Validation variant                        |
 | `maxSelections` | `number`                                                   | `0`                | Maximum selections allowed (0 = no limit) |
-| `clearable`     | `boolean`                                                  | `true`             | Show clear all button                     |
+| `clearable`     | `boolean`                                                  | `true`             | Allow clearing selections                 |
 
 ### Events
 
