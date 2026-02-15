@@ -38,11 +38,11 @@ import 'blueprint/components/menu';
 <ComponentPreview>
   <bp-menu>
     <bp-menu-item value="cut">
-      <bp-icon slot="prefix" name="scissors"></bp-icon>
+      <bp-icon slot="prefix" name="clipboard-cross"></bp-icon>
       Cut
     </bp-menu-item>
     <bp-menu-item value="copy">
-      <bp-icon slot="prefix" name="copy"></bp-icon>
+      <bp-icon slot="prefix" name="clipboard-copy"></bp-icon>
       Copy
     </bp-menu-item>
     <bp-menu-item value="paste">
@@ -55,11 +55,11 @@ import 'blueprint/components/menu';
 ```html
 <bp-menu>
   <bp-menu-item value="cut">
-    <bp-icon slot="prefix" name="scissors"></bp-icon>
+    <bp-icon slot="prefix" name="clipboard-cross"></bp-icon>
     Cut
   </bp-menu-item>
   <bp-menu-item value="copy">
-    <bp-icon slot="prefix" name="copy"></bp-icon>
+    <bp-icon slot="prefix" name="clipboard-copy"></bp-icon>
     Copy
   </bp-menu-item>
   <bp-menu-item value="paste">
@@ -95,15 +95,15 @@ import 'blueprint/components/menu';
 
 <ComponentPreview>
   <div style="display: flex; gap: 2rem;">
-    <bp-menu size="small">
+    <bp-menu size="sm">
       <bp-menu-item value="1">Small Item 1</bp-menu-item>
       <bp-menu-item value="2">Small Item 2</bp-menu-item>
     </bp-menu>
-    <bp-menu size="medium">
+    <bp-menu size="md">
       <bp-menu-item value="1">Medium Item 1</bp-menu-item>
       <bp-menu-item value="2">Medium Item 2</bp-menu-item>
     </bp-menu>
-    <bp-menu size="large">
+    <bp-menu size="lg">
       <bp-menu-item value="1">Large Item 1</bp-menu-item>
       <bp-menu-item value="2">Large Item 2</bp-menu-item>
     </bp-menu>
@@ -111,9 +111,9 @@ import 'blueprint/components/menu';
 </ComponentPreview>
 
 ```html
-<bp-menu size="small">...</bp-menu>
-<bp-menu size="medium">...</bp-menu>
-<bp-menu size="large">...</bp-menu>
+<bp-menu size="sm">...</bp-menu>
+<bp-menu size="md">...</bp-menu>
+<bp-menu size="lg">...</bp-menu>
 ```
 
 ### With Dividers
@@ -204,7 +204,7 @@ import 'blueprint/components/menu';
 
 | Property | Type                             | Default    | Description             |
 | -------- | -------------------------------- | ---------- | ----------------------- |
-| `size`   | `'small' \| 'medium' \| 'large'` | `'medium'` | Size for all menu items |
+| `size`   | `'sm' \| 'md' \| 'lg'`           | `'md'`     | Size for all menu items |
 
 ### bp-menu Events
 

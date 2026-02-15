@@ -135,7 +135,8 @@ export class BpMenuItem extends LitElement {
   @property({ type: Boolean }) declare selected: boolean;
 
   /** Whether the item has a submenu */
-  @property({ type: Boolean }) declare hasSubmenu: boolean;
+  @property({ type: Boolean, attribute: 'has-submenu' })
+  declare hasSubmenu: boolean;
 
   /** Size variant (inherited from parent menu) */
   @property({ type: String }) declare size: MenuSize;
