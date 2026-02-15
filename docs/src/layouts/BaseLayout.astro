@@ -34,9 +34,13 @@ const {
   <body>
     <slot />
 
-    <!-- Load Blueprint components -->
+    <!-- Load Blueprint components and theme CSS -->
     <script>
-      import '../../../source/index.ts';
+      // Import theme CSS (design tokens)
+      import '../../../source/themes/generated/index.css';
+
+      // Import all components (registers custom elements)
+      import '../../../source/components/index.ts';
 
       // Listen for theme changes
       window.addEventListener('theme-change', ((event: CustomEvent) => {
