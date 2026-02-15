@@ -24,27 +24,40 @@ import { booleanConverter } from '../../utilities/boolean-converter.js';
 @customElement('bp-pagination')
 export class BpPagination extends LitElement {
   /** Current page number (1-indexed) */
-  @property({ type: Number }) declare currentPage: number;
+  @property({ type: Number, attribute: 'current-page' })
+  declare currentPage: number;
 
   /** Total number of pages */
-  @property({ type: Number }) declare totalPages: number;
+  @property({ type: Number, attribute: 'total-pages' })
+  declare totalPages: number;
 
   /** Number of page buttons to show around the current page */
-  @property({ type: Number }) declare siblingCount: number;
+  @property({ type: Number, attribute: 'sibling-count' })
+  declare siblingCount: number;
 
   /** Number of page buttons to show at the start and end */
-  @property({ type: Number }) declare boundaryCount: number;
+  @property({ type: Number, attribute: 'boundary-count' })
+  declare boundaryCount: number;
 
   /** Show first/last page buttons */
-  @property({ converter: booleanConverter, reflect: true })
+  @property({
+    converter: booleanConverter,
+    reflect: true,
+    attribute: 'show-first-last',
+  })
   declare showFirstLast: boolean;
 
   /** Show previous/next page buttons */
-  @property({ converter: booleanConverter, reflect: true })
+  @property({
+    converter: booleanConverter,
+    reflect: true,
+    attribute: 'show-prev-next',
+  })
   declare showPrevNext: boolean;
 
   /** Show page info text (e.g., "Page 1 of 10") */
-  @property({ type: Boolean }) declare showInfo: boolean;
+  @property({ type: Boolean, attribute: 'show-info' })
+  declare showInfo: boolean;
 
   /** Disable all pagination controls */
   @property({ type: Boolean }) declare disabled: boolean;

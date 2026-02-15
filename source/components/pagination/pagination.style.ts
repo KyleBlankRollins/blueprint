@@ -17,8 +17,8 @@ export const paginationStyles = css`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: var(--bp-spacing-2xl);
-    height: var(--bp-spacing-2xl);
+    min-width: var(--bp-spacing-10);
+    height: var(--bp-spacing-10);
     padding: var(--bp-spacing-xs) var(--bp-spacing-sm);
     border: var(--bp-border-width) solid var(--bp-color-border);
     border-radius: var(--bp-border-radius-md);
@@ -96,12 +96,10 @@ export const paginationStyles = css`
 
   .pagination__ellipsis {
     display: inline-flex;
-    align-items: center;
+    align-items: end;
     justify-content: center;
     min-width: var(--bp-spacing-2xl);
     height: var(--bp-spacing-2xl);
-    padding: var(--bp-spacing-xs) var(--bp-spacing-sm);
-    padding-bottom: calc(var(--bp-spacing-xs) + 2px);
     color: var(--bp-color-text-muted);
     font-size: var(--bp-font-size-base);
     user-select: none;
@@ -133,15 +131,15 @@ export const paginationStyles = css`
   }
 
   .pagination--lg .pagination__button {
-    min-width: var(--bp-spacing-10);
-    height: var(--bp-spacing-10);
+    min-width: var(--bp-spacing-2xl);
+    height: var(--bp-spacing-2xl);
     padding: var(--bp-spacing-sm) var(--bp-spacing-md);
     font-size: var(--bp-font-size-lg);
   }
 
   .pagination--lg .pagination__ellipsis {
-    min-width: var(--bp-spacing-10);
-    height: var(--bp-spacing-10);
+    min-width: var(--bp-spacing-2xl);
+    height: var(--bp-spacing-2xl);
     font-size: var(--bp-font-size-lg);
   }
 
