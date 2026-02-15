@@ -218,6 +218,17 @@ export class BpTabs extends LitElement {
           this.selectTab(this.focusedTabId);
         }
         break;
+
+      case 'Delete':
+      case 'Backspace': {
+        const tab = this.tabs.find((t) => t.id === tabId);
+        if (tab?.closable) {
+          event.preventDefault();
+          handled = true;
+          this.handleTabClose(event, tabId);
+        }
+        break;
+      }
     }
 
     if (handled && newIndex !== currentIndex) {
@@ -270,6 +281,16 @@ export class BpTabs extends LitElement {
         composed: true,
       })
     );
+
+    // Remove the closed tab
+    const closedIndex = this.tabs.findIndex((t) => t.id === tabId);
+    this.tabs = this.tabs.filter((t) => t.id !== tabId);
+
+    // If the closed tab was active, activate an adjacent tab
+    if (this.value === tabId && this.tabs.length > 0) {
+      const nextIndex = Math.min(closedIndex, this.tabs.length - 1);
+      this.value = this.tabs[nextIndex].id;
+    }
   };
 
   private handleTabFocus = (tabId: string) => {

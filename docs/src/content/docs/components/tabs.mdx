@@ -103,7 +103,7 @@ document.querySelector('#tabs-demo').tabs = [
 <div style="display: flex; flex-direction: column; gap: 2rem;">
 <TabsDemo
   id="tabs-small"
-  size="small"
+  size="sm"
   tabs={[
     { id: 'tab1', label: 'Tab 1' },
     { id: 'tab2', label: 'Tab 2' },
@@ -115,7 +115,7 @@ document.querySelector('#tabs-demo').tabs = [
 />
 <TabsDemo
   id="tabs-medium"
-  size="medium"
+  size="md"
   tabs={[
     { id: 'tab1', label: 'Tab 1' },
     { id: 'tab2', label: 'Tab 2' },
@@ -127,7 +127,7 @@ document.querySelector('#tabs-demo').tabs = [
 />
 <TabsDemo
   id="tabs-large"
-  size="large"
+  size="lg"
   tabs={[
     { id: 'tab1', label: 'Tab 1' },
     { id: 'tab2', label: 'Tab 2' },
@@ -141,9 +141,9 @@ document.querySelector('#tabs-demo').tabs = [
 </ComponentPreview>
 
 ```html
-<bp-tabs size="small">...</bp-tabs>
-<bp-tabs size="medium">...</bp-tabs>
-<bp-tabs size="large">...</bp-tabs>
+<bp-tabs size="sm">...</bp-tabs>
+<bp-tabs size="md">...</bp-tabs>
+<bp-tabs size="lg">...</bp-tabs>
 ```
 
 ### Tab Placement
@@ -295,7 +295,7 @@ With `manual` mode, tabs are only activated when pressing Enter or Space:
 | ----------- | --------------------------------------- | ----------- | -------------------------------- |
 | `value`     | `string`                                | `''`        | ID of the currently selected tab |
 | `tabs`      | `TabItem[]`                             | `[]`        | Array of tab configurations      |
-| `size`      | `'small' \| 'medium' \| 'large'`        | `'medium'`  | Size of the tabs                 |
+| `size`      | `'sm' \| 'md' \| 'lg'`            | `'md'`      | Size of the tabs                 |
 | `variant`   | `'default' \| 'pills' \| 'underline'`   | `'default'` | Visual style variant             |
 | `placement` | `'top' \| 'bottom' \| 'start' \| 'end'` | `'top'`     | Position of tab list             |
 | `disabled`  | `boolean`                               | `false`     | Disable all tabs                 |
