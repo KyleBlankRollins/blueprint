@@ -1,8 +1,11 @@
 ---
 /**
  * Theme Preview Page
+ *
  * Interactive showcase of all Blueprint components with theme switching.
- * Supports query params: ?theme=<name> and ?all=true
+ * Uses native custom element tags — no framework wrappers needed.
+ * Components self-register via the global import in BaseLayout.
+ * Types come from source/jsx.d.ts (astroHTML.JSX.IntrinsicElements).
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
@@ -30,8 +33,8 @@ import Header from '../components/Header.astro';
     </header>
 
     <div id="preview-container" class="preview-content">
-      <!-- Single theme view (default) -->
-      <div id="single-view" class="single-view">
+      <div class="single-view">
+        <!-- Buttons -->
         <section class="component-section">
           <bp-heading level="2" size="xl">Buttons</bp-heading>
           <div class="component-grid">
@@ -59,6 +62,7 @@ import Header from '../components/Header.astro';
           </div>
         </section>
 
+        <!-- Form Controls -->
         <section class="component-section">
           <bp-heading level="2" size="xl">Form Controls</bp-heading>
           <div class="component-grid">
@@ -103,6 +107,7 @@ import Header from '../components/Header.astro';
           </div>
         </section>
 
+        <!-- Feedback -->
         <section class="component-section">
           <bp-heading level="2" size="xl">Feedback</bp-heading>
           <div class="component-grid">
@@ -151,12 +156,13 @@ import Header from '../components/Header.astro';
           </div>
         </section>
 
+        <!-- Navigation -->
         <section class="component-section">
           <bp-heading level="2" size="xl">Navigation</bp-heading>
           <div class="component-grid">
             <div class="component-card wide">
               <bp-text size="sm" weight="semibold">Tabs</bp-text>
-              <bp-tabs id="preview-tabs">
+              <bp-tabs id="preview-tabs" value="tab1">
                 <div data-tab-id="tab1" style="padding: 1rem;">
                   Content for Tab 1
                 </div>
@@ -183,6 +189,7 @@ import Header from '../components/Header.astro';
           </div>
         </section>
 
+        <!-- Data Display -->
         <section class="component-section">
           <bp-heading level="2" size="xl">Data Display</bp-heading>
           <div class="component-grid">
@@ -218,6 +225,7 @@ import Header from '../components/Header.astro';
           </div>
         </section>
 
+        <!-- Typography -->
         <section class="component-section">
           <bp-heading level="2" size="xl">Typography</bp-heading>
           <div class="component-grid">
@@ -249,6 +257,7 @@ import Header from '../components/Header.astro';
           </div>
         </section>
 
+        <!-- Layout -->
         <section class="component-section">
           <bp-heading level="2" size="xl">Layout</bp-heading>
           <div class="component-grid">
@@ -276,51 +285,19 @@ import Header from '../components/Header.astro';
           </div>
         </section>
       </div>
-
-      <!-- All themes view (side-by-side comparison) -->
-      <div id="all-view" class="all-view" style="display: none;">
-        <bp-text variant="muted">
-          Side-by-side theme comparison coming soon. Use the theme selector
-          above to preview individual themes.
-        </bp-text>
-      </div>
     </div>
   </main>
 </BaseLayout>
 
 <script>
-  // Initialize bp-tabs with tab data
-  customElements.whenDefined('bp-tabs').then(() => {
-    const previewTabs = document.getElementById('preview-tabs') as any;
-    if (previewTabs) {
-      previewTabs.tabs = [
-        { id: 'tab1', label: 'Tab 1' },
-        { id: 'tab2', label: 'Tab 2' },
-        { id: 'tab3', label: 'Tab 3' },
-      ];
-      previewTabs.value = 'tab1';
-    }
-  });
-
-  // Parse query parameters
-  const params = new URLSearchParams(window.location.search);
-  const initialTheme = params.get('theme');
-  const showAll = params.get('all') === 'true';
-
-  // Apply initial theme from query param
-  if (initialTheme) {
-    document.documentElement.setAttribute('data-theme', initialTheme);
-    localStorage.setItem('blueprint-theme', initialTheme);
-  }
-
-  // Handle all themes view
-  if (showAll) {
-    const singleView = document.getElementById('single-view');
-    const allView = document.getElementById('all-view');
-    if (singleView && allView) {
-      singleView.style.display = 'none';
-      allView.style.display = 'block';
-    }
+  // Set tabs data programmatically (arrays can't be set via HTML attributes)
+  const previewTabs = document.getElementById('preview-tabs');
+  if (previewTabs) {
+    (previewTabs as any).tabs = [
+      { id: 'tab1', label: 'Tab 1' },
+      { id: 'tab2', label: 'Tab 2' },
+      { id: 'tab3', label: 'Tab 3' },
+    ];
   }
 
   // Theme selector handling
@@ -328,26 +305,21 @@ import Header from '../components/Header.astro';
     'theme-selector'
   ) as HTMLSelectElement | null;
   if (themeSelector) {
-    // Set initial value
     const currentTheme =
       document.documentElement.getAttribute('data-theme') || 'light';
     themeSelector.value = currentTheme;
 
-    // Listen for changes
     themeSelector.addEventListener('bp-change', (event: Event) => {
       const customEvent = event as CustomEvent;
       const theme = customEvent.detail.value;
 
-      // Update theme
       document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem('blueprint-theme', theme);
 
-      // Update URL without reload
       const url = new URL(window.location.href);
       url.searchParams.set('theme', theme);
       window.history.replaceState({}, '', url.toString());
 
-      // Dispatch theme-change event for any listeners
       window.dispatchEvent(
         new CustomEvent('theme-change', {
           detail: { theme },
@@ -435,11 +407,6 @@ import Header from '../components/Header.astro';
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-  }
-
-  .all-view {
-    padding: 2rem;
-    text-align: center;
   }
 
   @media (max-width: 640px) {

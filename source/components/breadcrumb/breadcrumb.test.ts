@@ -240,7 +240,7 @@ describe('bp-breadcrumb', () => {
     });
 
     it('should emit event with correct item data', async () => {
-      const items = [
+      const items: BreadcrumbItem[] = [
         { label: 'Home', href: '/', icon: 'home' },
         { label: 'Products', href: '/products' },
       ];
