@@ -46,7 +46,6 @@ export const popoverStyles = css`
     min-width: 160px;
     max-width: 320px;
     max-height: calc(100vh - 80px);
-    overflow-y: auto;
     background-color: var(--bp-color-surface-elevated);
     border: var(--bp-border-width) solid var(--bp-color-border);
     border-radius: var(--bp-border-radius-lg);
@@ -269,6 +268,8 @@ export const popoverStyles = css`
   /* Body */
   .popover__body {
     padding: var(--bp-spacing-4) var(--bp-spacing-5);
+    overflow-y: auto;
+    max-height: calc(100vh - 160px);
   }
 
   /* Footer */

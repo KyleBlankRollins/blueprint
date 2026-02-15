@@ -95,8 +95,9 @@ export const radioStyles = css`
 
   /* States - Focus */
   .radio--focused .radio__circle {
-    outline: var(--bp-spacing-xs) solid var(--bp-color-focus);
-    outline-offset: var(--bp-spacing-xs);
+    outline: var(--bp-focus-width) var(--bp-focus-style) var(--bp-color-focus);
+    outline-offset: var(--bp-focus-offset);
+    z-index: 1;
   }
 
   /* States - Hover */

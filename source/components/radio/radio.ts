@@ -195,7 +195,7 @@ export class BpRadio extends LitElement {
     ) as BpRadio[];
 
     radios.forEach((radio) => {
-      if (radio !== this && radio.checked) {
+      if (radio !== this && radio.checked && !radio.disabled) {
         radio.checked = false;
       }
     });
