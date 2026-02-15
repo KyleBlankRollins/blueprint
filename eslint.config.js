@@ -42,6 +42,7 @@ export default [
         File: 'readonly',
         DataTransfer: 'readonly',
         DragEvent: 'readonly',
+        HTMLSlotElement: 'readonly',
         Node: 'readonly',
       },
     },

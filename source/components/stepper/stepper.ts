@@ -137,6 +137,11 @@ export class BpStepper extends LitElement {
    */
   @state() private errorSteps: Set<number> = new Set();
 
+  /**
+   * Tracks whether the panel slot has any assigned content
+   */
+  @state() private panelHasContent = false;
+
   static styles = [stepperStyles];
 
   constructor() {
@@ -152,8 +157,19 @@ export class BpStepper extends LitElement {
     this.showNavigation = true;
   }
 
-  protected updated(changedProperties: PropertyValues): void {
-    super.updated(changedProperties);
+  protected willUpdate(changedProperties: PropertyValues): void {
+    super.willUpdate(changedProperties);
+
+    // Sync errorSteps from step config error properties
+    if (changedProperties.has('steps')) {
+      const errors = new Set<number>();
+      this.steps.forEach((step, index) => {
+        if (step.error) {
+          errors.add(index);
+        }
+      });
+      this.errorSteps = errors;
+    }
 
     // Auto-mark previous steps as complete when advancing
     if (changedProperties.has('currentStep')) {
@@ -162,12 +178,13 @@ export class BpStepper extends LitElement {
         | undefined;
       if (prevStep !== undefined && this.currentStep > prevStep) {
         // Mark all steps before current as complete
+        const updated = new Set(this.completedSteps);
         for (let i = 0; i < this.currentStep; i++) {
           if (!this.errorSteps.has(i)) {
-            this.completedSteps.add(i);
+            updated.add(i);
           }
         }
-        this.requestUpdate();
+        this.completedSteps = updated;
       }
     }
   }
@@ -238,6 +255,12 @@ export class BpStepper extends LitElement {
     this.dispatchEvent(clickEvent);
 
     if (index !== this.currentStep) {
+      // When navigating backward, clear completion for steps at and after target
+      if (index < this.currentStep) {
+        for (let i = index; i < this.steps.length; i++) {
+          this.completedSteps.delete(i);
+        }
+      }
       this.currentStep = index;
       this._emitStepChange(index, step);
     }
@@ -332,6 +355,11 @@ export class BpStepper extends LitElement {
     if (this.currentStep <= 0) return false;
     if (this.disabled) return false;
 
+    // Remove completed status from steps at and after the new current position
+    for (let i = this.currentStep - 1; i < this.steps.length; i++) {
+      this.completedSteps.delete(i);
+    }
+
     this.currentStep--;
     this._emitStepChange(this.currentStep, this.steps[this.currentStep]);
     return true;
@@ -350,6 +378,13 @@ export class BpStepper extends LitElement {
     if (this.linear && index > this.currentStep) {
       // Can't skip ahead in linear mode
       return false;
+    }
+
+    // When navigating backward, clear completion for steps at and after target
+    if (index < this.currentStep) {
+      for (let i = index; i < this.steps.length; i++) {
+        this.completedSteps.delete(i);
+      }
     }
 
     this.currentStep = index;
@@ -519,6 +554,14 @@ export class BpStepper extends LitElement {
   }
 
   /**
+   * Handle slotchange on the panel slot to track whether content is provided
+   */
+  private _handlePanelSlotChange(event: Event): void {
+    const slot = event.target as HTMLSlotElement;
+    this.panelHasContent = slot.assignedNodes({ flatten: true }).length > 0;
+  }
+
+  /**
    * Render the content panel for the current step
    * Shows slotted content via step-{id} slot
    * @returns TemplateResult for panel or nothing if no current step
@@ -528,8 +571,18 @@ export class BpStepper extends LitElement {
     if (!currentStepConfig) return nothing;
 
     return html`
-      <div class="panel" part="panel" role="tabpanel">
-        <slot name="step-${currentStepConfig.id}"></slot>
+      <div
+        class=${classMap({
+          panel: true,
+          'panel--has-content': this.panelHasContent,
+        })}
+        part="panel"
+        role="tabpanel"
+      >
+        <slot
+          name="step-${currentStepConfig.id}"
+          @slotchange=${this._handlePanelSlotChange}
+        ></slot>
       </div>
     `;
   }

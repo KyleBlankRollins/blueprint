@@ -320,7 +320,7 @@ export const stepperStyles = css`
     border-radius: var(--bp-border-radius-md);
   }
 
-  .panel:empty {
+  .panel:not(.panel--has-content) {
     display: none;
   }
 

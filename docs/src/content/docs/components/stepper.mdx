@@ -19,27 +19,62 @@ import 'blueprint/components/stepper';
 ### Default
 
 <ComponentPreview>
-<StepperDemo 
-  id="stepper-demo"
-  currentStep={1}
-  steps={[
-    { id: 'account', label: 'Account' },
-    { id: 'profile', label: 'Profile' },
-    { id: 'review', label: 'Review' },
-    { id: 'complete', label: 'Complete' },
-  ]}
-/>
+<bp-stepper id="stepper-demo" current-step="1">
+  <div slot="step-account" style="display: flex; flex-direction: column; gap: 1rem;">
+    <bp-input label="Email" type="email" placeholder="you@example.com"></bp-input>
+    <bp-input label="Password" type="password" placeholder="Create a password"></bp-input>
+  </div>
+  <div slot="step-profile" style="display: flex; flex-direction: column; gap: 1rem;">
+    <bp-input label="Full name" placeholder="Jane Doe"></bp-input>
+    <bp-textarea label="Bio" placeholder="Tell us about yourself"></bp-textarea>
+  </div>
+  <div slot="step-review" style="display: flex; flex-direction: column; gap: 0.75rem;">
+    <bp-text>Please review your information before submitting.</bp-text>
+    <bp-checkbox>I agree to the terms and conditions</bp-checkbox>
+  </div>
+  <div slot="step-complete" style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem; padding: 1rem 0;">
+    <bp-icon name="check-circle" size="xl"></bp-icon>
+    <bp-heading level="3">All done!</bp-heading>
+    <bp-text>Your account has been created successfully.</bp-text>
+  </div>
+</bp-stepper>
+<script is:inline>{`
+  customElements.whenDefined('bp-stepper').then(() => {
+    requestAnimationFrame(() => {
+      const stepper = document.getElementById('stepper-demo');
+      if (stepper) {
+        stepper.steps = [
+          { id: 'account', label: 'Account' },
+          { id: 'profile', label: 'Profile' },
+          { id: 'review', label: 'Review' },
+          { id: 'complete', label: 'Complete' },
+        ];
+      }
+    });
+  });
+`}</script>
 </ComponentPreview>
 
-```javascript
-const stepper = document.querySelector('bp-stepper');
-stepper.steps = [
-  { id: 'account', label: 'Account' },
-  { id: 'profile', label: 'Profile' },
-  { id: 'review', label: 'Review' },
-  { id: 'complete', label: 'Complete' },
-];
-stepper.currentStep = 1;
+```html
+<bp-stepper current-step="1">
+  <div slot="step-account">
+    <bp-input label="Email" type="email" placeholder="you@example.com"></bp-input>
+    <bp-input label="Password" type="password" placeholder="Create a password"></bp-input>
+  </div>
+  <div slot="step-profile">
+    <bp-input label="Full name" placeholder="Jane Doe"></bp-input>
+    <bp-textarea label="Bio" placeholder="Tell us about yourself"></bp-textarea>
+  </div>
+  <div slot="step-review">
+    <bp-text>Please review your information before submitting.</bp-text>
+    <bp-checkbox>I agree to the terms and conditions</bp-checkbox>
+  </div>
+  <div slot="step-complete">
+    <bp-icon name="check-circle" size="xl"></bp-icon>
+    <bp-heading level="3">All done!</bp-heading>
+    <bp-text>Your account has been created successfully.</bp-text>
+  </div>
+</bp-stepper>
 ```
 
 ### With Descriptions

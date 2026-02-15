@@ -39,7 +39,8 @@ const stepsJson = JSON.stringify(steps);
 ---
 
 <bp-stepper id={id} current-step={currentStep} orientation={orientation}
-></bp-stepper>
+  ><slot /></bp-stepper
+>
 
 <script
   is:inline
