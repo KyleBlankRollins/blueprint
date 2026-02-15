@@ -1,0 +1,179 @@
+/* Spacing scale */
+:root {
+  --bp-spacing-0: 0px;
+  --bp-spacing-0-5: 2px;
+  --bp-spacing-1: 4px;
+  --bp-spacing-1-5: 6px;
+  --bp-spacing-2: 8px;
+  --bp-spacing-2-5: 10px;
+  --bp-spacing-3: 12px;
+  --bp-spacing-4: 16px;
+  --bp-spacing-5: 20px;
+  --bp-spacing-6: 24px;
+  --bp-spacing-8: 32px;
+  --bp-spacing-10: 40px;
+  --bp-spacing-12: 48px;
+  --bp-spacing-16: 64px;
+  --bp-spacing-20: 80px;
+  --bp-spacing-24: 96px;
+
+  /* Semantic spacing */
+  --bp-spacing-2xs: 4px;
+  --bp-spacing-xs: 8px;
+  --bp-spacing-sm: 12px;
+  --bp-spacing-md: 16px;
+  --bp-spacing-lg: 24px;
+  --bp-spacing-xl: 32px;
+  --bp-spacing-2xl: 48px;
+}
+
+/* Border radius scale */
+:root {
+  --bp-border-radius-none: 0px;
+  --bp-border-radius-sm: 2px;
+  --bp-border-radius-md: 4px;
+  --bp-border-radius-lg: 8px;
+  --bp-border-radius-xl: 12px;
+  --bp-border-radius-2xl: 16px;
+  --bp-border-radius-3xl: 24px;
+  --bp-border-radius-full: 9999px;
+}
+
+/* Motion tokens */
+:root {
+  /* Durations */
+  --bp-duration-instant: 0ms;
+  --bp-duration-fast: 150ms;
+  --bp-duration-normal: 300ms;
+  --bp-duration-slow: 500ms;
+
+  /* Easing functions */
+  --bp-ease-linear: linear;
+  --bp-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --bp-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --bp-ease-inOut: cubic-bezier(0.4, 0, 0.2, 1);
+  --bp-ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* Transition presets */
+  --bp-transition-fast: 150ms cubic-bezier(0, 0, 0.2, 1);
+  --bp-transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --bp-transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  --bp-transition-bounce: 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Typography tokens */
+:root {
+  /* Font families */
+  --bp-font-sans:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, sans-serif;
+  --bp-font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Courier New', monospace;
+
+  /* Font sizes */
+  --bp-font-size-xs: 12px;
+  --bp-font-size-sm: 14px;
+  --bp-font-size-base: 16px;
+  --bp-font-size-lg: 20px;
+  --bp-font-size-xl: 24px;
+  --bp-font-size-2xl: 30px;
+  --bp-font-size-3xl: 36px;
+  --bp-font-size-4xl: 48px;
+
+  /* Line heights */
+  --bp-line-height-none: 1;
+  --bp-line-height-tight: 1.25;
+  --bp-line-height-snug: 1.375;
+  --bp-line-height-normal: 1.5;
+  --bp-line-height-relaxed: 1.625;
+  --bp-line-height-loose: 2;
+  --bp-line-height-heading-sm: 1.3;
+  --bp-line-height-heading-md: 1.25;
+  --bp-line-height-heading-lg: 1.2;
+
+  /* Font weights */
+  --bp-font-weight-light: 300;
+  --bp-font-weight-normal: 400;
+  --bp-font-weight-medium: 500;
+  --bp-font-weight-semibold: 600;
+  --bp-font-weight-bold: 700;
+}
+
+/* Icon size tokens */
+:root {
+  --bp-icon-size-xs: 12px;
+  --bp-icon-size-sm: 16px;
+  --bp-icon-size-md: 20px;
+  --bp-icon-size-lg: 24px;
+  --bp-icon-size-xl: 32px;
+  --bp-icon-size-2xl: 40px;
+  --bp-icon-size-3xl: 48px;
+  --bp-icon-size-4xl: 64px;
+}
+
+/* Utility tokens */
+:root {
+  /* Focus indicators */
+  --bp-focus-width: 2px;
+  --bp-focus-offset: 2px;
+  --bp-focus-style: solid;
+  --bp-focus-ring: var(--bp-focus-width) var(--bp-focus-style)
+    var(--bp-color-focus);
+
+  /* Z-index scale */
+  --bp-z-base: 0;
+  --bp-z-dropdown: 1000;
+  --bp-z-sticky: 1020;
+  --bp-z-overlay: 1030;
+  --bp-z-modal: 1040;
+  --bp-z-popover: 1060;
+  --bp-z-tooltip: 1080;
+
+  /* Opacity scale */
+  --bp-opacity-disabled: 0.5;
+  --bp-opacity-hover: 0.8;
+  --bp-opacity-overlay: 0.6;
+  --bp-opacity-subtle: 0.4;
+
+  /* Text colors */
+  --bp-color-text-inverse: #ffffff;
+
+  /* Breakpoints */
+  --bp-breakpoint-sm: 640px;
+  --bp-breakpoint-md: 768px;
+  --bp-breakpoint-lg: 1024px;
+  --bp-breakpoint-xl: 1280px;
+  --bp-breakpoint-2xl: 1536px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --bp-transition-fast: 0ms;
+    --bp-transition-base: 0ms;
+    --bp-transition-slow: 0ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: more) {
+  :root {
+    --bp-color-text: #000000;
+    --bp-color-background: #ffffff;
+    --bp-border-width: 2px;
+    --bp-focus-width: 3px;
+  }
+
+  [data-theme='dark'] {
+    --bp-color-text: #ffffff;
+    --bp-color-background: #000000;
+    --bp-color-text-inverse: #000000;
+  }
+}

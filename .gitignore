@@ -140,6 +140,3 @@ dist
 
 *storybook.log
 storybook-static
-
-# Blueprint agent workflow files (runtime state)
-.blueprint/

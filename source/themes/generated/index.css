@@ -1,0 +1,15 @@
+/**
+ * Blueprint Theme System
+ * Auto-generated theme files - DO NOT EDIT MANUALLY
+ *
+ * To regenerate: npm run theme:generate
+ */
+
+/* Utility tokens (spacing, radius, motion, typography, etc.) */
+@import './utilities.css';
+
+/* blueprint-core themes */
+@import './blueprint-core/fonts.css'; /* bundled fonts */
+@import './blueprint-core/light.css'; /* light (default) */
+@import './blueprint-core/dark.css'; /* dark */
+
