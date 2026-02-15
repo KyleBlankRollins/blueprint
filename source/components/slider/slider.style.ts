@@ -66,7 +66,8 @@ export const sliderStyles = css`
     box-shadow:
       0 1px 3px oklch(0 0 0 / 0.2),
       0 1px 2px oklch(0 0 0 / 0.1);
-    transform: translateX(-50%);
+    top: 50%;
+    transform: translate(-50%, -50%);
     cursor: grab;
     transition:
       box-shadow var(--bp-transition-fast),
@@ -110,7 +111,6 @@ export const sliderStyles = css`
   .slider--sm .slider__thumb {
     width: var(--bp-spacing-3);
     height: var(--bp-spacing-3);
-    top: calc(var(--bp-spacing-1) / 2);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
 
@@ -121,7 +121,6 @@ export const sliderStyles = css`
   .slider--md .slider__thumb {
     width: var(--bp-spacing-4);
     height: var(--bp-spacing-4);
-    top: calc(var(--bp-spacing-1-5) / 2);
   }
 
   .slider--lg .slider__track {
@@ -131,14 +130,13 @@ export const sliderStyles = css`
   .slider--lg .slider__thumb {
     width: var(--bp-spacing-5);
     height: var(--bp-spacing-5);
-    top: calc(var(--bp-spacing-2) / 2);
     box-shadow: var(--bp-shadow-md);
   }
 
   /* States */
   .slider__container:hover .slider__thumb {
     border-color: var(--bp-color-primary-hover);
-    transform: translateX(-50%) scale(1.1);
+    transform: translate(-50%, -50%) scale(1.1);
   }
 
   .slider__container:hover .slider__fill {
@@ -157,7 +155,7 @@ export const sliderStyles = css`
     cursor: grabbing;
     border-color: var(--bp-color-primary-active);
     box-shadow: var(--bp-shadow-md);
-    transform: translateX(-50%) scale(1.15);
+    transform: translate(-50%, -50%) scale(1.15);
   }
 
   .slider--dragging .slider__fill {

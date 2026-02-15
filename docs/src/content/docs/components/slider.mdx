@@ -93,16 +93,16 @@ import 'blueprint/components/slider';
 
 <ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-    <bp-slider size="small" label="Small" value="30"></bp-slider>
-    <bp-slider size="medium" label="Medium" value="50"></bp-slider>
-    <bp-slider size="large" label="Large" value="70"></bp-slider>
+    <bp-slider size="sm" label="Small" value="30"></bp-slider>
+    <bp-slider size="md" label="Medium" value="50"></bp-slider>
+    <bp-slider size="lg" label="Large" value="70"></bp-slider>
   </div>
 </ComponentPreview>
 
 ```html
-<bp-slider size="small" label="Small"></bp-slider>
-<bp-slider size="medium" label="Medium"></bp-slider>
-<bp-slider size="large" label="Large"></bp-slider>
+<bp-slider size="sm" label="Small"></bp-slider>
+<bp-slider size="md" label="Medium"></bp-slider>
+<bp-slider size="lg" label="Large"></bp-slider>
 ```
 
 ### Disabled
@@ -161,7 +161,7 @@ import 'blueprint/components/slider';
 | `step`        | `number`                         | `1`        | Step increment                    |
 | `label`       | `string`                         | `''`       | Label text                        |
 | `name`        | `string`                         | `''`       | Name for form submission          |
-| `size`        | `'small' \| 'medium' \| 'large'` | `'medium'` | Size of the slider                |
+| `size`        | `'sm' \| 'md' \| 'lg'`           | `'md'`     | Size of the slider                |
 | `disabled`    | `boolean`                        | `false`    | Whether the slider is disabled    |
 | `show-value`  | `boolean`                        | `false`    | Show the current value            |
 | `show-ticks`  | `boolean`                        | `false`    | Show tick marks at step intervals |

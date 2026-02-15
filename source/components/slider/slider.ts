@@ -151,14 +151,26 @@ export class BpSlider extends LitElement {
   }
 
   /**
-   * Clamp value to min/max and round to step
+   * Clamp value to min/max and round to step.
+   * Uses decimal-aware rounding to avoid floating-point artifacts
+   * (e.g. 0.6900000000000001 instead of 0.69).
    */
   private clampValue(rawValue: number): number {
+    // Determine the number of decimal places in the step value
+    const stepString = String(this.step);
+    const decimalPlaces = stepString.includes('.')
+      ? stepString.split('.')[1].length
+      : 0;
+
     // Round to nearest step
     const steppedValue =
       Math.round((rawValue - this.min) / this.step) * this.step + this.min;
+
+    // Round to step precision to eliminate floating-point errors
+    const preciseValue = parseFloat(steppedValue.toFixed(decimalPlaces));
+
     // Clamp to range
-    return Math.max(this.min, Math.min(this.max, steppedValue));
+    return Math.max(this.min, Math.min(this.max, preciseValue));
   }
 
   /**
