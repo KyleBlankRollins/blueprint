@@ -170,6 +170,47 @@ export const notificationStyles = css`
     color: var(--bp-color-error);
   }
 
-  /* Position classes are handled by the default animation */
-  /* Future: Container component will manage positioning */
+  /* Position variants */
+  .notification--top-left,
+  .notification--top-center,
+  .notification--top-right,
+  .notification--bottom-left,
+  .notification--bottom-center,
+  .notification--bottom-right {
+    position: fixed;
+    z-index: 10000;
+    margin: var(--bp-spacing-4);
+  }
+
+  .notification--top-left {
+    top: 0;
+    left: 0;
+  }
+
+  .notification--top-center {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .notification--top-right {
+    top: 0;
+    right: 0;
+  }
+
+  .notification--bottom-left {
+    bottom: 0;
+    left: 0;
+  }
+
+  .notification--bottom-center {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .notification--bottom-right {
+    bottom: 0;
+    right: 0;
+  }
 `;

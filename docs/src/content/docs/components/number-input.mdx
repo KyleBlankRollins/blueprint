@@ -64,16 +64,16 @@ import 'blueprint/components/number-input';
 
 <ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
-    <bp-number-input size="small" label="Small" value="10"></bp-number-input>
-    <bp-number-input size="medium" label="Medium" value="10"></bp-number-input>
-    <bp-number-input size="large" label="Large" value="10"></bp-number-input>
+    <bp-number-input size="sm" label="Small" value="10"></bp-number-input>
+    <bp-number-input size="md" label="Medium" value="10"></bp-number-input>
+    <bp-number-input size="lg" label="Large" value="10"></bp-number-input>
   </div>
 </ComponentPreview>
 
 ```html
-<bp-number-input size="small" label="Small"></bp-number-input>
-<bp-number-input size="medium" label="Medium"></bp-number-input>
-<bp-number-input size="large" label="Large"></bp-number-input>
+<bp-number-input size="sm" label="Small"></bp-number-input>
+<bp-number-input size="md" label="Medium"></bp-number-input>
+<bp-number-input size="lg" label="Large"></bp-number-input>
 ```
 
 ### Validation Variants
@@ -168,7 +168,7 @@ import 'blueprint/components/number-input';
 | `placeholder`  | `string`                                         | `''`        | Placeholder text                 |
 | `name`         | `string`                                         | `''`        | Name for form submission         |
 | `message`      | `string`                                         | `''`        | Help or error message            |
-| `size`         | `'small' \| 'medium' \| 'large'`                 | `'medium'`  | Size of the input                |
+| `size`         | `'ms' \| 'md' \| 'lg'`                           | `'md'`      | Size of the input                |
 | `variant`      | `'default' \| 'success' \| 'error' \| 'warning'` | `'default'` | Validation variant               |
 | `disabled`     | `boolean`                                        | `false`     | Whether the input is disabled    |
 | `required`     | `boolean`                                        | `false`     | Whether the input is required    |
