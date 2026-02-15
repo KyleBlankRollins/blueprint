@@ -78,16 +78,16 @@ import 'blueprint/components/time-picker';
 
 <ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
-    <bp-time-picker size="small" placeholder="Small"></bp-time-picker>
-    <bp-time-picker size="medium" placeholder="Medium"></bp-time-picker>
-    <bp-time-picker size="large" placeholder="Large"></bp-time-picker>
+    <bp-time-picker size="sm" placeholder="Small"></bp-time-picker>
+    <bp-time-picker size="md" placeholder="Medium"></bp-time-picker>
+    <bp-time-picker size="lg" placeholder="Large"></bp-time-picker>
   </div>
 </ComponentPreview>
 
 ```html
-<bp-time-picker size="small" placeholder="Small"></bp-time-picker>
-<bp-time-picker size="medium" placeholder="Medium"></bp-time-picker>
-<bp-time-picker size="large" placeholder="Large"></bp-time-picker>
+<bp-time-picker size="sm" placeholder="Small"></bp-time-picker>
+<bp-time-picker size="md" placeholder="Medium"></bp-time-picker>
+<bp-time-picker size="lg" placeholder="Large"></bp-time-picker>
 ```
 
 ### Disabled
@@ -122,7 +122,7 @@ import 'blueprint/components/time-picker';
 | `placeholder` | `string`                         | `'Select time'` | Placeholder text               |
 | `disabled`    | `boolean`                        | `false`         | Whether the picker is disabled |
 | `required`    | `boolean`                        | `false`         | Whether selection is required  |
-| `size`        | `'small' \| 'medium' \| 'large'` | `'medium'`      | Size of the picker             |
+| `size`        | `'sm' \| 'md' \| 'lg'`           | `'md'`          | Size of the picker             |
 | `format`      | `'12' \| '24'`                   | `'12'`          | Time format (12 or 24-hour)    |
 | `step`        | `number`                         | `15`            | Minute intervals in dropdown   |
 
@@ -136,6 +136,7 @@ import 'blueprint/components/time-picker';
 
 | Part            | Description                 |
 | --------------- | --------------------------- |
+| `label`         | The label element           |
 | `input-wrapper` | The input wrapper container |
 | `input`         | The text input field        |
 | `icon`          | The clock icon indicator    |

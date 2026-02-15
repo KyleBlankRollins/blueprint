@@ -12,6 +12,21 @@ export const timePickerStyles = css`
     font-family: var(--bp-font-family);
   }
 
+  .label {
+    display: block;
+    font-size: var(--bp-font-size-sm);
+    font-weight: var(--bp-font-weight-medium);
+    color: var(--bp-color-text);
+    line-height: var(--bp-line-height-normal);
+    margin-bottom: var(--bp-spacing-xs);
+    cursor: pointer;
+  }
+
+  .label-required {
+    color: var(--bp-color-error);
+    margin-left: var(--bp-spacing-xs);
+  }
+
   .input-wrapper {
     position: relative;
     display: flex;

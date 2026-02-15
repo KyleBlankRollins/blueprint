@@ -246,6 +246,16 @@ export class BpTimePicker extends LitElement {
 
     return html`
       <div class="time-picker time-picker--${this.size}">
+        ${this.label
+          ? html`
+              <label class="label" part="label" @click=${this.toggleDropdown}>
+                ${this.label}
+                ${this.required
+                  ? html`<span class="label-required">*</span>`
+                  : ''}
+              </label>
+            `
+          : ''}
         <div
           class="input-wrapper"
           part="input-wrapper"
