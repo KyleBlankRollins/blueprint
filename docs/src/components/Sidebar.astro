@@ -1,6 +1,7 @@
 ---
 /**
  * Sidebar navigation component.
+ * Shows docs-only or components-only navigation based on the current URL path.
  * Uses Blueprint components: bp-heading, bp-link, bp-divider
  */
 interface NavItem {
@@ -13,7 +14,7 @@ interface NavSection {
   items: NavItem[];
 }
 
-const navigation: NavSection[] = [
+const docsNavigation: NavSection[] = [
   {
     title: 'Getting Started',
     items: [
@@ -34,6 +35,9 @@ const navigation: NavSection[] = [
       { label: 'Type Generation', href: '/themes/type-generation' },
     ],
   },
+];
+
+const componentsNavigation: NavSection[] = [
   {
     title: 'Components',
     items: [
@@ -84,6 +88,8 @@ const navigation: NavSection[] = [
 ];
 
 const currentPath = Astro.url.pathname;
+const isComponentsSection = currentPath.startsWith('/components');
+const navigation = isComponentsSection ? componentsNavigation : docsNavigation;
 ---
 
 <aside class="sidebar">

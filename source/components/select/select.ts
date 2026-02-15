@@ -246,6 +246,24 @@ export class BpSelect extends LitElement {
     });
   }
 
+  /**
+   * Returns the longest text among all options and the placeholder.
+   * Used by a hidden sizer element to keep the trigger width stable.
+   */
+  private getSizerText(): string {
+    const options = this.getOptions();
+    let longestText = this.placeholder || '';
+
+    for (const option of options) {
+      const text = option.textContent || '';
+      if (text.length > longestText.length) {
+        longestText = text;
+      }
+    }
+
+    return longestText;
+  }
+
   private getOptionElements = () => {
     const slot = this.shadowRoot?.querySelector('slot');
     const assignedElements = slot?.assignedElements() || [];
@@ -337,7 +355,12 @@ export class BpSelect extends LitElement {
           @click=${this.handleToggle}
           @keydown=${this.handleKeyDown}
         >
-          <span class="select-value" part="display">${displayLabel}</span>
+          <span class="select-value" part="display">
+            <span class="select-value__sizer" aria-hidden="true"
+              >${this.getSizerText()}</span
+            >
+            <span class="select-value__display">${displayLabel}</span>
+          </span>
           <svg
             class="select-icon"
             part="icon"

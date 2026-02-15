@@ -58,6 +58,23 @@ export const selectStyles = css`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    position: relative;
+  }
+
+  /* Hidden sizer keeps the trigger width stable across placeholder/option changes */
+  .select-value__sizer {
+    display: block;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    white-space: nowrap;
+  }
+
+  .select-value__display {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   /* Placeholder state - when no value is selected */
