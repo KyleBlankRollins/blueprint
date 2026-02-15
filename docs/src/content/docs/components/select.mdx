@@ -59,15 +59,15 @@ import 'blueprint/components/select';
 
 <ComponentPreview>
   <div class="component-preview-col">
-    <bp-select size="small" placeholder="Small">
+    <bp-select size="sm" placeholder="Small">
       <option value="1">Option 1</option>
       <option value="2">Option 2</option>
     </bp-select>
-    <bp-select size="medium" placeholder="Medium (default)">
+    <bp-select size="md" placeholder="Medium (default)">
       <option value="1">Option 1</option>
       <option value="2">Option 2</option>
     </bp-select>
-    <bp-select size="large" placeholder="Large">
+    <bp-select size="lg" placeholder="Large">
       <option value="1">Option 1</option>
       <option value="2">Option 2</option>
     </bp-select>
@@ -75,9 +75,9 @@ import 'blueprint/components/select';
 </ComponentPreview>
 
 ```html
-<bp-select size="small" placeholder="Small">...</bp-select>
-<bp-select size="medium" placeholder="Medium">...</bp-select>
-<bp-select size="large" placeholder="Large">...</bp-select>
+<bp-select size="sm" placeholder="Small">...</bp-select>
+<bp-select size="md" placeholder="Medium">...</bp-select>
+<bp-select size="lg" placeholder="Large">...</bp-select>
 ```
 
 ### States
@@ -87,7 +87,7 @@ import 'blueprint/components/select';
     <bp-select disabled value="disabled">
       <option value="disabled">Disabled</option>
     </bp-select>
-    <bp-select required placeholder="Required field">
+    <bp-select required label="Required field" placeholder="Select an option">
       <option value="1">Option 1</option>
       <option value="2">Option 2</option>
     </bp-select>
@@ -99,7 +99,7 @@ import 'blueprint/components/select';
   <option value="disabled">Disabled</option>
 </bp-select>
 
-<bp-select required placeholder="Required field">
+<bp-select required label="Required field" placeholder="Select an option">
   <option value="1">Option 1</option>
 </bp-select>
 ```
@@ -114,7 +114,7 @@ import 'blueprint/components/select';
 | `placeholder` | `string`                         | `''`       | Placeholder text    |
 | `disabled`    | `boolean`                        | `false`    | Disables the select |
 | `required`    | `boolean`                        | `false`    | Marks as required   |
-| `size`        | `'small' \| 'medium' \| 'large'` | `'medium'` | Select size         |
+| `size`        | `'sm' \| 'md' \| 'lg'`           | `'md'`.    | Select size         |
 | `name`        | `string`                         | `''`       | Form field name     |
 
 ### Slots

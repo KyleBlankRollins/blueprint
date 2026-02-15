@@ -5,6 +5,13 @@ export const selectStyles = css`
   :host {
     display: inline-block;
     width: 100%;
+    box-sizing: border-box;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
 
   .select {
