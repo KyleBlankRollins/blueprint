@@ -189,6 +189,17 @@ export const treeStyles = css`
     width: var(--bp-spacing-5);
     height: var(--bp-spacing-5);
   }
+
+  /* Link nodes — reset anchor styles so links look like regular nodes */
+  a.node-content {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  a.node-content:visited {
+    color: inherit;
+  }
+
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     .node-content,

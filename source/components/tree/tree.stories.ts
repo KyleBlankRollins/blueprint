@@ -284,3 +284,73 @@ export const WithEventLogging: Story = {
     </div>
   `,
 };
+
+const navigationNodes: TreeNode[] = [
+  {
+    id: 'getting-started',
+    label: 'Getting Started',
+    href: '/docs/getting-started',
+    children: [
+      {
+        id: 'installation',
+        label: 'Installation',
+        href: '/docs/getting-started/installation',
+      },
+      {
+        id: 'quick-start',
+        label: 'Quick Start',
+        href: '/docs/getting-started/quick-start',
+      },
+    ],
+  },
+  {
+    id: 'components',
+    label: 'Components',
+    children: [
+      { id: 'button', label: 'Button', href: '/docs/components/button' },
+      { id: 'input', label: 'Input', href: '/docs/components/input' },
+      { id: 'modal', label: 'Modal', href: '/docs/components/modal' },
+    ],
+  },
+  {
+    id: 'themes',
+    label: 'Themes',
+    href: '/docs/themes',
+    children: [
+      {
+        id: 'customization',
+        label: 'Customization',
+        href: '/docs/themes/customization',
+      },
+      { id: 'tokens', label: 'Design Tokens', href: '/docs/themes/tokens' },
+    ],
+  },
+  { id: 'changelog', label: 'Changelog', href: '/docs/changelog' },
+];
+
+export const Navigation: Story = {
+  render: () => html`
+    <p style="margin-bottom: 1rem; color: var(--bp-color-text-muted);">
+      Nodes with <code>href</code> render as real
+      <code>&lt;a&gt;</code> links. Click to navigate (prevented here for demo).
+    </p>
+    <bp-tree
+      .nodes=${navigationNodes}
+      .expandedIds=${['getting-started', 'components', 'themes']}
+      selectedId="installation"
+      size="sm"
+      @bp-navigate=${(e: CustomEvent) => {
+        e.preventDefault();
+        const log = document.getElementById('nav-log');
+        if (log)
+          log.textContent = `Navigate to: ${e.detail.href}`;
+      }}
+    ></bp-tree>
+    <div
+      id="nav-log"
+      style="margin-top: 1rem; padding: 0.5rem; background: var(--bp-color-surface-subdued); border-radius: 4px; font-family: monospace;"
+    >
+      Click a link node...
+    </div>
+  `,
+};

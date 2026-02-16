@@ -16,6 +16,8 @@ export interface TreeNode {
   label: string;
   /** Optional icon name */
   icon?: string;
+  /** URL to navigate to when the node is clicked */
+  href?: string;
   /** Child nodes */
   children?: TreeNode[];
   /** Whether the node is disabled */
@@ -30,6 +32,7 @@ export interface TreeNode {
  * @fires bp-select - Fired when a node is selected. Detail: { node: TreeNode, path: string[] }
  * @fires bp-expand - Fired when a node is expanded. Detail: { node: TreeNode, expanded: boolean }
  * @fires bp-collapse - Fired when a node is collapsed. Detail: { node: TreeNode, expanded: boolean }
+ * @fires bp-navigate - Fired when a node with href is clicked. Detail: { node: TreeNode, href: string, path: string[] }. Call preventDefault() to handle navigation yourself.
  *
  * @slot - Default slot for custom tree items (when not using data prop)
  *
@@ -293,13 +296,36 @@ export class BpTree extends LitElement {
 
   /**
    * Handles click events on tree nodes.
-   * Selects the node if selectable and not disabled.
+   * For nodes with href, dispatches bp-navigate and follows the link unless prevented.
+   * For other nodes, selects the node if selectable and not disabled.
    *
    * @param event - The click event
    * @param node - The node that was clicked
    */
   private handleNodeClick(event: Event, node: TreeNode): void {
     event.stopPropagation();
+
+    if (node.href && !node.disabled) {
+      const navigateEvent = new CustomEvent('bp-navigate', {
+        detail: {
+          node,
+          href: node.href,
+          path: this.getNodePath(node.id, this.nodes),
+        },
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      });
+      const allowed = this.dispatchEvent(navigateEvent);
+      if (allowed) {
+        // Default navigation — let the <a> handle it naturally
+        return;
+      }
+      // Consumer called preventDefault(); suppress default link behavior
+      event.preventDefault();
+      return;
+    }
+
     if (this.selectable && !node.disabled) {
       this.selectNode(node.id);
     }
@@ -314,6 +340,7 @@ export class BpTree extends LitElement {
    */
   private handleToggleClick(event: Event, node: TreeNode): void {
     event.stopPropagation();
+    event.preventDefault();
     this.toggle(node.id);
   }
 
@@ -334,7 +361,9 @@ export class BpTree extends LitElement {
       case 'Enter':
       case ' ':
         event.preventDefault();
-        if (this.selectable && !node.disabled) {
+        if (node.href && !node.disabled) {
+          this.handleNodeClick(event, node);
+        } else if (this.selectable && !node.disabled) {
           this.selectNode(node.id);
         }
         break;
@@ -380,6 +409,58 @@ export class BpTree extends LitElement {
     const isExpanded = this.expandedSet.has(node.id);
     const isSelected = this.isSelected(node.id);
 
+    const contentClasses = `node-content ${isSelected ? 'node-content--selected' : ''} ${node.href ? 'node-content--link' : ''}`;
+
+    const contentInner = html`
+      <span
+        class="node-toggle ${hasChildren ? 'node-toggle--visible' : ''}"
+        part="node-icon"
+        @click=${(e: Event) => this.handleToggleClick(e, node)}
+      >
+        ${hasChildren
+          ? html`<bp-icon
+              class="toggle-icon ${isExpanded ? 'toggle-icon--expanded' : ''}"
+              name="chevron-right"
+              size="sm"
+            ></bp-icon>`
+          : nothing}
+      </span>
+      ${node.icon
+        ? html`<bp-icon
+            class="node-icon"
+            part="node-custom-icon"
+            name=${node.icon}
+            size="sm"
+          ></bp-icon>`
+        : nothing}
+      <span class="node-label" part="node-label">${node.label}</span>
+    `;
+
+    const nodeContent = node.href
+      ? html`
+          <a
+            class=${contentClasses}
+            part="node-content"
+            href=${node.href}
+            tabindex=${node.disabled ? -1 : 0}
+            @click=${(e: Event) => this.handleNodeClick(e, node)}
+            @keydown=${(e: KeyboardEvent) => this.handleKeyDown(e, node)}
+          >
+            ${contentInner}
+          </a>
+        `
+      : html`
+          <div
+            class=${contentClasses}
+            part="node-content"
+            tabindex=${node.disabled ? -1 : 0}
+            @click=${(e: Event) => this.handleNodeClick(e, node)}
+            @keydown=${(e: KeyboardEvent) => this.handleKeyDown(e, node)}
+          >
+            ${contentInner}
+          </div>
+        `;
+
     return html`
       <div
         class="node ${node.disabled ? 'node--disabled' : ''} ${hasChildren &&
@@ -397,38 +478,7 @@ export class BpTree extends LitElement {
         aria-disabled=${ifDefined(node.disabled ? 'true' : undefined)}
         style="--node-level: ${level}"
       >
-        <div
-          class="node-content ${isSelected ? 'node-content--selected' : ''}"
-          part="node-content"
-          tabindex=${node.disabled ? -1 : 0}
-          @click=${(e: Event) => this.handleNodeClick(e, node)}
-          @keydown=${(e: KeyboardEvent) => this.handleKeyDown(e, node)}
-        >
-          <span
-            class="node-toggle ${hasChildren ? 'node-toggle--visible' : ''}"
-            part="node-icon"
-            @click=${(e: Event) => this.handleToggleClick(e, node)}
-          >
-            ${hasChildren
-              ? html`<bp-icon
-                  class="toggle-icon ${isExpanded
-                    ? 'toggle-icon--expanded'
-                    : ''}"
-                  name="chevron-right"
-                  size="sm"
-                ></bp-icon>`
-              : nothing}
-          </span>
-          ${node.icon
-            ? html`<bp-icon
-                class="node-icon"
-                part="node-custom-icon"
-                name=${node.icon}
-                size="sm"
-              ></bp-icon>`
-            : nothing}
-          <span class="node-label" part="node-label">${node.label}</span>
-        </div>
+        ${nodeContent}
         ${hasChildren && isExpanded
           ? html`
               <div class="node-children" part="node-children" role="group">

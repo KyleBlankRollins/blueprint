@@ -6,6 +6,7 @@ A hierarchical tree component for displaying nested data structures like file sy
 
 - **Hierarchical Display**: Render nested tree structures with unlimited depth
 - **Expand/Collapse**: Toggle visibility of child nodes with smooth animations
+- **Navigation**: Nodes with `href` render as real `<a>` links for accessible navigation
 - **Selection**: Single or multi-select mode with visual feedback
 - **Sizes**: sm, md, and lg size variants
 - **Connecting Lines**: Optional visual lines between parent and child nodes
@@ -38,6 +39,30 @@ A hierarchical tree component for displaying nested data structures like file sy
 <bp-tree
   .nodes=${nodes}
   .expandedIds=${['folder1', 'folder2']}
+></bp-tree>
+```
+
+### Navigation Tree
+
+Nodes with `href` render as real `<a>` links and emit `bp-navigate` on click:
+
+```html
+<bp-tree
+  .nodes=${[
+    {
+      id: 'getting-started',
+      label: 'Getting Started',
+      href: '/docs/getting-started',
+      children: [
+        { id: 'install', label: 'Installation', href: '/docs/install' },
+        { id: 'quick-start', label: 'Quick Start', href: '/docs/quick-start' }
+      ]
+    },
+    { id: 'changelog', label: 'Changelog', href: '/changelog' }
+  ]}
+  .expandedIds=${['getting-started']}
+  selectedId="install"
+  @bp-navigate=${(e) => console.log('Navigate to:', e.detail.href)}
 ></bp-tree>
 ```
 
@@ -93,6 +118,7 @@ interface TreeNode {
   id: string; // Unique identifier
   label: string; // Display label
   icon?: string; // Optional icon name
+  href?: string; // URL — renders the node as an <a> link
   children?: TreeNode[]; // Child nodes
   disabled?: boolean; // Whether node is disabled
   data?: unknown; // Custom data
@@ -118,6 +144,7 @@ interface TreeNode {
 | `bp-select`   | `{ node: TreeNode, selectedIds: string[], path: string[] }` | Fired when a node is selected  |
 | `bp-expand`   | `{ node: TreeNode, expanded: boolean }`                     | Fired when a node is expanded  |
 | `bp-collapse` | `{ node: TreeNode, expanded: boolean }`                     | Fired when a node is collapsed |
+| `bp-navigate` | `{ node: TreeNode, href: string, path: string[] }`          | Fired when a link node is clicked. Call `preventDefault()` to handle navigation yourself |
 
 ### Slots
 

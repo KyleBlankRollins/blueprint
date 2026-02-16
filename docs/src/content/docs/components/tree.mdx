@@ -6,7 +6,7 @@ description: Hierarchical tree view for nested data
 import ComponentPreview from '../../../components/ComponentPreview.astro';
 import TreeDemo from '../../../components/TreeDemo.astro';
 
-The `bp-tree` component displays hierarchical data in an expandable/collapsible tree structure. It supports selection, multi-select, custom icons, and connecting lines between nodes.
+The `bp-tree` component displays hierarchical data in an expandable/collapsible tree structure. It supports selection, multi-select, custom icons, connecting lines between nodes, and navigation links.
 
 ## Import
 
@@ -270,6 +270,59 @@ tree.nodes = [...];
 tree.expandedIds = ['documents', 'photos']; // Pre-expand these nodes
 ```
 
+### Navigation Links
+
+Nodes can include an `href` property to render as links. When clicked, link nodes emit a `bp-navigate` event instead of `bp-select`. The tree renders them as `<a>` elements for native browser behavior (middle-click to open in new tab, right-click context menu, etc.).
+
+<ComponentPreview>
+<TreeDemo
+  id="tree-nav"
+  nodes={[
+    {
+      id: 'home',
+      label: 'Home',
+      icon: 'home',
+      href: '/'
+    },
+    {
+      id: 'docs',
+      label: 'Documentation',
+      icon: 'folder-closed',
+      href: '/docs',
+      children: [
+        { id: 'getting-started', label: 'Getting Started', href: '/docs/getting-started' },
+        { id: 'api', label: 'API Reference', href: '/docs/api' },
+      ],
+    },
+    { id: 'about', label: 'About', icon: 'info', href: '/about' },
+  ]}
+/>
+</ComponentPreview>
+
+```javascript
+const tree = document.querySelector('#tree-nav');
+tree.nodes = [
+  { id: 'home', label: 'Home', icon: 'home', href: '/' },
+  {
+    id: 'docs',
+    label: 'Documentation',
+    icon: 'folder-closed',
+    href: '/docs',
+    children: [
+      { id: 'getting-started', label: 'Getting Started', href: '/docs/getting-started' },
+      { id: 'api', label: 'API Reference', href: '/docs/api' },
+    ],
+  },
+  { id: 'about', label: 'About', icon: 'info', href: '/about' },
+];
+
+// Listen for navigation
+tree.addEventListener('bp-navigate', (e) => {
+  console.log('Navigating to:', e.detail.href);
+  // Call e.preventDefault() to handle navigation yourself
+});
+```
+
 ### Disabled Nodes
 
 <ComponentPreview>
@@ -401,6 +454,7 @@ interface TreeNode {
   id: string; // Unique identifier
   label: string; // Display text
   icon?: string; // Icon name
+  href?: string; // URL for navigation nodes
   children?: TreeNode[]; // Child nodes
   disabled?: boolean; // Disable selection
   data?: unknown; // Custom data
@@ -426,6 +480,7 @@ interface TreeNode {
 | `bp-select`   | `{ node, selectedIds, path }` | Fired when selection changes |
 | `bp-expand`   | `{ node, expanded }`          | Fired when a node expands    |
 | `bp-collapse` | `{ node, expanded }`          | Fired when a node collapses  |
+| `bp-navigate` | `{ node, href, path }`        | Fired when a link node is clicked. Call `preventDefault()` to handle navigation yourself |
 
 ### Slots
 
@@ -450,7 +505,7 @@ interface TreeNode {
 - **Arrow Up/Down**: Navigate between visible nodes
 - **Arrow Right**: Expand node or move to first child
 - **Arrow Left**: Collapse node or move to parent
-- **Enter/Space**: Select/toggle node
+- **Enter/Space**: Select/toggle node (or follow link for `href` nodes)
 - **Home**: Move to first node
 - **End**: Move to last visible node
 - **\***: Expand all siblings
@@ -461,5 +516,5 @@ interface TreeNode {
 - `aria-expanded` indicates expand state
 - `aria-selected` indicates selection
 - `aria-disabled` for disabled nodes
+- Link nodes render as `<a>` elements for proper semantics
 - Full keyboard navigation support
-import ComponentPreview from '../../../components/ComponentPreview.astro';

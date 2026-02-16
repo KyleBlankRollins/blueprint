@@ -548,7 +548,7 @@ describe('bp-tree', () => {
     const selectHandler = vi.fn();
     element.addEventListener('bp-select', selectHandler);
 
-    // Find and click screen1.png (nested 3 levels deep)
+    // Find and click the screen1 node (nested 3 levels deep)
     const nodeContents = element.shadowRoot?.querySelectorAll('.node-content');
     const screen1Content = Array.from(nodeContents || []).find(
       (n) => n.querySelector('.node-label')?.textContent === 'screen1.png'
@@ -560,5 +560,113 @@ describe('bp-tree', () => {
     expect(path).toContain('folder2');
     expect(path).toContain('subfolder1');
     expect(path).toContain('screen1');
+  });
+
+  // ── href / navigation tests ──
+
+  it('should render an <a> tag for nodes with href', async () => {
+    element.nodes = [
+      { id: 'link1', label: 'Docs', href: '/docs' },
+      { id: 'plain1', label: 'Plain' },
+    ];
+    await element.updateComplete;
+
+    const links = element.shadowRoot?.querySelectorAll('a.node-content');
+    const divs = element.shadowRoot?.querySelectorAll('div.node-content');
+    expect(links?.length).toBe(1);
+    expect(divs?.length).toBe(1);
+    expect(links?.[0].getAttribute('href')).toBe('/docs');
+  });
+
+  it('should emit bp-navigate event when node with href is clicked', async () => {
+    element.nodes = [{ id: 'nav1', label: 'Home', href: '/home' }];
+    await element.updateComplete;
+
+    const navigateHandler = vi.fn();
+    element.addEventListener('bp-navigate', navigateHandler);
+
+    const link = element.shadowRoot?.querySelector(
+      'a.node-content'
+    ) as HTMLElement;
+    link?.click();
+
+    expect(navigateHandler).toHaveBeenCalled();
+    expect(navigateHandler.mock.calls[0][0].detail.href).toBe('/home');
+    expect(navigateHandler.mock.calls[0][0].detail.node.id).toBe('nav1');
+  });
+
+  it('should not emit bp-select for nodes with href', async () => {
+    element.nodes = [{ id: 'nav1', label: 'Home', href: '/home' }];
+    await element.updateComplete;
+
+    const selectHandler = vi.fn();
+    element.addEventListener('bp-select', selectHandler);
+
+    const link = element.shadowRoot?.querySelector(
+      'a.node-content'
+    ) as HTMLElement;
+    link?.click();
+
+    expect(selectHandler).not.toHaveBeenCalled();
+  });
+
+  it('should support href on parent nodes with children', async () => {
+    element.nodes = [
+      {
+        id: 'parent',
+        label: 'Section',
+        href: '/section',
+        children: [{ id: 'child', label: 'Page', href: '/section/page' }],
+      },
+    ];
+    element.expandedIds = ['parent'];
+    await element.updateComplete;
+
+    const links = element.shadowRoot?.querySelectorAll('a.node-content');
+    expect(links?.length).toBe(2);
+    expect(links?.[0].getAttribute('href')).toBe('/section');
+    expect(links?.[1].getAttribute('href')).toBe('/section/page');
+  });
+
+  it('should not navigate when disabled node with href is clicked', async () => {
+    element.nodes = [
+      { id: 'disabled-link', label: 'Locked', href: '/locked', disabled: true },
+    ];
+    await element.updateComplete;
+
+    const navigateHandler = vi.fn();
+    element.addEventListener('bp-navigate', navigateHandler);
+
+    const link = element.shadowRoot?.querySelector(
+      'a.node-content'
+    ) as HTMLElement;
+    link?.click();
+
+    expect(navigateHandler).not.toHaveBeenCalled();
+  });
+
+  it('should toggle expand without navigating when toggle icon is clicked on href parent node', async () => {
+    element.nodes = [
+      {
+        id: 'section',
+        label: 'Section',
+        href: '/section',
+        children: [{ id: 'page', label: 'Page', href: '/section/page' }],
+      },
+    ];
+    await element.updateComplete;
+
+    const navigateHandler = vi.fn();
+    element.addEventListener('bp-navigate', navigateHandler);
+
+    const toggle = element.shadowRoot?.querySelector(
+      '.node-toggle'
+    ) as HTMLElement;
+    toggle?.click();
+    await element.updateComplete;
+
+    // Should expand the node, not navigate
+    expect(navigateHandler).not.toHaveBeenCalled();
+    expect(element.expandedIds).toContain('section');
   });
 });
