@@ -110,14 +110,18 @@ import Header from '../components/Header.astro';
     <section class="quick-start">
       <bp-heading level="2" size="2xl" weight="bold">Quick Start</bp-heading>
 
-      <bp-text>Build the package and install in your project:</bp-text>
+      <bp-text>Install Blueprint from npm:</bp-text>
 
       <bp-card variant="outlined">
-        <pre><code># In the Blueprint directory
-npm run build:package
+        <pre><code>npm install @krollins/blueprint</code></pre>
+      </bp-card>
 
-# In your project
-npm install path/to/blueprint/blueprint-0.1.0.tgz</code></pre>
+      <bp-text>Import the theme CSS and components you need:</bp-text>
+
+      <bp-card variant="outlined">
+        <pre><code>import '@krollins/blueprint/dist/index.css';
+import '@krollins/blueprint/button';
+import '@krollins/blueprint/input';</code></pre>
       </bp-card>
 
       <bp-text>Then use components in your HTML:</bp-text>
