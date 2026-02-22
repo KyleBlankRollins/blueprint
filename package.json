@@ -1,6 +1,6 @@
 {
   "name": "@krollins/blueprint",
-  "version": "0.1.16",
+  "version": "0.2.0",
   "description": "A highly portable and customizable component library built on Lit",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -137,6 +137,7 @@
     "vitest": "^4.0.16"
   },
   "dependencies": {
+    "@krollins/blueprint": "^0.2.0",
     "lit": "^3.3.2"
   },
   "overrides": {

@@ -6,6 +6,8 @@ import { iconStyles } from './icon.style.js';
 import { getIconSvg } from './icon-registry.js';
 import type { IconName } from './icons/icon-name.generated.js';
 
+export type { IconName } from './icons/icon-name.generated.js';
+
 export type IconSize =
   | 'xs'
   | 'sm'
@@ -49,10 +51,21 @@ export type IconColor =
 @customElement('bp-icon')
 export class BpIcon extends LitElement {
   /**
-   * Name of the icon from the System UI Icons library
+   * Name of the icon from the System UI Icons library.
+   * Looks up the SVG from the runtime registry (icons must be registered
+   * first via `registerIcon()` or by importing `all.ts`).
+   * Ignored when the `svg` property is set.
    * @type {IconName}
    */
   @property({ type: String }) declare name: IconName | '';
+
+  /**
+   * Raw SVG string to render directly. When set, the `name` property is
+   * ignored. This is the preferred way for internal Blueprint components
+   * to supply icon data because it survives bundler tree-shaking.
+   * @type {string}
+   */
+  @property({ type: String }) declare svg: string;
 
   /**
    * Size variant of the icon
@@ -76,6 +89,7 @@ export class BpIcon extends LitElement {
   constructor() {
     super();
     this.name = '';
+    this.svg = '';
     this.size = 'md';
     this.color = 'default';
     this.ariaLabel = '';
@@ -88,8 +102,8 @@ export class BpIcon extends LitElement {
       ' '
     );
 
-    // Get icon from registry if name is provided
-    const svgContent = this.name ? getIconSvg(this.name) : null;
+    // Prefer direct svg property, then registry lookup by name, then slot
+    const svgContent = this.svg || (this.name ? getIconSvg(this.name) : null);
 
     return html`
       <span
@@ -103,8 +117,6 @@ export class BpIcon extends LitElement {
     `;
   }
 }
-
-export type { IconName } from './icons/icon-name.generated.js';
 
 declare global {
   interface HTMLElementTagNameMap {

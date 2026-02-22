@@ -1,7 +1,4 @@
 // Auto-generated icon entry — do not edit.
 // Re-generate: node source/components/icon/generate-icon-entries.js
 
-import { registerIcon } from '../../icon-registry.js';
-
-const svg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" transform=\"translate(1 1)\"><path d=\"m9.5.5 9 16h-18z\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"m9.5 10.5v-5\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"9.5\" cy=\"13.5\" fill=\"currentColor\" r=\"1\"/></g></svg>";
-registerIcon('warning-triangle', svg);
+export const warningTriangleSvg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" transform=\"translate(1 1)\"><path d=\"m9.5.5 9 16h-18z\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"m9.5 10.5v-5\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"9.5\" cy=\"13.5\" fill=\"currentColor\" r=\"1\"/></g></svg>";

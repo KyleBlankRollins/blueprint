@@ -1,18 +1,19 @@
 /**
  * Shared icon registry — runtime singleton.
  *
- * Icons register themselves by calling registerIcon() as a side effect
- * when their entry module is imported. The bp-icon component reads from
- * this registry at render time via getIconSvg().
+ * Consumers can register icons by name so that `<bp-icon name="...">` can
+ * look them up at render time. The `all.ts` barrel imports every icon entry
+ * and registers them all (used in Storybook / dev tools).
  *
- * This module intentionally contains NO SVG data. It is the meeting point
- * between icon entry modules (writers) and the bp-icon component (reader).
+ * Internal Blueprint components do NOT use this registry. They import SVG
+ * data as value bindings and pass it directly to `<bp-icon>` via the `svg`
+ * property, which guarantees the data survives bundler tree-shaking.
  */
 
 const registry = new Map<string, string>();
 
 /**
- * Register an icon's SVG content. Called by per-icon entry modules.
+ * Register an icon's SVG content by name.
  * Duplicate registrations silently overwrite (idempotent).
  */
 export function registerIcon(name: string, svg: string): void {

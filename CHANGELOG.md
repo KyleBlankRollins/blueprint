@@ -1,5 +1,22 @@
 # @krollins/blueprint
 
+## 0.2.0
+
+### Minor Changes
+
+- Add `svg` property to bp-icon for direct SVG string rendering
+
+  The `bp-icon` component now accepts a `svg` property containing a raw SVG string. When set, it takes priority over the `name` property (registry lookup) and the default slot. This enables internal components to pass icon data as value bindings that survive bundler tree-shaking.
+
+  Internal components (accordion, alert, avatar, drawer, notification, popover, table, tag, tree) now import icon SVG data as named value exports instead of relying on side-effect-only registry calls. This fixes icons not rendering when the library is consumed by Astro/Vite sites, because Rollup was stripping the side-effect-only imports during the library build.
+
+  Icon entry modules now export their SVG string (`export const searchSvg = '...'`) instead of calling `registerIcon()` as a side effect. The `all.ts` barrel still registers all icons into the runtime registry for Storybook and consumer use with `name=`.
+
+### Patch Changes
+
+- Updated dependencies
+  - @krollins/blueprint@0.2.0
+
 ## 0.1.16
 
 ### Patch Changes

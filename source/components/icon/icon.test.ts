@@ -242,6 +242,43 @@ describe('bp-icon', () => {
     expect(renderedSvg?.hasAttribute('data-custom')).toBe(false);
   });
 
+  // Properties - SVG (direct value)
+  it('should have correct default svg property value', () => {
+    expect(element.svg).toBe('');
+  });
+
+  it('should render SVG content from svg property', async () => {
+    element.svg =
+      '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/></svg>';
+    await element.updateComplete;
+
+    const icon = element.shadowRoot?.querySelector('.icon');
+    const svg = icon?.querySelector('svg');
+    expect(svg).toBeTruthy();
+    expect(svg?.querySelector('circle')).toBeTruthy();
+  });
+
+  it('should prefer svg property over name property', async () => {
+    element.name = 'create';
+    element.svg =
+      '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect width="10" height="10"/></svg>';
+    await element.updateComplete;
+
+    const icon = element.shadowRoot?.querySelector('.icon');
+    const rect = icon?.querySelector('rect');
+    expect(rect).toBeTruthy();
+  });
+
+  it('should fall back to name when svg is empty', async () => {
+    element.name = 'create';
+    element.svg = '';
+    await element.updateComplete;
+
+    const icon = element.shadowRoot?.querySelector('.icon');
+    const svg = icon?.querySelector('svg');
+    expect(svg).toBeTruthy();
+  });
+
   // Slots
   it('should render slotted SVG content', async () => {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');

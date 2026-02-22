@@ -1,7 +1,4 @@
 // Auto-generated icon entry — do not edit.
 // Re-generate: node source/components/icon/generate-icon-entries.js
 
-import { registerIcon } from '../../icon-registry.js';
-
-const svg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(3 2)\"><path d=\"m6.5 3.5h-4c-1.1045695 0-2 .8954305-2 2v7c0 1.1045695.8954305 2 2 2h7c1.1045695 0 2-.8954305 2-2v-3.5-.5\"/><path d=\"m11.5.5v6\"/><path d=\"m11.5.5v6\" transform=\"matrix(0 1 -1 0 15 -8)\"/></g></svg>";
-registerIcon('component-add', svg);
+export const componentAddSvg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(3 2)\"><path d=\"m6.5 3.5h-4c-1.1045695 0-2 .8954305-2 2v7c0 1.1045695.8954305 2 2 2h7c1.1045695 0 2-.8954305 2-2v-3.5-.5\"/><path d=\"m11.5.5v6\"/><path d=\"m11.5.5v6\" transform=\"matrix(0 1 -1 0 15 -8)\"/></g></svg>";

@@ -1,7 +1,4 @@
 // Auto-generated icon entry — do not edit.
 // Re-generate: node source/components/icon/generate-icon-entries.js
 
-import { registerIcon } from '../../icon-registry.js';
-
-const svg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(2 2)\"><path d=\"m.5 3.5v-1c0-1.1045695.8954305-2 2-2h1m0 16h-1c-1.1045695 0-2-.8954305-2-2v-1m16-10v-1c0-1.1045695-.8954305-2-2-2h-1m0 16h1c1.1045695 0 2-.8954305 2-2v-1\"/><path d=\"m5.5.5h2\"/><path d=\"m9.5.5h2\"/><path d=\"m5.5 16.5h2\"/><path d=\"m9.5 16.5h2\"/><path d=\"m16.5 5.498v2.002\"/><path d=\"m16.5 9.498v2.002\"/><path d=\"m.5 5.498v2.002\"/><path d=\"m.5 9.498v2.002\"/></g></svg>";
-registerIcon('marquee', svg);
+export const marqueeSvg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(2 2)\"><path d=\"m.5 3.5v-1c0-1.1045695.8954305-2 2-2h1m0 16h-1c-1.1045695 0-2-.8954305-2-2v-1m16-10v-1c0-1.1045695-.8954305-2-2-2h-1m0 16h1c1.1045695 0 2-.8954305 2-2v-1\"/><path d=\"m5.5.5h2\"/><path d=\"m9.5.5h2\"/><path d=\"m5.5 16.5h2\"/><path d=\"m9.5 16.5h2\"/><path d=\"m16.5 5.498v2.002\"/><path d=\"m16.5 9.498v2.002\"/><path d=\"m.5 5.498v2.002\"/><path d=\"m.5 9.498v2.002\"/></g></svg>";

@@ -2,8 +2,8 @@ import { LitElement, html, nothing } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { popoverStyles } from './popover.style.js';
 import { booleanConverter } from '../../utilities/boolean-converter.js';
+import { closeSvg } from '../icon/icons/entries/close.js';
 import '../icon/icon.js';
-import '../icon/icons/entries/close.js';
 
 export type PopoverPlacement =
   | 'top'
@@ -455,7 +455,7 @@ export class BpPopover extends LitElement {
                                 aria-label="Close popover"
                                 @click=${this.handleCloseClick}
                               >
-                                <bp-icon name="close" size="sm"></bp-icon>
+                                <bp-icon .svg=${closeSvg} size="sm"></bp-icon>
                               </button>
                             `
                           : nothing}

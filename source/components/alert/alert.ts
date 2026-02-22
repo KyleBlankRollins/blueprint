@@ -1,21 +1,21 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { alertStyles } from './alert.style.js';
-import type { IconName } from '../icon/icons/icon-name.generated.js';
+import { infoCircleSvg } from '../icon/icons/entries/info-circle.js';
+import { checkCircleSvg } from '../icon/icons/entries/check-circle.js';
+import { warningCircleSvg } from '../icon/icons/entries/warning-circle.js';
+import { crossCircleSvg } from '../icon/icons/entries/cross-circle.js';
+import { crossSvg } from '../icon/icons/entries/cross.js';
 import '../icon/icon.js';
-import '../icon/icons/entries/info-circle.js';
-import '../icon/icons/entries/check-circle.js';
-import '../icon/icons/entries/warning-circle.js';
-import '../icon/icons/entries/cross-circle.js';
-import '../icon/icons/entries/cross.js';
 
 export type AlertVariant = 'info' | 'success' | 'warning' | 'error';
-interface IconMap {
-  info: IconName;
-  success: IconName;
-  warning: IconName;
-  error: IconName;
-}
+
+const VARIANT_ICONS: Record<AlertVariant, string> = {
+  info: infoCircleSvg,
+  success: checkCircleSvg,
+  warning: warningCircleSvg,
+  error: crossCircleSvg,
+};
 
 /**
  * An alert component for displaying notification messages to users.
@@ -71,14 +71,8 @@ export class BpAlert extends LitElement {
     }
   }
 
-  private getIconName(): IconName {
-    const iconMap: IconMap = {
-      info: 'info-circle',
-      success: 'check-circle',
-      warning: 'warning-circle',
-      error: 'cross-circle',
-    };
-    return iconMap[this.variant];
+  private getVariantIconSvg(): string {
+    return VARIANT_ICONS[this.variant];
   }
 
   render() {
@@ -94,7 +88,7 @@ export class BpAlert extends LitElement {
             ? html`
                 <div class="alert-icon" part="icon">
                   <slot name="icon">
-                    <bp-icon name=${this.getIconName()}></bp-icon>
+                    <bp-icon .svg=${this.getVariantIconSvg()}></bp-icon>
                   </slot>
                 </div>
               `
@@ -112,7 +106,7 @@ export class BpAlert extends LitElement {
                 @click=${this.handleClose}
                 aria-label="Close alert"
               >
-                <bp-icon name="cross"></bp-icon>
+                <bp-icon .svg=${crossSvg}></bp-icon>
               </button>
             `
           : null}

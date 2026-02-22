@@ -2,11 +2,11 @@ import { LitElement, html, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { notificationStyles } from './notification.style.js';
 import { booleanConverter } from '../../utilities/boolean-converter.js';
+import { checkSvg } from '../icon/icons/entries/check.js';
+import { warningCircleSvg } from '../icon/icons/entries/warning-circle.js';
+import { crossSvg } from '../icon/icons/entries/cross.js';
+import { infoCircleSvg } from '../icon/icons/entries/info-circle.js';
 import '../icon/icon.js';
-import '../icon/icons/entries/check.js';
-import '../icon/icons/entries/warning-circle.js';
-import '../icon/icons/entries/cross.js';
-import '../icon/icons/entries/info-circle.js';
 
 /**
  * A notification/toast component for displaying non-blocking messages.
@@ -243,13 +243,16 @@ export class BpNotification extends LitElement {
    * Uses the bp-icon component for consistency with the design system.
    */
   private getDefaultIcon() {
-    const iconMap = {
-      success: 'check',
-      warning: 'warning-circle',
-      error: 'cross',
-      info: 'info-circle',
-    } as const;
-    return html`<bp-icon name=${iconMap[this.variant]} size="md"></bp-icon>`;
+    const variantIconSvg: Record<string, string> = {
+      success: checkSvg,
+      warning: warningCircleSvg,
+      error: crossSvg,
+      info: infoCircleSvg,
+    };
+    return html`<bp-icon
+      .svg=${variantIconSvg[this.variant]}
+      size="md"
+    ></bp-icon>`;
   }
 
   render() {

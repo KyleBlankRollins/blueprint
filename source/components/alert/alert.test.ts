@@ -1,6 +1,10 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import './alert.js';
 import type { BpAlert } from './alert.js';
+import { infoCircleSvg } from '../icon/icons/entries/info-circle.js';
+import { checkCircleSvg } from '../icon/icons/entries/check-circle.js';
+import { warningCircleSvg } from '../icon/icons/entries/warning-circle.js';
+import { crossCircleSvg } from '../icon/icons/entries/cross-circle.js';
 
 describe('bp-alert', () => {
   let element: BpAlert;
@@ -191,9 +195,9 @@ describe('bp-alert', () => {
     element.showIcon = true;
     await element.updateComplete;
 
-    const icon = element.shadowRoot?.querySelector('.alert-icon bp-icon');
+    const icon = element.shadowRoot?.querySelector('.alert-icon bp-icon') as HTMLElement & { svg: string };
     expect(icon).toBeTruthy();
-    expect(icon?.getAttribute('name')).toBe('info-circle');
+    expect(icon?.svg).toBe(infoCircleSvg);
   });
 
   it('should render default success icon when showIcon is true', async () => {
@@ -201,9 +205,9 @@ describe('bp-alert', () => {
     element.showIcon = true;
     await element.updateComplete;
 
-    const icon = element.shadowRoot?.querySelector('.alert-icon bp-icon');
+    const icon = element.shadowRoot?.querySelector('.alert-icon bp-icon') as HTMLElement & { svg: string };
     expect(icon).toBeTruthy();
-    expect(icon?.getAttribute('name')).toBe('check-circle');
+    expect(icon?.svg).toBe(checkCircleSvg);
   });
 
   it('should render default warning icon when showIcon is true', async () => {
@@ -211,9 +215,9 @@ describe('bp-alert', () => {
     element.showIcon = true;
     await element.updateComplete;
 
-    const icon = element.shadowRoot?.querySelector('.alert-icon bp-icon');
+    const icon = element.shadowRoot?.querySelector('.alert-icon bp-icon') as HTMLElement & { svg: string };
     expect(icon).toBeTruthy();
-    expect(icon?.getAttribute('name')).toBe('warning-circle');
+    expect(icon?.svg).toBe(warningCircleSvg);
   });
 
   it('should render default error icon when showIcon is true', async () => {
@@ -221,9 +225,9 @@ describe('bp-alert', () => {
     element.showIcon = true;
     await element.updateComplete;
 
-    const icon = element.shadowRoot?.querySelector('.alert-icon bp-icon');
+    const icon = element.shadowRoot?.querySelector('.alert-icon bp-icon') as HTMLElement & { svg: string };
     expect(icon).toBeTruthy();
-    expect(icon?.getAttribute('name')).toBe('cross-circle');
+    expect(icon?.svg).toBe(crossCircleSvg);
   });
 
   it('should not render icon when showIcon is false', async () => {

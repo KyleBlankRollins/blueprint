@@ -1,7 +1,4 @@
 // Auto-generated icon entry — do not edit.
 // Re-generate: node source/components/icon/generate-icon-entries.js
 
-import { registerIcon } from '../../icon-registry.js';
-
-const svg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" transform=\"translate(2 3)\"><path d=\"m14 14c1.4477153-1.4477153 2.5-3.290861 2.5-5.5 0-4.418278-3.581722-8-8-8s-8 3.581722-8 8c0 2.209139 1.05228475 4.0522847 2.5 5.5\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"m8.5 8.5-4-4\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"8.5\" cy=\"8.5\" fill=\"currentColor\" r=\"1.5\"/></g></svg>";
-registerIcon('gauge', svg);
+export const gaugeSvg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" transform=\"translate(2 3)\"><path d=\"m14 14c1.4477153-1.4477153 2.5-3.290861 2.5-5.5 0-4.418278-3.581722-8-8-8s-8 3.581722-8 8c0 2.209139 1.05228475 4.0522847 2.5 5.5\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"m8.5 8.5-4-4\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"8.5\" cy=\"8.5\" fill=\"currentColor\" r=\"1.5\"/></g></svg>";

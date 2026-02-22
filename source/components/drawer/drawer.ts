@@ -2,8 +2,8 @@ import { LitElement, html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { drawerStyles } from './drawer.style.js';
 import { booleanConverter } from '../../utilities/boolean-converter.js';
+import { closeSvg } from '../icon/icons/entries/close.js';
 import '../icon/icon.js';
-import '../icon/icons/entries/close.js';
 
 export type DrawerPlacement = 'left' | 'right' | 'top' | 'bottom';
 export type DrawerSize = 'sm' | 'md' | 'lg' | 'full';
@@ -397,7 +397,7 @@ export class BpDrawer extends LitElement {
                     aria-label="Close drawer"
                     @click=${this.handleCloseClick}
                   >
-                    <bp-icon name="close" size="sm"></bp-icon>
+                    <bp-icon .svg=${closeSvg} size="sm"></bp-icon>
                   </button>
                 `
               : nothing}

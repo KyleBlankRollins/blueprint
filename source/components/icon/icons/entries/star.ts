@@ -1,7 +1,4 @@
 // Auto-generated icon entry — do not edit.
 // Re-generate: node source/components/icon/generate-icon-entries.js
 
-import { registerIcon } from '../../icon-registry.js';
-
-const svg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m7.5 11.5-5 3 2-5.131-4-3.869h5l2-5 2 5h5l-4 4 2 5z\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(3 3)\"/></svg>";
-registerIcon('star', svg);
+export const starSvg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m7.5 11.5-5 3 2-5.131-4-3.869h5l2-5 2 5h5l-4 4 2 5z\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(3 3)\"/></svg>";

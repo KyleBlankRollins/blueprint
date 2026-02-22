@@ -2,8 +2,8 @@ import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { tagStyles } from './tag.style.js';
+import { crossSvg } from '../icon/icons/entries/cross.js';
 import '../icon/icon.js';
-import '../icon/icons/entries/cross.js';
 
 /**
  * Tag component for displaying removable labels, chips, or category markers.
@@ -162,7 +162,7 @@ export class BpTag extends LitElement {
                 @click=${this.handleRemove}
                 tabindex="-1"
               >
-                <bp-icon name="cross" size=${iconSize}></bp-icon>
+                <bp-icon .svg=${crossSvg} size=${iconSize}></bp-icon>
               </button>
             `
           : ''}

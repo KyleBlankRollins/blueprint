@@ -1,7 +1,4 @@
 // Auto-generated icon entry — do not edit.
 // Re-generate: node source/components/icon/generate-icon-entries.js
 
-import { registerIcon } from '../../icon-registry.js';
-
-const svg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(5 4)\"><path d=\"m.5 13.5v-11\"/><path d=\"m.5 2.5c.66666667-1.33333333 1.66666667-2 3-2 2 0 2 2 4 2 1.33333333 0 2.33333333-.33333333 3-1v6c-.66666667.66666667-1.66666667 1-3 1-2 0-2-2-4-2-1.33333333 0-2.33333333.66666667-3 2z\"/></g></svg>";
-registerIcon('flag', svg);
+export const flagSvg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(5 4)\"><path d=\"m.5 13.5v-11\"/><path d=\"m.5 2.5c.66666667-1.33333333 1.66666667-2 3-2 2 0 2 2 4 2 1.33333333 0 2.33333333-.33333333 3-1v6c-.66666667.66666667-1.66666667 1-3 1-2 0-2-2-4-2-1.33333333 0-2.33333333.66666667-3 2z\"/></g></svg>";

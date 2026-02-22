@@ -4,8 +4,8 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { treeStyles } from './tree.style.js';
 import { memoizeOne } from '../../utilities/memoize.js';
+import { chevronRightSvg } from '../icon/icons/entries/chevron-right.js';
 import '../icon/icon.js';
-import '../icon/icons/entries/chevron-right.js';
 
 /**
  * Tree node data structure
@@ -421,7 +421,7 @@ export class BpTree extends LitElement {
         ${hasChildren
           ? html`<bp-icon
               class="toggle-icon ${isExpanded ? 'toggle-icon--expanded' : ''}"
-              name="chevron-right"
+              .svg=${chevronRightSvg}
               size="sm"
             ></bp-icon>`
           : nothing}

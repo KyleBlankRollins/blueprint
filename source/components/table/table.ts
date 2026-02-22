@@ -6,9 +6,9 @@ import { repeat } from 'lit/directives/repeat.js';
 import { tableStyles } from './table.style.js';
 import { memoizeOne } from '../../utilities/memoize.js';
 import { booleanConverter } from '../../utilities/boolean-converter.js';
+import { chevronUpSvg } from '../icon/icons/entries/chevron-up.js';
+import { chevronDownSvg } from '../icon/icons/entries/chevron-down.js';
 import '../icon/icon.js';
-import '../icon/icons/entries/chevron-up.js';
-import '../icon/icons/entries/chevron-down.js';
 
 export type TableVariant = 'default' | 'striped' | 'bordered';
 export type TableSize = 'sm' | 'md' | 'lg';
@@ -405,12 +405,12 @@ export class BpTable extends LitElement {
     const isActive = this.sortState?.column === column.key;
     const direction = isActive ? this.sortState?.direction : 'none';
 
-    const iconName =
+    const iconSvg =
       direction === 'asc'
-        ? 'chevron-up'
+        ? chevronUpSvg
         : direction === 'desc'
-          ? 'chevron-down'
-          : 'chevron-up';
+          ? chevronDownSvg
+          : chevronUpSvg;
 
     const iconClasses = {
       'sort-icon': true,
@@ -420,7 +420,7 @@ export class BpTable extends LitElement {
 
     return html`
       <span class=${classMap(iconClasses)} part="sort-icon" aria-hidden="true">
-        <bp-icon name=${iconName} size="sm"></bp-icon>
+        <bp-icon .svg=${iconSvg} size="sm"></bp-icon>
       </span>
     `;
   }

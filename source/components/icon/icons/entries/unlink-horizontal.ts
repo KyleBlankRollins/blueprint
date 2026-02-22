@@ -1,7 +1,4 @@
 // Auto-generated icon entry — do not edit.
 // Re-generate: node source/components/icon/generate-icon-entries.js
 
-import { registerIcon } from '../../icon-registry.js';
-
-const svg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m5.5 8.5c-.39387503 0-.0547637 0-1 0-2.209139 0-4-1.790861-4-4s1.790861-4 4-4h1m4 0h1c2.209139 0 4 1.790861 4 4s-1.790861 4-4 4c-.88888889 0-.55555556 0-1 0\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(3 6)\"/></svg>";
-registerIcon('unlink-horizontal', svg);
+export const unlinkHorizontalSvg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m5.5 8.5c-.39387503 0-.0547637 0-1 0-2.209139 0-4-1.790861-4-4s1.790861-4 4-4h1m4 0h1c2.209139 0 4 1.790861 4 4s-1.790861 4-4 4c-.88888889 0-.55555556 0-1 0\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(3 6)\"/></svg>";

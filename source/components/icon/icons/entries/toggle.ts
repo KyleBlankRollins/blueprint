@@ -1,7 +1,4 @@
 // Auto-generated icon entry — do not edit.
 // Re-generate: node source/components/icon/generate-icon-entries.js
 
-import { registerIcon } from '../../icon-registry.js';
-
-const svg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(3 7)\"><circle cx=\"3.5\" cy=\"3.5\" r=\"3\"/><path d=\"m6 1.5h6.5c.8284271 0 2 .3248291 2 2s-1.1715729 2-2 2h-6.5\"/></g></svg>";
-registerIcon('toggle', svg);
+export const toggleSvg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(3 7)\"><circle cx=\"3.5\" cy=\"3.5\" r=\"3\"/><path d=\"m6 1.5h6.5c.8284271 0 2 .3248291 2 2s-1.1715729 2-2 2h-6.5\"/></g></svg>";

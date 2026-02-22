@@ -1,7 +1,4 @@
 // Auto-generated icon entry — do not edit.
 // Re-generate: node source/components/icon/generate-icon-entries.js
 
-import { registerIcon } from '../../icon-registry.js';
-
-const svg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"currentColor\" fill-rule=\"evenodd\"><path d=\"m7 5h2v2h-2z\"/><path d=\"m12 5h2v2h-2z\"/><path d=\"m7 9h2v2h-2z\"/><path d=\"m12 9h2v2h-2z\"/><path d=\"m7 13h2v2h-2z\"/><path d=\"m12 13h2v2h-2z\"/></g></svg>";
-registerIcon('drag-vertical', svg);
+export const dragVerticalSvg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"currentColor\" fill-rule=\"evenodd\"><path d=\"m7 5h2v2h-2z\"/><path d=\"m12 5h2v2h-2z\"/><path d=\"m7 9h2v2h-2z\"/><path d=\"m12 9h2v2h-2z\"/><path d=\"m7 13h2v2h-2z\"/><path d=\"m12 13h2v2h-2z\"/></g></svg>";

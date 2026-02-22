@@ -22,23 +22,30 @@ function toIconName(filename) {
   return filename.replace('.svg', '').replace(/_/g, '-');
 }
 
+// Derive a camelCase export name: "info-circle" → "infoCircleSvg"
+// Handles leading digits after hyphens: "battery-75" → "battery75Svg"
+function toExportName(iconName) {
+  const camel = iconName.replace(/-([a-z0-9])/g, (_, char) =>
+    char.toUpperCase()
+  );
+  return `${camel}Svg`;
+}
+
 // Clear and recreate entries dir
 fs.rmSync(entriesOutputDir, { recursive: true, force: true });
 fs.mkdirSync(entriesOutputDir, { recursive: true });
 
-// Write per-icon entry files
+// Write per-icon entry files — each exports the SVG string as a value
 for (const file of svgFiles) {
   const iconName = toIconName(file);
+  const exportName = toExportName(iconName);
   const svgContent = fs
     .readFileSync(path.join(iconsSourceDir, file), 'utf-8')
     .trim();
   const entryContent = `// Auto-generated icon entry — do not edit.
 // Re-generate: node source/components/icon/generate-icon-entries.js
 
-import { registerIcon } from '../../icon-registry.js';
-
-const svg = ${JSON.stringify(svgContent)};
-registerIcon('${iconName}', svg);
+export const ${exportName} = ${JSON.stringify(svgContent)};
 `;
   fs.writeFileSync(path.join(entriesOutputDir, `${iconName}.ts`), entryContent);
 }
@@ -53,15 +60,31 @@ ${iconNameType};
 `;
 fs.writeFileSync(typeOutputFile, typeContent);
 
-// Write all-icons barrel
+// Write all-icons barrel — imports every icon entry and registers them all.
+// Used by Storybook and dev tools. NOT for production consumers.
 const allImports = svgFiles
-  .map((f) => `import './entries/${toIconName(f)}.js';`)
+  .map((f) => {
+    const iconName = toIconName(f);
+    const exportName = toExportName(iconName);
+    return `import { ${exportName} } from './entries/${iconName}.js';`;
+  })
   .join('\n');
-const barrelContent = `// Auto-generated barrel — imports all icon entries.
+const allRegistrations = svgFiles
+  .map((f) => {
+    const iconName = toIconName(f);
+    const exportName = toExportName(iconName);
+    return `  registerIcon('${iconName}', ${exportName});`;
+  })
+  .join('\n');
+const barrelContent = `// Auto-generated barrel — imports and registers all icons.
 // Used by Storybook and dev tools. NOT for production consumers.
 // Re-generate: node source/components/icon/generate-icon-entries.js
 
+import { registerIcon } from '../icon-registry.js';
+
 ${allImports}
+
+${allRegistrations}
 `;
 fs.writeFileSync(allBarrelFile, barrelContent);
 

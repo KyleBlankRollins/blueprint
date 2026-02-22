@@ -1,7 +1,4 @@
 // Auto-generated icon entry — do not edit.
 // Re-generate: node source/components/icon/generate-icon-entries.js
 
-import { registerIcon } from '../../icon-registry.js';
-
-const svg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(3 3)\"><path d=\"m15.5.5v5h-5\" transform=\"matrix(1 0 0 -1 0 6)\"/><path d=\"m12-.95v9.9\" transform=\"matrix(.70710678 .70710678 -.70710678 .70710678 6.343146 -7.313708)\"/><path d=\"m7.5.5h-5c-1.1045695 0-2 .8954305-2 2v10c0 1.1045695.8954305 2 2 2h11c1.1045695 0 2-.8954305 2-2v-4\"/></g></svg>";
-registerIcon('external', svg);
+export const externalSvg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(3 3)\"><path d=\"m15.5.5v5h-5\" transform=\"matrix(1 0 0 -1 0 6)\"/><path d=\"m12-.95v9.9\" transform=\"matrix(.70710678 .70710678 -.70710678 .70710678 6.343146 -7.313708)\"/><path d=\"m7.5.5h-5c-1.1045695 0-2 .8954305-2 2v10c0 1.1045695.8954305 2 2 2h11c1.1045695 0 2-.8954305 2-2v-4\"/></g></svg>";

@@ -1,7 +1,4 @@
 // Auto-generated icon entry — do not edit.
 // Re-generate: node source/components/icon/generate-icon-entries.js
 
-import { registerIcon } from '../../icon-registry.js';
-
-const svg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(4 6)\"><path d=\"m8.378 1.376 4.243.003v4.242\" transform=\"matrix(.70710678 -.70710678 -.70710678 -.70710678 5.549155 13.396845)\"/><path d=\"m5.5 9.49996362h5c2 .00090726 3-.99908061 3-2.99996362s-1-3.00089514-3-3.00003638h-10\" transform=\"matrix(-1 0 0 1 14 0)\"/></g></svg>";
-registerIcon('wrap-forward', svg);
+export const wrapForwardSvg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(4 6)\"><path d=\"m8.378 1.376 4.243.003v4.242\" transform=\"matrix(.70710678 -.70710678 -.70710678 -.70710678 5.549155 13.396845)\"/><path d=\"m5.5 9.49996362h5c2 .00090726 3-.99908061 3-2.99996362s-1-3.00089514-3-3.00003638h-10\" transform=\"matrix(-1 0 0 1 14 0)\"/></g></svg>";

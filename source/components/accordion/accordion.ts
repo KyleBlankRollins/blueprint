@@ -2,8 +2,8 @@ import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { accordionStyles } from './accordion.style.js';
+import { chevronDownSvg } from '../icon/icons/entries/chevron-down.js';
 import '../icon/icon.js';
-import '../icon/icons/entries/chevron-down.js';
 
 /**
  * A container component that groups accordion items.
@@ -340,7 +340,7 @@ export class BpAccordionItem extends LitElement {
             <slot name="header">${this.header}</slot>
           </span>
           <span class="item__icon" part="icon" aria-hidden="true">
-            <bp-icon name="chevron-down" size="md"></bp-icon>
+            <bp-icon .svg=${chevronDownSvg} size="md"></bp-icon>
           </span>
         </button>
         <div

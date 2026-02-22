@@ -1,7 +1,4 @@
 // Auto-generated icon entry — do not edit.
 // Re-generate: node source/components/icon/generate-icon-entries.js
 
-import { registerIcon } from '../../icon-registry.js';
-
-const svg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(3 3)\"><path d=\"m5.5 9.5 4-4 4 4\" transform=\"matrix(0 1 -1 0 17 -2)\"/><path d=\"m11.5 7.5h-11\"/><path d=\"m14.5.5v14\"/></g></svg>";
-registerIcon('push-right', svg);
+export const pushRightSvg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(3 3)\"><path d=\"m5.5 9.5 4-4 4 4\" transform=\"matrix(0 1 -1 0 17 -2)\"/><path d=\"m11.5 7.5h-11\"/><path d=\"m14.5.5v14\"/></g></svg>";
