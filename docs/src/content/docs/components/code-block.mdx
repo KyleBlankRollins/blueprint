@@ -1,0 +1,243 @@
+---
+title: Code Block
+description: Display source code with syntax highlighting, copy-to-clipboard, and line numbers
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+The `bp-code-block` component displays source code with features like copy-to-clipboard, line numbers, line highlighting, and expand/collapse for long blocks.
+
+## Import
+
+```javascript
+import '@krollins/blueprint/code-block';
+```
+
+## Examples
+
+### Basic
+
+<ComponentPreview>
+  <bp-code-block language="bash" code="npm install @krollins/blueprint"></bp-code-block>
+</ComponentPreview>
+
+```html
+<bp-code-block
+  language="bash"
+  code="npm install @krollins/blueprint"
+></bp-code-block>
+```
+
+### With Title
+
+Use the `title` attribute to display a filename or label in the header.
+
+<ComponentPreview>
+  <bp-code-block
+    language="typescript"
+    title="greeting.ts"
+    code={`function greet(name: string): string {\n  return \`Hello, \${name}!\`;\n}`}
+  ></bp-code-block>
+</ComponentPreview>
+
+```html
+<bp-code-block
+  language="typescript"
+  title="greeting.ts"
+  code="function greet(name: string): string {
+  return `Hello, ${name}!`;
+}"
+></bp-code-block>
+```
+
+### With Line Numbers
+
+<ComponentPreview>
+  <bp-code-block
+    language="javascript"
+    show-line-numbers
+    code={`import { html, LitElement } from 'lit';\nimport { customElement } from 'lit/decorators.js';\n\n@customElement('my-element')\nexport class MyElement extends LitElement {\n  render() {\n    return html\`<p>Hello World</p>\`;\n  }\n}`}
+  ></bp-code-block>
+</ComponentPreview>
+
+```html
+<bp-code-block
+  language="javascript"
+  show-line-numbers
+  code="import { html, LitElement } from 'lit';
+import { customElement } from 'lit/decorators.js';
+
+@customElement('my-element')
+export class MyElement extends LitElement {
+  render() {
+    return html`<p>Hello World</p>`;
+  }
+}"
+></bp-code-block>
+```
+
+### No Line Wrapping
+
+Disable line wrapping to enable horizontal scrolling for wide code.
+
+<ComponentPreview>
+  <bp-code-block
+    language="javascript"
+    wrap-lines="false"
+    code={`const veryLongVariableName = someFunction(argumentOne, argumentTwo, argumentThree, argumentFour, argumentFive);`}
+  ></bp-code-block>
+</ComponentPreview>
+
+```html
+<bp-code-block
+  language="javascript"
+  wrap-lines="false"
+  code="const veryLongVariableName = someFunction(argumentOne, argumentTwo, argumentThree, argumentFour, argumentFive);"
+></bp-code-block>
+```
+
+### Collapsible
+
+Use `max-lines` to collapse long code blocks with a "Show more" toggle.
+
+<ComponentPreview>
+  <bp-code-block
+    language="css"
+    title="tokens.css"
+    show-line-numbers
+    max-lines="5"
+    code={`:root {\n  --bp-color-primary: #3b82f6;\n  --bp-color-secondary: #64748b;\n  --bp-color-success: #22c55e;\n  --bp-color-warning: #f59e0b;\n  --bp-color-error: #ef4444;\n  --bp-spacing-sm: 0.5rem;\n  --bp-spacing-md: 1rem;\n  --bp-spacing-lg: 1.5rem;\n  --bp-spacing-xl: 2rem;\n  --bp-border-radius-sm: 0.25rem;\n  --bp-border-radius-md: 0.5rem;\n}`}
+  ></bp-code-block>
+</ComponentPreview>
+
+```html
+<bp-code-block
+  language="css"
+  title="tokens.css"
+  show-line-numbers
+  max-lines="5"
+  code=":root {
+  --bp-color-primary: #3b82f6;
+  --bp-color-secondary: #64748b;
+  --bp-color-success: #22c55e;
+  --bp-color-warning: #f59e0b;
+  --bp-color-error: #ef4444;
+  --bp-spacing-sm: 0.5rem;
+  --bp-spacing-md: 1rem;
+  --bp-spacing-lg: 1.5rem;
+  --bp-spacing-xl: 2rem;
+  --bp-border-radius-sm: 0.25rem;
+  --bp-border-radius-md: 0.5rem;
+}"
+></bp-code-block>
+```
+
+### Without Header
+
+Hide the header bar entirely. The copy button floats over the code area instead.
+
+<ComponentPreview>
+  <bp-code-block
+    language="bash"
+    show-header="false"
+    code="echo 'Hello, world!'"
+  ></bp-code-block>
+</ComponentPreview>
+
+```html
+<bp-code-block
+  language="bash"
+  show-header="false"
+  code="echo 'Hello, world!'"
+></bp-code-block>
+```
+
+### Without Copy Button
+
+<ComponentPreview>
+  <bp-code-block
+    language="text"
+    show-copy-button="false"
+    code="This block has no copy button."
+  ></bp-code-block>
+</ComponentPreview>
+
+```html
+<bp-code-block
+  language="text"
+  show-copy-button="false"
+  code="This block has no copy button."
+></bp-code-block>
+```
+
+## Syntax Highlighting
+
+The component uses a pluggable adapter pattern. The built-in `plainTextAdapter` renders monospace text with zero dependencies. You can set a custom adapter (e.g. Shiki) per-instance or globally:
+
+```javascript
+import { createShikiAdapter, BpCodeBlock } from '@krollins/blueprint/code-block';
+
+// Set globally for all code blocks
+BpCodeBlock.defaultAdapter = createShikiAdapter({
+  langs: ['typescript', 'html', 'css'],
+  theme: 'github-dark',
+});
+```
+
+## API Reference
+
+### Properties
+
+| Property           | Attribute           | Type                        | Default            | Description                                                              |
+| ------------------ | ------------------- | --------------------------- | ------------------ | ------------------------------------------------------------------------ |
+| `code`             | `code`              | `string`                    | `''`               | The source code to display                                               |
+| `language`         | `language`          | `string`                    | `'text'`           | Language identifier for syntax highlighting and header label             |
+| `title`            | `title`             | `string`                    | `''`               | Optional title in the header (e.g. filename). Overrides language label   |
+| `showLineNumbers`  | `show-line-numbers` | `boolean`                   | `false`            | Show line number gutter                                                  |
+| `highlightLines`   | —                   | `number[]`                  | `[]`               | Array of 1-based line numbers to visually highlight                      |
+| `wrapLines`        | `wrap-lines`        | `boolean`                   | `true`             | Wrap long lines instead of horizontal scroll                             |
+| `showCopyButton`   | `show-copy-button`  | `boolean`                   | `true`             | Show the copy-to-clipboard button                                        |
+| `maxLines`         | `max-lines`         | `number \| undefined`       | `undefined`        | Collapse to this many lines with a "Show more" toggle                    |
+| `showHeader`       | `show-header`       | `boolean`                   | `true`             | Show/hide the header bar. When false, copy button floats over the code   |
+| `highlightAdapter` | —                   | `CodeBlockHighlightAdapter` | `plainTextAdapter` | Pluggable syntax highlighting adapter. Set per-instance or as a default  |
+
+### Events
+
+| Event     | Detail                               | Description                                                                |
+| --------- | ------------------------------------ | -------------------------------------------------------------------------- |
+| `bp-copy` | `{ code: string, success: boolean }` | Fired after a copy attempt. `success` indicates clipboard write succeeded. |
+
+### Slots
+
+| Slot          | Description                                            |
+| ------------- | ------------------------------------------------------ |
+| `title`       | Custom title content. Overrides the `title` attribute. |
+| `controls`    | Additional controls placed before the copy button.     |
+| `copy-icon`   | Custom icon for the copy button (default state).       |
+| `copied-icon` | Custom icon for the copy button (success state).       |
+
+### CSS Parts
+
+| Part            | Description               |
+| --------------- | ------------------------- |
+| `base`          | Outer wrapper             |
+| `header`        | Header bar                |
+| `title`         | Title text area           |
+| `controls`      | Controls container        |
+| `copy-button`   | The copy button           |
+| `body`          | Scrollable code container |
+| `pre`           | The `<pre>` element       |
+| `code`          | The `<code>` element      |
+| `line-number`   | Individual line number    |
+| `line`          | Individual line of code   |
+| `expand-button` | The show more/less button |
+
+## Accessibility
+
+- `role="region"` with `aria-label` including the title when set
+- Semantic `<pre><code>` structure for screen readers
+- Copy button has `aria-label` that updates on copy state
+- `aria-live="polite"` region announces copy success/failure
+- Line numbers are `aria-hidden="true"` (decorative)
+- Expand button has `aria-expanded` attribute
+- Keyboard: `Tab` to copy/expand buttons, `Enter`/`Space` to activate
