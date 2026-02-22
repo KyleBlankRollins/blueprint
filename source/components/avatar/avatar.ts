@@ -2,6 +2,7 @@ import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { avatarStyles } from './avatar.style.js';
 import '../icon/icon.js';
+import '../icon/icons/entries/users.js';
 
 export type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type AvatarShape = 'circle' | 'square';

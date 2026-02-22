@@ -6,6 +6,7 @@ export { BpButton } from './button/button.js';
 export { BpInput } from './input/input.js';
 export { BpBadge } from './badge/badge.js';
 export { BpIcon, type IconSize, type IconColor } from './icon/icon.js';
+export type { IconName } from './icon/icons/icon-name.generated.js';
 export {
   BpSpinner,
   type SpinnerSize,

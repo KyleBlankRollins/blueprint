@@ -3,6 +3,7 @@ import { customElement, property, state, query } from 'lit/decorators.js';
 import { popoverStyles } from './popover.style.js';
 import { booleanConverter } from '../../utilities/boolean-converter.js';
 import '../icon/icon.js';
+import '../icon/icons/entries/close.js';
 
 export type PopoverPlacement =
   | 'top'

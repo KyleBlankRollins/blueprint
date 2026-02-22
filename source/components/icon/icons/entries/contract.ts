@@ -1,0 +1,7 @@
+// Auto-generated icon entry — do not edit.
+// Re-generate: node source/components/icon/generate-icon-entries.js
+
+import { registerIcon } from '../../icon-registry.js';
+
+const svg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(2 2)\"><path d=\"m7.5 14.5v-4.978l-5-.022\"/><path d=\"m16.5.5-7 7\"/><path d=\"m14.5 7.5-5 .023v-5.023\"/><path d=\"m7.5 9.5-7 7\"/></g></svg>";
+registerIcon('contract', svg);

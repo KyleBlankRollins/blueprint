@@ -1,0 +1,7 @@
+// Auto-generated icon entry — do not edit.
+// Re-generate: node source/components/icon/generate-icon-entries.js
+
+import { registerIcon } from '../../icon-registry.js';
+
+const svg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(5 5)\"><path d=\"m5.5 11.5c0-2.76142375-2.23857625-5-5-5\"/><path d=\"m.5.5v11h11\"/></g></svg>";
+registerIcon('angle', svg);

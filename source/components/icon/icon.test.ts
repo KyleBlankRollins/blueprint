@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import './icon.js';
 import type { BpIcon } from './icon.js';
+import './icons/all.js';
 
 describe('bp-icon', () => {
   let element: BpIcon;

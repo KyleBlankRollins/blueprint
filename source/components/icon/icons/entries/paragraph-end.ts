@@ -1,0 +1,7 @@
+// Auto-generated icon entry — do not edit.
+// Re-generate: node source/components/icon/generate-icon-entries.js
+
+import { registerIcon } from '../../icon-registry.js';
+
+const svg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m3.5 5.5h13.978\"/><path d=\"m3.5 7.5h13.978\"/><path d=\"m3.5 9.5h13.978\"/><path d=\"m3.5 11.5h13.978\"/><path d=\"m3.5 13.5h13.978\"/><path d=\"m3.5 15.5h7\"/></g></svg>";
+registerIcon('paragraph-end', svg);

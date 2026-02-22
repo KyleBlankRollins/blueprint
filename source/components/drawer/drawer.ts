@@ -3,6 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { drawerStyles } from './drawer.style.js';
 import { booleanConverter } from '../../utilities/boolean-converter.js';
 import '../icon/icon.js';
+import '../icon/icons/entries/close.js';
 
 export type DrawerPlacement = 'left' | 'right' | 'top' | 'bottom';
 export type DrawerSize = 'sm' | 'md' | 'lg' | 'full';

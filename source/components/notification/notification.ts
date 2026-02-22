@@ -3,6 +3,10 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { notificationStyles } from './notification.style.js';
 import { booleanConverter } from '../../utilities/boolean-converter.js';
 import '../icon/icon.js';
+import '../icon/icons/entries/check.js';
+import '../icon/icons/entries/warning-circle.js';
+import '../icon/icons/entries/cross.js';
+import '../icon/icons/entries/info-circle.js';
 
 /**
  * A notification/toast component for displaying non-blocking messages.

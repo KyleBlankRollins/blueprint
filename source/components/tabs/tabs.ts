@@ -8,7 +8,8 @@ import {
 import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { tabsStyles } from './tabs.style.js';
-import type { IconName } from '../icon/icons/registry.generated.js';
+import type { IconName } from '../icon/icons/icon-name.generated.js';
+import '../icon/icon.js';
 
 export type TabsSize = 'sm' | 'md' | 'lg';
 export type TabsVariant = 'default' | 'pills' | 'underline';

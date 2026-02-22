@@ -7,6 +7,8 @@ import { tableStyles } from './table.style.js';
 import { memoizeOne } from '../../utilities/memoize.js';
 import { booleanConverter } from '../../utilities/boolean-converter.js';
 import '../icon/icon.js';
+import '../icon/icons/entries/chevron-up.js';
+import '../icon/icons/entries/chevron-down.js';
 
 export type TableVariant = 'default' | 'striped' | 'bordered';
 export type TableSize = 'sm' | 'md' | 'lg';

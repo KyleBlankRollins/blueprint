@@ -16,12 +16,27 @@ for (const name of readdirSync(componentsDir, { withFileTypes: true })) {
   }
 }
 
+// Discover all icon entry files for per-icon entry points.
+const iconEntriesDir = resolve(
+  __dirname,
+  'source/components/icon/icons/entries'
+);
+const iconEntries: Record<string, string> = {};
+
+for (const file of readdirSync(iconEntriesDir)) {
+  if (file.endsWith('.ts')) {
+    const iconName = file.replace('.ts', '');
+    iconEntries[`icons/${iconName}`] = resolve(iconEntriesDir, file);
+  }
+}
+
 export default defineConfig({
   build: {
     lib: {
       entry: {
         index: resolve(__dirname, 'source/index.ts'),
         ...componentEntries,
+        ...iconEntries,
       },
       formats: ['es'],
       cssFileName: 'index',

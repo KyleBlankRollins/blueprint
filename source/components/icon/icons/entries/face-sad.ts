@@ -1,0 +1,7 @@
+// Auto-generated icon entry — do not edit.
+// Re-generate: node source/components/icon/generate-icon-entries.js
+
+import { registerIcon } from '../../icon-registry.js';
+
+const svg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" transform=\"translate(2 2)\"><path d=\"m8.5 16.5c4.418278 0 8-3.581722 8-8s-3.581722-8-8-8-8 3.581722-8 8 3.581722 8 8 8z\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><circle cx=\"6\" cy=\"6\" fill=\"currentColor\" r=\"1\"/><circle cx=\"11\" cy=\"6\" fill=\"currentColor\" r=\"1\"/><path d=\"m5.5 11.5c.60286458-1.3333333 1.60286458-2 3-2s2.3971354.6666667 3 2\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></g></svg>";
+registerIcon('face-sad', svg);

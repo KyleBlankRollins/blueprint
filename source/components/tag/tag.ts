@@ -3,6 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { tagStyles } from './tag.style.js';
 import '../icon/icon.js';
+import '../icon/icons/entries/cross.js';
 
 /**
  * Tag component for displaying removable labels, chips, or category markers.

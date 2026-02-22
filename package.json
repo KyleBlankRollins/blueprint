@@ -52,7 +52,8 @@
     "./textarea": "./dist/components/textarea.js",
     "./time-picker": "./dist/components/time-picker.js",
     "./tooltip": "./dist/components/tooltip.js",
-    "./tree": "./dist/components/tree.js"
+    "./tree": "./dist/components/tree.js",
+    "./icons/*": "./dist/icons/*.js"
   },
   "files": [
     "dist",
@@ -64,7 +65,8 @@
   "sideEffects": [
     "dist/index.js",
     "dist/index.css",
-    "dist/components/**/*.js"
+    "dist/components/**/*.js",
+    "dist/icons/**/*.js"
   ],
   "repository": {
     "type": "git",
@@ -94,6 +96,7 @@
     "theme:watch-types": "npm run build:cli && node dist/cli/index.js theme generate-types --watch",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "generate:icons": "node source/components/icon/generate-icon-entries.js",
     "generate:jsx": "npm run build:cli && node dist/cli/index.js generate jsx",
     "prepack": "node -e \"require('fs').copyFileSync('README.npm.md','README.md')\"",
     "postpack": "git checkout README.md"

@@ -3,6 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { accordionStyles } from './accordion.style.js';
 import '../icon/icon.js';
+import '../icon/icons/entries/chevron-down.js';
 
 /**
  * A container component that groups accordion items.

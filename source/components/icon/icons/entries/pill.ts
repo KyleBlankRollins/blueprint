@@ -1,0 +1,7 @@
+// Auto-generated icon entry — do not edit.
+// Re-generate: node source/components/icon/generate-icon-entries.js
+
+import { registerIcon } from '../../icon-registry.js';
+
+const svg = "<svg width=\"21\" height=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\"><g stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M10.5 7.5v5.817M3.5 10.5a3 3 0 003 3h8a3 3 0 000-6h-8a3 3 0 00-3 3z\"/></g></g></svg>";
+registerIcon('pill', svg);

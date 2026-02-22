@@ -1,8 +1,10 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { iconStyles } from './icon.style.js';
-import { getIcon, type IconName } from './icons/registry.generated.js';
+import { getIconSvg } from './icon-registry.js';
+import type { IconName } from './icons/icon-name.generated.js';
 
 export type IconSize =
   | 'xs'
@@ -87,7 +89,7 @@ export class BpIcon extends LitElement {
     );
 
     // Get icon from registry if name is provided
-    const iconTemplate = this.name ? getIcon(this.name) : null;
+    const svgContent = this.name ? getIconSvg(this.name) : null;
 
     return html`
       <span
@@ -96,11 +98,13 @@ export class BpIcon extends LitElement {
         role=${this.ariaLabel ? 'img' : 'presentation'}
         aria-label=${ifDefined(this.ariaLabel || undefined)}
       >
-        ${iconTemplate || html`<slot></slot>`}
+        ${svgContent ? html`${unsafeHTML(svgContent)}` : html`<slot></slot>`}
       </span>
     `;
   }
 }
+
+export type { IconName } from './icons/icon-name.generated.js';
 
 declare global {
   interface HTMLElementTagNameMap {

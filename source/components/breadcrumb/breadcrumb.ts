@@ -4,7 +4,8 @@ import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { breadcrumbStyles } from './breadcrumb.style.js';
-import type { IconName } from '../icon/icons/registry.generated.js';
+import type { IconName } from '../icon/icons/icon-name.generated.js';
+import '../icon/icon.js';
 
 export type BreadcrumbSize = 'sm' | 'md' | 'lg';
 export type BreadcrumbSeparator = 'slash' | 'chevron' | 'arrow' | 'dot';

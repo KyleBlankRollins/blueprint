@@ -5,6 +5,7 @@ import { repeat } from 'lit/directives/repeat.js';
 import { treeStyles } from './tree.style.js';
 import { memoizeOne } from '../../utilities/memoize.js';
 import '../icon/icon.js';
+import '../icon/icons/entries/chevron-right.js';
 
 /**
  * Tree node data structure

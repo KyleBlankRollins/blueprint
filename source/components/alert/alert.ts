@@ -1,8 +1,13 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { alertStyles } from './alert.style.js';
-import { type IconName } from '../icon/icons/registry.generated.js';
+import type { IconName } from '../icon/icons/icon-name.generated.js';
 import '../icon/icon.js';
+import '../icon/icons/entries/info-circle.js';
+import '../icon/icons/entries/check-circle.js';
+import '../icon/icons/entries/warning-circle.js';
+import '../icon/icons/entries/cross-circle.js';
+import '../icon/icons/entries/cross.js';
 
 export type AlertVariant = 'info' | 'success' | 'warning' | 'error';
 interface IconMap {

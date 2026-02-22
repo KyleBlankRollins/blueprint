@@ -8,7 +8,7 @@
 - Color variants for semantic states (primary, success, warning, error, muted)
 - Accessible with ARIA label support
 - Automatic role assignment based on context
-- Tree-shakeable - only bundle icons you use
+- Tree-shakeable — consumers only bundle the icons they import
 - Fully theme-aware using design tokens
 - Auto-generated TypeScript types for autocomplete
 
@@ -66,18 +66,34 @@ All **430 icons** from [System UI Icons](https://www.systemuicons.com/) are avai
 
 ### Adding New Icons
 
-If you need to add SVG files to the icon library:
-
 1. Add new `.svg` files to `source/assets/icons/`
-2. Run the generator: `node source/components/icon/generate-icon-registry.js`
-3. The registry will be automatically regenerated with all icons
+2. Run the generator: `npm run generate:icons`
+3. Icon entries will be generated in `source/components/icon/icons/entries/`
 
-The generator automatically:
+The generator produces:
+- Per-icon entry files that register SVG data on import
+- TypeScript type union for autocomplete
+- An all-icons barrel for Storybook and dev tools
 
-- Imports all SVG files using Vite's `?raw` import
-- Handles reserved JavaScript keywords (e.g., `import` → `_import`)
-- Generates TypeScript types for autocomplete
-- Creates a tree-shakeable registry
+### Importing Icons
+
+Components that use icons internally (alert, tag, tree, etc.) automatically import the icons they need. No extra steps required.
+
+For standalone `<bp-icon>` use, import the specific icons you need:
+
+```javascript
+import '@krollins/blueprint/icons/search';
+import '@krollins/blueprint/icons/heart';
+```
+
+Then use in HTML:
+
+```html
+<bp-icon name="search"></bp-icon>
+<bp-icon name="heart" color="error"></bp-icon>
+```
+
+Only the imported icons are bundled — unused icons are not included.
 
 ## API
 
