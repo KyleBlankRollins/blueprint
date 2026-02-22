@@ -6,7 +6,7 @@ import { checkCircleSvg } from '../icon/icons/entries/check-circle.js';
 import { warningCircleSvg } from '../icon/icons/entries/warning-circle.js';
 import { crossCircleSvg } from '../icon/icons/entries/cross-circle.js';
 import { crossSvg } from '../icon/icons/entries/cross.js';
-import '../icon/icon.js';
+import { BpIcon } from '../icon/icon.js';
 
 export type AlertVariant = 'info' | 'success' | 'warning' | 'error';
 
@@ -28,6 +28,12 @@ const VARIANT_ICONS: Record<AlertVariant, string> = {
  */
 @customElement('bp-alert')
 export class BpAlert extends LitElement {
+  /**
+   * Child components that self-register as custom elements on import.
+   * Value imports prevent bundler tree-shaking of the registration side effect.
+   */
+  static dependencies = [BpIcon];
+
   /**
    * Visual variant indicating the type of alert
    */

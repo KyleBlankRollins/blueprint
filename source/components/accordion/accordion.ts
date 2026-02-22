@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { accordionStyles } from './accordion.style.js';
 import { chevronDownSvg } from '../icon/icons/entries/chevron-down.js';
-import '../icon/icon.js';
+import { BpIcon } from '../icon/icon.js';
 
 /**
  * A container component that groups accordion items.
@@ -24,6 +24,12 @@ import '../icon/icon.js';
  */
 @customElement('bp-accordion')
 export class BpAccordion extends LitElement {
+  /**
+   * Child components that self-register as custom elements on import.
+   * Value imports prevent bundler tree-shaking of the registration side effect.
+   */
+  static dependencies = [BpIcon];
+
   /** Whether multiple items can be expanded simultaneously */
   @property({ type: Boolean, reflect: true }) declare multiple: boolean;
 

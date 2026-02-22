@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { tagStyles } from './tag.style.js';
 import { crossSvg } from '../icon/icons/entries/cross.js';
-import '../icon/icon.js';
+import { BpIcon } from '../icon/icon.js';
 
 /**
  * Tag component for displaying removable labels, chips, or category markers.
@@ -26,6 +26,12 @@ import '../icon/icon.js';
  */
 @customElement('bp-tag')
 export class BpTag extends LitElement {
+  /**
+   * Child components that self-register as custom elements on import.
+   * Value imports prevent bundler tree-shaking of the registration side effect.
+   */
+  static dependencies = [BpIcon];
+
   /**
    * Visual variant of the tag
    * @type {'solid' | 'outlined'}

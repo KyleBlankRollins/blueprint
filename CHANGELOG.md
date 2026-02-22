@@ -1,5 +1,18 @@
 # @krollins/blueprint
 
+## 0.2.3
+
+### Patch Changes
+
+- Fix `<bp-icon>` not rendering inside composed components when imported individually
+
+  Components that internally use `<bp-icon>` (accordion, alert, avatar, breadcrumb, drawer, notification, popover, table, tabs, tag, tree) relied on a bare side-effect import (`import '../icon/icon.js'`) to register the `<bp-icon>` custom element. Rollup's tree-shaking removed these imports during the library build, so consumers importing individual components (e.g., `@krollins/blueprint/tree`) never got the `<bp-icon>` definition.
+
+  Changed all 11 components to use value imports (`import { BpIcon } from '../icon/icon.js'`) with a `static dependencies` class property referencing the import. This prevents tree-shaking while keeping the dependency explicit.
+
+- Updated dependencies
+  - @krollins/blueprint@0.2.3
+
 ## 0.2.2
 
 ### Patch Changes

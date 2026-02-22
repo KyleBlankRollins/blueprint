@@ -6,7 +6,7 @@ import { checkSvg } from '../icon/icons/entries/check.js';
 import { warningCircleSvg } from '../icon/icons/entries/warning-circle.js';
 import { crossSvg } from '../icon/icons/entries/cross.js';
 import { infoCircleSvg } from '../icon/icons/entries/info-circle.js';
-import '../icon/icon.js';
+import { BpIcon } from '../icon/icon.js';
 
 /**
  * A notification/toast component for displaying non-blocking messages.
@@ -29,6 +29,12 @@ import '../icon/icon.js';
  */
 @customElement('bp-notification')
 export class BpNotification extends LitElement {
+  /**
+   * Child components that self-register as custom elements on import.
+   * Value imports prevent bundler tree-shaking of the registration side effect.
+   */
+  static dependencies = [BpIcon];
+
   /** The notification variant */
   @property({
     type: String,

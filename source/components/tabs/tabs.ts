@@ -9,7 +9,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { tabsStyles } from './tabs.style.js';
 import type { IconName } from '../icon/icons/icon-name.generated.js';
-import '../icon/icon.js';
+import { BpIcon } from '../icon/icon.js';
 
 export type TabsSize = 'sm' | 'md' | 'lg';
 export type TabsVariant = 'default' | 'pills' | 'underline';
@@ -60,6 +60,12 @@ export interface TabItem {
  */
 @customElement('bp-tabs')
 export class BpTabs extends LitElement {
+  /**
+   * Child components that self-register as custom elements on import.
+   * Value imports prevent bundler tree-shaking of the registration side effect.
+   */
+  static dependencies = [BpIcon];
+
   /**
    * The ID of the currently selected tab
    */

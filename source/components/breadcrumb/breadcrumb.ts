@@ -5,7 +5,7 @@ import { repeat } from 'lit/directives/repeat.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { breadcrumbStyles } from './breadcrumb.style.js';
 import type { IconName } from '../icon/icons/icon-name.generated.js';
-import '../icon/icon.js';
+import { BpIcon } from '../icon/icon.js';
 
 export type BreadcrumbSize = 'sm' | 'md' | 'lg';
 export type BreadcrumbSeparator = 'slash' | 'chevron' | 'arrow' | 'dot';
@@ -51,6 +51,12 @@ export interface BreadcrumbItem {
  */
 @customElement('bp-breadcrumb')
 export class BpBreadcrumb extends LitElement {
+  /**
+   * Child components that self-register as custom elements on import.
+   * Value imports prevent bundler tree-shaking of the registration side effect.
+   */
+  static dependencies = [BpIcon];
+
   /**
    * Array of breadcrumb items
    */

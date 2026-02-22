@@ -8,7 +8,7 @@ import { memoizeOne } from '../../utilities/memoize.js';
 import { booleanConverter } from '../../utilities/boolean-converter.js';
 import { chevronUpSvg } from '../icon/icons/entries/chevron-up.js';
 import { chevronDownSvg } from '../icon/icons/entries/chevron-down.js';
-import '../icon/icon.js';
+import { BpIcon } from '../icon/icon.js';
 
 export type TableVariant = 'default' | 'striped' | 'bordered';
 export type TableSize = 'sm' | 'md' | 'lg';
@@ -89,6 +89,12 @@ export interface TableSortState {
  */
 @customElement('bp-table')
 export class BpTable extends LitElement {
+  /**
+   * Child components that self-register as custom elements on import.
+   * Value imports prevent bundler tree-shaking of the registration side effect.
+   */
+  static dependencies = [BpIcon];
+
   /** Array of column definitions */
   @property({ type: Array }) declare columns: TableColumn[];
 

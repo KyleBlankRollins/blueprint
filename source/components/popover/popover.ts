@@ -3,7 +3,7 @@ import { customElement, property, state, query } from 'lit/decorators.js';
 import { popoverStyles } from './popover.style.js';
 import { booleanConverter } from '../../utilities/boolean-converter.js';
 import { closeSvg } from '../icon/icons/entries/close.js';
-import '../icon/icon.js';
+import { BpIcon } from '../icon/icon.js';
 
 export type PopoverPlacement =
   | 'top'
@@ -44,7 +44,11 @@ export type PopoverTrigger = 'click' | 'hover' | 'focus' | 'manual';
  * @csspart close-button - The close button (when showClose is true)
  */
 @customElement('bp-popover')
-export class BpPopover extends LitElement {
+export class BpPopover extends LitElement {  /**
+   * Child components that self-register as custom elements on import.
+   * Value imports prevent bundler tree-shaking of the registration side effect.
+   */
+  static dependencies = [BpIcon];
   /** Whether the popover is currently open */
   @property({ type: Boolean, reflect: true }) declare open: boolean;
 

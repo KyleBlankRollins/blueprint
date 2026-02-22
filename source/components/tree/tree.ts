@@ -5,7 +5,8 @@ import { repeat } from 'lit/directives/repeat.js';
 import { treeStyles } from './tree.style.js';
 import { memoizeOne } from '../../utilities/memoize.js';
 import { chevronRightSvg } from '../icon/icons/entries/chevron-right.js';
-import '../icon/icon.js';
+import { BpIcon } from '../icon/icon.js';
+import type { IconName } from '../icon/icon.js';
 
 /**
  * Tree node data structure
@@ -16,7 +17,7 @@ export interface TreeNode {
   /** Display label */
   label: string;
   /** Optional icon name */
-  icon?: string;
+  icon?: IconName;
   /** URL to navigate to when the node is clicked */
   href?: string;
   /** Child nodes */
@@ -46,6 +47,12 @@ export interface TreeNode {
  */
 @customElement('bp-tree')
 export class BpTree extends LitElement {
+  /**
+   * Child components that self-register as custom elements on import.
+   * Value imports prevent bundler tree-shaking of the registration side effect.
+   */
+  static dependencies = [BpIcon];
+
   /** Array of tree nodes to render */
   @property({ type: Array }) declare nodes: TreeNode[];
 

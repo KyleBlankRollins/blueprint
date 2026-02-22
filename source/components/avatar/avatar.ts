@@ -2,7 +2,7 @@ import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { avatarStyles } from './avatar.style.js';
 import { usersSvg } from '../icon/icons/entries/users.js';
-import '../icon/icon.js';
+import { BpIcon } from '../icon/icon.js';
 
 export type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type AvatarShape = 'circle' | 'square';
@@ -14,6 +14,12 @@ export type AvatarStatus = 'online' | 'offline' | 'busy' | 'away';
  */
 @customElement('bp-avatar')
 export class BpAvatar extends LitElement {
+  /**
+   * Child components that self-register as custom elements on import.
+   * Value imports prevent bundler tree-shaking of the registration side effect.
+   */
+  static dependencies = [BpIcon];
+
   /**
    * Image source URL for the avatar.
    * @type {string}

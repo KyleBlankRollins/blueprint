@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { drawerStyles } from './drawer.style.js';
 import { booleanConverter } from '../../utilities/boolean-converter.js';
 import { closeSvg } from '../icon/icons/entries/close.js';
-import '../icon/icon.js';
+import { BpIcon } from '../icon/icon.js';
 
 export type DrawerPlacement = 'left' | 'right' | 'top' | 'bottom';
 export type DrawerSize = 'sm' | 'md' | 'lg' | 'full';
@@ -30,6 +30,12 @@ export type DrawerSize = 'sm' | 'md' | 'lg' | 'full';
  */
 @customElement('bp-drawer')
 export class BpDrawer extends LitElement {
+  /**
+   * Child components that self-register as custom elements on import.
+   * Value imports prevent bundler tree-shaking of the registration side effect.
+   */
+  static dependencies = [BpIcon];
+
   /** Whether the drawer is open */
   @property({ type: Boolean, reflect: true }) declare open: boolean;
 
