@@ -1,0 +1,13 @@
+:root {
+  --bp-color-primary: #3b82f6;
+  --bp-color-secondary: #64748b;
+  --bp-color-success: #22c55e;
+  --bp-color-warning: #f59e0b;
+  --bp-color-error: #ef4444;
+  --bp-spacing-sm: 0.5rem;
+  --bp-spacing-md: 1rem;
+  --bp-spacing-lg: 1.5rem;
+  --bp-spacing-xl: 2rem;
+  --bp-border-radius-sm: 0.25rem;
+  --bp-border-radius-md: 0.5rem;
+}

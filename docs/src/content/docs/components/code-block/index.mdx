@@ -3,7 +3,10 @@ title: Code Block
 description: Display source code with syntax highlighting, copy-to-clipboard, and line numbers
 ---
 
-import ComponentPreview from '../../../components/ComponentPreview.astro';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import CodeBlock from '../../../../components/CodeBlock.astro';
+
+export const examplesBase = 'src/content/docs/components/code-block/examples';
 
 The `bp-code-block` component displays source code with features like copy-to-clipboard, line numbers, line highlighting, and expand/collapse for long blocks.
 
@@ -18,7 +21,7 @@ import '@krollins/blueprint/code-block';
 ### Basic
 
 <ComponentPreview>
-  <bp-code-block language="bash" code="npm install @krollins/blueprint"></bp-code-block>
+  <CodeBlock base={examplesBase} src="install.sh" />
 </ComponentPreview>
 
 ```html
@@ -33,11 +36,7 @@ import '@krollins/blueprint/code-block';
 Use the `title` attribute to display a filename or label in the header.
 
 <ComponentPreview>
-  <bp-code-block
-    language="typescript"
-    title="greeting.ts"
-    code={`function greet(name: string): string {\n  return \`Hello, \${name}!\`;\n}`}
-  ></bp-code-block>
+  <CodeBlock base={examplesBase} src="greeting.ts" title="greeting.ts" />
 </ComponentPreview>
 
 ```html
@@ -53,11 +52,7 @@ Use the `title` attribute to display a filename or label in the header.
 ### With Line Numbers
 
 <ComponentPreview>
-  <bp-code-block
-    language="javascript"
-    show-line-numbers
-    code={`import { html, LitElement } from 'lit';\nimport { customElement } from 'lit/decorators.js';\n\n@customElement('my-element')\nexport class MyElement extends LitElement {\n  render() {\n    return html\`<p>Hello World</p>\`;\n  }\n}`}
-  ></bp-code-block>
+  <CodeBlock base={examplesBase} src="lit-element.js" showLineNumbers />
 </ComponentPreview>
 
 ```html
@@ -81,11 +76,7 @@ export class MyElement extends LitElement {
 Disable line wrapping to enable horizontal scrolling for wide code.
 
 <ComponentPreview>
-  <bp-code-block
-    language="javascript"
-    wrap-lines="false"
-    code={`const veryLongVariableName = someFunction(argumentOne, argumentTwo, argumentThree, argumentFour, argumentFive);`}
-  ></bp-code-block>
+  <CodeBlock base={examplesBase} src="long-line.js" wrapLines={false} />
 </ComponentPreview>
 
 ```html
@@ -101,13 +92,7 @@ Disable line wrapping to enable horizontal scrolling for wide code.
 Use `max-lines` to collapse long code blocks with a "Show more" toggle.
 
 <ComponentPreview>
-  <bp-code-block
-    language="css"
-    title="tokens.css"
-    show-line-numbers
-    max-lines="5"
-    code={`:root {\n  --bp-color-primary: #3b82f6;\n  --bp-color-secondary: #64748b;\n  --bp-color-success: #22c55e;\n  --bp-color-warning: #f59e0b;\n  --bp-color-error: #ef4444;\n  --bp-spacing-sm: 0.5rem;\n  --bp-spacing-md: 1rem;\n  --bp-spacing-lg: 1.5rem;\n  --bp-spacing-xl: 2rem;\n  --bp-border-radius-sm: 0.25rem;\n  --bp-border-radius-md: 0.5rem;\n}`}
-  ></bp-code-block>
+  <CodeBlock base={examplesBase} src="tokens.css" title="tokens.css" showLineNumbers maxLines={5} />
 </ComponentPreview>
 
 ```html
@@ -137,11 +122,7 @@ Use `max-lines` to collapse long code blocks with a "Show more" toggle.
 Hide the header bar entirely. The copy button floats over the code area instead.
 
 <ComponentPreview>
-  <bp-code-block
-    language="bash"
-    show-header="false"
-    code="echo 'Hello, world!'"
-  ></bp-code-block>
+  <CodeBlock base={examplesBase} src="hello.sh" showHeader={false} />
 </ComponentPreview>
 
 ```html
@@ -155,11 +136,7 @@ Hide the header bar entirely. The copy button floats over the code area instead.
 ### Without Copy Button
 
 <ComponentPreview>
-  <bp-code-block
-    language="text"
-    show-copy-button="false"
-    code="This block has no copy button."
-  ></bp-code-block>
+  <CodeBlock base={examplesBase} src="no-copy.txt" showCopyButton={false} />
 </ComponentPreview>
 
 ```html
@@ -183,6 +160,66 @@ BpCodeBlock.defaultAdapter = createShikiAdapter({
   theme: 'github-dark',
 });
 ```
+
+## Loading Code from Files
+
+Passing multi-line code through the `code` attribute works, but it gets unwieldy fast — escaped backticks, template literals, and strings that are hard to read or maintain.
+
+This docs site solves that with a thin Astro wrapper (`CodeBlock.astro`) that reads source files at build time and passes their contents to `bp-code-block`.
+
+### How it works
+
+1. Store each code example as a standalone file with the correct extension (e.g. `greeting.ts`, `install.sh`).
+2. The wrapper reads the file at build time via `fs.readFileSync` and passes the content into the `code` attribute.
+3. Language is inferred from the file extension — no need to specify it manually.
+
+### Co-locating examples with pages
+
+Example files live alongside the page that uses them. For this page, the structure looks like:
+
+```
+components/
+  code-block/
+    index.mdx             ← this page
+    examples/
+      greeting.ts
+      tokens.css
+      lit-element.js
+      ...
+```
+
+Astro's content collection glob (`**/*.{md,mdx}`) only picks up Markdown files, so the `.ts`, `.css`, and `.js` example files are ignored by the content pipeline — they're just data files read at build time. A `generateId` function in the content config strips `/index` from the id so that `code-block/index.mdx` produces the route `/components/code-block/` as expected.
+
+The `CodeBlock` wrapper accepts a `base` prop to tell it where to find the files:
+
+```astro
+---
+import CodeBlock from '../components/CodeBlock.astro';
+
+// Point to the co-located examples directory
+export const examplesBase = 'src/content/docs/components/code-block/examples';
+---
+
+<!-- Language inferred from .sh extension -->
+<CodeBlock base={examplesBase} src="install.sh" />
+
+<!-- With additional props -->
+<CodeBlock base={examplesBase} src="greeting.ts" title="greeting.ts" showLineNumbers />
+
+<!-- Collapsible -->
+<CodeBlock base={examplesBase} src="tokens.css" title="tokens.css" showLineNumbers maxLines={5} />
+```
+
+Pages that don't set `base` resolve from the default `src/examples/` directory, so existing usage is unaffected.
+
+### Why this works well
+
+- **Real files with real extensions** — your editor gives you syntax highlighting, linting, and formatting for free.
+- **No escaping** — backticks, template literals, and special characters just work.
+- **Co-location** — examples live next to the page that uses them, making it easy to see what belongs together.
+- **Build-time only** — file reads happen during the static build. Zero runtime cost.
+
+The wrapper is Astro-specific, but the same pattern works in any SSG or framework that supports build-time file reads. The key idea is that `bp-code-block` accepts code as a string — how you get that string to the component is up to you.
 
 ## API Reference
 

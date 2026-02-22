@@ -4,6 +4,7 @@
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
+import CodeBlock from '../components/CodeBlock.astro';
 ---
 
 <BaseLayout title="Blueprint - Component Library">
@@ -59,23 +60,15 @@ import Header from '../components/Header.astro';
 
       <bp-text>Install Blueprint from npm:</bp-text>
 
-      <bp-code-block language="bash" code="npm install @krollins/blueprint"
-      ></bp-code-block>
+      <CodeBlock src="install.sh" />
 
       <bp-text>Import the theme CSS and components you need:</bp-text>
 
-      <bp-code-block
-        language="javascript"
-        code={`import '@krollins/blueprint/dist/index.css';
-import '@krollins/blueprint/button';
-import '@krollins/blueprint/input';`}></bp-code-block>
+      <CodeBlock src="quick-start-imports.js" />
 
       <bp-text>Then use components in your HTML:</bp-text>
 
-      <bp-code-block
-        language="html"
-        code={`<bp-button variant="primary">Click me</bp-button>
-<bp-input placeholder="Enter text..."></bp-input>`}></bp-code-block>
+      <CodeBlock src="quick-start-usage.html" />
     </section>
 
     <section class="features">

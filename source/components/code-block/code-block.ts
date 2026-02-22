@@ -421,45 +421,48 @@ export class BpCodeBlock extends LitElement {
     showNumber: boolean
   ) {
     const isHighlighted = this._highlightSet.has(lineNumber);
-    return html`
-      ${showNumber
-        ? html`<span
+    // Template kept tight to avoid whitespace text nodes inside the CSS grid.
+    // Anonymous text nodes in a grid become extra rows, adding visual gaps.
+    return showNumber
+      ? html`<span
             part="line-number"
             class="code-block__line-number"
             aria-hidden="true"
             >${lineNumber}</span
+          ><span
+            part="line"
+            class="code-block__line ${isHighlighted
+              ? 'code-block__line--highlighted'
+              : ''}"
+            aria-current=${ifDefined(isHighlighted ? 'true' : undefined)}
+            >${unsafeHTML(lineHtml)}</span
           >`
-        : nothing}
-      <span
-        part="line"
-        class="code-block__line ${isHighlighted
-          ? 'code-block__line--highlighted'
-          : ''}"
-        aria-current=${ifDefined(isHighlighted ? 'true' : undefined)}
-        >${unsafeHTML(lineHtml)}</span
-      >
-    `;
+      : html`<span
+          part="line"
+          class="code-block__line ${isHighlighted
+            ? 'code-block__line--highlighted'
+            : ''}"
+          aria-current=${ifDefined(isHighlighted ? 'true' : undefined)}
+          >${unsafeHTML(lineHtml)}</span
+        >`;
   }
 
   private _renderCodeLines() {
+    // Templates kept tight to avoid whitespace text nodes inside CSS grids.
     if (this.showLineNumbers) {
-      return html`
-        <div class="code-block__lines">
-          ${this._highlightedLines.map((lineHtml, index) =>
-            this._renderLine(lineHtml, index + 1, true)
-          )}
-        </div>
-      `;
+      return html`<div class="code-block__lines">
+        ${this._highlightedLines.map((lineHtml, index) =>
+          this._renderLine(lineHtml, index + 1, true)
+        )}
+      </div>`;
     }
 
     if (this.highlightLines.length > 0) {
-      return html`
-        <div class="code-block__lines code-block__lines--no-gutter">
-          ${this._highlightedLines.map((lineHtml, index) =>
-            this._renderLine(lineHtml, index + 1, false)
-          )}
-        </div>
-      `;
+      return html`<div class="code-block__lines code-block__lines--no-gutter">
+        ${this._highlightedLines.map((lineHtml, index) =>
+          this._renderLine(lineHtml, index + 1, false)
+        )}
+      </div>`;
     }
 
     return unsafeHTML(this._highlightedHtml);

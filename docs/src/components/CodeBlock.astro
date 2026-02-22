@@ -1,0 +1,117 @@
+---
+/**
+ * Build-time wrapper for bp-code-block.
+ *
+ * Reads a source file at build time and passes its content to the
+ * bp-code-block component via the `code` attribute. This avoids runtime
+ * fetches and eliminates the need to embed multi-line code strings in
+ * template literals.
+ *
+ * By default, `src` is resolved relative to `src/examples/` in the docs
+ * project root. Pass a `base` prop to resolve relative to a different
+ * directory — useful for co-locating examples alongside their page:
+ *
+ *   <!-- Global examples (default) -->
+ *   <CodeBlock src="install.sh" />
+ *
+ *   <!-- Co-located examples next to a page -->
+ *   <CodeBlock base="src/content/docs/components/code-block/examples" src="greeting.ts" />
+ *
+ * Language is inferred from the file extension unless explicitly provided.
+ */
+import fs from 'node:fs';
+import path from 'node:path';
+
+interface Props {
+  /** Path to the source file, resolved relative to `base`. */
+  src: string;
+  /**
+   * Base directory for resolving `src`, relative to the project root.
+   * Defaults to `src/examples`.
+   */
+  base?: string;
+  /** Language identifier. Inferred from file extension if omitted. */
+  language?: string;
+  /** Title shown in the header (e.g. filename). */
+  title?: string;
+  /** Show line number gutter. */
+  showLineNumbers?: boolean;
+  /** Wrap long lines. Defaults to true. */
+  wrapLines?: boolean;
+  /** Show the copy-to-clipboard button. Defaults to true. */
+  showCopyButton?: boolean;
+  /** Collapse to this many lines with a toggle. */
+  maxLines?: number;
+  /** Show/hide the header bar. Defaults to true. */
+  showHeader?: boolean;
+}
+
+const extensionToLanguage: Record<string, string> = {
+  ts: 'typescript',
+  tsx: 'typescript',
+  js: 'javascript',
+  jsx: 'javascript',
+  py: 'python',
+  rb: 'ruby',
+  rs: 'rust',
+  go: 'go',
+  sh: 'bash',
+  bash: 'bash',
+  yml: 'yaml',
+  yaml: 'yaml',
+  md: 'markdown',
+  json: 'json',
+  html: 'html',
+  htm: 'html',
+  css: 'css',
+  scss: 'scss',
+  xml: 'xml',
+  sql: 'sql',
+  toml: 'toml',
+  txt: 'text',
+};
+
+const {
+  src,
+  base,
+  language,
+  title,
+  showLineNumbers,
+  wrapLines,
+  showCopyButton,
+  maxLines,
+  showHeader,
+} = Astro.props;
+
+// Resolve the file path relative to the base directory (or src/examples/ by default)
+const projectRoot = process.cwd();
+const baseDir = path.resolve(projectRoot, base ?? path.join('src', 'examples'));
+const filePath = path.resolve(baseDir, src);
+
+// Safety: prevent path traversal outside the base directory
+if (!filePath.startsWith(baseDir)) {
+  throw new Error(
+    `CodeBlock src must be within ${base ?? 'src/examples/'}. Got: ${src}`
+  );
+}
+
+if (!fs.existsSync(filePath)) {
+  throw new Error(`CodeBlock source file not found: ${filePath}`);
+}
+
+const code = fs.readFileSync(filePath, 'utf-8').trimEnd();
+
+// Infer language from extension if not provided
+const extension = src.split('.').pop()?.toLowerCase() ?? '';
+const resolvedLanguage = language ?? extensionToLanguage[extension] ?? 'text';
+---
+
+<bp-code-block
+  language={resolvedLanguage}
+  code={code}
+  title={title}
+  show-line-numbers={showLineNumbers || undefined}
+  wrap-lines={wrapLines === false ? 'false' : undefined}
+  show-copy-button={showCopyButton === false ? 'false' : undefined}
+  max-lines={maxLines}
+  show-header={showHeader === false ? 'false' : undefined}></bp-code-block>

@@ -9,6 +9,7 @@
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
+import CodeBlock from '../components/CodeBlock.astro';
 ---
 
 <BaseLayout title="Theme Preview">
@@ -231,48 +232,20 @@ import Header from '../components/Header.astro';
           <div class="component-grid">
             <div class="component-card wide">
               <bp-text size="sm" weight="semibold">Code Block</bp-text>
-              <bp-code-block
-                language="typescript"
-                title="example.ts"
-                show-line-numbers
-                code="import { html, LitElement } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-
-@customElement('my-greeting')
-export class MyGreeting extends LitElement {
-  @property() name = 'World';
-
-  render() {
-    return html`<p>Hello, ${this.name}!</p>`;
-  }
-}"
-              ></bp-code-block>
+              <CodeBlock src="example.ts" title="example.ts" showLineNumbers />
             </div>
             <div class="component-card">
               <bp-text size="sm" weight="semibold">Minimal (no header)</bp-text>
-              <bp-code-block
-                language="bash"
-                show-header="false"
-                code="npm install @krollins/blueprint"></bp-code-block>
+              <CodeBlock src="install.sh" showHeader={false} />
             </div>
             <div class="component-card">
               <bp-text size="sm" weight="semibold">Collapsible</bp-text>
-              <bp-code-block
-                language="css"
+              <CodeBlock
+                src="tokens.css"
                 title="tokens.css"
-                show-line-numbers
-                max-lines="4"
-                code=":root {
-  --bp-color-primary: #3b82f6;
-  --bp-color-secondary: #64748b;
-  --bp-color-success: #22c55e;
-  --bp-color-warning: #f59e0b;
-  --bp-color-error: #ef4444;
-  --bp-spacing-sm: 0.5rem;
-  --bp-spacing-md: 1rem;
-  --bp-spacing-lg: 1.5rem;
-}"
-              ></bp-code-block>
+                showLineNumbers
+                maxLines={4}
+              />
             </div>
           </div>
         </section>
