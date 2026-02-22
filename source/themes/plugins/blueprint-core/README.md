@@ -101,15 +101,24 @@ Blueprint Core bundles the **Figtree** variable font for self-hosted typography.
 
 ```css
 /* Primary font family */
-font-family: Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+font-family:
+  Figtree,
+  -apple-system,
+  BlinkMacSystemFont,
+  'Segoe UI',
+  Roboto,
+  'Helvetica Neue',
+  Arial,
+  sans-serif;
 
 /* Monospace font family */
-font-family: "SF Mono", Monaco, "Cascadia Code", "Courier New", monospace;
+font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Courier New', monospace;
 ```
 
 ### How It Works
 
 When you run `npm run theme:generate`, the CLI:
+
 1. Collects font assets declared in `getAssets()`
 2. Generates a `fonts.css` file with `@font-face` declarations
 3. Copies font files to `generated/blueprint-core/assets/fonts/`

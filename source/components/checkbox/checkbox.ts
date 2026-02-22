@@ -81,7 +81,7 @@ export class BpCheckbox extends LitElement {
   static styles = [checkboxStyles];
 
   static formAssociated = true;
-  // eslint-disable-next-line no-undef
+
   private internals: ElementInternals | null = null;
 
   constructor() {
@@ -161,7 +161,7 @@ export class BpCheckbox extends LitElement {
   /**
    * Sets focus on the checkbox.
    */
-  // eslint-disable-next-line no-undef
+
   focus(options?: FocusOptions) {
     this.input?.focus(options);
   }

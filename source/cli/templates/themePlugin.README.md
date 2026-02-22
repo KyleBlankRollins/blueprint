@@ -208,6 +208,7 @@ builder.addThemeVariant('{{PLUGIN_ID}}-light', {
 ```
 
 When you run `npm run theme:generate`, fonts are automatically:
+
 - Validated for allowed extensions
 - Copied to the output directory
 - Referenced in a generated `fonts.css` file

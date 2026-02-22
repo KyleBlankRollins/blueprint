@@ -9,7 +9,8 @@
 }
 @font-face {
   font-family: 'Figtree-Italic';
-  src: url('./assets/fonts/Figtree-Italic-VariableFont_wght.ttf') format('truetype');
+  src: url('./assets/fonts/Figtree-Italic-VariableFont_wght.ttf')
+    format('truetype');
   font-weight: 300 900;
   font-style: normal;
   font-display: swap;

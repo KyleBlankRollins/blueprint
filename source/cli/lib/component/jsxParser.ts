@@ -255,9 +255,7 @@ export function parseComponentFile(
 
       // Check for private keyword in the text after the decorator
       const afterDecorator =
-        j === decoratorEndLine
-          ? ln.substring(ln.lastIndexOf(')') + 1)
-          : ln;
+        j === decoratorEndLine ? ln.substring(ln.lastIndexOf(')') + 1) : ln;
 
       if (/\bprivate\b/.test(afterDecorator)) {
         isPrivate = true;

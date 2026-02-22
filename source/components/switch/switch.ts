@@ -76,7 +76,7 @@ export class BpSwitch extends LitElement {
   static styles = [switchStyles];
 
   static formAssociated = true;
-  // eslint-disable-next-line no-undef
+
   private internals: ElementInternals | null = null;
 
   constructor() {
@@ -156,7 +156,7 @@ export class BpSwitch extends LitElement {
   /**
    * Sets focus on the switch.
    */
-  // eslint-disable-next-line no-undef
+
   focus(options?: FocusOptions) {
     this.input?.focus(options);
   }

@@ -137,7 +137,10 @@ function updateSidebarNavigation(componentName: string): {
   );
 
   if (!componentsSectionMatch) {
-    return { success: false, error: 'Could not find Components section in Sidebar.astro' };
+    return {
+      success: false,
+      error: 'Could not find Components section in Sidebar.astro',
+    };
   }
 
   const [fullMatch, prefix, itemsContent, suffix] = componentsSectionMatch;

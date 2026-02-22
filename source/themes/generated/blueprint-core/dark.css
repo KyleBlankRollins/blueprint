@@ -1,52 +1,60 @@
 /* dark theme */
-[data-theme="dark"] {
-  --bp-color-background: oklch(0.15 0.01 240.0);
-  --bp-color-surface: oklch(0.25 0.01 240.0);
-  --bp-color-surface-elevated: oklch(0.35 0.02 240.0);
-  --bp-color-surface-subdued: oklch(0.00 0.00 0.0);
+[data-theme='dark'] {
+  --bp-color-background: oklch(0.15 0.01 240);
+  --bp-color-surface: oklch(0.25 0.01 240);
+  --bp-color-surface-elevated: oklch(0.35 0.02 240);
+  --bp-color-surface-subdued: oklch(0 0 0);
   --bp-color-text: oklch(0.89 0.01 91.4);
-  --bp-color-text-strong: oklch(1.00 0.00 0.0);
+  --bp-color-text-strong: oklch(1 0 0);
   --bp-color-text-muted: oklch(0.75 0.02 91.4);
-  --bp-color-text-inverse: oklch(0.25 0.01 240.0);
+  --bp-color-text-inverse: oklch(0.25 0.01 240);
   --bp-color-primary: oklch(0.48 0.12 233.4);
-  --bp-color-primary-hover: oklch(0.44 0.10 233.4);
-  --bp-color-primary-active: oklch(0.40 0.08 233.4);
-  --bp-color-secondary: oklch(0.65 0.02 240.0);
-  --bp-color-secondary-hover: oklch(0.70 0.02 240.0);
+  --bp-color-primary-hover: oklch(0.44 0.1 233.4);
+  --bp-color-primary-active: oklch(0.4 0.08 233.4);
+  --bp-color-secondary: oklch(0.65 0.02 240);
+  --bp-color-secondary-hover: oklch(0.7 0.02 240);
   --bp-color-link: oklch(0.48 0.12 233.4);
-  --bp-color-link-hover: oklch(0.44 0.10 233.4);
-  --bp-color-link-visited: oklch(0.55 0.10 280.0);
-  --bp-color-success: oklch(0.36 0.10 145.0);
-  --bp-color-success-hover: oklch(0.40 0.12 145.0);
-  --bp-color-success-bg: oklch(0.20 0.04 145.0);
+  --bp-color-link-hover: oklch(0.44 0.1 233.4);
+  --bp-color-link-visited: oklch(0.55 0.1 280);
+  --bp-color-success: oklch(0.36 0.1 145);
+  --bp-color-success-hover: oklch(0.4 0.12 145);
+  --bp-color-success-bg: oklch(0.2 0.04 145);
   --bp-color-warning: oklch(0.45 0.11 64.5);
-  --bp-color-warning-hover: oklch(0.50 0.13 64.5);
-  --bp-color-warning-bg: oklch(0.20 0.04 64.5);
-  --bp-color-error: oklch(0.36 0.12 25.0);
-  --bp-color-error-hover: oklch(0.40 0.14 25.0);
-  --bp-color-error-bg: oklch(0.20 0.04 25.0);
+  --bp-color-warning-hover: oklch(0.5 0.13 64.5);
+  --bp-color-warning-bg: oklch(0.2 0.04 64.5);
+  --bp-color-error: oklch(0.36 0.12 25);
+  --bp-color-error-hover: oklch(0.4 0.14 25);
+  --bp-color-error-bg: oklch(0.2 0.04 25);
   --bp-color-info: oklch(0.48 0.12 233.4);
-  --bp-color-info-hover: oklch(0.44 0.10 233.4);
-  --bp-color-info-bg: oklch(0.20 0.03 233.4);
+  --bp-color-info-hover: oklch(0.44 0.1 233.4);
+  --bp-color-info-bg: oklch(0.2 0.03 233.4);
   --bp-color-hover-overlay: oklch(1 0 0 / 0.05);
   --bp-color-active-overlay: oklch(1 0 0 / 0.1);
   --bp-color-selected-bg: oklch(0.25 0.04 233.4);
   --bp-color-placeholder: oklch(0.75 0.02 91.4);
-  --bp-color-input-bg: oklch(0.15 0.01 240.0);
-  --bp-color-input-border: oklch(0.35 0.02 240.0);
-  --bp-color-border: oklch(0.35 0.02 240.0);
-  --bp-color-border-strong: oklch(0.45 0.02 240.0);
+  --bp-color-input-bg: oklch(0.15 0.01 240);
+  --bp-color-input-border: oklch(0.35 0.02 240);
+  --bp-color-border: oklch(0.35 0.02 240);
+  --bp-color-border-strong: oklch(0.45 0.02 240);
   --bp-border-width: 1px;
   --bp-color-focus: oklch(0.55 0.15 233.4);
   --bp-color-backdrop: oklch(0 0 0 / 0.6);
-  --bp-font-family: Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --bp-font-family-mono: "SF Mono", Monaco, "Cascadia Code", "Courier New", monospace;
-  --bp-font-family-heading: Figtree, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --bp-font-family:
+    Figtree, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --bp-font-family-mono:
+    'SF Mono', Monaco, 'Cascadia Code', 'Courier New', monospace;
+  --bp-font-family-heading:
+    Figtree, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
   --bp-border-radius: 4px;
   --bp-border-radius-large: 8px;
   --bp-border-radius-full: 9999px;
   --bp-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-  --bp-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-  --bp-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
-  --bp-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  --bp-shadow-md:
+    0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --bp-shadow-lg:
+    0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --bp-shadow-xl:
+    0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
 }

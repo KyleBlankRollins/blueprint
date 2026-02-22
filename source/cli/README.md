@@ -220,11 +220,11 @@ npm run generate:jsx
 
 The generator is split into three modules in `source/cli/lib/component/`:
 
-| File               | Responsibility                                                                                              |
-| ------------------ | ----------------------------------------------------------------------------------------------------------- |
-| `jsxParser.ts`     | Discovers components and parses each `.ts` file with regex to extract tag names, properties, and type exports |
-| `jsxEmitter.ts`    | Takes parsed data and builds the complete `jsx.d.ts` string (imports, interfaces, element map, namespaces)   |
-| `generateJsx.ts`   | Thin orchestrator — calls parser, emitter, Prettier, then writes or compares                                 |
+| File             | Responsibility                                                                                                |
+| ---------------- | ------------------------------------------------------------------------------------------------------------- |
+| `jsxParser.ts`   | Discovers components and parses each `.ts` file with regex to extract tag names, properties, and type exports |
+| `jsxEmitter.ts`  | Takes parsed data and builds the complete `jsx.d.ts` string (imports, interfaces, element map, namespaces)    |
+| `generateJsx.ts` | Thin orchestrator — calls parser, emitter, Prettier, then writes or compares                                  |
 
 The parser handles:
 
@@ -235,15 +235,15 @@ The parser handles:
 
 The emitter maps Lit property types to JSX-friendly types:
 
-| Source type            | JSX prop type            |
-| ---------------------- | ------------------------ |
-| `boolean`              | `BooleanAttr`            |
-| `number`               | `NumberAttr`             |
-| `string`               | `string`                 |
-| `ButtonVariant` (alias)| `StringAttr<ButtonVariant>` |
-| `'a' \| 'b'` (union)  | `StringAttr<'a' \| 'b'>` |
-| `TableColumn[]`        | `TableColumn[]`          |
-| `SortState \| null`    | `SortState \| null`      |
+| Source type             | JSX prop type               |
+| ----------------------- | --------------------------- |
+| `boolean`               | `BooleanAttr`               |
+| `number`                | `NumberAttr`                |
+| `string`                | `string`                    |
+| `ButtonVariant` (alias) | `StringAttr<ButtonVariant>` |
+| `'a' \| 'b'` (union)    | `StringAttr<'a' \| 'b'>`    |
+| `TableColumn[]`         | `TableColumn[]`             |
+| `SortState \| null`     | `SortState \| null`         |
 
 ### Documentation Management
 

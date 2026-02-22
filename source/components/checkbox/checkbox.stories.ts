@@ -135,7 +135,7 @@ export const FormIntegration: Story = {
     <form
       @submit=${(e: Event) => {
         e.preventDefault();
-        // eslint-disable-next-line no-undef
+
         const formData = new FormData(e.target as HTMLFormElement);
         const data = Object.fromEntries(formData.entries());
         console.log('Form data:', data);

@@ -3,7 +3,9 @@ import { addToDocs, isValidComponentName } from '../lib/component/addToDocs.js';
 import { error } from '../utils/logger.js';
 
 export function docsCommand(program: Command): void {
-  const docs = program.command('docs').description('Manage documentation pages');
+  const docs = program
+    .command('docs')
+    .description('Manage documentation pages');
 
   docs
     .command('add <name>')
@@ -56,7 +58,11 @@ Common issues:
         result.errors.forEach((err) => console.log(`  ⚠️  ${err}`));
       }
 
-      console.log('\n💡 View at http://localhost:4321/components/' + name + ' (run: cd docs && npm run dev)');
+      console.log(
+        '\n💡 View at http://localhost:4321/components/' +
+          name +
+          ' (run: cd docs && npm run dev)'
+      );
       process.exit(0);
     });
 }

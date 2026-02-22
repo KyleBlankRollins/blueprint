@@ -67,9 +67,7 @@ describe('emitJsxDeclarations', () => {
 
   it('named type alias prop → StringAttr<TypeName>', () => {
     const comp = makeComponent({
-      properties: [
-        { name: 'size', rawType: 'ButtonSize', litType: 'String' },
-      ],
+      properties: [{ name: 'size', rawType: 'ButtonSize', litType: 'String' }],
       exportedTypes: [{ name: 'ButtonSize', kind: 'type' }],
     });
     const output = emitJsxDeclarations([comp]);
@@ -163,9 +161,7 @@ describe('emitJsxDeclarations', () => {
       tagName: 'bp-alpha',
       componentName: 'alpha',
       sourceFile: 'components/alpha/alpha.ts',
-      properties: [
-        { name: 'size', rawType: 'AlphaSize', litType: 'String' },
-      ],
+      properties: [{ name: 'size', rawType: 'AlphaSize', litType: 'String' }],
       exportedTypes: [{ name: 'AlphaSize', kind: 'type' }],
     });
     const output = emitJsxDeclarations([compA, compB]);

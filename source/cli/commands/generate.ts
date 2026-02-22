@@ -185,7 +185,9 @@ Common issues:
           );
           process.exit(1);
         }
-        console.log(`jsx.d.ts is up to date (${result.componentCount} components)`);
+        console.log(
+          `jsx.d.ts is up to date (${result.componentCount} components)`
+        );
         process.exit(0);
       }
 

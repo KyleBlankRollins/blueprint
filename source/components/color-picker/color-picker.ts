@@ -11,7 +11,6 @@ import {
   formatColorOutput,
 } from './color-picker.utils.js';
 
-/* eslint-disable no-undef */
 // Browser globals: PointerEvent and EyeDropper are available in modern browsers
 
 /**

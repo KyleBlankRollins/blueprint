@@ -4,9 +4,7 @@
  * Ideal for willUpdate() patterns where you memoize based on reactive properties.
  */
 
-export function memoizeOne<T extends (...args: never[]) => unknown>(
-  fn: T
-): T {
+export function memoizeOne<T extends (...args: never[]) => unknown>(fn: T): T {
   let lastArgs: Parameters<T> | undefined;
   let lastResult: ReturnType<T>;
   let hasBeenCalled = false;

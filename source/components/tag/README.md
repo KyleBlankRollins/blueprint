@@ -89,7 +89,7 @@ A removable label or chip component for displaying categories, filters, or selec
 | Property    | Type                                                                    | Default     | Description                    |
 | ----------- | ----------------------------------------------------------------------- | ----------- | ------------------------------ |
 | `variant`   | `'solid' \| 'outlined'`                                                 | `'solid'`   | Visual variant of the tag      |
-| `size`      | `'sm' \| 'md' \| 'lg'`                                        | `'md'`  | Size of the tag                |
+| `size`      | `'sm' \| 'md' \| 'lg'`                                                  | `'md'`      | Size of the tag                |
 | `color`     | `'primary' \| 'success' \| 'error' \| 'warning' \| 'info' \| 'neutral'` | `'neutral'` | Color scheme of the tag        |
 | `removable` | `boolean`                                                               | `false`     | Whether the tag can be removed |
 | `disabled`  | `boolean`                                                               | `false`     | Whether the tag is disabled    |

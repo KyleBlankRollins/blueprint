@@ -219,11 +219,7 @@ export const ListPlaceholder: Story = {
                 size="md"
                 style="margin-bottom: 4px;"
               ></bp-skeleton>
-              <bp-skeleton
-                variant="text"
-                size="sm"
-                width="60%"
-              ></bp-skeleton>
+              <bp-skeleton variant="text" size="sm" width="60%"></bp-skeleton>
             </div>
           </div>
         `

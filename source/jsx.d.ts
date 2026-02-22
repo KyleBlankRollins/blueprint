@@ -26,6 +26,7 @@ import type {
 import type { ButtonSize, ButtonVariant } from './components/button/button.js';
 import type { CardDirection, CardVariant } from './components/card/card.js';
 import type { CheckboxSize } from './components/checkbox/checkbox.js';
+import type { CodeBlockHighlightAdapter } from './components/code-block/code-block.js';
 import type { ColorPickerSize } from './components/color-picker/color-picker.js';
 import type {
   ComboboxSize,
@@ -228,6 +229,18 @@ interface BpCheckboxProps extends BaseHTMLAttributes {
   value?: string;
   size?: StringAttr<CheckboxSize>;
   error?: BooleanAttr;
+}
+
+interface BpCodeBlockProps extends BaseHTMLAttributes {
+  code?: string;
+  language?: string;
+  showLineNumbers?: BooleanAttr;
+  highlightLines?: number[];
+  wrapLines?: BooleanAttr;
+  showCopyButton?: BooleanAttr;
+  maxLines?: NumberAttr;
+  showHeader?: BooleanAttr;
+  highlightAdapter?: CodeBlockHighlightAdapter;
 }
 
 interface BpColorPickerProps extends BaseHTMLAttributes {
@@ -661,6 +674,7 @@ export interface BlueprintElements {
   'bp-button': BpButtonProps;
   'bp-card': BpCardProps;
   'bp-checkbox': BpCheckboxProps;
+  'bp-code-block': BpCodeBlockProps;
   'bp-color-picker': BpColorPickerProps;
   'bp-combobox': BpComboboxProps;
   'bp-date-picker': BpDatePickerProps;

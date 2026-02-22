@@ -471,7 +471,7 @@ describe('bp-color-picker', () => {
     ) as HTMLElement;
 
     // Initial state is hex
-    let hexInput = element.shadowRoot?.querySelector('.hex-input');
+    const hexInput = element.shadowRoot?.querySelector('.hex-input');
     expect(hexInput).toBeTruthy();
 
     // Click to switch to RGB

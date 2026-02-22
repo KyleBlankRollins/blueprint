@@ -39,10 +39,7 @@ export class BpBadge extends LitElement {
    * @type {'sm' | 'md' | 'lg'}
    * @default 'md'
    */
-  @property({ type: String, reflect: true }) declare size:
-    | 'sm'
-    | 'md'
-    | 'lg';
+  @property({ type: String, reflect: true }) declare size: 'sm' | 'md' | 'lg';
 
   /**
    * Whether the badge is a dot/pill shape (for count indicators)

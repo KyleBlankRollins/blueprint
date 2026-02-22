@@ -44,7 +44,7 @@ export async function registerPlugin(
       .join('') + 'Plugin';
   const importPath = options?.importPath || `../plugins/${pluginId}/index.js`;
 
-  let content = await readFile(configPath, 'utf-8');
+  const content = await readFile(configPath, 'utf-8');
 
   // Check if already registered
   if (content.includes(`'${pluginId}'`) || content.includes(`"${pluginId}"`)) {
@@ -140,7 +140,7 @@ export async function unregisterPlugin(pluginId: string): Promise<void> {
     throw new Error(`ThemeBuilder.ts not found at ${configPath}`);
   }
 
-  let content = await readFile(configPath, 'utf-8');
+  const content = await readFile(configPath, 'utf-8');
   const lines = content.split('\n');
 
   // Remove import line

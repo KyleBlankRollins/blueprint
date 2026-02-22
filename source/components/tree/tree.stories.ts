@@ -331,8 +331,8 @@ const navigationNodes: TreeNode[] = [
 export const Navigation: Story = {
   render: () => html`
     <p style="margin-bottom: 1rem; color: var(--bp-color-text-muted);">
-      Nodes with <code>href</code> render as real
-      <code>&lt;a&gt;</code> links. Click to navigate (prevented here for demo).
+      Nodes with <code>href</code> render as real <code>&lt;a&gt;</code> links.
+      Click to navigate (prevented here for demo).
     </p>
     <bp-tree
       .nodes=${navigationNodes}
@@ -342,8 +342,7 @@ export const Navigation: Story = {
       @bp-navigate=${(e: CustomEvent) => {
         e.preventDefault();
         const log = document.getElementById('nav-log');
-        if (log)
-          log.textContent = `Navigate to: ${e.detail.href}`;
+        if (log) log.textContent = `Navigate to: ${e.detail.href}`;
       }}
     ></bp-tree>
     <div

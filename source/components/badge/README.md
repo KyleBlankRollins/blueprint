@@ -59,7 +59,7 @@ A compact status indicator for displaying counts, labels, and notifications.
 | Property  | Type                                                                    | Default     | Description                        |
 | --------- | ----------------------------------------------------------------------- | ----------- | ---------------------------------- |
 | `variant` | `'primary' \| 'success' \| 'error' \| 'warning' \| 'info' \| 'neutral'` | `'primary'` | Visual variant of the badge        |
-| `size`    | `'sm' \| 'md' \| 'lg'`                                        | `'md'`  | Size of the badge                  |
+| `size`    | `'sm' \| 'md' \| 'lg'`                                                  | `'md'`      | Size of the badge                  |
 | `dot`     | `boolean`                                                               | `false`     | Display as a minimal dot indicator |
 
 ### Events

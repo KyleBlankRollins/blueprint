@@ -112,3 +112,9 @@ export {
 } from './popover/popover.js';
 export { BpColorPicker } from './color-picker/color-picker.js';
 export { BpStepper } from './stepper/stepper.js';
+export { BpCodeBlock } from './code-block/code-block.js';
+export type {
+  CodeBlockHighlightAdapter,
+  HighlightResult,
+} from './code-block/code-block.js';
+export { plainTextAdapter } from './code-block/code-block.js';

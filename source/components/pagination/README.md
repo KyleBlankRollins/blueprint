@@ -68,17 +68,17 @@ pagination.addEventListener('bp-page-change', (e) => {
 
 ### Properties
 
-| Property        | Type      | Default  | Description                                            |
-| --------------- | --------- | -------- | ------------------------------------------------------ | -------- | ------------ |
-| `currentPage`   | `number`  | `1`      | Current page number (1-indexed)                        |
-| `totalPages`    | `number`  | `1`      | Total number of pages                                  |
-| `siblingCount`  | `number`  | `1`      | Number of page buttons to show around the current page |
-| `boundaryCount` | `number`  | `1`      | Number of page buttons to show at the start and end    |
-| `showFirstLast` | `boolean` | `true`   | Show first/last page buttons                           |
-| `showPrevNext`  | `boolean` | `true`   | Show previous/next page buttons                        |
-| `showInfo`      | `boolean` | `false`  | Show page info text (e.g., "Page 1 of 10")             |
-| `disabled`      | `boolean` | `false`  | Disable all pagination controls                        |
-| `size`          | `'sm'  | 'md' | 'lg'`                                               | `medium` | Size variant |
+| Property        | Type      | Default | Description                                            |
+| --------------- | --------- | ------- | ------------------------------------------------------ | -------- | ------------ |
+| `currentPage`   | `number`  | `1`     | Current page number (1-indexed)                        |
+| `totalPages`    | `number`  | `1`     | Total number of pages                                  |
+| `siblingCount`  | `number`  | `1`     | Number of page buttons to show around the current page |
+| `boundaryCount` | `number`  | `1`     | Number of page buttons to show at the start and end    |
+| `showFirstLast` | `boolean` | `true`  | Show first/last page buttons                           |
+| `showPrevNext`  | `boolean` | `true`  | Show previous/next page buttons                        |
+| `showInfo`      | `boolean` | `false` | Show page info text (e.g., "Page 1 of 10")             |
+| `disabled`      | `boolean` | `false` | Disable all pagination controls                        |
+| `size`          | `'sm'     | 'md'    | 'lg'`                                                  | `medium` | Size variant |
 
 ### Events
 

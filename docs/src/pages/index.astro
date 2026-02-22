@@ -54,6 +54,30 @@ import Header from '../components/Header.astro';
       </div>
     </section>
 
+    <section class="quick-start">
+      <bp-heading level="2" size="2xl" weight="bold">Quick Start</bp-heading>
+
+      <bp-text>Install Blueprint from npm:</bp-text>
+
+      <bp-code-block language="bash" code="npm install @krollins/blueprint"
+      ></bp-code-block>
+
+      <bp-text>Import the theme CSS and components you need:</bp-text>
+
+      <bp-code-block
+        language="javascript"
+        code={`import '@krollins/blueprint/dist/index.css';
+import '@krollins/blueprint/button';
+import '@krollins/blueprint/input';`}></bp-code-block>
+
+      <bp-text>Then use components in your HTML:</bp-text>
+
+      <bp-code-block
+        language="html"
+        code={`<bp-button variant="primary">Click me</bp-button>
+<bp-input placeholder="Enter text..."></bp-input>`}></bp-code-block>
+    </section>
+
     <section class="features">
       <bp-heading
         level="2"
@@ -106,37 +130,12 @@ import Header from '../components/Header.astro';
         </bp-card>
       </div>
     </section>
-
-    <section class="quick-start">
-      <bp-heading level="2" size="2xl" weight="bold">Quick Start</bp-heading>
-
-      <bp-text>Install Blueprint from npm:</bp-text>
-
-      <bp-card variant="outlined">
-        <pre><code>npm install @krollins/blueprint</code></pre>
-      </bp-card>
-
-      <bp-text>Import the theme CSS and components you need:</bp-text>
-
-      <bp-card variant="outlined">
-        <pre><code>import '@krollins/blueprint/dist/index.css';
-import '@krollins/blueprint/button';
-import '@krollins/blueprint/input';</code></pre>
-      </bp-card>
-
-      <bp-text>Then use components in your HTML:</bp-text>
-
-      <bp-card variant="outlined">
-        <pre><code>&lt;bp-button variant="primary"&gt;Click me&lt;/bp-button&gt;
-&lt;bp-input placeholder="Enter text..."&gt;&lt;/bp-input&gt;</code></pre>
-      </bp-card>
-    </section>
   </main>
 
   <footer class="landing-footer">
     <bp-divider></bp-divider>
     <bp-text variant="muted" size="sm">
-      © 2026 Blueprint. Built with ❤️ using Lit.
+      Blueprint is built with ❤️ using Lit.
     </bp-text>
   </footer>
 </BaseLayout>
@@ -207,11 +206,6 @@ import '@krollins/blueprint/input';</code></pre>
     flex-direction: column;
     gap: 1rem;
     max-width: 700px;
-  }
-
-  .quick-start pre {
-    margin: 0;
-    background: var(--bp-color-surface-secondary);
   }
 
   .landing-footer {

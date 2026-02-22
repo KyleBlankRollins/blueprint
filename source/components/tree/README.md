@@ -139,11 +139,11 @@ interface TreeNode {
 
 ### Events
 
-| Event         | Detail                                                      | Description                    |
-| ------------- | ----------------------------------------------------------- | ------------------------------ |
-| `bp-select`   | `{ node: TreeNode, selectedIds: string[], path: string[] }` | Fired when a node is selected  |
-| `bp-expand`   | `{ node: TreeNode, expanded: boolean }`                     | Fired when a node is expanded  |
-| `bp-collapse` | `{ node: TreeNode, expanded: boolean }`                     | Fired when a node is collapsed |
+| Event         | Detail                                                      | Description                                                                              |
+| ------------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `bp-select`   | `{ node: TreeNode, selectedIds: string[], path: string[] }` | Fired when a node is selected                                                            |
+| `bp-expand`   | `{ node: TreeNode, expanded: boolean }`                     | Fired when a node is expanded                                                            |
+| `bp-collapse` | `{ node: TreeNode, expanded: boolean }`                     | Fired when a node is collapsed                                                           |
 | `bp-navigate` | `{ node: TreeNode, href: string, path: string[] }`          | Fired when a link node is clicked. Call `preventDefault()` to handle navigation yourself |
 
 ### Slots

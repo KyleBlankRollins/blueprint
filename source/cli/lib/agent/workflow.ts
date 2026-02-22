@@ -235,7 +235,9 @@ export async function continueNext(): Promise<void> {
         `- source/components/${currentComponent}/ (all component files)`
       );
       logProgress(`- source/components/index.ts (exported component)`);
-      logProgress(`- docs/src/content/docs/components/${currentComponent}.mdx (documentation page)`);
+      logProgress(
+        `- docs/src/content/docs/components/${currentComponent}.mdx (documentation page)`
+      );
       logProgress(`- .blueprint/features.toml (marked as complete)\\n`);
 
       // Remove component from active sessions now that it's complete
