@@ -10,5 +10,10 @@
   "exclude": [
     "node_modules",
     "dist",
+    "source/cli",
+    "source/themes",
+    "**/*.test.ts",
+    "**/*.stories.ts",
+    "**/*.spec.ts"
   ]
 }

@@ -2,16 +2,15 @@
 import storybook from 'eslint-plugin-storybook';
 
 import js from '@eslint/js';
-import tseslint from '@typescript-eslint/eslint-plugin';
-import tsparser from '@typescript-eslint/parser';
+import tseslint from 'typescript-eslint';
 import prettier from 'eslint-config-prettier';
 
-export default [
+export default tseslint.config(
   js.configs.recommended,
+  ...tseslint.configs.recommended,
   {
     files: ['**/*.ts', '**/*.tsx'],
     languageOptions: {
-      parser: tsparser,
       parserOptions: {
         ecmaVersion: 2020,
         sourceType: 'module',
@@ -46,11 +45,7 @@ export default [
         Node: 'readonly',
       },
     },
-    plugins: {
-      '@typescript-eslint': tseslint,
-    },
     rules: {
-      ...tseslint.configs.recommended.rules,
       '@typescript-eslint/no-unused-vars': 'error',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/explicit-function-return-type': 'off',
@@ -61,7 +56,6 @@ export default [
     // Node.js scripts and CLI configuration
     files: ['source/scripts/**/*.ts', 'source/cli/**/*.ts', 'source/**/*.js'],
     languageOptions: {
-      parser: tsparser,
       parserOptions: {
         ecmaVersion: 2020,
         sourceType: 'module',
@@ -78,11 +72,7 @@ export default [
         URLSearchParams: 'readonly',
       },
     },
-    plugins: {
-      '@typescript-eslint': tseslint,
-    },
     rules: {
-      ...tseslint.configs.recommended.rules,
       '@typescript-eslint/no-unused-vars': 'error',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/explicit-function-return-type': 'off',
@@ -90,5 +80,5 @@ export default [
     },
   },
   prettier,
-  ...storybook.configs['flat/recommended'],
-];
+  ...storybook.configs['flat/recommended']
+);
