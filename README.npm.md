@@ -18,10 +18,16 @@ npm install @krollins/blueprint
 <bp-button variant="primary">Click me</bp-button>
 ```
 
-Or import individual components:
+Or import individual components for smaller bundles:
 
-```typescript
-import { BpButton } from '@krollins/blueprint';
+```javascript
+// Import the theme CSS (design tokens, fonts, colors)
+import '@krollins/blueprint/dist/index.css';
+
+// Import only the components you need
+import '@krollins/blueprint/button';
+import '@krollins/blueprint/card';
+import '@krollins/blueprint/heading';
 ```
 
 ## Components

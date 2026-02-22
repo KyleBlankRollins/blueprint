@@ -3,70 +3,78 @@ title: Installation
 description: How to install and set up Blueprint in your project
 ---
 
-Blueprint is a local-only component library. It's distributed via tarball and installed into your projects from the local filesystem.
+Blueprint is published to npm as `@krollins/blueprint`. It works in any project that supports ES modules and web components.
 
-## Building Blueprint
-
-First, build the library and create a distributable package:
+## Install
 
 ```bash
-# Navigate to the Blueprint directory
-cd path/to/blueprint
-
-# Build and package
-npm run build:package
+npm install @krollins/blueprint
 ```
-
-This creates a `blueprint-x.x.x.tgz` file in the Blueprint directory.
-
-## Installing in Your Project
-
-Install the tarball in your consuming project:
-
-```bash
-# From your project directory
-npm install path/to/blueprint/blueprint-0.1.0.tgz
-```
-
-Or add it to your `package.json` dependencies:
-
-```json
-{
-  "dependencies": {
-    "blueprint": "file:../blueprint/blueprint-0.1.0.tgz"
-  }
-}
-```
-
-Then run `npm install`.
 
 ## Importing Components
 
 ### Import All Components
 
-```javascript
-// Import all components and styles
-import 'blueprint';
-```
-
-### Import Individual Components
-
-For better tree-shaking, you can import only the components you need:
+Import the full library to register every component at once:
 
 ```javascript
-import 'blueprint/dist/components/button/button.js';
-import 'blueprint/dist/components/input/input.js';
-import 'blueprint/dist/components/card/card.js';
+import '@krollins/blueprint';
 ```
+
+This registers all `bp-*` custom elements and includes the theme CSS (design tokens, fonts, colors).
+
+### Import Individual Components (Recommended)
+
+For smaller bundles, import only the components you need:
+
+```javascript
+import '@krollins/blueprint/button';
+import '@krollins/blueprint/input';
+import '@krollins/blueprint/card';
+```
+
+Each sub-path import registers that component's custom element as a side effect. You still need to import the theme CSS separately when using individual imports:
+
+```javascript
+import '@krollins/blueprint/dist/index.css';
+```
+
+Without the theme CSS, components render without styling because the `--bp-*` custom properties they reference won't exist.
 
 ## Framework Integration
 
+### Astro
+
+For Astro projects, add the `@astrojs/lit` integration:
+
+```bash
+npx astro add lit
+```
+
+Import the theme CSS in your layout's frontmatter, and component JS in a client-side `<script>` tag:
+
+```astro
+---
+import '@krollins/blueprint/dist/index.css';
+---
+
+<script>
+  import '@krollins/blueprint/button';
+  import '@krollins/blueprint/card';
+  import '@krollins/blueprint/heading';
+</script>
+
+<bp-button variant="primary">Click me</bp-button>
+```
+
 ### React
 
-Blueprint components work directly in React without any wrappers:
+Blueprint components work directly in React without wrappers:
 
 ```jsx
-import 'blueprint';
+import '@krollins/blueprint/dist/index.css';
+import '@krollins/blueprint/button';
+import '@krollins/blueprint/input';
 
 function App() {
   return (
@@ -91,7 +99,9 @@ Use Blueprint components like any other HTML element:
 </template>
 
 <script setup>
-import 'blueprint';
+import '@krollins/blueprint/dist/index.css';
+import '@krollins/blueprint/button';
+import '@krollins/blueprint/input';
 </script>
 ```
 
@@ -101,40 +111,11 @@ Blueprint components work directly in Svelte:
 
 ```svelte
 <script>
-  import 'blueprint';
+  import '@krollins/blueprint/dist/index.css';
+  import '@krollins/blueprint/button';
 </script>
 
 <bp-button on:click={() => alert('Clicked!')}>Click me</bp-button>
-```
-
-### Astro
-
-For Astro projects, use the `@astrojs/lit` integration:
-
-```bash
-npx astro add lit
-```
-
-Then import Blueprint in your layout or component:
-
-```astro
-<script>
-  import 'blueprint';
-</script>
-
-<bp-button>Click me</bp-button>
-```
-
-## Updating Blueprint
-
-When Blueprint is updated, rebuild and reinstall:
-
-```bash
-# In Blueprint directory
-npm run build:package
-
-# In your project directory
-npm install path/to/blueprint/blueprint-0.1.0.tgz
 ```
 
 ## TypeScript Support
