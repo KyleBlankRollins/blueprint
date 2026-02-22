@@ -1,5 +1,5 @@
 ---
-name: managing-changesets
+name: manage-changesets
 description: Creates changeset files to document changes for npm releases of the Blueprint package. Use when completing work on Blueprint components, themes, utilities, or any code that affects the published package, or when the user asks to add a changeset, version, or publish.
 ---
 
@@ -32,20 +32,11 @@ Create a changeset for any change that affects the published package (`dist/`):
 
 ## Adding a changeset
 
-Run the Changesets CLI from the Blueprint repo root:
+Create a markdown file in `.changeset/` with a short descriptive kebab-case name (e.g., `fix-button-focus.md`). The file has YAML front matter specifying the package name and bump type, followed by a markdown summary.
 
-```bash
-npx changeset
-```
+> **Why not `npx changeset`?** The CLI uses interactive prompts (`enquirer`) that require arrow-key navigation and sequential stdin input. Agents cannot drive these prompts — the readline crashes when stdin closes. Writing the file directly is explicitly supported by Changesets and produces identical results.
 
-Since this is a single-package repo, the CLI skips package selection and prompts for:
-
-1. **Semver bump type** — `patch`, `minor`, or `major`
-2. **Summary** — a description of the change for the changelog
-
-The CLI then writes a markdown file in `.changeset/` with a random human-readable name (e.g., `curly-lions-dance.md`). You can edit the generated file afterward — both the bump type in the YAML front matter and the markdown summary are safe to change.
-
-### Generated file format
+### File format
 
 ```markdown
 ---
