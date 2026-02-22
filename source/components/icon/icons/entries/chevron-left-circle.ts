@@ -2,3 +2,4 @@
 // Re-generate: node source/components/icon/generate-icon-entries.js
 
 export const chevronLeftCircleSvg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(2 2)\"><circle cx=\"8.5\" cy=\"8.5\" r=\"8\"/><path d=\"m9.55 11.4-3-2.9 3-3\"/></g></svg>";
+export default chevronLeftCircleSvg;

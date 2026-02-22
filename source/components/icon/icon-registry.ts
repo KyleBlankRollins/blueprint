@@ -1,13 +1,16 @@
 /**
  * Shared icon registry — runtime singleton.
  *
- * Consumers can register icons by name so that `<bp-icon name="...">` can
- * look them up at render time. The `all.ts` barrel imports every icon entry
- * and registers them all (used in Storybook / dev tools).
+ * Serves two roles:
+ * 1. **Lazy-load cache** — When `<bp-icon name="...">` dynamically imports
+ *    an icon entry module, the SVG is stored here so subsequent renders of
+ *    the same icon name are instant.
+ * 2. **Bulk registration** — `all.ts` imports every icon entry and calls
+ *    `registerIcon()` for each one (used by Storybook / dev tools).
  *
- * Internal Blueprint components do NOT use this registry. They import SVG
- * data as value bindings and pass it directly to `<bp-icon>` via the `svg`
- * property, which guarantees the data survives bundler tree-shaking.
+ * Internal Blueprint components bypass the registry entirely. They import
+ * SVG data as value bindings and pass them directly via the `svg` property,
+ * which guarantees the data survives bundler tree-shaking.
  */
 
 const registry = new Map<string, string>();
@@ -28,10 +31,4 @@ export function getIconSvg(name: string): string | undefined {
   return registry.get(name);
 }
 
-/**
- * Get all currently registered icon names.
- * Useful for Storybook and dev-tool enumeration.
- */
-export function getRegisteredIconNames(): string[] {
-  return [...registry.keys()];
-}
+

@@ -50,7 +50,7 @@ import type {
   HeadingWeight,
 } from './components/heading/heading.js';
 import type { IconColor, IconSize } from './components/icon/icon.js';
-import type { IconName } from './components/icon/icons/registry.generated.js';
+import type { IconName } from './components/icon/icons/icon-name.generated.js';
 import type {
   AutocompleteType,
   InputModeType,

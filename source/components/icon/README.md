@@ -71,29 +71,15 @@ All **430 icons** from [System UI Icons](https://www.systemuicons.com/) are avai
 3. Icon entries will be generated in `source/components/icon/icons/entries/`
 
 The generator produces:
-- Per-icon entry files that register SVG data on import
+- Per-icon entry files that export SVG data as value bindings
 - TypeScript type union for autocomplete
 - An all-icons barrel for Storybook and dev tools
 
-### Importing Icons
+### How Icons Are Resolved
 
-Components that use icons internally (alert, tag, tree, etc.) automatically import the icons they need. No extra steps required.
+**Internal Blueprint components** (alert, tag, tree, etc.) import SVG strings directly from entry modules and pass them via the `.svg` property. This is tree-shake safe.
 
-For standalone `<bp-icon>` use, import the specific icons you need:
-
-```javascript
-import '@krollins/blueprint/icons/search';
-import '@krollins/blueprint/icons/heart';
-```
-
-Then use in HTML:
-
-```html
-<bp-icon name="search"></bp-icon>
-<bp-icon name="heart" color="error"></bp-icon>
-```
-
-Only the imported icons are bundled — unused icons are not included.
+**Consumer HTML** uses the `name` attribute (`<bp-icon name="check">`). The component lazy-loads the icon module at runtime and caches it for subsequent renders. No manual registration or barrel imports are needed.
 
 ## API
 

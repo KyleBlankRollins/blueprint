@@ -36,6 +36,8 @@ fs.rmSync(entriesOutputDir, { recursive: true, force: true });
 fs.mkdirSync(entriesOutputDir, { recursive: true });
 
 // Write per-icon entry files — each exports the SVG string as a value
+// Named export for static imports (internal components), default export
+// for dynamic imports (lazy loading by name).
 for (const file of svgFiles) {
   const iconName = toIconName(file);
   const exportName = toExportName(iconName);
@@ -46,6 +48,7 @@ for (const file of svgFiles) {
 // Re-generate: node source/components/icon/generate-icon-entries.js
 
 export const ${exportName} = ${JSON.stringify(svgContent)};
+export default ${exportName};
 `;
   fs.writeFileSync(path.join(entriesOutputDir, `${iconName}.ts`), entryContent);
 }

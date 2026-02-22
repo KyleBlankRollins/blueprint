@@ -240,7 +240,7 @@ function generateImports(components: ComponentInfo[]): string {
   }
 
   // Special IconName import path
-  const iconNamePath = './components/icon/icons/registry.generated.js';
+  const iconNamePath = './components/icon/icons/icon-name.generated.js';
   if (needsIconName) {
     if (!importsByFile.has(iconNamePath)) {
       importsByFile.set(iconNamePath, new Set());

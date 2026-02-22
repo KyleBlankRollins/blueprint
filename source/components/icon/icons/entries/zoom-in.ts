@@ -2,3 +2,4 @@
 // Re-generate: node source/components/icon/generate-icon-entries.js
 
 export const zoomInSvg = "<svg height=\"21\" viewBox=\"0 0 21 21\" width=\"21\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(3 3)\"><circle cx=\"5.5\" cy=\"5.5\" r=\"5\"/><path d=\"m7.5 5.5h-4zm-2 2v-4z\"/><path d=\"m14.5 14.5-5.367-5.367\"/></g></svg>";
+export default zoomInSvg;

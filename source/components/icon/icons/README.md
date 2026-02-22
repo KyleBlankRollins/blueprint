@@ -1,83 +1,45 @@
-# Icon Registry
+# Icon Entries
 
-This directory contains the auto-generated icon registry for the Blueprint Icon component.
+This directory contains auto-generated per-icon entry modules and supporting files for the Blueprint Icon component.
 
-## Overview
+## Contents
 
-The icon registry uses **Vite's raw import feature** to dynamically load all SVG files from `source/assets/icons/`. This approach:
+- **`entries/`** — 430 per-icon modules, each exporting a raw SVG string (named + default export)
+- **`all.ts`** — Barrel that imports every entry and registers them in the runtime cache (Storybook / dev tools only)
+- **`icon-name.generated.ts`** — TypeScript union type of all icon names for autocomplete
 
-- **Eliminates manual work** - No need to create TypeScript files for each icon
-- **Tree-shakeable** - Only bundle icons you actually use in your app
-- **Type-safe** - Full TypeScript autocomplete for all 430+ icon names
-- **Easy to extend** - Just add SVG files and regenerate
+All files are auto-generated. To regenerate after adding or removing SVG source files:
+
+```bash
+npm run generate:icons
+```
 
 ## How It Works
 
-1. **SVG files** are stored in `source/assets/icons/` (430+ icons from System UI Icons)
-2. **Generator script** (`generate-icon-registry.js`) scans the directory and creates `registry.generated.ts`
-3. **Vite's `?raw` import** loads SVG files as strings at build time
-4. **Registry exports** `getIcon(name)` function and `IconName` type for the component
+1. SVG files live in `source/assets/icons/` (430 icons from System UI Icons)
+2. `generate-icon-entries.js` reads each SVG and writes a per-icon TypeScript module to `entries/`
+3. Each entry exports the SVG string as both a named export and a default export
 
-## Files
+Example entry (`entries/check.ts`):
 
-- **`registry.generated.ts`** - Auto-generated icon registry (DO NOT EDIT MANUALLY)
-- **`README.md`** - This file
+```typescript
+export const checkSvg = '<svg ...>...</svg>';
+export default checkSvg;
+```
+
+### Named exports
+
+Used by internal Blueprint components that import SVG data directly and pass it to `<bp-icon>` via the `.svg` property. This pattern is tree-shake safe because the import is a concrete value binding.
+
+### Default exports
+
+Used by the `<bp-icon>` lazy loader. When a consumer writes `<bp-icon name="check">`, the component dynamically imports the entry module at runtime and reads `.default`.
 
 ## Adding New Icons
 
-To add icons to the registry:
-
 1. Add `.svg` files to `source/assets/icons/`
-2. Run the generator:
-   ```bash
-   node source/components/icon/generate-icon-registry.js
-   ```
-3. The registry will be automatically regenerated with all icons
-
-## Generator Features
-
-The generator automatically:
-
-- Imports all `.svg` files using Vite's `?raw` import
-- Converts filenames to kebab-case icon names (e.g., `arrow_down.svg` → `arrow-down`)
-- Handles JavaScript reserved keywords (e.g., `import.svg` → `_import`)
-- Generates TypeScript union type for autocomplete (`IconName`)
-- Creates lookup function (`getIcon(name)`)
-
-## Example Usage
-
-```typescript
-import { getIcon, type IconName } from './icons/registry.generated.js';
-
-// Type-safe icon name
-const iconName: IconName = 'arrow-down';
-
-// Get icon template
-const iconTemplate = getIcon('arrow-down');
-// Returns: html`<svg>...</svg>` or null if not found
-```
-
-## TypeScript Autocomplete
-
-The `IconName` type provides autocomplete for all 430+ icon names:
-
-```typescript
-// Your IDE will suggest all available icons
-<bp-icon name="arrow-down"></bp-icon>
-```
-
-## Why Use `?raw` Imports?
-
-Vite's `?raw` import loads file contents as strings at build time:
-
-```typescript
-import arrowDown from '../../../assets/icons/arrow_down.svg?raw';
-// arrowDown = '<svg>...</svg>' (string)
-```
-
-Benefits:
-
-- **No runtime file loading** - SVG content is bundled
+2. Run `npm run generate:icons`
+3. New entry modules, the `IconName` type, and `all.ts` barrel are regenerated automatically
 - **Tree-shaking works** - Unused icons are not bundled
 - **Fast** - No HTTP requests or file system reads at runtime
 - **Type-safe** - Import errors caught at build time

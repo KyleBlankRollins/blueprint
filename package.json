@@ -65,8 +65,7 @@
   "sideEffects": [
     "dist/index.js",
     "dist/index.css",
-    "dist/components/**/*.js",
-    "dist/icons/**/*.js"
+    "dist/components/**/*.js"
   ],
   "repository": {
     "type": "git",

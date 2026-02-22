@@ -1,9 +1,9 @@
-import { LitElement, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { LitElement, html, type PropertyValues } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { iconStyles } from './icon.style.js';
-import { getIconSvg } from './icon-registry.js';
+import { getIconSvg, registerIcon } from './icon-registry.js';
 import type { IconName } from './icons/icon-name.generated.js';
 
 export type { IconName } from './icons/icon-name.generated.js';
@@ -52,8 +52,8 @@ export type IconColor =
 export class BpIcon extends LitElement {
   /**
    * Name of the icon from the System UI Icons library.
-   * Looks up the SVG from the runtime registry (icons must be registered
-   * first via `registerIcon()` or by importing `all.ts`).
+   * When set (and `svg` is empty), the component lazy-loads the icon's
+   * entry module at runtime and caches the SVG for subsequent renders.
    * Ignored when the `svg` property is set.
    * @type {IconName}
    */
@@ -86,6 +86,12 @@ export class BpIcon extends LitElement {
   @property({ type: String, attribute: 'aria-label' })
   declare ariaLabel: string;
 
+  /** SVG content resolved by lazy-loading an icon entry module. */
+  @state() private _loadedSvg = '';
+
+  /** Tracks which icon name is currently being loaded to avoid races. */
+  private _loadingName = '';
+
   constructor() {
     super();
     this.name = '';
@@ -97,13 +103,74 @@ export class BpIcon extends LitElement {
 
   static styles = [iconStyles];
 
+  willUpdate(changedProps: PropertyValues) {
+    // When the name changes and no direct svg is provided, lazy-load the icon.
+    if (changedProps.has('name') || changedProps.has('svg')) {
+      if (this.svg) {
+        // Direct svg takes priority — clear any lazy-loaded content.
+        this._loadedSvg = '';
+        this._loadingName = '';
+        return;
+      }
+
+      if (this.name && changedProps.has('name')) {
+        this._loadIcon(this.name);
+      }
+    }
+  }
+
+  /**
+   * Lazy-load an icon entry module by name.
+   *
+   * First checks the sync registry cache (populated by `all.ts` or a
+   * previous load). If the icon isn't cached, dynamically imports the
+   * per-icon entry module using `import.meta.url` to resolve the path
+   * relative to this file's location in `dist/`.
+   */
+  private async _loadIcon(name: string) {
+    this._loadingName = name;
+
+    // Fast path: icon already in the registry (e.g. tests import all.ts).
+    const cached = getIconSvg(name);
+    if (cached) {
+      this._loadedSvg = cached;
+      return;
+    }
+
+    try {
+      // Build an absolute URL to the per-icon entry module.
+      // The URL is computed from this module's own location so it resolves
+      // correctly regardless of how the consumer's bundler serves the files.
+      const iconPath = ['..', 'icons', name + '.js'].join('/');
+      const resolved = new URL(iconPath, import.meta.url).href;
+
+      // Use Function to construct the import call so Rollup/Vite cannot
+      // statically analyse or rewrite it. This is intentional — the icon
+      // entries are separate files that must be fetched at runtime.
+      const loadModule = new Function('url', 'return import(url)') as (
+        url: string
+      ) => Promise<{ default: string }>;
+      const module = await loadModule(resolved);
+      const svg: string = module.default;
+
+      if (svg && this._loadingName === name) {
+        registerIcon(name, svg); // Cache for next time.
+        this._loadedSvg = svg;
+      }
+    } catch {
+      if (this._loadingName === name) {
+        this._loadedSvg = '';
+      }
+    }
+  }
+
   render() {
     const classes = ['icon', `icon--${this.size}`, `icon--${this.color}`].join(
       ' '
     );
 
-    // Prefer direct svg property, then registry lookup by name, then slot
-    const svgContent = this.svg || (this.name ? getIconSvg(this.name) : null);
+    // Priority: svg property → lazy-loaded → slot fallback
+    const svgContent = this.svg || this._loadedSvg || null;
 
     return html`
       <span
