@@ -1,6 +1,6 @@
 {
   "name": "@krollins/blueprint",
-  "version": "0.1.0",
+  "version": "0.1.13",
   "description": "A highly portable and customizable component library built on Lit",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -9,7 +9,50 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "./dist/index.css": "./dist/index.css",
+    "./accordion": "./dist/components/accordion.js",
+    "./alert": "./dist/components/alert.js",
+    "./avatar": "./dist/components/avatar.js",
+    "./badge": "./dist/components/badge.js",
+    "./breadcrumb": "./dist/components/breadcrumb.js",
+    "./button": "./dist/components/button.js",
+    "./card": "./dist/components/card.js",
+    "./checkbox": "./dist/components/checkbox.js",
+    "./color-picker": "./dist/components/color-picker.js",
+    "./combobox": "./dist/components/combobox.js",
+    "./date-picker": "./dist/components/date-picker.js",
+    "./divider": "./dist/components/divider.js",
+    "./drawer": "./dist/components/drawer.js",
+    "./dropdown": "./dist/components/dropdown.js",
+    "./file-upload": "./dist/components/file-upload.js",
+    "./heading": "./dist/components/heading.js",
+    "./icon": "./dist/components/icon.js",
+    "./input": "./dist/components/input.js",
+    "./link": "./dist/components/link.js",
+    "./menu": "./dist/components/menu.js",
+    "./modal": "./dist/components/modal.js",
+    "./multi-select": "./dist/components/multi-select.js",
+    "./notification": "./dist/components/notification.js",
+    "./number-input": "./dist/components/number-input.js",
+    "./pagination": "./dist/components/pagination.js",
+    "./popover": "./dist/components/popover.js",
+    "./progress": "./dist/components/progress.js",
+    "./radio": "./dist/components/radio.js",
+    "./select": "./dist/components/select.js",
+    "./skeleton": "./dist/components/skeleton.js",
+    "./slider": "./dist/components/slider.js",
+    "./spinner": "./dist/components/spinner.js",
+    "./stepper": "./dist/components/stepper.js",
+    "./switch": "./dist/components/switch.js",
+    "./table": "./dist/components/table.js",
+    "./tabs": "./dist/components/tabs.js",
+    "./tag": "./dist/components/tag.js",
+    "./text": "./dist/components/text.js",
+    "./textarea": "./dist/components/textarea.js",
+    "./time-picker": "./dist/components/time-picker.js",
+    "./tooltip": "./dist/components/tooltip.js",
+    "./tree": "./dist/components/tree.js"
   },
   "files": [
     "dist",
@@ -18,7 +61,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "sideEffects": false,
+  "sideEffects": [
+    "dist/index.js",
+    "dist/index.css",
+    "dist/components/**/*.js"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KyleBlankRollins/blueprint.git"

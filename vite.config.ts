@@ -1,16 +1,30 @@
 import { defineConfig } from 'vite';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { readdirSync } from 'fs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// Discover all component directories for per-component entry points.
+const componentsDir = resolve(__dirname, 'source/components');
+const componentEntries: Record<string, string> = {};
+
+for (const name of readdirSync(componentsDir, { withFileTypes: true })) {
+  if (name.isDirectory()) {
+    const componentFile = resolve(componentsDir, name.name, `${name.name}.ts`);
+    componentEntries[`components/${name.name}`] = componentFile;
+  }
+}
 
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, 'source/index.ts'),
-      name: 'Blueprint',
-      fileName: 'index',
+      entry: {
+        index: resolve(__dirname, 'source/index.ts'),
+        ...componentEntries,
+      },
       formats: ['es'],
+      cssFileName: 'index',
     },
     rollupOptions: {
       // Use a regex to externalize lit AND all sub-path imports
@@ -18,9 +32,9 @@ export default defineConfig({
       // as well as @lit/* packages like @lit/reactive-element.
       external: [/^lit(\/.*)?$/, /^@lit\//],
       output: {
-        globals: {
-          lit: 'Lit',
-        },
+        // Preserve the entry point directory structure in dist/.
+        entryFileNames: '[name].js',
+        chunkFileNames: 'shared/[name]-[hash].js',
       },
     },
     sourcemap: true,
