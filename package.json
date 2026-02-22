@@ -1,6 +1,6 @@
 {
   "name": "@krollins/blueprint",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "description": "A highly portable and customizable component library built on Lit",
   "main": "dist/index.js",
   "module": "dist/index.js",
