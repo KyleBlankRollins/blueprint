@@ -10,6 +10,7 @@ const typeOutputFile = path.resolve(
   './icons/icon-name.generated.ts'
 );
 const allBarrelFile = path.resolve(__dirname, './icons/all.ts');
+const resolverOutputFile = path.resolve(__dirname, './icons/resolver.generated.ts');
 
 // Read all .svg files, sorted
 const svgFiles = fs
@@ -91,7 +92,33 @@ ${allRegistrations}
 `;
 fs.writeFileSync(allBarrelFile, barrelContent);
 
+// Write lazy resolver — maps icon names to dynamic import functions.
+// Used by bp-icon's _loadIcon method. Each import path is static so
+// bundlers (Rollup, Vite, esbuild) can analyse and rewrite them.
+const resolverEntries = svgFiles
+  .map((f) => {
+    const iconName = toIconName(f);
+    return `  '${iconName}': () => import('./entries/${iconName}.js'),`;
+  })
+  .join('\n');
+const resolverContent = `// Auto-generated icon resolver — do not edit.
+// Re-generate: node source/components/icon/generate-icon-entries.js
+
+const resolvers: Record<string, () => Promise<{ default: string }>> = {
+${resolverEntries}
+};
+
+export async function loadIconByName(name: string): Promise<string | undefined> {
+  const loader = resolvers[name];
+  if (!loader) return undefined;
+  const mod = await loader();
+  return mod.default;
+}
+`;
+fs.writeFileSync(resolverOutputFile, resolverContent);
+
 // Report
 console.log(`Generated ${svgFiles.length} icon entries in ${entriesOutputDir}`);
 console.log(`Generated type file: ${typeOutputFile}`);
 console.log(`Generated barrel file: ${allBarrelFile}`);
+console.log(`Generated resolver file: ${resolverOutputFile}`);

@@ -30,6 +30,14 @@ for (const file of readdirSync(iconEntriesDir)) {
   }
 }
 
+// The resolver maps icon names to lazy import() calls with static paths.
+// Making it an entry point gives it a stable output path (dist/icons/resolver.js).
+const resolverFile = resolve(
+  __dirname,
+  'source/components/icon/icons/resolver.generated.ts'
+);
+iconEntries['icons/resolver'] = resolverFile;
+
 export default defineConfig({
   build: {
     lib: {

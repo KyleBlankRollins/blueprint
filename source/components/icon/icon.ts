@@ -124,8 +124,10 @@ export class BpIcon extends LitElement {
    *
    * First checks the sync registry cache (populated by `all.ts` or a
    * previous load). If the icon isn't cached, dynamically imports the
-   * per-icon entry module using `import.meta.url` to resolve the path
-   * relative to this file's location in `dist/`.
+   * generated resolver module which contains static `import()` paths for
+   * every icon. Static paths let the consumer's bundler (Vite, Rollup,
+   * esbuild) analyse and rewrite them at build time — unlike computed
+   * URLs which break when the bundler reorganises the file layout.
    */
   private async _loadIcon(name: string) {
     this._loadingName = name;
@@ -138,20 +140,10 @@ export class BpIcon extends LitElement {
     }
 
     try {
-      // Build an absolute URL to the per-icon entry module.
-      // The URL is computed from this module's own location so it resolves
-      // correctly regardless of how the consumer's bundler serves the files.
-      const iconPath = ['..', 'icons', name + '.js'].join('/');
-      const resolved = new URL(iconPath, import.meta.url).href;
-
-      // Use Function to construct the import call so Rollup/Vite cannot
-      // statically analyse or rewrite it. This is intentional — the icon
-      // entries are separate files that must be fetched at runtime.
-      const loadModule = new Function('url', 'return import(url)') as (
-        url: string
-      ) => Promise<{ default: string }>;
-      const module = await loadModule(resolved);
-      const svg: string = module.default;
+      const { loadIconByName } = await import(
+        './icons/resolver.generated.js'
+      );
+      const svg = await loadIconByName(name);
 
       if (svg && this._loadingName === name) {
         registerIcon(name, svg); // Cache for next time.
