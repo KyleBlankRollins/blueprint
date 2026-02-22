@@ -37,10 +37,10 @@ const {
     <!-- Load Blueprint components and theme CSS -->
     <script>
       // Import theme CSS (design tokens)
-      import '../../../source/themes/generated/index.css';
+      import '@krollins/blueprint/dist/index.css';
 
       // Import all components (registers custom elements)
-      import '../../../source/components/index.ts';
+      import '@krollins/blueprint';
 
       // Listen for theme changes
       window.addEventListener('theme-change', ((event: CustomEvent) => {
