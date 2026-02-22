@@ -47,7 +47,9 @@
     "theme:watch-types": "npm run build:cli && node dist/cli/index.js theme generate-types --watch",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "generate:jsx": "npm run build:cli && node dist/cli/index.js generate jsx"
+    "generate:jsx": "npm run build:cli && node dist/cli/index.js generate jsx",
+    "prepack": "node -e \"require('fs').copyFileSync('README.npm.md','README.md')\"",
+    "postpack": "git checkout README.md"
   },
   "keywords": [
     "web-components",
