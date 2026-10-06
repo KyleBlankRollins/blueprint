@@ -73,31 +73,31 @@ export const AllVariants: Story = {
         value="75"
         variant="primary"
         label="Primary"
-        show-value
+        showValue
       ></bp-progress>
       <bp-progress
         value="100"
         variant="success"
         label="Success"
-        show-value
+        showValue
       ></bp-progress>
       <bp-progress
         value="50"
         variant="warning"
         label="Warning"
-        show-value
+        showValue
       ></bp-progress>
       <bp-progress
         value="30"
         variant="error"
         label="Error"
-        show-value
+        showValue
       ></bp-progress>
       <bp-progress
         value="60"
         variant="info"
         label="Info"
-        show-value
+        showValue
       ></bp-progress>
     </div>
   `,
@@ -130,11 +130,11 @@ export const Indeterminate: Story = {
 export const FileUpload: Story = {
   render: () => html`
     <div style="display: flex; flex-direction: column; gap: 16px;">
-      <bp-progress value="45" label="photo.jpg" show-value></bp-progress>
+      <bp-progress value="45" label="photo.jpg" showValue></bp-progress>
       <bp-progress
         value="78"
         label="document.pdf"
-        show-value
+        showValue
         variant="info"
       ></bp-progress>
       <bp-progress indeterminate label="processing..."></bp-progress>
@@ -149,7 +149,7 @@ export const DarkBackground: Story = {
         value="60"
         variant="success"
         label="Dark mode test"
-        show-value
+        showValue
       ></bp-progress>
     </div>
   `,
@@ -161,10 +161,10 @@ export const Completion: Story = {
       <bp-progress
         value="100"
         label="Completed!"
-        show-value
+        showValue
         complete
       ></bp-progress>
-      <bp-progress value="95" label="Almost there" show-value></bp-progress>
+      <bp-progress value="95" label="Almost there" showValue></bp-progress>
     </div>
   `,
 };

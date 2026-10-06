@@ -120,17 +120,6 @@ export const breadcrumbStyles = css`
     user-select: none;
   }
 
-  /* Hide separator on last item */
-  :host(:last-of-type) .separator {
-    display: none;
-  }
-
-  /* Separator content via ::before - uses custom properties from parent */
-  .separator::before {
-    content: var(--bp-breadcrumb-separator-content, '/');
-    font-size: var(--bp-breadcrumb-separator-size, inherit);
-  }
-
   .separator__icon {
     width: var(--bp-spacing-md);
     height: var(--bp-spacing-md);
@@ -225,5 +214,26 @@ export const breadcrumbStyles = css`
   /* Collapse on mobile - handled via maxItems property instead of CSS */
   .breadcrumb--collapse-mobile {
     /* Reserved for future container query support */
+  }
+`;
+
+/**
+ * Styles that only apply to <bp-breadcrumb-item>.
+ *
+ * Kept out of the shared sheet: on <bp-breadcrumb> itself, `:host(:last-of-type)`
+ * matches the breadcrumb element (usually the last of its type among its
+ * siblings) and hid every separator rendered from the `items` property, and the
+ * `::before` content would double up with the rendered separator icon.
+ */
+export const breadcrumbItemStyles = css`
+  /* Hide separator on last item */
+  :host(:last-of-type) .separator {
+    display: none;
+  }
+
+  /* Separator content via ::before - uses custom properties from parent */
+  .separator::before {
+    content: var(--bp-breadcrumb-separator-content, '/');
+    font-size: var(--bp-breadcrumb-separator-size, inherit);
   }
 `;

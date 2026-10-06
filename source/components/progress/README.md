@@ -20,7 +20,7 @@ A progress bar component for displaying task completion status or loading indica
 <bp-progress value="50" max="100"></bp-progress>
 
 <!-- With label and percentage -->
-<bp-progress value="75" label="Uploading file" show-value></bp-progress>
+<bp-progress value="75" label="Uploading file" showValue></bp-progress>
 
 <!-- Success variant -->
 <bp-progress value="100" variant="success"></bp-progress>

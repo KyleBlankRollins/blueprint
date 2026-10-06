@@ -24,7 +24,7 @@ const meta: Meta = {
       control: 'number',
       description: 'Auto-close duration in milliseconds (0 = no auto-close)',
     },
-    notificationTitle: {
+    title: {
       control: 'text',
       description: 'The notification title text',
     },
@@ -49,7 +49,7 @@ export const Default: Story = {
     open: true,
     closable: true,
     duration: 0,
-    notificationTitle: 'Information',
+    title: 'Information',
     message: 'This is an informational notification.',
   },
   render: (args) => html`
@@ -58,7 +58,7 @@ export const Default: Story = {
       ?open=${args.open}
       ?closable=${args.closable}
       .duration=${args.duration}
-      .notificationTitle=${args.notificationTitle}
+      .title=${args.title}
       .message=${args.message}
     ></bp-notification>
   `,
@@ -70,7 +70,7 @@ export const Info: Story = {
       variant="info"
       open
       closable
-      notificationTitle="Information"
+      title="Information"
       message="Your settings have been saved successfully."
     ></bp-notification>
   `,
@@ -82,7 +82,7 @@ export const Success: Story = {
       variant="success"
       open
       closable
-      notificationTitle="Success"
+      title="Success"
       message="Your file has been uploaded successfully."
     ></bp-notification>
   `,
@@ -94,7 +94,7 @@ export const Warning: Story = {
       variant="warning"
       open
       closable
-      notificationTitle="Warning"
+      title="Warning"
       message="Your session will expire in 5 minutes."
     ></bp-notification>
   `,
@@ -106,7 +106,7 @@ export const Error: Story = {
       variant="error"
       open
       closable
-      notificationTitle="Error"
+      title="Error"
       message="Failed to save changes. Please try again."
     ></bp-notification>
   `,
@@ -121,7 +121,7 @@ export const AllVariants: Story = {
         variant="info"
         open
         closable
-        notificationTitle="Information"
+        title="Information"
         message="This is an informational notification."
         style="position: relative;"
       ></bp-notification>
@@ -129,7 +129,7 @@ export const AllVariants: Story = {
         variant="success"
         open
         closable
-        notificationTitle="Success"
+        title="Success"
         message="Operation completed successfully."
         style="position: relative;"
       ></bp-notification>
@@ -137,7 +137,7 @@ export const AllVariants: Story = {
         variant="warning"
         open
         closable
-        notificationTitle="Warning"
+        title="Warning"
         message="Please review your input before continuing."
         style="position: relative;"
       ></bp-notification>
@@ -145,7 +145,7 @@ export const AllVariants: Story = {
         variant="error"
         open
         closable
-        notificationTitle="Error"
+        title="Error"
         message="Something went wrong. Please try again."
         style="position: relative;"
       ></bp-notification>
@@ -155,12 +155,7 @@ export const AllVariants: Story = {
 
 export const WithCustomContent: Story = {
   render: () => html`
-    <bp-notification
-      variant="success"
-      open
-      closable
-      notificationTitle="File Uploaded"
-    >
+    <bp-notification variant="success" open closable title="File Uploaded">
       <p>
         Your document <strong>report.pdf</strong> has been uploaded
         successfully.
@@ -178,7 +173,7 @@ export const WithActionButton: Story = {
       variant="warning"
       open
       closable
-      notificationTitle="Session Expiring"
+      title="Session Expiring"
       message="Your session will expire in 5 minutes."
     >
       <button
@@ -197,7 +192,7 @@ export const WithCustomIcon: Story = {
       variant="info"
       open
       closable
-      notificationTitle="New Message"
+      title="New Message"
       message="You have received a new message from John."
     >
       <svg
@@ -222,7 +217,7 @@ export const NonClosable: Story = {
     <bp-notification
       variant="info"
       open
-      notificationTitle="Processing"
+      title="Processing"
       message="Please wait while we process your request..."
     ></bp-notification>
   `,
@@ -251,7 +246,7 @@ export const AutoCloseDemo: Story = {
         variant="success"
         closable
         .duration=${3000}
-        notificationTitle="Auto-closing Notification"
+        title="Auto-closing Notification"
         message="This notification will close automatically in 3 seconds."
         style="position: relative; margin-top: 16px;"
       ></bp-notification>
@@ -269,7 +264,7 @@ export const Positions: Story = {
         open
         closable
         position="top-right"
-        notificationTitle="Top Right"
+        title="Top Right"
         message="Notification in top-right position"
       ></bp-notification>
       <bp-notification
@@ -277,7 +272,7 @@ export const Positions: Story = {
         open
         closable
         position="top-left"
-        notificationTitle="Top Left"
+        title="Top Left"
         message="Notification in top-left position"
       ></bp-notification>
       <bp-notification
@@ -285,7 +280,7 @@ export const Positions: Story = {
         open
         closable
         position="bottom-right"
-        notificationTitle="Bottom Right"
+        title="Bottom Right"
         message="Notification in bottom-right position"
       ></bp-notification>
       <bp-notification
@@ -293,7 +288,7 @@ export const Positions: Story = {
         open
         closable
         position="bottom-left"
-        notificationTitle="Bottom Left"
+        title="Bottom Left"
         message="Notification in bottom-left position"
       ></bp-notification>
     </div>

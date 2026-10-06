@@ -200,7 +200,11 @@ export const drawerStyles = css`
   }
 
   .close-button:active {
-    background-color: var(--bp-color-surface-pressed);
+    background-color: var(--bp-color-surface-subdued);
+    background-image: linear-gradient(
+      var(--bp-color-active-overlay),
+      var(--bp-color-active-overlay)
+    );
     transform: translateY(1px);
   }
 

@@ -637,3 +637,26 @@ describe('bp-breadcrumb-item', () => {
     expect(part).toBeTruthy();
   });
 });
+
+// Regression: separators rendered from the `items` property were hidden because
+// item-only rules (`:host(:last-of-type) .separator`) also matched <bp-breadcrumb>.
+describe('breadcrumb separator styles', () => {
+  const cssTextOf = (tag: string) => {
+    const ctor = customElements.get(tag) as unknown as {
+      styles: Array<{ cssText: string }>;
+    };
+    return ctor.styles.map((s) => s.cssText).join('\n');
+  };
+
+  it('does not hide separators on bp-breadcrumb when it is the last of its type', () => {
+    const css = cssTextOf('bp-breadcrumb');
+    expect(css).not.toContain(':host(:last-of-type) .separator');
+    expect(css).not.toContain('.separator::before');
+  });
+
+  it('keeps the last-item and ::before separator rules on bp-breadcrumb-item', () => {
+    const css = cssTextOf('bp-breadcrumb-item');
+    expect(css).toContain(':host(:last-of-type) .separator');
+    expect(css).toContain('.separator::before');
+  });
+});

@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { breadcrumbStyles } from './breadcrumb.style.js';
+import { breadcrumbStyles, breadcrumbItemStyles } from './breadcrumb.style.js';
 import type { IconName } from '../icon/icons/icon-name.generated.js';
 import { BpIcon } from '../icon/icon.js';
 
@@ -353,7 +353,7 @@ export class BpBreadcrumbItem extends LitElement {
    */
   @property({ type: Boolean, reflect: true }) declare current: boolean;
 
-  static styles = [breadcrumbStyles];
+  static styles = [breadcrumbStyles, breadcrumbItemStyles];
 
   constructor() {
     super();

@@ -32,7 +32,7 @@ A dropdown component for selecting multiple options with tag-based display of se
 </bp-multi-select>
 
 <!-- With maximum selections -->
-<bp-multi-select maxSelections="3" placeholder="Choose up to 3">
+<bp-multi-select max-selections="3" placeholder="Choose up to 3">
   <option value="a">Item A</option>
   <option value="b">Item B</option>
   <option value="c">Item C</option>

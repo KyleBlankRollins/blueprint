@@ -18,39 +18,39 @@ A pagination component for navigating through multiple pages of content with cus
 ### Basic Pagination
 
 ```html
-<bp-pagination currentPage="1" totalPages="10"></bp-pagination>
+<bp-pagination current-page="1" total-pages="10"></bp-pagination>
 ```
 
 ### With Page Info
 
 ```html
-<bp-pagination currentPage="3" totalPages="20" showInfo></bp-pagination>
+<bp-pagination current-page="3" total-pages="20" show-info></bp-pagination>
 ```
 
 ### Compact (No First/Last Buttons)
 
 ```html
 <bp-pagination
-  currentPage="5"
-  totalPages="15"
-  showFirstLast="false"
+  current-page="5"
+  total-pages="15"
+  show-first-last="false"
 ></bp-pagination>
 ```
 
 ### Small Size
 
 ```html
-<bp-pagination currentPage="2" totalPages="8" size="sm"></bp-pagination>
+<bp-pagination current-page="2" total-pages="8" size="sm"></bp-pagination>
 ```
 
 ### Custom Sibling and Boundary Counts
 
 ```html
 <bp-pagination
-  currentPage="10"
-  totalPages="50"
-  siblingCount="2"
-  boundaryCount="2"
+  current-page="10"
+  total-pages="50"
+  sibling-count="2"
+  boundary-count="2"
 ></bp-pagination>
 ```
 

@@ -69,7 +69,7 @@ export const WithPreselectedValues: Story = {
 
 export const MaxSelections: Story = {
   render: () => html`
-    <bp-multi-select maxSelections="3" placeholder="Choose up to 3">
+    <bp-multi-select max-selections="3" placeholder="Choose up to 3">
       <option value="red">Red</option>
       <option value="blue">Blue</option>
       <option value="green">Green</option>

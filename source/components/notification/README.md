@@ -22,7 +22,7 @@ A non-blocking toast/notification component for displaying brief messages to use
   variant="info"
   open
   closable
-  notificationTitle="Information"
+  title="Information"
   message="This is an informational notification."
 ></bp-notification>
 ```
@@ -34,7 +34,7 @@ A non-blocking toast/notification component for displaying brief messages to use
   variant="success"
   open
   closable
-  notificationTitle="Success"
+  title="Success"
   message="Your file has been uploaded successfully."
 ></bp-notification>
 ```
@@ -47,7 +47,7 @@ A non-blocking toast/notification component for displaying brief messages to use
   open
   closable
   duration="3000"
-  notificationTitle="Saved"
+  title="Saved"
   message="Changes saved successfully."
 ></bp-notification>
 ```
@@ -55,12 +55,7 @@ A non-blocking toast/notification component for displaying brief messages to use
 ### With Custom Content
 
 ```html
-<bp-notification
-  variant="warning"
-  open
-  closable
-  notificationTitle="Session Expiring"
->
+<bp-notification variant="warning" open closable title="Session Expiring">
   <p>Your session will expire in 5 minutes.</p>
   <button slot="action">Extend Session</button>
 </bp-notification>
@@ -69,7 +64,7 @@ A non-blocking toast/notification component for displaying brief messages to use
 ### With Custom Icon
 
 ```html
-<bp-notification variant="info" open closable notificationTitle="New Message">
+<bp-notification variant="info" open closable title="New Message">
   <svg slot="icon" width="20" height="20" viewBox="0 0 24 24">
     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
   </svg>
@@ -93,15 +88,15 @@ notification.hide();
 
 ### Properties
 
-| Property            | Type                                                           | Default       | Description                                   |
-| ------------------- | -------------------------------------------------------------- | ------------- | --------------------------------------------- |
-| `variant`           | `'info' \| 'success' \| 'warning' \| 'error'`                  | `'info'`      | The visual style variant                      |
-| `open`              | `boolean`                                                      | `false`       | Whether the notification is visible           |
-| `closable`          | `boolean`                                                      | `false`       | Whether to show a close button                |
-| `duration`          | `number`                                                       | `0`           | Auto-close duration in ms (0 = no auto-close) |
-| `notificationTitle` | `string`                                                       | `''`          | The notification title text                   |
-| `message`           | `string`                                                       | `''`          | The notification message text                 |
-| `position`          | `'top-right' \| 'top-left' \| 'bottom-right' \| 'bottom-left'` | `'top-right'` | Position of the notification on screen        |
+| Property   | Type                                                                                              | Default       | Description                                   |
+| ---------- | ------------------------------------------------------------------------------------------------- | ------------- | --------------------------------------------- |
+| `variant`  | `'info' \| 'success' \| 'warning' \| 'error'`                                                     | `'info'`      | The visual style variant                      |
+| `open`     | `boolean`                                                                                         | `false`       | Whether the notification is visible           |
+| `closable` | `boolean`                                                                                         | `true`        | Whether to show a close button                |
+| `duration` | `number`                                                                                          | `0`           | Auto-close duration in ms (0 = no auto-close) |
+| `title`    | `string`                                                                                          | `''`          | The notification title text                   |
+| `message`  | `string`                                                                                          | `''`          | The notification message text                 |
+| `position` | `'top-left' \| 'top-center' \| 'top-right' \| 'bottom-left' \| 'bottom-center' \| 'bottom-right'` | `'top-right'` | Position of the notification on screen        |
 
 ### Methods
 

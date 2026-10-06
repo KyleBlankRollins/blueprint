@@ -366,7 +366,11 @@ export const stepperStyles = css`
   }
 
   .nav-button--previous:hover:not(:disabled) {
-    background-color: var(--bp-color-surface-hover);
+    background-color: var(--bp-color-surface);
+    background-image: linear-gradient(
+      var(--bp-color-hover-overlay),
+      var(--bp-color-hover-overlay)
+    );
     border-color: var(--bp-color-border-strong);
   }
 

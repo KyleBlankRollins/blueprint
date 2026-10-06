@@ -76,7 +76,11 @@ export const accordionStyles = css`
     outline-offset: var(--bp-focus-offset);
   }
   .item__header:active:not(:disabled) {
-    background-color: var(--bp-color-surface-hover);
+    background-color: var(--bp-color-surface);
+    background-image: linear-gradient(
+      var(--bp-color-active-overlay),
+      var(--bp-color-active-overlay)
+    );
     transform: translateY(1px);
   }
   .item__header-content {
