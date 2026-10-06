@@ -17,10 +17,12 @@
  */
 
 import { ThemeBase } from '../../builder/ThemeBase.js';
+import { DEFAULT_ACCESSIBILITY } from '../../builder/defaults.js';
 import type {
   ThemeBuilderInterface,
   ThemeConfig,
   PluginAssetDefinition,
+  AccessibilityConfig,
 } from '../../core/types.js';
 
 export class BlueprintCoreTheme extends ThemeBase {
@@ -38,6 +40,15 @@ export class BlueprintCoreTheme extends ThemeBase {
    * Bundle Figtree variable font for self-hosted typography.
    * Figtree is a friendly geometric sans-serif by Erik Kennedy.
    */
+  /**
+   * Fail theme generation if any checked pair misses WCAG AA
+   * (see validateThemeContrast for the pairs).
+   */
+  protected accessibility: AccessibilityConfig = {
+    ...DEFAULT_ACCESSIBILITY,
+    enforceWCAG: true,
+  };
+
   getAssets(): PluginAssetDefinition[] {
     return [
       {
@@ -76,7 +87,7 @@ export class BlueprintCoreTheme extends ThemeBase {
       // Text - Gray neutral scale
       text: 'oklch(0.25 0.01 240.0)',
       textStrong: 'oklch(0.00 0.00 0.0)',
-      textMuted: 'oklch(0.50 0.02 240.0)', // Darkened from 0.55 for WCAG AA 4.5:1 contrast
+      textMuted: 'oklch(0.48 0.02 240.0)', // 4.6:1 on background (0.50 was 4.3:1)
       textInverse: 'oklch(0.89 0.01 91.4)',
 
       // Primary - Vanderpoel Blue (deep, sophisticated blue)
@@ -85,8 +96,8 @@ export class BlueprintCoreTheme extends ThemeBase {
       primaryActive: 'oklch(0.32 0.12 233.4)',
 
       // Secondary - Neutral gray for secondary actions
-      secondary: 'oklch(0.55 0.02 240.0)',
-      secondaryHover: 'oklch(0.50 0.02 240.0)',
+      secondary: 'oklch(0.48 0.02 240.0)',
+      secondaryHover: 'oklch(0.43 0.02 240.0)',
 
       // Link colors
       link: 'oklch(0.40 0.08 233.4)', // Same as primary
@@ -94,14 +105,15 @@ export class BlueprintCoreTheme extends ThemeBase {
       linkVisited: 'oklch(0.45 0.08 280.0)', // Purple tint
 
       // Semantic colors with hover and background variants
-      success: 'oklch(0.55 0.13 145.0)',
-      successHover: 'oklch(0.50 0.15 145.0)',
+      // Fills are dark enough for textInverse at >= 4.5:1
+      success: 'oklch(0.47 0.13 145.0)',
+      successHover: 'oklch(0.42 0.15 145.0)',
       successBg: 'oklch(0.95 0.05 145.0)',
-      warning: 'oklch(0.51 0.13 64.5)',
-      warningHover: 'oklch(0.46 0.15 64.5)',
+      warning: 'oklch(0.49 0.13 64.5)',
+      warningHover: 'oklch(0.44 0.15 64.5)',
       warningBg: 'oklch(0.95 0.05 64.5)',
-      error: 'oklch(0.55 0.15 25.0)',
-      errorHover: 'oklch(0.50 0.17 25.0)',
+      error: 'oklch(0.50 0.15 25.0)',
+      errorHover: 'oklch(0.45 0.17 25.0)',
       errorBg: 'oklch(0.95 0.05 25.0)',
       info: 'oklch(0.40 0.08 233.4)',
       infoHover: 'oklch(0.36 0.10 233.4)',
@@ -113,7 +125,7 @@ export class BlueprintCoreTheme extends ThemeBase {
       selectedBg: 'oklch(0.95 0.03 233.4)', // Light primary tint
 
       // Input-specific tokens
-      placeholder: 'oklch(0.50 0.02 240.0)', // Same as textMuted
+      placeholder: 'oklch(0.48 0.02 240.0)', // Same as textMuted
       inputBg: 'oklch(0.89 0.01 91.4)', // Same as background
       inputBorder: 'oklch(0.75 0.02 91.4)', // Same as border
 
@@ -161,33 +173,36 @@ export class BlueprintCoreTheme extends ThemeBase {
       textMuted: 'oklch(0.75 0.02 91.4)',
       textInverse: 'oklch(0.25 0.01 240.0)',
 
-      // Primary - Brighter Vanderpoel Blue for visibility on dark backgrounds
-      // Updated from L=26% to L=48% per UI audit (was nearly invisible)
-      primary: 'oklch(0.48 0.12 233.4)',
-      primaryHover: 'oklch(0.44 0.10 233.4)',
-      primaryActive: 'oklch(0.40 0.08 233.4)',
+      // Primary - Light Vanderpoel Blue for dark backgrounds.
+      // L=72% so it reads as text/border on every dark surface (4.6:1 on
+      // surfaceElevated) and carries dark textInverse at 6.6:1. Was L=48%
+      // (textInverse on primary only 2.6:1). Hover/active step lighter.
+      primary: 'oklch(0.72 0.12 233.4)',
+      primaryHover: 'oklch(0.76 0.11 233.4)',
+      primaryActive: 'oklch(0.80 0.10 233.4)',
 
       // Secondary - Neutral gray for secondary actions
       secondary: 'oklch(0.65 0.02 240.0)',
       secondaryHover: 'oklch(0.70 0.02 240.0)',
 
       // Link colors
-      link: 'oklch(0.48 0.12 233.4)', // Same as primary
-      linkHover: 'oklch(0.44 0.10 233.4)',
-      linkVisited: 'oklch(0.55 0.10 280.0)', // Purple tint (lighter for dark bg)
+      link: 'oklch(0.72 0.12 233.4)', // Same as primary
+      linkHover: 'oklch(0.76 0.11 233.4)',
+      linkVisited: 'oklch(0.73 0.10 280.0)', // Purple tint (lighter for dark bg)
 
-      // Semantic (lighter shades for dark backgrounds)
-      success: 'oklch(0.36 0.10 145.0)',
-      successHover: 'oklch(0.40 0.12 145.0)',
+      // Semantic (light shades for dark backgrounds): each reads as text on
+      // surfaceElevated at >= 4.5:1 and carries dark textInverse at >= 6.5:1
+      success: 'oklch(0.72 0.13 145.0)',
+      successHover: 'oklch(0.76 0.12 145.0)',
       successBg: 'oklch(0.20 0.04 145.0)',
-      warning: 'oklch(0.45 0.11 64.5)', // Slightly darker for dark theme
-      warningHover: 'oklch(0.50 0.13 64.5)',
+      warning: 'oklch(0.74 0.13 64.5)',
+      warningHover: 'oklch(0.78 0.12 64.5)',
       warningBg: 'oklch(0.20 0.04 64.5)',
-      error: 'oklch(0.36 0.12 25.0)',
-      errorHover: 'oklch(0.40 0.14 25.0)',
+      error: 'oklch(0.74 0.14 25.0)',
+      errorHover: 'oklch(0.78 0.12 25.0)',
       errorBg: 'oklch(0.20 0.04 25.0)',
-      info: 'oklch(0.48 0.12 233.4)', // Match primary
-      infoHover: 'oklch(0.44 0.10 233.4)',
+      info: 'oklch(0.72 0.12 233.4)', // Match primary
+      infoHover: 'oklch(0.76 0.11 233.4)',
       infoBg: 'oklch(0.20 0.03 233.4)',
 
       // Interactive state overlays

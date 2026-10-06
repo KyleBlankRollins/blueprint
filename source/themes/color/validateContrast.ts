@@ -103,7 +103,13 @@ export function validateThemeContrast(
       return ref;
     }
 
-    // Otherwise treat as string reference
+    // Literal CSS colors (e.g. 'oklch(0.4 0.08 233.4)', '#004f6e') are
+    // passed through; culori parses them for the contrast calculation.
+    if (/^(oklch|oklab|rgb|rgba|hsl|hsla|lab|lch|color)\(|^#/i.test(ref)) {
+      return ref;
+    }
+
+    // Otherwise treat as a primitive reference ("colorName.step")
     if (ref === 'white') return '#ffffff';
     if (ref === 'black') return '#000000';
 
@@ -128,6 +134,15 @@ export function validateThemeContrast(
       ['textMuted', 'background', contrast.text],
       ['text', 'surface', contrast.text],
       ['textMuted', 'surface', contrast.text],
+      ['link', 'background', contrast.text],
+      ['link', 'surface', contrast.text],
+      // Label text on filled controls (buttons, solid badges)
+      ['textInverse', 'primary', contrast.text],
+      ['textInverse', 'secondary', contrast.text],
+      ['textInverse', 'success', contrast.text],
+      ['textInverse', 'warning', contrast.text],
+      ['textInverse', 'error', contrast.text],
+      ['textInverse', 'info', contrast.text],
     ] as const;
 
     violations.push(
@@ -135,9 +150,10 @@ export function validateThemeContrast(
     );
 
     // UI component contrast checks
+    // `border` / `borderStrong` are not checked: they draw decorative
+    // dividers and container edges, which WCAG 1.4.11 does not require to
+    // meet 3:1.
     const uiPairs = [
-      ['border', 'background', contrast.ui],
-      ['borderStrong', 'background', contrast.ui],
       ['primary', 'background', contrast.ui],
       ['success', 'background', contrast.ui],
       ['error', 'background', contrast.ui],

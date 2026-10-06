@@ -46,15 +46,17 @@ export const DEFAULT_TYPOGRAPHY = {
     sans: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
     mono: '"SF Mono", Monaco, "Cascadia Code", "Courier New", monospace',
   },
+  // Matches the committed utilities.css and the theming docs
+  // (lg 1.25rem, xl 1.5rem). <bp-heading> defaults to 4xl (48px).
   fontSizes: {
     xs: 12,
     sm: 14,
     base: 16,
-    lg: 18,
-    xl: 20,
-    '2xl': 24,
-    '3xl': 30,
-    '4xl': 36,
+    lg: 20,
+    xl: 24,
+    '2xl': 30,
+    '3xl': 36,
+    '4xl': 48,
   },
   lineHeights: {
     none: 1,

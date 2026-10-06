@@ -147,7 +147,8 @@ describe('ThemeBase', () => {
       expect(tokens.opacity.disabled).toBe(0.5);
       expect(tokens.breakpoints.md).toBe('768px');
       expect(tokens.focus.width).toBe(2);
-      expect(tokens.accessibility.enforceWCAG).toBe(false);
+      // blueprint-core opts in to WCAG enforcement; the default stays opt-in
+      expect(tokens.accessibility.enforceWCAG).toBe(true);
       expect(tokens.zIndex.modal).toBe(1040);
     });
 
