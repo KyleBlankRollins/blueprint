@@ -450,4 +450,17 @@ describe('bp-icon', () => {
     const icon = element.shadowRoot?.querySelector('.icon');
     expect(icon?.classList.contains('icon--muted')).toBe(true);
   });
+
+  it('should take the surrounding text color by default', async () => {
+    const parent = document.createElement('div');
+    parent.style.color = 'rgb(1, 2, 3)';
+    parent.style.setProperty('--bp-color-text', 'rgb(9, 9, 9)');
+    parent.appendChild(element);
+    document.body.appendChild(parent);
+    await element.updateComplete;
+
+    const icon = element.shadowRoot?.querySelector('.icon') as HTMLElement;
+    expect(getComputedStyle(icon).color).toBe('rgb(1, 2, 3)');
+    parent.remove();
+  });
 });

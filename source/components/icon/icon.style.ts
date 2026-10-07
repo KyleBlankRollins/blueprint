@@ -20,7 +20,8 @@ export const iconStyles = css`
     align-items: center;
     justify-content: center;
     line-height: 1;
-    color: var(--bp-color-text);
+    /* Icons take the color of the text around them unless a variant is set */
+    color: inherit;
   }
 
   .icon svg,
@@ -33,7 +34,7 @@ export const iconStyles = css`
 
   /* Color variants */
   .icon--default {
-    color: var(--bp-color-text);
+    color: inherit;
   }
 
   .icon--primary {

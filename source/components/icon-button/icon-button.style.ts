@@ -51,11 +51,6 @@ export const iconButtonStyles = css`
   .icon-slot {
     display: inline-flex;
   }
-
-  /* bp-icon paints its own text color by default; follow the button's */
-  bp-icon::part(icon) {
-    color: inherit;
-  }
   .button--sm .icon-slot ::slotted(svg) {
     width: var(--bp-icon-size-sm);
     height: var(--bp-icon-size-sm);
