@@ -10,7 +10,7 @@ A non-blocking toast/notification component for displaying brief messages to use
 - **Closable**: Optional close button for manual dismissal
 - **Slots**: Custom icon, content, and action button slots
 - **CSS Parts**: Full styling control via shadow parts
-- **Accessible**: ARIA live region, role="alert", keyboard support
+- **Accessible**: ARIA live region (`role="status"`, or `role="alert"` for errors), keyboard support
 - **Animated**: Smooth slide-in/out animations based on position
 
 ## Usage
@@ -88,15 +88,18 @@ notification.hide();
 
 ### Properties
 
-| Property   | Type                                                                                              | Default       | Description                                   |
-| ---------- | ------------------------------------------------------------------------------------------------- | ------------- | --------------------------------------------- |
-| `variant`  | `'info' \| 'success' \| 'warning' \| 'error'`                                                     | `'info'`      | The visual style variant                      |
-| `open`     | `boolean`                                                                                         | `false`       | Whether the notification is visible           |
-| `closable` | `boolean`                                                                                         | `true`        | Whether to show a close button                |
-| `duration` | `number`                                                                                          | `0`           | Auto-close duration in ms (0 = no auto-close) |
-| `title`    | `string`                                                                                          | `''`          | The notification title text                   |
-| `message`  | `string`                                                                                          | `''`          | The notification message text                 |
-| `position` | `'top-left' \| 'top-center' \| 'top-right' \| 'bottom-left' \| 'bottom-center' \| 'bottom-right'` | `'top-right'` | Position of the notification on screen        |
+| Property   | Type                                                                                              | Default       | Description                                                                                           |
+| ---------- | ------------------------------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------- |
+| `variant`  | `'info' \| 'success' \| 'warning' \| 'error'`                                                     | `'info'`      | The visual style variant                                                                              |
+| `open`     | `boolean`                                                                                         | `false`       | Whether the notification is visible                                                                   |
+| `closable` | `boolean`                                                                                         | `true`        | Whether to show a close button                                                                        |
+| `duration` | `number`                                                                                          | `0`           | Auto-close duration in ms (0 = no auto-close)                                                         |
+| `title`    | `string`                                                                                          | `''`          | The notification title text                                                                           |
+| `message`  | `string`                                                                                          | `''`          | The notification message text                                                                         |
+| `position` | `'top-left' \| 'top-center' \| 'top-right' \| 'bottom-left' \| 'bottom-center' \| 'bottom-right'` | `'top-right'` | Position of the notification on screen                                                                |
+| `stacked`  | `boolean`                                                                                         | `false`       | Set by `bp-notification-stack`. Flows in the stack instead of using `position`, and never moves focus |
+
+To show more than one notification at a time, use [`bp-notification-stack`](../notification-stack/README.md), which positions, queues and removes them for you.
 
 ### Methods
 
@@ -160,9 +163,9 @@ notification.hide();
 
 ## Accessibility
 
-- Uses `role="alert"` for screen reader announcements
+- Uses `role="status"` (polite) for info, success and warning, and `role="alert"` (assertive) for errors
 - Uses `aria-live="polite"` for non-intrusive announcements
 - Close button has `aria-label="Close notification"` for screen readers
 - Supports keyboard navigation (Tab to close button, Enter/Space to close)
-- Focus is managed appropriately when notification appears
+- A standalone notification moves focus to its close button when it opens. A stacked one (inside `bp-notification-stack`) never moves focus
 - High contrast between text and background for readability

@@ -121,6 +121,15 @@ export type {
 export { plainTextAdapter } from './code-block/code-block.js';
 export { BpFieldset } from './fieldset/fieldset.js';
 export { BpRadioGroup } from './radio-group/radio-group.js';
+export {
+  BpNotificationStack,
+  notify,
+} from './notification-stack/notification-stack.js';
+export type {
+  NotifyOptions,
+  NotificationStackPosition,
+  NotificationVariant,
+} from './notification-stack/notification-stack.js';
 export { BpIconButton } from './icon-button/icon-button.js';
 export type {
   IconButtonVariant,
