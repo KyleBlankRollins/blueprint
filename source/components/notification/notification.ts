@@ -92,7 +92,15 @@ export class BpNotification extends LitElement {
     | 'bottom-center'
     | 'bottom-right';
 
+  /**
+   * Whether the notification sits in a `bp-notification-stack`. Set
+   * automatically by the stack: a stacked notification flows in the stack
+   * instead of using `position`, and does not move focus when it opens.
+   */
+  @property({ type: Boolean, reflect: true }) declare stacked: boolean;
+
   @state() private autoCloseTimer: number | null = null;
+  private timerStartedAt = 0;
   @state() private remainingTime: number = 0;
   @state() private timerPaused: boolean = false;
   @state() private isExiting: boolean = false;
@@ -108,13 +116,16 @@ export class BpNotification extends LitElement {
     this.title = '';
     this.message = '';
     this.position = 'top-right';
+    this.stacked = false;
   }
 
   updated(changedProperties: Map<string, unknown>) {
     if (changedProperties.has('open')) {
       if (this.open) {
         this.handleOpen();
-      } else {
+      } else if (changedProperties.get('open') !== undefined) {
+        // Only a real open -> closed change hides; the first render of a
+        // closed notification is not a hide.
         this.handleClose();
       }
     }
@@ -152,9 +163,10 @@ export class BpNotification extends LitElement {
     );
     this.startAutoCloseTimer();
 
-    // Focus close button for accessibility
+    // A standalone notification takes focus; one in a stack must not
+    // interrupt the user, so it is announced but focus stays put.
     this.updateComplete.then(() => {
-      if (this.closable) {
+      if (this.closable && !this.stacked) {
         const closeButton = this.shadowRoot?.querySelector(
           '.notification__close'
         ) as HTMLElement;
@@ -183,6 +195,7 @@ export class BpNotification extends LitElement {
 
     if (this.duration > 0 && !this.timerPaused) {
       this.remainingTime = this.duration;
+      this.timerStartedAt = Date.now();
       this.autoCloseTimer = window.setTimeout(() => {
         this.hide();
       }, this.duration);
@@ -206,6 +219,10 @@ export class BpNotification extends LitElement {
   private pauseAutoCloseTimer() {
     if (this.autoCloseTimer && this.duration > 0) {
       this.timerPaused = true;
+      this.remainingTime = Math.max(
+        0,
+        this.remainingTime - (Date.now() - this.timerStartedAt)
+      );
       window.clearTimeout(this.autoCloseTimer);
       this.autoCloseTimer = null;
     }
@@ -217,6 +234,7 @@ export class BpNotification extends LitElement {
   private resumeAutoCloseTimer() {
     if (this.timerPaused && this.duration > 0) {
       this.timerPaused = false;
+      this.timerStartedAt = Date.now();
       this.autoCloseTimer = window.setTimeout(() => {
         this.hide();
       }, this.remainingTime);
@@ -268,13 +286,13 @@ export class BpNotification extends LitElement {
 
     return html`
       <div
-        class="notification notification--${this.variant} notification--${
-          this.position
+        class="notification notification--${this.variant} ${
+          this.stacked ? '' : `notification--${this.position}`
         } ${
           this.isExiting ? 'notification--exiting' : 'notification--entering'
         }"
         part="base"
-        role="alert"
+        role=${this.variant === 'error' ? 'alert' : 'status'}
         aria-live=${this.variant === 'error' ? 'assertive' : 'polite'}
         @keydown=${this.handleKeydown}
         @mouseenter=${this.pauseAutoCloseTimer}
