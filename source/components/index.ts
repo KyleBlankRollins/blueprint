@@ -119,3 +119,9 @@ export type {
   HighlightResult,
 } from './code-block/code-block.js';
 export { plainTextAdapter } from './code-block/code-block.js';
+export { BpIconButton } from './icon-button/icon-button.js';
+export type {
+  IconButtonVariant,
+  IconButtonSize,
+  IconButtonShape,
+} from './icon-button/icon-button.js';
