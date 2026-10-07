@@ -71,6 +71,7 @@ All **430 icons** from [System UI Icons](https://www.systemuicons.com/) are avai
 3. Icon entries will be generated in `source/components/icon/icons/entries/`
 
 The generator produces:
+
 - Per-icon entry files that export SVG data as value bindings
 - TypeScript type union for autocomplete
 - An all-icons barrel for Storybook and dev tools
@@ -89,7 +90,7 @@ The generator produces:
 | ----------- | --------------------------------------------------------------------------- | ----------- | -------------------------------------------------------------------- |
 | `name`      | `IconName \| ''`                                                            | `''`        | Name of icon from System UI Icons library (takes priority over slot) |
 | `size`      | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl' \| '3xl' \| '4xl' \| 'full'` | `'md'`      | Size variant of the icon                                             |
-| `color`     | `'default' \| 'primary' \| 'success' \| 'warning' \| 'error' \| 'muted'`    | `'default'` | Color variant of the icon                                            |
+| `color`     | `'default' \| 'primary' \| 'success' \| 'warning' \| 'error' \| 'muted'`    | `'default'` | Color variant. `default` inherits the surrounding text color         |
 | `ariaLabel` | `string`                                                                    | `''`        | ARIA label for accessibility (sets role="img" when provided)         |
 
 ### Events
@@ -112,7 +113,7 @@ This component does not emit any custom events.
 
 **Colors:**
 
-- `--bp-color-text` - Default icon color
+- (none) - The default color inherits the surrounding text color (`currentColor`)
 - `--bp-color-primary` - Primary variant color
 - `--bp-color-success` - Success variant color
 - `--bp-color-warning` - Warning variant color

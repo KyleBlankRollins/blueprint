@@ -74,7 +74,7 @@ export class BpIcon extends LitElement {
   @property({ type: String, reflect: true }) declare size: IconSize;
 
   /**
-   * Color variant of the icon
+   * Color variant of the icon. `default` inherits the surrounding text color.
    * @type {IconColor}
    */
   @property({ type: String }) declare color: IconColor;
