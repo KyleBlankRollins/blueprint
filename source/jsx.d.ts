@@ -72,6 +72,7 @@ import type {
   MultiSelectSize,
   MultiSelectVariant,
 } from './components/multi-select/multi-select.js';
+import type { NotificationStackPosition } from './components/notification-stack/notification-stack.js';
 import type {
   NumberInputSize,
   NumberInputVariant,
@@ -448,6 +449,14 @@ interface BpNotificationProps extends BaseHTMLAttributes {
     | 'bottom-center'
     | 'bottom-right'
   >;
+  stacked?: BooleanAttr;
+}
+
+interface BpNotificationStackProps extends BaseHTMLAttributes {
+  position?: StringAttr<NotificationStackPosition>;
+  max?: NumberAttr;
+  duration?: NumberAttr;
+  label?: string;
 }
 
 interface BpNumberInputProps extends BaseHTMLAttributes {
@@ -708,6 +717,7 @@ export interface BlueprintElements {
   'bp-modal': BpModalProps;
   'bp-multi-select': BpMultiSelectProps;
   'bp-notification': BpNotificationProps;
+  'bp-notification-stack': BpNotificationStackProps;
   'bp-number-input': BpNumberInputProps;
   'bp-pagination': BpPaginationProps;
   'bp-popover': BpPopoverProps;

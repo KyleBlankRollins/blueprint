@@ -21,6 +21,7 @@ export const notificationStyles = css`
     color: var(--bp-color-text);
     max-width: 400px;
     min-width: 300px;
+    box-sizing: border-box;
     animation: notification-slide-in var(--bp-duration-fast) var(--bp-ease-out);
   }
 
@@ -60,6 +61,12 @@ export const notificationStyles = css`
       animation: none;
       opacity: 0;
     }
+  }
+
+  /* In a stack, fill the stack's width instead of a fixed range */
+  :host([stacked]) .notification {
+    min-width: 0;
+    max-width: none;
   }
 
   /* Icon */
@@ -178,7 +185,7 @@ export const notificationStyles = css`
   .notification--bottom-center,
   .notification--bottom-right {
     position: fixed;
-    z-index: 10000;
+    z-index: var(--bp-z-popover);
     margin: var(--bp-spacing-4);
   }
 
