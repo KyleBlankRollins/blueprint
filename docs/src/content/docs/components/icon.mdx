@@ -69,6 +69,8 @@ The `full` size makes the icon expand to fill its container, useful for placing 
 
 ### Colors
 
+By default an icon takes the color of the text around it (`currentColor`), so it matches a link, button or alert it sits in. Set `color` to use a specific theme color instead.
+
 <ComponentPreview>
   <div class="component-preview-row">
     <bp-icon name="check" color="default"></bp-icon>
@@ -156,12 +158,12 @@ You can provide custom SVG content via the default slot:
 
 ### Properties
 
-| Property     | Type                                                                     | Default     | Description                         |
-| ------------ | ------------------------------------------------------------------------ | ----------- | ----------------------------------- |
-| `name`       | `IconName`                                                               | `''`        | Name of the icon from the library   |
-| `size`       | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl' \| '3xl' \| '4xl' \| 'full'` | `'md'`      | Size of the icon                    |
-| `color`      | `'default' \| 'primary' \| 'success' \| 'warning' \| 'error' \| 'muted'` | `'default'` | Color variant                       |
-| `aria-label` | `string`                                                                 | `''`        | Accessible label for screen readers |
+| Property     | Type                                                                        | Default     | Description                                                  |
+| ------------ | --------------------------------------------------------------------------- | ----------- | ------------------------------------------------------------ |
+| `name`       | `IconName`                                                                  | `''`        | Name of the icon from the library                            |
+| `size`       | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl' \| '3xl' \| '4xl' \| 'full'` | `'md'`      | Size of the icon                                             |
+| `color`      | `'default' \| 'primary' \| 'success' \| 'warning' \| 'error' \| 'muted'`    | `'default'` | Color variant. `default` inherits the surrounding text color |
+| `aria-label` | `string`                                                                    | `''`        | Accessible label for screen readers                          |
 
 ### Slots
 

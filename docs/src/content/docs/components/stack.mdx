@@ -1,0 +1,159 @@
+---
+title: Stack
+description: Lay children out in a column or row with a gap from the spacing scale
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+The `bp-stack` component lays its children out in a single column or row with a gap from the spacing scale. Use it for the space between siblings instead of margins on the children: a vertical stack for form fields and page sections, a horizontal one (with `wrap`) for button groups, tags and toolbars.
+
+## Import
+
+```javascript
+import '@krollins/blueprint/stack';
+```
+
+## Examples
+
+### Default
+
+A stack is vertical with a `md` (16px) gap by default.
+
+<ComponentPreview>
+  <bp-stack>
+    <bp-input label="Name"></bp-input>
+    <bp-input label="Email" type="email"></bp-input>
+  </bp-stack>
+</ComponentPreview>
+
+```html
+<bp-stack>
+  <bp-input label="Name"></bp-input>
+  <bp-input label="Email" type="email"></bp-input>
+</bp-stack>
+```
+
+### Horizontal
+
+<ComponentPreview>
+  <bp-stack direction="horizontal" gap="xs" justify="end">
+    <bp-button variant="secondary">Cancel</bp-button>
+    <bp-button>Save</bp-button>
+  </bp-stack>
+</ComponentPreview>
+
+```html
+<bp-stack direction="horizontal" gap="xs" justify="end">
+  <bp-button variant="secondary">Cancel</bp-button>
+  <bp-button>Save</bp-button>
+</bp-stack>
+```
+
+### Gap
+
+The gap uses the `--bp-spacing-*` scale: `none`, `2xs`, `xs`, `sm`, `md`, `lg`, `xl` and `2xl`.
+
+<ComponentPreview>
+  <bp-stack gap="lg">
+    <bp-stack direction="horizontal" gap="2xs">
+      <bp-tag>2xs</bp-tag>
+      <bp-tag>2xs</bp-tag>
+      <bp-tag>2xs</bp-tag>
+    </bp-stack>
+    <bp-stack direction="horizontal" gap="md">
+      <bp-tag>md</bp-tag>
+      <bp-tag>md</bp-tag>
+      <bp-tag>md</bp-tag>
+    </bp-stack>
+    <bp-stack direction="horizontal" gap="2xl">
+      <bp-tag>2xl</bp-tag>
+      <bp-tag>2xl</bp-tag>
+      <bp-tag>2xl</bp-tag>
+    </bp-stack>
+  </bp-stack>
+</ComponentPreview>
+
+```html
+<bp-stack direction="horizontal" gap="2xs">...</bp-stack>
+<bp-stack direction="horizontal" gap="md">...</bp-stack>
+<bp-stack direction="horizontal" gap="2xl">...</bp-stack>
+```
+
+### Wrapping
+
+Set `wrap` to let items flow onto new lines when they run out of room.
+
+<ComponentPreview>
+  <bp-stack direction="horizontal" gap="xs" wrap>
+    <bp-tag>Design</bp-tag>
+    <bp-tag>Tokens</bp-tag>
+    <bp-tag>Accessibility</bp-tag>
+    <bp-tag>Web components</bp-tag>
+    <bp-tag>Theming</bp-tag>
+    <bp-tag>Forms</bp-tag>
+    <bp-tag>Layout</bp-tag>
+    <bp-tag>Documentation</bp-tag>
+  </bp-stack>
+</ComponentPreview>
+
+```html
+<bp-stack direction="horizontal" gap="xs" wrap>
+  <bp-tag>Design</bp-tag>
+  <bp-tag>Tokens</bp-tag>
+  <bp-tag>Accessibility</bp-tag>
+  <!-- ... -->
+</bp-stack>
+```
+
+### Alignment
+
+`align` sets the cross-axis alignment and `justify` the main-axis distribution.
+
+<ComponentPreview>
+  <bp-stack direction="horizontal" align="center" justify="between">
+    <bp-heading level="3" size="md">
+      Team members
+    </bp-heading>
+    <bp-button size="sm">Invite</bp-button>
+  </bp-stack>
+</ComponentPreview>
+
+```html
+<bp-stack direction="horizontal" align="center" justify="between">
+  <bp-heading level="3" size="md">Team members</bp-heading>
+  <bp-button size="sm">Invite</bp-button>
+</bp-stack>
+```
+
+## API Reference
+
+### Properties
+
+| Property    | Type                                                                | Default      | Description                                             |
+| ----------- | ------------------------------------------------------------------- | ------------ | ------------------------------------------------------- |
+| `direction` | `'vertical' \| 'horizontal'`                                        | `'vertical'` | Main axis: a column or a row                            |
+| `gap`       | `'none' \| '2xs' \| 'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl'`  | `'md'`       | Space between items, from `--bp-spacing-*`              |
+| `align`     | `'start' \| 'center' \| 'end' \| 'stretch' \| 'baseline'`           | `'stretch'`  | Cross-axis alignment of the items                       |
+| `justify`   | `'start' \| 'center' \| 'end' \| 'between' \| 'around' \| 'evenly'` | `'start'`    | Main-axis distribution of the items                     |
+| `wrap`      | `boolean`                                                           | `false`      | Let items wrap onto new lines when they run out of room |
+
+All properties reflect to attributes.
+
+### Events
+
+This component does not emit any events.
+
+### Slots
+
+| Slot      | Description          |
+| --------- | -------------------- |
+| (default) | The items to lay out |
+
+### CSS Parts
+
+None. The host is the flex container, so style it directly.
+
+## Accessibility
+
+- Stack is purely presentational: it adds no role and does not change reading or focus order, which follow the source order of the children
+- Avoid `justify` or `direction` choices that make the visual order differ from the source order

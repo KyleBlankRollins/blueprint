@@ -61,33 +61,71 @@ import '@krollins/blueprint/input';
 <bp-input type="number" placeholder="Number"></bp-input>
 ```
 
+### Help and error text
+
+Use `helperText` for a hint under the input. Setting `errorMessage` marks the input invalid: the message replaces the hint, is announced to screen readers, and the border turns to the error color. The error shows whenever `errorMessage` is set; `variant="error"` still works for error styling without a message.
+
+<ComponentPreview>
+  <div class="component-preview-col">
+    <bp-input label="Username" helperText="3 to 20 letters or numbers"></bp-input>
+    <bp-input label="Email" type="email" value="kyle@" errorMessage="Enter a complete email address"></bp-input>
+  </div>
+</ComponentPreview>
+
+```html
+<bp-input label="Username" helperText="3 to 20 letters or numbers"></bp-input>
+<bp-input
+  label="Email"
+  type="email"
+  value="kyle@"
+  errorMessage="Enter a complete email address"
+></bp-input>
+```
+
 ## API Reference
 
 ### Properties
 
-| Property      | Type      | Default  | Description                 |
-| ------------- | --------- | -------- | --------------------------- |
-| `value`       | `string`  | `''`     | The input value             |
-| `placeholder` | `string`  | `''`     | Placeholder text            |
-| `type`        | `string`  | `'text'` | HTML input type             |
-| `disabled`    | `boolean` | `false`  | Disables the input          |
-| `readonly`    | `boolean` | `false`  | Makes the input read-only   |
-| `required`    | `boolean` | `false`  | Marks the input as required |
+| Property       | Type                                                          | Default     | Description                                                                                                                                              |
+| -------------- | ------------------------------------------------------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `variant`      | `'default' \| 'success' \| 'error' \| 'warning' \| 'info'`    | `'default'` | Visual variant (affects border color)                                                                                                                    |
+| `size`         | `'sm' \| 'md' \| 'lg'`                                        | `'md'`      | Input size                                                                                                                                               |
+| `type`         | `'text' \| 'email' \| 'password' \| 'number' \| 'tel' \| ...` | `'text'`    | Native input type                                                                                                                                        |
+| `value`        | `string`                                                      | `''`        | Input value                                                                                                                                              |
+| `placeholder`  | `string`                                                      | `''`        | Placeholder text                                                                                                                                         |
+| `label`        | `string`                                                      | `''`        | Label text (optional)                                                                                                                                    |
+| `helperText`   | `string`                                                      | `''`        | Helper text below the input, linked with `aria-describedby`                                                                                              |
+| `errorMessage` | `string`                                                      | `''`        | Error text. When set, the input is invalid: the message replaces the helper text, is announced (`role="alert"`), and the border turns to the error color |
+| `disabled`     | `boolean`                                                     | `false`     | Whether input is disabled                                                                                                                                |
+| `required`     | `boolean`                                                     | `false`     | Whether input is required (shows asterisk)                                                                                                               |
+| `readonly`     | `boolean`                                                     | `false`     | Whether input is readonly                                                                                                                                |
+| `name`         | `string`                                                      | `''`        | Form input name                                                                                                                                          |
+| `autocomplete` | `string`                                                      | `''`        | Autocomplete attribute                                                                                                                                   |
 
 ### Events
 
-| Event    | Detail      | Description                  |
-| -------- | ----------- | ---------------------------- |
-| `input`  | `{ value }` | Fired on input               |
-| `change` | `{ value }` | Fired when value changes     |
-| `focus`  | -           | Fired when input gains focus |
-| `blur`   | -           | Fired when input loses focus |
+| Event       | Detail                                         | Description                     |
+| ----------- | ---------------------------------------------- | ------------------------------- |
+| `bp-input`  | `{ value: string, originalEvent: InputEvent }` | Fired on every input change     |
+| `bp-change` | `{ value: string, originalEvent: Event }`      | Fired when input loses focus    |
+| `bp-focus`  | `{ originalEvent: FocusEvent }`                | Fired when input receives focus |
+| `bp-blur`   | `{ originalEvent: FocusEvent }`                | Fired when input loses focus    |
+
+### Methods
+
+| Method     | Description                   |
+| ---------- | ----------------------------- |
+| `focus()`  | Focuses the input element     |
+| `blur()`   | Blurs the input element       |
+| `select()` | Selects all text in the input |
 
 ### CSS Parts
 
-| Part    | Description                |
-| ------- | -------------------------- |
-| `input` | The internal input element |
+| Part            | Description              |
+| --------------- | ------------------------ |
+| `input`         | The native input element |
+| `helper-text`   | The helper text          |
+| `error-message` | The error message        |
 
 ## Accessibility
 
@@ -95,3 +133,4 @@ import '@krollins/blueprint/input';
 - Supports all standard keyboard interactions
 - Required state is conveyed via `aria-required`
 - Disabled state prevents interaction
+- `helperText` and `errorMessage` are linked to the input with `aria-describedby`; an error message sets `aria-invalid="true"` and is announced with `role="alert"`

@@ -1,0 +1,104 @@
+---
+title: Grid
+description: Lay children out on a CSS grid with a fixed or responsive number of columns
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+The `bp-grid` component lays its children out on a CSS grid with a gap from the spacing scale. Give it a fixed number of `columns`, or a `min-column-width` to fit as many columns as the space allows, which makes the grid responsive without media queries.
+
+## Import
+
+```javascript
+import '@krollins/blueprint/grid';
+```
+
+## Examples
+
+### Fixed Columns
+
+<ComponentPreview>
+  <bp-grid columns="3" gap="md">
+    <bp-card>One</bp-card>
+    <bp-card>Two</bp-card>
+    <bp-card>Three</bp-card>
+  </bp-grid>
+</ComponentPreview>
+
+```html
+<bp-grid columns="3" gap="md">
+  <bp-card>One</bp-card>
+  <bp-card>Two</bp-card>
+  <bp-card>Three</bp-card>
+</bp-grid>
+```
+
+### Responsive Columns
+
+Set `min-column-width` to fit as many columns of at least that width as the space allows. Resize the window to see the columns reflow. A column never overflows a narrow container: the minimum is capped at the grid's width.
+
+<ComponentPreview>
+  <bp-grid min-column-width="12rem" gap="lg">
+    <bp-card>Starter</bp-card>
+    <bp-card>Team</bp-card>
+    <bp-card>Business</bp-card>
+    <bp-card>Enterprise</bp-card>
+  </bp-grid>
+</ComponentPreview>
+
+```html
+<bp-grid min-column-width="12rem" gap="lg">
+  <bp-card>Starter</bp-card>
+  <bp-card>Team</bp-card>
+  <bp-card>Business</bp-card>
+  <bp-card>Enterprise</bp-card>
+</bp-grid>
+```
+
+### Spanning Columns
+
+Items can span columns with standard CSS.
+
+<ComponentPreview>
+  <bp-grid columns="12" gap="xs">
+    <bp-card style="grid-column: span 8">Main</bp-card>
+    <bp-card style="grid-column: span 4">Aside</bp-card>
+  </bp-grid>
+</ComponentPreview>
+
+```html
+<bp-grid columns="12" gap="xs">
+  <div style="grid-column: span 8">Main</div>
+  <div style="grid-column: span 4">Aside</div>
+</bp-grid>
+```
+
+## API Reference
+
+### Properties
+
+| Property         | Attribute          | Type                                                               | Default     | Description                                                                    |
+| ---------------- | ------------------ | ------------------------------------------------------------------ | ----------- | ------------------------------------------------------------------------------ |
+| `columns`        | `columns`          | `number`                                                           | `1`         | Number of equal-width columns. Ignored when `minColumnWidth` is set            |
+| `minColumnWidth` | `min-column-width` | `string`                                                           | `''`        | Minimum column width as a CSS length. Fits as many columns as the space allows |
+| `gap`            | `gap`              | `'none' \| '2xs' \| 'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl'` | `'md'`      | Space between rows and columns, from `--bp-spacing-*`                          |
+| `align`          | `align`            | `'start' \| 'center' \| 'end' \| 'stretch'`                        | `'stretch'` | Vertical alignment of items within their row                                   |
+
+### Events
+
+This component does not emit any events.
+
+### Slots
+
+| Slot      | Description    |
+| --------- | -------------- |
+| (default) | The grid items |
+
+### CSS Parts
+
+None. The host is the grid container, so style it directly.
+
+## Accessibility
+
+- Grid is purely presentational: it adds no role, and reading and focus order follow the source order of the children
+- For tabular data, use [`bp-table`](/components/table) instead
