@@ -4,6 +4,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { sliderStyles } from './slider.style.js';
 import { throttle } from '../../utilities/throttle.js';
+import { FormControlMixin } from '../../utilities/form-control.js';
 
 /**
  * Size variants for the slider
@@ -25,7 +26,7 @@ export type SliderSize = 'sm' | 'md' | 'lg';
  * @csspart value-display - The current value display
  */
 @customElement('bp-slider')
-export class BpSlider extends LitElement {
+export class BpSlider extends FormControlMixin(LitElement) {
   /**
    * Current value of the slider
    */

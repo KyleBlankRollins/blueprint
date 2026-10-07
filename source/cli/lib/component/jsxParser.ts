@@ -196,7 +196,8 @@ export function parseComponentFile(
       const classLine = lines[j];
       if (!classLine) continue;
       const classMatch = classLine.match(
-        /class\s+(\w+)\s+extends\s+\w*(?:Lit)?Element/
+        // Also matches mixins: `extends FormControlMixin(LitElement)`
+        /class\s+(\w+)\s+extends\s+(?:\w+\(\s*)*\w*(?:Lit)?Element/
       );
       if (classMatch?.[1]) {
         classDefs.push({ tagName, className: classMatch[1], startLine: j });

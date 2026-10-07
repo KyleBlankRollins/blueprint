@@ -267,34 +267,56 @@ describe('bp-radio', () => {
   });
 
   // Interactions
-  it('should focus input when label is clicked', async () => {
+  it('should focus the radio when its label is clicked', async () => {
     await element.updateComplete;
-    const input = element.shadowRoot!.querySelector(
-      'input'
-    ) as HTMLInputElement;
-    const focusSpy = vi.spyOn(input, 'focus');
-
     const label = element.shadowRoot!.querySelector('label') as HTMLElement;
     label.click();
     await element.updateComplete;
 
-    expect(focusSpy).toHaveBeenCalled();
+    expect(document.activeElement).toBe(element);
   });
 
   it('should not focus when disabled and clicked', async () => {
     element.disabled = true;
     await element.updateComplete;
 
-    const input = element.shadowRoot!.querySelector(
-      'input'
-    ) as HTMLInputElement;
-    const focusSpy = vi.spyOn(input, 'focus');
-
     const label = element.shadowRoot!.querySelector('label') as HTMLElement;
     label.click();
     await element.updateComplete;
 
-    expect(focusSpy).not.toHaveBeenCalled();
+    expect(document.activeElement).not.toBe(element);
+  });
+
+  // Keyboard
+  it('should be in the tab order, and out of it when disabled', async () => {
+    await element.updateComplete;
+    expect(element.tabIndex).toBe(0);
+    element.disabled = true;
+    await element.updateComplete;
+    expect(element.tabIndex).toBe(-1);
+  });
+
+  it('should check the radio and fire bp-change on Space', async () => {
+    const changeHandler = vi.fn();
+    element.addEventListener('bp-change', changeHandler);
+    await element.updateComplete;
+
+    element.dispatchEvent(
+      new KeyboardEvent('keydown', { key: ' ', bubbles: true })
+    );
+    await element.updateComplete;
+
+    expect(element.checked).toBe(true);
+    expect(changeHandler).toHaveBeenCalledTimes(1);
+  });
+
+  it('should ignore Space when disabled', async () => {
+    element.disabled = true;
+    await element.updateComplete;
+    element.dispatchEvent(
+      new KeyboardEvent('keydown', { key: ' ', bubbles: true })
+    );
+    expect(element.checked).toBe(false);
   });
 
   it('should uncheck other radios in same group when checked', async () => {
@@ -371,24 +393,15 @@ describe('bp-radio', () => {
   // Public Methods
   it('should support focus() method', async () => {
     await element.updateComplete;
-    const input = element.shadowRoot!.querySelector(
-      'input'
-    ) as HTMLInputElement;
-    const focusSpy = vi.spyOn(input, 'focus');
-
     element.focus();
-    expect(focusSpy).toHaveBeenCalled();
+    expect(document.activeElement).toBe(element);
   });
 
   it('should support blur() method', async () => {
     await element.updateComplete;
-    const input = element.shadowRoot!.querySelector(
-      'input'
-    ) as HTMLInputElement;
-    const blurSpy = vi.spyOn(input, 'blur');
-
+    element.focus();
     element.blur();
-    expect(blurSpy).toHaveBeenCalled();
+    expect(document.activeElement).not.toBe(element);
   });
 
   it('should support checkValidity() method', async () => {

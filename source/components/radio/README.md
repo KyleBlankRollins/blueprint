@@ -8,7 +8,7 @@ A form radio input with label support and group functionality. Radio buttons all
 - Multiple sizes (sm, md, lg)
 - Error state styling
 - Form integration with ElementInternals API
-- Keyboard navigation support
+- Keyboard support: each standalone radio is a tab stop and Space selects it; inside `bp-radio-group`, arrow keys move between radios
 - ARIA attributes for accessibility
 - Label support via default slot
 - CSS Parts for custom styling
@@ -16,7 +16,13 @@ A form radio input with label support and group functionality. Radio buttons all
 ## Usage
 
 ```html
-<!-- Basic radio group -->
+<!-- Prefer bp-radio-group for a set of options -->
+<bp-radio-group label="Color" name="color" value="red">
+  <bp-radio value="red">Red</bp-radio>
+  <bp-radio value="blue">Blue</bp-radio>
+</bp-radio-group>
+
+<!-- Standalone radios grouped by name -->
 <bp-radio name="color" value="red" checked>Red</bp-radio>
 <bp-radio name="color" value="blue">Blue</bp-radio>
 <bp-radio name="color" value="green">Green</bp-radio>

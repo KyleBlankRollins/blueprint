@@ -166,6 +166,10 @@ combobox.addEventListener('bp-change', (e) => {
 - `--bp-transition-fast`
 - `--bp-z-dropdown`
 
+## Form integration
+
+A form-associated custom element: inside a `<form>` it submits its `value` under `name`, takes part in `checkValidity()`/`reportValidity()` (with `required` reporting a missing value), restores its initial value on reset, and is excluded from submission when `disabled`.
+
 ## Accessibility
 
 - Uses `role="combobox"` and `aria-haspopup="listbox"` for proper semantics

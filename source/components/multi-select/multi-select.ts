@@ -6,6 +6,7 @@ import { repeat } from 'lit/directives/repeat.js';
 import { multiSelectStyles } from './multi-select.style.js';
 import { memoizeOne } from '../../utilities/memoize.js';
 import { booleanConverter } from '../../utilities/boolean-converter.js';
+import { FormControlMixin } from '../../utilities/form-control.js';
 
 export type MultiSelectSize = 'sm' | 'md' | 'lg';
 export type MultiSelectVariant =
@@ -17,7 +18,7 @@ export interface MultiSelectOption {
 }
 
 @customElement('bp-multi-select')
-export class BpMultiSelect extends LitElement {
+export class BpMultiSelect extends FormControlMixin(LitElement) {
   /** The current selected values as an array */
   @property({ type: Array }) declare value: string[];
 

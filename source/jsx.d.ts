@@ -43,6 +43,7 @@ import type {
   DrawerPlacement,
   DrawerSize,
 } from './components/drawer/drawer.js';
+import type { FieldsetOrientation } from './components/fieldset/fieldset.js';
 import type { GridAlign } from './components/grid/grid.js';
 import type {
   HeadingLevel,
@@ -87,6 +88,7 @@ import type {
   ProgressSize,
   ProgressVariant,
 } from './components/progress/progress.js';
+import type { RadioGroupOrientation } from './components/radio-group/radio-group.js';
 import type { RadioSize } from './components/radio/radio.js';
 import type { SelectSize } from './components/select/select.js';
 import type { SliderSize } from './components/slider/slider.js';
@@ -339,6 +341,15 @@ interface BpDropdownProps extends BaseHTMLAttributes {
   panelRole?: StringAttr<'menu' | 'dialog' | 'listbox'>;
 }
 
+interface BpFieldsetProps extends BaseHTMLAttributes {
+  legend?: string;
+  description?: string;
+  errorMessage?: string;
+  required?: BooleanAttr;
+  disabled?: BooleanAttr;
+  orientation?: StringAttr<FieldsetOrientation>;
+}
+
 interface BpFileUploadProps extends BaseHTMLAttributes {
   name?: string;
   label?: string;
@@ -544,6 +555,17 @@ interface BpRadioProps extends BaseHTMLAttributes {
   error?: BooleanAttr;
 }
 
+interface BpRadioGroupProps extends BaseHTMLAttributes {
+  label?: string;
+  description?: string;
+  errorMessage?: string;
+  name?: string;
+  value?: string;
+  required?: BooleanAttr;
+  disabled?: BooleanAttr;
+  orientation?: StringAttr<RadioGroupOrientation>;
+}
+
 interface BpSelectProps extends BaseHTMLAttributes {
   value?: string;
   name?: string;
@@ -734,6 +756,7 @@ export interface BlueprintElements {
   'bp-divider': BpDividerProps;
   'bp-drawer': BpDrawerProps;
   'bp-dropdown': BpDropdownProps;
+  'bp-fieldset': BpFieldsetProps;
   'bp-file-upload': BpFileUploadProps;
   'bp-grid': BpGridProps;
   'bp-heading': BpHeadingProps;
@@ -753,6 +776,7 @@ export interface BlueprintElements {
   'bp-popover': BpPopoverProps;
   'bp-progress': BpProgressProps;
   'bp-radio': BpRadioProps;
+  'bp-radio-group': BpRadioGroupProps;
   'bp-select': BpSelectProps;
   'bp-skeleton': BpSkeletonProps;
   'bp-slider': BpSliderProps;

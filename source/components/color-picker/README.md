@@ -147,6 +147,10 @@ A feature-rich color picker component that provides an accessible and intuitive 
 - `--bp-spacing-md` - Medium spacing
 - `--bp-shadow-md` - Popover shadow
 
+## Form integration
+
+A form-associated custom element: inside a `<form>` it submits its `value` under `name`, takes part in `checkValidity()`/`reportValidity()` (with `required` reporting a missing value), restores its initial value on reset, and is excluded from submission when `disabled`.
+
 ## Accessibility
 
 - Trigger button has `aria-haspopup="dialog"` and `aria-expanded`

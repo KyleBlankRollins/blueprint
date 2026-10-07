@@ -2,6 +2,10 @@ import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { datePickerStyles } from './date-picker.style.js';
+import {
+  FormControlMixin,
+  type FormValidity,
+} from '../../utilities/form-control.js';
 
 export type DatePickerSize = 'sm' | 'md' | 'lg';
 
@@ -24,7 +28,7 @@ export type DatePickerSize = 'sm' | 'md' | 'lg';
  * @csspart day - Individual day cell
  */
 @customElement('bp-date-picker')
-export class BpDatePicker extends LitElement {
+export class BpDatePicker extends FormControlMixin(LitElement) {
   @property({ type: String, reflect: true }) declare value: string;
   @property({ type: String }) declare name: string;
   @property({ type: String }) declare label: string;
@@ -323,6 +327,23 @@ export class BpDatePicker extends LitElement {
     }
 
     return days;
+  }
+
+  /** Report required and out-of-range dates to the enclosing form. */
+  getFormValidity(): FormValidity {
+    if (this.required && !this.value) {
+      return {
+        flags: { valueMissing: true },
+        message: 'Please choose a date.',
+      };
+    }
+    if (!this.checkValidity()) {
+      return {
+        flags: { customError: true },
+        message: 'Please choose a date within the allowed range.',
+      };
+    }
+    return { flags: {}, message: '' };
   }
 
   public checkValidity(): boolean {
