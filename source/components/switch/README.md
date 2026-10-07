@@ -64,6 +64,8 @@ A toggle switch component for binary on/off states with form integration and com
 </form>
 ```
 
+Setting `errorMessage` marks the switch invalid for its form, so `form.checkValidity()` fails and the form won't submit until you clear it.
+
 ### Settings panel
 
 ```html

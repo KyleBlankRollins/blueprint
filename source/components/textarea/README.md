@@ -160,6 +160,8 @@ A multi-line text input component with validation states, resizing options, and 
 
 A form-associated custom element: inside a `<form>` it submits its `value` under `name`, takes part in `checkValidity()`/`reportValidity()` (with `required` reporting a missing value), restores its initial value on reset, and is excluded from submission when `disabled`. Constraint validation (`required`, `minlength`, `maxlength`) is mirrored from the inner textarea.
 
+Setting `errorMessage` marks the control invalid for its form (like `setCustomValidity()`: `customError`, with the message as `validationMessage`), so the form won't submit until you clear it.
+
 ## Accessibility
 
 - **ARIA attributes**: `aria-invalid`, `aria-describedby` link error/helper messages

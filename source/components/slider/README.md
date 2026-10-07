@@ -117,6 +117,8 @@ A slider component for selecting numeric values within a range. Supports keyboar
 
 A form-associated custom element: inside a `<form>` it submits its `value` under `name`, takes part in `checkValidity()`/`reportValidity()` (with `required` reporting a missing value), restores its initial value on reset, and is excluded from submission when `disabled`.
 
+Setting `errorMessage` marks the control invalid for its form (like `setCustomValidity()`: `customError`, with the message as `validationMessage`), so the form won't submit until you clear it.
+
 ## Accessibility
 
 This component follows the [ARIA slider pattern](https://www.w3.org/WAI/ARIA/apg/patterns/slider/) with full keyboard and screen reader support.

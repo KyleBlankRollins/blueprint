@@ -353,6 +353,11 @@ export class BpNumberInput extends FormControlMixin(LitElement) {
     }
   }
 
+  /** The shown error, including the deprecated `message`, blocks submit. */
+  getCustomValidityMessage(): string {
+    return this.fieldMessage.errorMessage ?? '';
+  }
+
   /** Help/error text, including the deprecated `message` */
   private get fieldMessage() {
     const legacyError = this.variant === 'error' ? this.message : '';
