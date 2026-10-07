@@ -11,7 +11,6 @@
  * Run `npx bp generate jsx` to regenerate from component source files.
  */
 
-import type { AccordionVariant } from './components/accordion/accordion.js';
 import type { AlertVariant } from './components/alert/alert.js';
 import type {
   AvatarShape,
@@ -26,12 +25,12 @@ import type {
 import type { ButtonSize, ButtonVariant } from './components/button/button.js';
 import type { CardDirection, CardVariant } from './components/card/card.js';
 import type { CheckboxSize } from './components/checkbox/checkbox.js';
-import type { CodeBlockHighlightAdapter } from './components/code-block/code-block.js';
 import type { ColorPickerSize } from './components/color-picker/color-picker.js';
 import type {
   ComboboxSize,
   ComboboxVariant,
 } from './components/combobox/combobox.js';
+import type { ContainerSize } from './components/container/container.js';
 import type { DatePickerSize } from './components/date-picker/date-picker.js';
 import type {
   DividerColor,
@@ -44,6 +43,7 @@ import type {
   DrawerPlacement,
   DrawerSize,
 } from './components/drawer/drawer.js';
+import type { GridAlign } from './components/grid/grid.js';
 import type {
   HeadingLevel,
   HeadingSize,
@@ -88,6 +88,12 @@ import type {
   SpinnerSize,
   SpinnerVariant,
 } from './components/spinner/spinner.js';
+import type {
+  LayoutGap,
+  StackAlign,
+  StackDirection,
+  StackJustify,
+} from './components/stack/stack.js';
 import type {
   Step,
   StepperOrientation,
@@ -153,7 +159,6 @@ type BooleanAttr = boolean | 'true' | 'false' | '';
 type NumberAttr<T extends number = number> = T | `${number}`;
 
 interface BpAccordionProps extends BaseHTMLAttributes {
-  variant?: StringAttr<AccordionVariant>;
   multiple?: BooleanAttr;
   expandedItems?: string[];
   disabled?: BooleanAttr;
@@ -234,13 +239,13 @@ interface BpCheckboxProps extends BaseHTMLAttributes {
 interface BpCodeBlockProps extends BaseHTMLAttributes {
   code?: string;
   language?: string;
+  title?: string;
   showLineNumbers?: BooleanAttr;
   highlightLines?: number[];
   wrapLines?: BooleanAttr;
   showCopyButton?: BooleanAttr;
   maxLines?: NumberAttr;
   showHeader?: BooleanAttr;
-  highlightAdapter?: CodeBlockHighlightAdapter;
 }
 
 interface BpColorPickerProps extends BaseHTMLAttributes {
@@ -260,12 +265,18 @@ interface BpColorPickerProps extends BaseHTMLAttributes {
 interface BpComboboxProps extends BaseHTMLAttributes {
   value?: string;
   name?: string;
+  label?: string;
   placeholder?: string;
   disabled?: BooleanAttr;
   required?: BooleanAttr;
   size?: StringAttr<ComboboxSize>;
   variant?: StringAttr<ComboboxVariant>;
   allowCustomValue?: BooleanAttr;
+}
+
+interface BpContainerProps extends BaseHTMLAttributes {
+  size?: StringAttr<ContainerSize>;
+  gutter?: string;
 }
 
 interface BpDatePickerProps extends BaseHTMLAttributes {
@@ -338,6 +349,13 @@ interface BpFileUploadProps extends BaseHTMLAttributes {
   showPreviews?: BooleanAttr;
 }
 
+interface BpGridProps extends BaseHTMLAttributes {
+  columns?: NumberAttr;
+  minColumnWidth?: string;
+  gap?: string;
+  align?: StringAttr<GridAlign>;
+}
+
 interface BpHeadingProps extends BaseHTMLAttributes {
   level?: NumberAttr<HeadingLevel>;
   size?: StringAttr<HeadingSize>;
@@ -346,6 +364,7 @@ interface BpHeadingProps extends BaseHTMLAttributes {
 
 interface BpIconProps extends BaseHTMLAttributes {
   name?: StringAttr<IconName | ''>;
+  svg?: string;
   size?: StringAttr<IconSize>;
   color?: StringAttr<IconColor>;
   ariaLabel?: string;
@@ -409,6 +428,7 @@ interface BpModalProps extends BaseHTMLAttributes {
 interface BpMultiSelectProps extends BaseHTMLAttributes {
   value?: string[];
   name?: string;
+  label?: string;
   placeholder?: string;
   disabled?: BooleanAttr;
   required?: BooleanAttr;
@@ -536,6 +556,14 @@ interface BpSpinnerProps extends BaseHTMLAttributes {
   size?: StringAttr<SpinnerSize>;
   variant?: StringAttr<SpinnerVariant>;
   label?: string;
+}
+
+interface BpStackProps extends BaseHTMLAttributes {
+  direction?: StringAttr<StackDirection>;
+  gap?: StringAttr<LayoutGap>;
+  align?: StringAttr<StackAlign>;
+  justify?: StringAttr<StackJustify>;
+  wrap?: BooleanAttr;
 }
 
 interface BpStepperProps extends BaseHTMLAttributes {
@@ -677,11 +705,13 @@ export interface BlueprintElements {
   'bp-code-block': BpCodeBlockProps;
   'bp-color-picker': BpColorPickerProps;
   'bp-combobox': BpComboboxProps;
+  'bp-container': BpContainerProps;
   'bp-date-picker': BpDatePickerProps;
   'bp-divider': BpDividerProps;
   'bp-drawer': BpDrawerProps;
   'bp-dropdown': BpDropdownProps;
   'bp-file-upload': BpFileUploadProps;
+  'bp-grid': BpGridProps;
   'bp-heading': BpHeadingProps;
   'bp-icon': BpIconProps;
   'bp-input': BpInputProps;
@@ -701,6 +731,7 @@ export interface BlueprintElements {
   'bp-skeleton': BpSkeletonProps;
   'bp-slider': BpSliderProps;
   'bp-spinner': BpSpinnerProps;
+  'bp-stack': BpStackProps;
   'bp-stepper': BpStepperProps;
   'bp-switch': BpSwitchProps;
   'bp-tab-panel': BpTabPanelProps;

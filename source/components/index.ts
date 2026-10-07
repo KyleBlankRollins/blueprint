@@ -119,3 +119,6 @@ export type {
   HighlightResult,
 } from './code-block/code-block.js';
 export { plainTextAdapter } from './code-block/code-block.js';
+export { BpStack } from './stack/stack.js';
+export { BpGrid } from './grid/grid.js';
+export { BpContainer } from './container/container.js';
