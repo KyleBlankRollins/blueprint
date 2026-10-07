@@ -87,8 +87,7 @@ This component does not emit any custom events.
 - `--bp-color-error`
 - `--bp-color-warning`
 - `--bp-color-info`
-- `--bp-color-border-strong`
-- `--bp-color-text`
+- `--bp-color-secondary` (neutral)
 - `--bp-color-text-inverse`
 
 **Typography:**
