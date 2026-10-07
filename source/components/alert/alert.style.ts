@@ -107,11 +107,19 @@ export const alertStyles = css`
     color: var(--bp-color-text);
   }
 
+  .alert--info .alert-icon {
+    color: var(--bp-color-info);
+  }
+
   .alert--success {
     background-color: var(--bp-color-surface-elevated);
     border-color: var(--bp-color-success);
     border-left-width: var(--bp-spacing-1);
     color: var(--bp-color-text);
+  }
+
+  .alert--success .alert-icon {
+    color: var(--bp-color-success);
   }
 
   .alert--warning {
@@ -122,11 +130,19 @@ export const alertStyles = css`
     box-shadow: var(--bp-shadow-sm);
   }
 
+  .alert--warning .alert-icon {
+    color: var(--bp-color-warning);
+  }
+
   .alert--error {
     background-color: var(--bp-color-surface-elevated);
     border-color: var(--bp-color-error);
     border-left-width: var(--bp-spacing-1);
     color: var(--bp-color-text);
     box-shadow: var(--bp-shadow-sm);
+  }
+
+  .alert--error .alert-icon {
+    color: var(--bp-color-error);
   }
 `;

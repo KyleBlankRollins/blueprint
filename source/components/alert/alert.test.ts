@@ -230,6 +230,41 @@ describe('bp-alert', () => {
     expect(icon?.svg).toBe(crossCircleSvg);
   });
 
+  it('should color the variant icon with its variant color', async () => {
+    const colors = {
+      info: 'rgb(1, 2, 3)',
+      success: 'rgb(4, 5, 6)',
+      warning: 'rgb(7, 8, 9)',
+      error: 'rgb(10, 11, 12)',
+    } as const;
+    for (const [variant, rgb] of Object.entries(colors)) {
+      element.style.setProperty(`--bp-color-${variant}`, rgb);
+    }
+    element.style.setProperty('--bp-color-text', 'rgb(99, 99, 99)');
+    element.showIcon = true;
+    element.dismissible = true;
+
+    for (const [variant, rgb] of Object.entries(colors)) {
+      element.variant = variant as BpAlert['variant'];
+      await element.updateComplete;
+
+      const iconContainer = element.shadowRoot?.querySelector(
+        '.alert-icon'
+      ) as HTMLElement;
+      expect(getComputedStyle(iconContainer).color).toBe(rgb);
+      const icon = element.shadowRoot?.querySelector(
+        '.alert-icon bp-icon'
+      ) as HTMLElement;
+      expect(getComputedStyle(icon).color).toBe(rgb);
+    }
+
+    // The dismiss button keeps the body text color.
+    const closeButton = element.shadowRoot?.querySelector(
+      '.alert-close'
+    ) as HTMLElement;
+    expect(getComputedStyle(closeButton).color).toBe('rgb(99, 99, 99)');
+  });
+
   it('should not render icon when showIcon is false', async () => {
     element.showIcon = false;
     await element.updateComplete;

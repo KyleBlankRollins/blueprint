@@ -6,7 +6,7 @@ A notification message component to display important information, feedback, or 
 
 - 4 semantic variants (info, success, warning, error)
 - Optional dismiss functionality
-- Built-in icons or custom icon slot
+- Built-in icons or custom icon slot; the icon takes the variant's color (custom icons drawn with `currentColor` do too)
 - ARIA-compliant for screen readers
 - Flexible content through default slot
 - Fully customizable via CSS parts
@@ -80,7 +80,7 @@ A notification message component to display important information, feedback, or 
 
 ## Design Tokens Used
 
-- **Colors:** `--bp-blue-50`, `--bp-blue-400`, `--bp-blue-900`, `--bp-green-100`, `--bp-green-600`, `--bp-green-900`, `--bp-yellow-200`, `--bp-yellow-700`, `--bp-yellow-900`, `--bp-red-200`, `--bp-red-700`, `--bp-red-900`
+- **Colors:** `--bp-color-surface-elevated`, `--bp-color-text`, `--bp-color-info`, `--bp-color-success`, `--bp-color-warning`, `--bp-color-error` (each variant's color is used for its left border and its icon)
 - **Spacing:** `--bp-spacing-md`, `--bp-spacing-lg`, `--bp-spacing-sm`, `--bp-spacing-xs`, `--bp-spacing-2xs`
 - **Typography:** `--bp-font-family-sans`, `--bp-font-size-base`, `--bp-font-weight-semibold`, `--bp-line-height-relaxed`, `--bp-line-height-tight`
 - **Borders:** `--bp-border-radius-md`, `--bp-border-radius-sm`, `--bp-border-width`
@@ -94,4 +94,5 @@ A notification message component to display important information, feedback, or 
 - Uses `aria-live="polite"` to announce changes without interrupting
 - Close button includes `aria-label="Close alert"` for clarity
 - Semantic color variants help convey meaning beyond color alone
+- Variant icon colors meet 3:1 non-text contrast against the alert background in the light and dark themes
 - Keyboard accessible dismiss button
