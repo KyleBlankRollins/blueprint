@@ -30,5 +30,3 @@ export function registerIcon(name: string, svg: string): void {
 export function getIconSvg(name: string): string | undefined {
   return registry.get(name);
 }
-
-

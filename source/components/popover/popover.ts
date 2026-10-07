@@ -44,7 +44,8 @@ export type PopoverTrigger = 'click' | 'hover' | 'focus' | 'manual';
  * @csspart close-button - The close button (when showClose is true)
  */
 @customElement('bp-popover')
-export class BpPopover extends LitElement {  /**
+export class BpPopover extends LitElement {
+  /**
    * Child components that self-register as custom elements on import.
    * Value imports prevent bundler tree-shaking of the registration side effect.
    */
@@ -405,9 +406,9 @@ export class BpPopover extends LitElement {  /**
   render() {
     return html`
       <div
-        class="popover ${this.open ? 'popover--open' : ''} ${this.disabled
-          ? 'popover--disabled'
-          : ''}"
+        class="popover ${this.open ? 'popover--open' : ''} ${
+          this.disabled ? 'popover--disabled' : ''
+        }"
       >
         <div
           class="popover__trigger"
@@ -427,67 +428,80 @@ export class BpPopover extends LitElement {  /**
         >
           <slot></slot>
         </div>
-        ${this.open
-          ? html`
-              <div
-                id=${this.popoverId}
-                class="popover__panel popover__panel--${this.placement}"
-                part="panel"
-                role="dialog"
-                aria-label=${this.label || nothing}
-                aria-modal="false"
-                style="--popover-distance: ${this.distance}px;"
-                @mouseenter=${this.handlePanelMouseEnter}
-                @mouseleave=${this.handlePanelMouseLeave}
-              >
-                ${this.arrow
-                  ? html`<div class="popover__arrow" part="arrow"></div>`
-                  : nothing}
-                ${this.hasHeader || this.showClose
-                  ? html`
-                      <div class="popover__header" part="header">
-                        <slot
+        ${
+          this.open
+            ? html`
+                <div
+                  id=${this.popoverId}
+                  class="popover__panel popover__panel--${this.placement}"
+                  part="panel"
+                  role="dialog"
+                  aria-label=${this.label || nothing}
+                  aria-modal="false"
+                  style="--popover-distance: ${this.distance}px;"
+                  @mouseenter=${this.handlePanelMouseEnter}
+                  @mouseleave=${this.handlePanelMouseLeave}
+                >
+                  ${
+                    this.arrow
+                      ? html`<div class="popover__arrow" part="arrow"></div>`
+                      : nothing
+                  }
+                  ${
+                    this.hasHeader || this.showClose
+                      ? html`
+                          <div class="popover__header" part="header">
+                            <slot
+                              name="header"
+                              @slotchange=${this.handleHeaderSlotChange}
+                            ></slot>
+                            ${
+                              this.showClose
+                                ? html`
+                                    <button
+                                      class="popover__close"
+                                      part="close-button"
+                                      type="button"
+                                      aria-label="Close popover"
+                                      @click=${this.handleCloseClick}
+                                    >
+                                      <bp-icon
+                                        .svg=${closeSvg}
+                                        size="sm"
+                                      ></bp-icon>
+                                    </button>
+                                  `
+                                : nothing
+                            }
+                          </div>
+                        `
+                      : html`<slot
                           name="header"
                           @slotchange=${this.handleHeaderSlotChange}
-                        ></slot>
-                        ${this.showClose
-                          ? html`
-                              <button
-                                class="popover__close"
-                                part="close-button"
-                                type="button"
-                                aria-label="Close popover"
-                                @click=${this.handleCloseClick}
-                              >
-                                <bp-icon .svg=${closeSvg} size="sm"></bp-icon>
-                              </button>
-                            `
-                          : nothing}
-                      </div>
-                    `
-                  : html`<slot
-                      name="header"
-                      @slotchange=${this.handleHeaderSlotChange}
-                    ></slot>`}
-                <div class="popover__body" part="body">
-                  <slot name="content"></slot>
-                </div>
-                ${this.hasFooter
-                  ? html`
-                      <div class="popover__footer" part="footer">
-                        <slot
+                        ></slot>`
+                  }
+                  <div class="popover__body" part="body">
+                    <slot name="content"></slot>
+                  </div>
+                  ${
+                    this.hasFooter
+                      ? html`
+                          <div class="popover__footer" part="footer">
+                            <slot
+                              name="footer"
+                              @slotchange=${this.handleFooterSlotChange}
+                            ></slot>
+                          </div>
+                        `
+                      : html`<slot
                           name="footer"
                           @slotchange=${this.handleFooterSlotChange}
-                        ></slot>
-                      </div>
-                    `
-                  : html`<slot
-                      name="footer"
-                      @slotchange=${this.handleFooterSlotChange}
-                    ></slot>`}
-              </div>
-            `
-          : nothing}
+                        ></slot>`
+                  }
+                </div>
+              `
+            : nothing
+        }
       </div>
     `;
   }

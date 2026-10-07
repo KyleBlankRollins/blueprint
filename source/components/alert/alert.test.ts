@@ -195,7 +195,9 @@ describe('bp-alert', () => {
     element.showIcon = true;
     await element.updateComplete;
 
-    const icon = element.shadowRoot?.querySelector('.alert-icon bp-icon') as HTMLElement & { svg: string };
+    const icon = element.shadowRoot?.querySelector(
+      '.alert-icon bp-icon'
+    ) as HTMLElement & { svg: string };
     expect(icon).toBeTruthy();
     expect(icon?.svg).toBe(infoCircleSvg);
   });
@@ -205,7 +207,9 @@ describe('bp-alert', () => {
     element.showIcon = true;
     await element.updateComplete;
 
-    const icon = element.shadowRoot?.querySelector('.alert-icon bp-icon') as HTMLElement & { svg: string };
+    const icon = element.shadowRoot?.querySelector(
+      '.alert-icon bp-icon'
+    ) as HTMLElement & { svg: string };
     expect(icon).toBeTruthy();
     expect(icon?.svg).toBe(checkCircleSvg);
   });
@@ -215,7 +219,9 @@ describe('bp-alert', () => {
     element.showIcon = true;
     await element.updateComplete;
 
-    const icon = element.shadowRoot?.querySelector('.alert-icon bp-icon') as HTMLElement & { svg: string };
+    const icon = element.shadowRoot?.querySelector(
+      '.alert-icon bp-icon'
+    ) as HTMLElement & { svg: string };
     expect(icon).toBeTruthy();
     expect(icon?.svg).toBe(warningCircleSvg);
   });
@@ -225,7 +231,9 @@ describe('bp-alert', () => {
     element.showIcon = true;
     await element.updateComplete;
 
-    const icon = element.shadowRoot?.querySelector('.alert-icon bp-icon') as HTMLElement & { svg: string };
+    const icon = element.shadowRoot?.querySelector(
+      '.alert-icon bp-icon'
+    ) as HTMLElement & { svg: string };
     expect(icon).toBeTruthy();
     expect(icon?.svg).toBe(crossCircleSvg);
   });

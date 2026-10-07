@@ -9,22 +9,9 @@ import type { IconName } from './icons/icon-name.generated.js';
 export type { IconName } from './icons/icon-name.generated.js';
 
 export type IconSize =
-  | 'xs'
-  | 'sm'
-  | 'md'
-  | 'lg'
-  | 'xl'
-  | '2xl'
-  | '3xl'
-  | '4xl'
-  | 'full';
+  'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | 'full';
 export type IconColor =
-  | 'default'
-  | 'primary'
-  | 'success'
-  | 'warning'
-  | 'error'
-  | 'muted';
+  'default' | 'primary' | 'success' | 'warning' | 'error' | 'muted';
 
 /**
  * Icon component - SVG icon wrapper with size variants
@@ -140,9 +127,7 @@ export class BpIcon extends LitElement {
     }
 
     try {
-      const { loadIconByName } = await import(
-        './icons/resolver.generated.js'
-      );
+      const { loadIconByName } = await import('./icons/resolver.generated.js');
       const svg = await loadIconByName(name);
 
       if (svg && this._loadingName === name) {
