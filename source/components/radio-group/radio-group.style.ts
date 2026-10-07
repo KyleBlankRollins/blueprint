@@ -19,13 +19,6 @@ export const radioGroupStyles = css`
     margin-left: var(--bp-spacing-xs);
   }
 
-  .radio-group__description {
-    margin: 0 0 var(--bp-spacing-sm);
-    font-size: var(--bp-font-size-sm);
-    line-height: var(--bp-line-height-normal);
-    color: var(--bp-color-text-muted);
-  }
-
   .radio-group__options {
     display: flex;
     flex-direction: column;
@@ -37,12 +30,5 @@ export const radioGroupStyles = css`
     flex-wrap: wrap;
     align-items: center;
     gap: var(--bp-spacing-sm) var(--bp-spacing-lg);
-  }
-
-  .radio-group__error {
-    margin: var(--bp-spacing-xs) 0 0;
-    font-size: var(--bp-font-size-sm);
-    line-height: var(--bp-line-height-normal);
-    color: var(--bp-color-error);
   }
 `;

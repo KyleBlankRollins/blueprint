@@ -117,16 +117,16 @@ import '@krollins/blueprint/file-upload';
 
 <ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
-    <bp-file-upload variant="success" label="Uploaded" message="File uploaded successfully"></bp-file-upload>
-    <bp-file-upload variant="error" label="Error" message="File too large"></bp-file-upload>
-    <bp-file-upload variant="warning" label="Warning" message="File may be too small"></bp-file-upload>
+    <bp-file-upload variant="success" label="Uploaded" helperText="File uploaded successfully"></bp-file-upload>
+    <bp-file-upload variant="error" label="Error" errorMessage="File too large"></bp-file-upload>
+    <bp-file-upload variant="warning" label="Warning" helperText="File may be too small"></bp-file-upload>
   </div>
 </ComponentPreview>
 
 ```html
-<bp-file-upload variant="success" message="Upload successful"></bp-file-upload>
-<bp-file-upload variant="error" message="File too large"></bp-file-upload>
-<bp-file-upload variant="warning" message="Check file format"></bp-file-upload>
+<bp-file-upload variant="success" helperText="Upload successful"></bp-file-upload>
+<bp-file-upload variant="error" errorMessage="File too large"></bp-file-upload>
+<bp-file-upload variant="warning" helperText="Check file format"></bp-file-upload>
 ```
 
 ### Disabled

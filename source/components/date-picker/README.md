@@ -94,18 +94,20 @@ A calendar-based date picker component that allows users to select dates through
 
 ### Properties
 
-| Property         | Type                   | Default           | Description                                  |
-| ---------------- | ---------------------- | ----------------- | -------------------------------------------- |
-| `value`          | `string`               | `''`              | Selected date in YYYY-MM-DD format           |
-| `name`           | `string`               | `''`              | Form field name for form submissions         |
-| `label`          | `string`               | `''`              | Accessible label for screen readers          |
-| `placeholder`    | `string`               | `'Select a date'` | Placeholder text shown when no date selected |
-| `disabled`       | `boolean`              | `false`           | Disables the date picker                     |
-| `required`       | `boolean`              | `false`           | Marks the field as required for forms        |
-| `size`           | `'sm' \| 'md' \| 'lg'` | `'md'`            | Visual size of the date picker               |
-| `min`            | `string`               | `''`              | Minimum selectable date in YYYY-MM-DD format |
-| `max`            | `string`               | `''`              | Maximum selectable date in YYYY-MM-DD format |
-| `firstDayOfWeek` | `0 \| 1`               | `0`               | First day of week (0 = Sunday, 1 = Monday)   |
+| Property         | Type                   | Default           | Description                                                                                                                                                    |
+| ---------------- | ---------------------- | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`          | `string`               | `''`              | Selected date in YYYY-MM-DD format                                                                                                                             |
+| `name`           | `string`               | `''`              | Form field name for form submissions                                                                                                                           |
+| `label`          | `string`               | `''`              | Visible label above the input                                                                                                                                  |
+| `helperText`     | `string`               | `''`              | Helper text below the date picker, linked with `aria-describedby`                                                                                              |
+| `errorMessage`   | `string`               | `''`              | Error text. When set, the date picker is invalid: the message replaces the helper text, is announced (`role="alert"`), and the border turns to the error color |
+| `placeholder`    | `string`               | `'Select a date'` | Placeholder text shown when no date selected                                                                                                                   |
+| `disabled`       | `boolean`              | `false`           | Disables the date picker                                                                                                                                       |
+| `required`       | `boolean`              | `false`           | Marks the field as required for forms                                                                                                                          |
+| `size`           | `'sm' \| 'md' \| 'lg'` | `'md'`            | Visual size of the date picker                                                                                                                                 |
+| `min`            | `string`               | `''`              | Minimum selectable date in YYYY-MM-DD format                                                                                                                   |
+| `max`            | `string`               | `''`              | Maximum selectable date in YYYY-MM-DD format                                                                                                                   |
+| `firstDayOfWeek` | `0 \| 1`               | `0`               | First day of week (0 = Sunday, 1 = Monday)                                                                                                                     |
 
 ### Events
 

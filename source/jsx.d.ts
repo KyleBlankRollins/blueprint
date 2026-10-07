@@ -242,6 +242,8 @@ interface BpCheckboxProps extends BaseHTMLAttributes {
   value?: string;
   size?: StringAttr<CheckboxSize>;
   error?: BooleanAttr;
+  helperText?: string;
+  errorMessage?: string;
 }
 
 interface BpCodeBlockProps extends BaseHTMLAttributes {
@@ -266,6 +268,8 @@ interface BpColorPickerProps extends BaseHTMLAttributes {
   readonly?: BooleanAttr;
   size?: StringAttr<ColorPickerSize>;
   label?: string;
+  helperText?: string;
+  errorMessage?: string;
   name?: string;
   placeholder?: string;
 }
@@ -274,6 +278,8 @@ interface BpComboboxProps extends BaseHTMLAttributes {
   value?: string;
   name?: string;
   label?: string;
+  helperText?: string;
+  errorMessage?: string;
   placeholder?: string;
   disabled?: BooleanAttr;
   required?: BooleanAttr;
@@ -291,6 +297,8 @@ interface BpDatePickerProps extends BaseHTMLAttributes {
   value?: string;
   name?: string;
   label?: string;
+  helperText?: string;
+  errorMessage?: string;
   placeholder?: string;
   disabled?: BooleanAttr;
   required?: BooleanAttr;
@@ -361,6 +369,8 @@ interface BpFileUploadProps extends BaseHTMLAttributes {
   disabled?: BooleanAttr;
   required?: BooleanAttr;
   variant?: StringAttr<'default' | 'success' | 'error' | 'warning'>;
+  helperText?: string;
+  errorMessage?: string;
   message?: string;
   size?: StringAttr<'sm' | 'md' | 'lg'>;
   showPreviews?: BooleanAttr;
@@ -456,6 +466,8 @@ interface BpMultiSelectProps extends BaseHTMLAttributes {
   value?: string[];
   name?: string;
   label?: string;
+  helperText?: string;
+  errorMessage?: string;
   placeholder?: string;
   disabled?: BooleanAttr;
   required?: BooleanAttr;
@@ -503,6 +515,8 @@ interface BpNumberInputProps extends BaseHTMLAttributes {
   readonly?: BooleanAttr;
   size?: StringAttr<NumberInputSize>;
   variant?: StringAttr<NumberInputVariant>;
+  helperText?: string;
+  errorMessage?: string;
   message?: string;
   precision?: NumberAttr;
   hideButtons?: BooleanAttr;
@@ -557,8 +571,9 @@ interface BpRadioProps extends BaseHTMLAttributes {
 
 interface BpRadioGroupProps extends BaseHTMLAttributes {
   label?: string;
-  description?: string;
+  helperText?: string;
   errorMessage?: string;
+  description?: string;
   name?: string;
   value?: string;
   required?: BooleanAttr;
@@ -570,6 +585,8 @@ interface BpSelectProps extends BaseHTMLAttributes {
   value?: string;
   name?: string;
   label?: string;
+  helperText?: string;
+  errorMessage?: string;
   placeholder?: string;
   disabled?: BooleanAttr;
   required?: BooleanAttr;
@@ -592,6 +609,8 @@ interface BpSliderProps extends BaseHTMLAttributes {
   step?: NumberAttr;
   name?: string;
   label?: string;
+  helperText?: string;
+  errorMessage?: string;
   disabled?: BooleanAttr;
   size?: StringAttr<SliderSize>;
   showValue?: BooleanAttr;
@@ -632,6 +651,8 @@ interface BpSwitchProps extends BaseHTMLAttributes {
   value?: string;
   size?: StringAttr<SwitchSize>;
   error?: BooleanAttr;
+  helperText?: string;
+  errorMessage?: string;
 }
 
 interface BpTabPanelProps extends BaseHTMLAttributes {
@@ -712,6 +733,8 @@ interface BpTimePickerProps extends BaseHTMLAttributes {
   value?: string;
   name?: string;
   label?: string;
+  helperText?: string;
+  errorMessage?: string;
   placeholder?: string;
   disabled?: BooleanAttr;
   required?: BooleanAttr;

@@ -5,6 +5,11 @@ import { repeat } from 'lit/directives/repeat.js';
 import { sliderStyles } from './slider.style.js';
 import { throttle } from '../../utilities/throttle.js';
 import { FormControlMixin } from '../../utilities/form-control.js';
+import {
+  fieldMessageState,
+  renderFieldMessage,
+  fieldMessageStyles,
+} from '../../utilities/field-message.js';
 
 /**
  * Size variants for the slider
@@ -57,6 +62,15 @@ export class BpSlider extends FormControlMixin(LitElement) {
    */
   @property({ type: String }) declare label: string;
 
+  /** Helper text displayed below the slider */
+  @property({ type: String }) declare helperText: string;
+
+  /**
+   * Error text. When set, the slider is invalid: the message replaces the
+   * helper text, is announced, and the thumb and fill turn to the error color.
+   */
+  @property({ type: String }) declare errorMessage: string;
+
   /**
    * Whether the slider is disabled
    */
@@ -101,7 +115,7 @@ export class BpSlider extends FormControlMixin(LitElement) {
     this.updateValueFromPosition(clientX);
   }, 16);
 
-  static styles = [sliderStyles];
+  static styles = [fieldMessageStyles, sliderStyles];
 
   constructor() {
     super();
@@ -111,6 +125,8 @@ export class BpSlider extends FormControlMixin(LitElement) {
     this.step = 1;
     this.name = '';
     this.label = '';
+    this.helperText = '';
+    this.errorMessage = '';
     this.disabled = false;
     this.size = 'md';
     this.showValue = false;
@@ -329,11 +345,18 @@ export class BpSlider extends FormControlMixin(LitElement) {
   }
 
   render() {
+    const message = {
+      helperText: this.helperText,
+      errorMessage: this.errorMessage,
+      invalid: false,
+    };
+    const { invalid, describedBy } = fieldMessageState(message);
     const wrapperClasses = {
       slider: true,
       [`slider--${this.size}`]: true,
       'slider--disabled': this.disabled,
       'slider--dragging': this.isDragging,
+      'slider--invalid': invalid,
     };
 
     return html`
@@ -400,6 +423,8 @@ export class BpSlider extends FormControlMixin(LitElement) {
             aria-valuenow=${this.value}
             aria-valuetext=${this.formatValue(this.value)}
             aria-disabled=${this.disabled}
+            aria-invalid=${invalid ? 'true' : nothing}
+            aria-describedby=${describedBy ?? nothing}
             style="left: ${this.percentage}%"
             @keydown=${this.handleKeyDown}
           ></div>
@@ -414,6 +439,7 @@ export class BpSlider extends FormControlMixin(LitElement) {
             : nothing
         }
       </div>
+      ${renderFieldMessage(message)}
     `;
   }
 }

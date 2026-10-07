@@ -1,8 +1,13 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { timePickerStyles } from './time-picker.style.js';
 import { FormControlMixin } from '../../utilities/form-control.js';
+import {
+  fieldMessageState,
+  renderFieldMessage,
+  fieldMessageStyles,
+} from '../../utilities/field-message.js';
 
 export type TimePickerSize = 'sm' | 'md' | 'lg';
 export type TimeFormat = '12' | '24';
@@ -26,6 +31,15 @@ export class BpTimePicker extends FormControlMixin(LitElement) {
   @property({ type: String }) declare value: string;
   @property({ type: String }) declare name: string;
   @property({ type: String }) declare label: string;
+
+  /** Helper text displayed below the time picker */
+  @property({ type: String }) declare helperText: string;
+
+  /**
+   * Error text. When set, the time picker is invalid: the message replaces the
+   * helper text, is announced, and the border turns to the error color.
+   */
+  @property({ type: String }) declare errorMessage: string;
   @property({ type: String }) declare placeholder: string;
   @property({ type: Boolean }) declare disabled: boolean;
   @property({ type: Boolean }) declare required: boolean;
@@ -37,13 +51,15 @@ export class BpTimePicker extends FormControlMixin(LitElement) {
   @state() private focusedHour: number | null = null;
   @state() private focusedMinute: number | null = null;
 
-  static styles = [timePickerStyles];
+  static styles = [fieldMessageStyles, timePickerStyles];
 
   constructor() {
     super();
     this.value = '';
     this.name = '';
     this.label = '';
+    this.helperText = '';
+    this.errorMessage = '';
     this.placeholder = 'Select time';
     this.disabled = false;
     this.required = false;
@@ -242,11 +258,21 @@ export class BpTimePicker extends FormControlMixin(LitElement) {
   }
 
   render() {
+    const message = {
+      helperText: this.helperText,
+      errorMessage: this.errorMessage,
+      invalid: false,
+    };
+    const { invalid, describedBy } = fieldMessageState(message);
     const displayValue = this.getDisplayValue();
     const timeOptions = this.generateTimeOptions();
 
     return html`
-      <div class="time-picker time-picker--${this.size}">
+      <div
+        class="time-picker time-picker--${this.size} ${
+          invalid ? 'time-picker--invalid' : ''
+        }"
+      >
         ${
           this.label
             ? html`
@@ -280,6 +306,8 @@ export class BpTimePicker extends FormControlMixin(LitElement) {
             aria-expanded=${this.isOpen}
             aria-disabled=${this.disabled}
             aria-label=${this.label || this.placeholder || 'Time picker'}
+            aria-invalid=${invalid ? 'true' : nothing}
+            aria-describedby=${describedBy ?? nothing}
             @click=${this.toggleDropdown}
           />
           ${
@@ -349,6 +377,7 @@ export class BpTimePicker extends FormControlMixin(LitElement) {
             : ''
         }
       </div>
+      ${renderFieldMessage(message)}
     `;
   }
 }

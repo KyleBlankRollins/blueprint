@@ -1,8 +1,13 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, nothing } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
 import { checkboxStyles } from './checkbox.style.js';
+import {
+  fieldMessageState,
+  renderFieldMessage,
+  fieldMessageStyles,
+} from '../../utilities/field-message.js';
 
 export type CheckboxSize = 'sm' | 'md' | 'lg';
 
@@ -76,9 +81,18 @@ export class BpCheckbox extends LitElement {
    */
   @property({ type: Boolean, reflect: true }) declare error: boolean;
 
+  /** Helper text displayed below the checkbox */
+  @property({ type: String }) declare helperText: string;
+
+  /**
+   * Error text. When set, the checkbox is invalid: the message replaces the
+   * helper text, is announced, and the control turns to the error color.
+   */
+  @property({ type: String }) declare errorMessage: string;
+
   @state() private hasFocus = false;
 
-  static styles = [checkboxStyles];
+  static styles = [fieldMessageStyles, checkboxStyles];
 
   static formAssociated = true;
 
@@ -94,6 +108,8 @@ export class BpCheckbox extends LitElement {
     this.value = 'on';
     this.size = 'md';
     this.error = false;
+    this.helperText = '';
+    this.errorMessage = '';
 
     // attachInternals may not be available in all environments (e.g., test)
     if (typeof this.attachInternals === 'function') {
@@ -174,13 +190,19 @@ export class BpCheckbox extends LitElement {
   }
 
   render() {
+    const message = {
+      helperText: this.helperText,
+      errorMessage: this.errorMessage,
+      invalid: this.error,
+    };
+    const { invalid, describedBy } = fieldMessageState(message);
     const classes = [
       'checkbox',
       `checkbox--${this.size}`,
       this.checked ? 'checkbox--checked' : '',
       this.indeterminate ? 'checkbox--indeterminate' : '',
       this.disabled ? 'checkbox--disabled' : '',
-      this.error ? 'checkbox--error' : '',
+      invalid ? 'checkbox--error' : '',
       this.hasFocus ? 'checkbox--focused' : '',
     ]
       .filter(Boolean)
@@ -199,6 +221,8 @@ export class BpCheckbox extends LitElement {
           name=${ifDefined(this.name || undefined)}
           value=${this.value}
           aria-checked=${this.indeterminate ? 'mixed' : this.checked}
+          aria-invalid=${invalid ? 'true' : nothing}
+          aria-describedby=${describedBy ?? nothing}
           @change=${this.handleChange}
           @focus=${this.handleFocus}
           @blur=${this.handleBlur}
@@ -240,6 +264,7 @@ export class BpCheckbox extends LitElement {
           <slot></slot>
         </span>
       </label>
+      ${renderFieldMessage(message)}
     `;
   }
 }

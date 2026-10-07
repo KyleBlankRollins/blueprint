@@ -297,21 +297,16 @@ export const fileUploadStyles = css`
   }
 
   /* Message */
-  .file-upload__message {
-    font-size: var(--bp-font-size-sm);
-    color: var(--bp-color-text-muted);
-    line-height: var(--bp-line-height-normal);
+  /* Help and error text: spaced by the wrapper's gap */
+  .field-message {
+    margin-top: 0;
   }
 
-  .file-upload__message--success {
+  .file-upload--success .field-message {
     color: var(--bp-color-success);
   }
 
-  .file-upload__message--error {
-    color: var(--bp-color-error);
-  }
-
-  .file-upload__message--warning {
+  .file-upload--warning .field-message {
     color: var(--bp-color-warning);
   }
 `;

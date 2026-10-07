@@ -7,6 +7,21 @@ export const datePickerStyles = css`
     width: 100%;
   }
 
+  .date-picker__label {
+    display: block;
+    font-family: var(--bp-font-family);
+    font-size: var(--bp-font-size-sm);
+    font-weight: var(--bp-font-weight-medium);
+    color: var(--bp-color-text);
+    line-height: var(--bp-line-height-normal);
+    margin-bottom: var(--bp-spacing-xs);
+  }
+
+  .date-picker__required {
+    color: var(--bp-color-error);
+    margin-left: var(--bp-spacing-xs);
+  }
+
   .date-picker__input-wrapper {
     position: relative;
     display: flex;
@@ -37,6 +52,13 @@ export const datePickerStyles = css`
   .date-picker__input:focus {
     border-color: var(--bp-color-focus);
     box-shadow: 0 0 0 var(--bp-focus-width) var(--bp-color-focus);
+  }
+
+  /* Invalid: error border, also while hovered or focused */
+  .date-picker--invalid .date-picker__input,
+  .date-picker--invalid .date-picker__input:hover:not(:disabled),
+  .date-picker--invalid .date-picker__input:focus {
+    border-color: var(--bp-color-error);
   }
 
   .date-picker__input:disabled {

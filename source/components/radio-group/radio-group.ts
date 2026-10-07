@@ -3,6 +3,11 @@ import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { radioGroupStyles } from './radio-group.style.js';
 import { FormControlMixin } from '../../utilities/form-control.js';
+import {
+  fieldMessageState,
+  renderFieldMessage,
+  fieldMessageStyles,
+} from '../../utilities/field-message.js';
 import type { BpRadio } from '../radio/radio.js';
 
 export type RadioGroupOrientation = 'vertical' | 'horizontal';
@@ -28,20 +33,26 @@ const PREV_KEYS = ['ArrowUp', 'ArrowLeft'];
  *
  * @csspart group - The element with role="radiogroup"
  * @csspart label - The group label
- * @csspart description - The description text
+ * @csspart helper-text - The helper text
  * @csspart options - The wrapper around the radios
- * @csspart error - The error message
+ * @csspart error-message - The error message
  */
 @customElement('bp-radio-group')
 export class BpRadioGroup extends FormControlMixin(LitElement) {
   /** Visible group label */
   @property({ type: String }) declare label: string;
 
-  /** Helper text shown under the label and linked to the group */
-  @property({ type: String }) declare description: string;
+  /** Helper text displayed below the options */
+  @property({ type: String }) declare helperText: string;
 
-  /** Error text. When set, the group is marked invalid and the message is announced */
+  /**
+   * Error text. When set, the group is invalid: the message replaces the
+   * helper text and is announced.
+   */
   @property({ type: String }) declare errorMessage: string;
+
+  /** @deprecated Use `helperText`. */
+  @property({ type: String }) declare description: string;
 
   /** Name submitted with the form */
   @property({ type: String, reflect: true }) declare name: string;
@@ -62,12 +73,13 @@ export class BpRadioGroup extends FormControlMixin(LitElement) {
   /** Radios this group disabled, so re-enabling leaves the rest alone */
   private disabledByGroup = new Set<BpRadio>();
 
-  static styles = [radioGroupStyles];
+  static styles = [fieldMessageStyles, radioGroupStyles];
 
   constructor() {
     super();
     this.label = '';
     this.description = '';
+    this.helperText = '';
     this.errorMessage = '';
     this.name = '';
     this.value = '';
@@ -188,25 +200,25 @@ export class BpRadioGroup extends FormControlMixin(LitElement) {
   }
 
   render() {
-    const hasError = Boolean(this.errorMessage);
-    const describedBy =
-      [this.description ? 'description' : '', hasError ? 'error-message' : '']
-        .filter(Boolean)
-        .join(' ') || nothing;
+    const message = {
+      helperText: this.helperText || this.description,
+      errorMessage: this.errorMessage,
+    };
+    const { invalid, describedBy } = fieldMessageState(message);
 
     return html`
       <div
         class=${classMap({
           'radio-group': true,
           [`radio-group--${this.orientation}`]: true,
-          'radio-group--invalid': hasError,
+          'radio-group--invalid': invalid,
         })}
         part="group"
         role="radiogroup"
         aria-labelledby=${this.label ? 'label' : nothing}
-        aria-describedby=${describedBy}
+        aria-describedby=${describedBy ?? nothing}
         aria-required=${this.required ? 'true' : nothing}
-        aria-invalid=${hasError ? 'true' : nothing}
+        aria-invalid=${invalid ? 'true' : nothing}
         aria-disabled=${this.disabled ? 'true' : nothing}
       >
         ${
@@ -225,32 +237,10 @@ export class BpRadioGroup extends FormControlMixin(LitElement) {
               </div>`
             : nothing
         }
-        ${
-          this.description
-            ? html`<p
-                id="description"
-                class="radio-group__description"
-                part="description"
-              >
-                ${this.description}
-              </p>`
-            : nothing
-        }
         <div class="radio-group__options" part="options">
           <slot @slotchange=${this.handleSlotChange}></slot>
         </div>
-        ${
-          hasError
-            ? html`<p
-                id="error-message"
-                class="radio-group__error"
-                part="error"
-                role="alert"
-              >
-                ${this.errorMessage}
-              </p>`
-            : nothing
-        }
+        ${renderFieldMessage(message)}
       </div>
     `;
   }

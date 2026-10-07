@@ -350,7 +350,7 @@ describe('bp-textarea', () => {
   it('should render helper text', async () => {
     element.helperText = 'Enter your comment here';
     await element.updateComplete;
-    const helper = element.shadowRoot?.querySelector('.textarea-message');
+    const helper = element.shadowRoot?.querySelector('.field-message');
     expect(helper?.textContent?.trim()).toBe('Enter your comment here');
   });
 
@@ -358,7 +358,7 @@ describe('bp-textarea', () => {
     element.variant = 'error';
     element.errorMessage = 'Comment is required';
     await element.updateComplete;
-    const error = element.shadowRoot?.querySelector('.textarea-message--error');
+    const error = element.shadowRoot?.querySelector('.field-message--error');
     expect(error?.textContent?.trim()).toBe('Comment is required');
   });
 
@@ -367,7 +367,7 @@ describe('bp-textarea', () => {
     element.errorMessage = 'Error!';
     element.helperText = 'Helper';
     await element.updateComplete;
-    const error = element.shadowRoot?.querySelector('.textarea-message--error');
+    const error = element.shadowRoot?.querySelector('.field-message--error');
     const helper = element.shadowRoot?.querySelector('#helper-text');
     expect(error).toBeTruthy();
     expect(helper).toBeFalsy();
@@ -423,7 +423,7 @@ describe('bp-textarea', () => {
     element.variant = 'error';
     element.errorMessage = 'Error!';
     await element.updateComplete;
-    const error = element.shadowRoot?.querySelector('.textarea-message--error');
+    const error = element.shadowRoot?.querySelector('.field-message--error');
     expect(error?.getAttribute('role')).toBe('alert');
   });
 

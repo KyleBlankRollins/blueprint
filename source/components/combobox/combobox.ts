@@ -6,6 +6,11 @@ import { comboboxStyles } from './combobox.style.js';
 import { debounce } from '../../utilities/debounce.js';
 import { memoizeOne } from '../../utilities/memoize.js';
 import { FormControlMixin } from '../../utilities/form-control.js';
+import {
+  fieldMessageState,
+  renderFieldMessage,
+  fieldMessageStyles,
+} from '../../utilities/field-message.js';
 
 export type ComboboxSize = 'sm' | 'md' | 'lg';
 export type ComboboxVariant =
@@ -26,6 +31,15 @@ export class BpCombobox extends FormControlMixin(LitElement) {
 
   /** Visible label text displayed above the combobox */
   @property({ type: String, reflect: true }) declare label: string;
+
+  /** Helper text displayed below the combobox */
+  @property({ type: String }) declare helperText: string;
+
+  /**
+   * Error text. When set, the combobox is invalid: the message replaces the
+   * helper text, is announced, and the border turns to the error color.
+   */
+  @property({ type: String }) declare errorMessage: string;
 
   /** Placeholder text when no value is selected */
   @property({ type: String }) declare placeholder: string;
@@ -88,13 +102,15 @@ export class BpCombobox extends FormControlMixin(LitElement) {
     }
   );
 
-  static styles = [comboboxStyles];
+  static styles = [fieldMessageStyles, comboboxStyles];
 
   constructor() {
     super();
     this.value = '';
     this.name = '';
     this.label = '';
+    this.helperText = '';
+    this.errorMessage = '';
     this.placeholder = 'Search or select...';
     this.disabled = false;
     this.required = false;
@@ -389,6 +405,12 @@ export class BpCombobox extends FormControlMixin(LitElement) {
   }
 
   render() {
+    const message = {
+      helperText: this.helperText,
+      errorMessage: this.errorMessage,
+      invalid: this.variant === 'error',
+    };
+    const { invalid, describedBy } = fieldMessageState(message);
     const hasValue = Boolean(this.value || this.searchText);
 
     return html`
@@ -398,7 +420,7 @@ export class BpCombobox extends FormControlMixin(LitElement) {
           'combobox--open': this.isOpen,
           'combobox--disabled': this.disabled,
           [`combobox--${this.size}`]: true,
-          [`combobox--${this.variant}`]: true,
+          [`combobox--${invalid ? 'error' : this.variant}`]: true,
         })}
       >
         ${
@@ -440,6 +462,8 @@ export class BpCombobox extends FormControlMixin(LitElement) {
             aria-autocomplete="list"
             aria-controls="listbox"
             aria-disabled=${this.disabled}
+            aria-invalid=${invalid ? 'true' : nothing}
+            aria-describedby=${describedBy ?? nothing}
             part="input"
           />
 
@@ -483,6 +507,7 @@ export class BpCombobox extends FormControlMixin(LitElement) {
             : ''
         }
       </div>
+      ${renderFieldMessage(message)}
     `;
   }
 }

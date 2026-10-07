@@ -5,6 +5,11 @@ import { live } from 'lit/directives/live.js';
 import { inputStyles } from './input.style.js';
 import { debounce } from '../../utilities/debounce.js';
 import { FormControlMixin } from '../../utilities/form-control.js';
+import {
+  fieldMessageState,
+  renderFieldMessage,
+  fieldMessageStyles,
+} from '../../utilities/field-message.js';
 
 export type InputVariant = 'default' | 'success' | 'error' | 'warning' | 'info';
 export type InputSize = 'sm' | 'md' | 'lg';
@@ -69,7 +74,12 @@ export class BpInput extends FormControlMixin(LitElement) {
   @property({ type: String, reflect: true }) value: string = '';
   @property({ type: String, reflect: true }) placeholder?: string;
   @property({ type: String, reflect: true }) label?: string;
+  /** Helper text displayed below the input */
   @property({ type: String, reflect: true }) helperText?: string;
+  /**
+   * Error text. When set, the input is invalid: the message replaces the
+   * helper text, is announced, and the border turns to the error color.
+   */
   @property({ type: String, reflect: true }) errorMessage?: string;
   @property({ type: Boolean, reflect: true }) disabled: boolean = false;
   @property({ type: Boolean, reflect: true }) required: boolean = false;
@@ -104,7 +114,7 @@ export class BpInput extends FormControlMixin(LitElement) {
     150
   );
 
-  static styles = [inputStyles];
+  static styles = [fieldMessageStyles, inputStyles];
 
   disconnectedCallback() {
     super.disconnectedCallback();
@@ -172,17 +182,14 @@ export class BpInput extends FormControlMixin(LitElement) {
     this.inputElement?.select();
   }
 
-  private get messageId(): string {
-    const showError = this.variant === 'error' && this.errorMessage;
-    const showHelper = this.helperText && !showError;
-    if (showError) return 'error-message';
-    if (showHelper) return 'helper-text';
-    return '';
-  }
-
   render() {
-    const showError = this.variant === 'error' && this.errorMessage;
-    const showHelper = this.helperText && !showError;
+    const message = {
+      helperText: this.helperText,
+      errorMessage: this.errorMessage,
+      invalid: this.variant === 'error',
+    };
+    const { invalid, describedBy } = fieldMessageState(message);
+    const variant = invalid ? 'error' : this.variant;
 
     return html`
       <div class="input-wrapper">
@@ -204,7 +211,7 @@ export class BpInput extends FormControlMixin(LitElement) {
         <input
           part="input"
           id="input"
-          class="input input--${this.variant} input--${this.size}"
+          class="input input--${variant} input--${this.size}"
           type=${this.type}
           .value=${live(this.value)}
           placeholder=${ifDefined(this.placeholder)}
@@ -220,34 +227,15 @@ export class BpInput extends FormControlMixin(LitElement) {
           min=${ifDefined(this.min)}
           max=${ifDefined(this.max)}
           inputmode=${ifDefined(this.inputmode)}
-          aria-invalid=${this.variant === 'error' ? 'true' : 'false'}
-          aria-describedby=${this.messageId || nothing}
+          aria-invalid=${invalid ? 'true' : 'false'}
+          aria-describedby=${describedBy ?? nothing}
           @input=${this.handleInput}
           @change=${this.handleChange}
           @focus=${this.handleFocus}
           @blur=${this.handleBlur}
         />
 
-        ${
-          showError
-            ? html`
-                <div
-                  id="error-message"
-                  class="input-message input-message--error"
-                  role="alert"
-                >
-                  ${this.errorMessage}
-                </div>
-              `
-            : ''
-        }
-        ${
-          showHelper
-            ? html`<div id="helper-text" class="input-message">
-                ${this.helperText}
-              </div>`
-            : ''
-        }
+        ${renderFieldMessage(message)}
       </div>
     `;
   }

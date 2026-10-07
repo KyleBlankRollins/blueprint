@@ -242,22 +242,16 @@ export const numberInputStyles = css`
     pointer-events: none;
   }
 
-  /* Message styles */
-  .number-input__message {
-    font-size: var(--bp-font-size-sm);
-    line-height: var(--bp-line-height-normal);
-    color: var(--bp-color-text-muted);
+  /* Help and error text: spaced by the wrapper's gap */
+  .field-message {
+    margin-top: 0;
   }
 
-  .number-input__message--error {
-    color: var(--bp-color-error);
-  }
-
-  .number-input__message--success {
+  .number-input--success .field-message {
     color: var(--bp-color-success);
   }
 
-  .number-input__message--warning {
+  .number-input--warning .field-message {
     color: var(--bp-color-warning);
   }
 

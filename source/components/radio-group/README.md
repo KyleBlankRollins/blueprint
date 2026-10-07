@@ -43,16 +43,17 @@ document.querySelector('bp-radio-group').addEventListener('bp-change', (e) => {
 
 ### Properties
 
-| Property       | Type                         | Default      | Description                                                               |
-| -------------- | ---------------------------- | ------------ | ------------------------------------------------------------------------- |
-| `label`        | `string`                     | `''`         | Visible group label                                                       |
-| `description`  | `string`                     | `''`         | Helper text shown under the label and linked to the group                 |
-| `errorMessage` | `string`                     | `''`         | Error text. Marks the group invalid and announces the message             |
-| `name`         | `string`                     | `''`         | Name submitted with the form                                              |
-| `value`        | `string`                     | `''`         | Value of the selected radio (`''` when none)                              |
-| `required`     | `boolean`                    | `false`      | Requires a selection before the form can submit                           |
-| `disabled`     | `boolean`                    | `false`      | Disables every radio; ones already disabled stay disabled when re-enabled |
-| `orientation`  | `'vertical' \| 'horizontal'` | `'vertical'` | Stack the radios, or lay them out in a wrapping row                       |
+| Property       | Type                         | Default      | Description                                                                                                                                        |
+| -------------- | ---------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `label`        | `string`                     | `''`         | Visible group label                                                                                                                                |
+| `description`  | `string`                     | `''`         | **Deprecated.** Use `helperText`                                                                                                                   |
+| `helperText`   | `string`                     | `''`         | Helper text below the group, linked with `aria-describedby`                                                                                        |
+| `errorMessage` | `string`                     | `''`         | Error text. When set, the group is invalid: the message replaces the helper text, is announced (`role="alert"`), and the group gets `aria-invalid` |
+| `name`         | `string`                     | `''`         | Name submitted with the form                                                                                                                       |
+| `value`        | `string`                     | `''`         | Value of the selected radio (`''` when none)                                                                                                       |
+| `required`     | `boolean`                    | `false`      | Requires a selection before the form can submit                                                                                                    |
+| `disabled`     | `boolean`                    | `false`      | Disables every radio; ones already disabled stay disabled when re-enabled                                                                          |
+| `orientation`  | `'vertical' \| 'horizontal'` | `'vertical'` | Stack the radios, or lay them out in a wrapping row                                                                                                |
 
 ### Events
 
@@ -70,13 +71,13 @@ The radios' own `bp-change` events stop at the group.
 
 ### CSS Parts
 
-| Part          | Description                          |
-| ------------- | ------------------------------------ |
-| `group`       | The element with `role="radiogroup"` |
-| `label`       | The group label                      |
-| `description` | The description text                 |
-| `options`     | The wrapper around the radios        |
-| `error`       | The error message                    |
+| Part            | Description                          |
+| --------------- | ------------------------------------ |
+| `group`         | The element with `role="radiogroup"` |
+| `label`         | The group label                      |
+| `helper-text`   | The helper text                      |
+| `options`       | The wrapper around the radios        |
+| `error-message` | The error message                    |
 
 ## Design Tokens Used
 

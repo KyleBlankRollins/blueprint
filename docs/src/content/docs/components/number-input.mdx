@@ -80,9 +80,9 @@ import '@krollins/blueprint/number-input';
 
 <ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
-    <bp-number-input variant="success" label="Success" value="100" message="Valid amount"></bp-number-input>
-    <bp-number-input variant="error" label="Error" value="-5" message="Must be positive"></bp-number-input>
-    <bp-number-input variant="warning" label="Warning" value="999" message="Unusually high value"></bp-number-input>
+    <bp-number-input variant="success" label="Success" value="100" helperText="Valid amount"></bp-number-input>
+    <bp-number-input variant="error" label="Error" value="-5" errorMessage="Must be positive"></bp-number-input>
+    <bp-number-input variant="warning" label="Warning" value="999" helperText="Unusually high value"></bp-number-input>
   </div>
 </ComponentPreview>
 
@@ -90,17 +90,17 @@ import '@krollins/blueprint/number-input';
 <bp-number-input
   variant="success"
   label="Success"
-  message="Valid"
+  helperText="Valid"
 ></bp-number-input>
 <bp-number-input
   variant="error"
   label="Error"
-  message="Invalid"
+  errorMessage="Invalid"
 ></bp-number-input>
 <bp-number-input
   variant="warning"
   label="Warning"
-  message="Check value"
+  helperText="Check value"
 ></bp-number-input>
 ```
 

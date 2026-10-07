@@ -96,15 +96,17 @@ A toggle switch component for binary on/off states with form integration and com
 
 ### Properties
 
-| Property   | Type                   | Default | Description                              |
-| ---------- | ---------------------- | ------- | ---------------------------------------- |
-| `checked`  | `boolean`              | `false` | Whether the switch is in the on position |
-| `disabled` | `boolean`              | `false` | Whether the switch is disabled           |
-| `required` | `boolean`              | `false` | Whether the switch is required           |
-| `name`     | `string`               | `''`    | The name for form submission             |
-| `value`    | `string`               | `'on'`  | The value for form submission            |
-| `size`     | `'sm' \| 'md' \| 'lg'` | `'md'`  | The size of the switch                   |
-| `error`    | `boolean`              | `false` | Whether the switch has an error state    |
+| Property       | Type                   | Default | Description                                                                                                                                              |
+| -------------- | ---------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `checked`      | `boolean`              | `false` | Whether the switch is in the on position                                                                                                                 |
+| `disabled`     | `boolean`              | `false` | Whether the switch is disabled                                                                                                                           |
+| `required`     | `boolean`              | `false` | Whether the switch is required                                                                                                                           |
+| `name`         | `string`               | `''`    | The name for form submission                                                                                                                             |
+| `value`        | `string`               | `'on'`  | The value for form submission                                                                                                                            |
+| `size`         | `'sm' \| 'md' \| 'lg'` | `'md'`  | The size of the switch                                                                                                                                   |
+| `error`        | `boolean`              | `false` | Show the error state without a message. `errorMessage` also sets it                                                                                      |
+| `helperText`   | `string`               | `''`    | Helper text below the switch, linked with `aria-describedby`                                                                                             |
+| `errorMessage` | `string`               | `''`    | Error text. When set, the switch is invalid: the message replaces the helper text, is announced (`role="alert"`), and the track turns to the error color |
 
 ### Events
 
@@ -129,13 +131,15 @@ A toggle switch component for binary on/off states with form integration and com
 
 ### CSS Parts
 
-| Part     | Description                       |
-| -------- | --------------------------------- |
-| `switch` | The switch container (label)      |
-| `input`  | The native checkbox input element |
-| `track`  | The switch track background       |
-| `thumb`  | The switch thumb/handle           |
-| `label`  | The label text container          |
+| Part            | Description                       |
+| --------------- | --------------------------------- |
+| `switch`        | The switch container (label)      |
+| `input`         | The native checkbox input element |
+| `track`         | The switch track background       |
+| `thumb`         | The switch thumb/handle           |
+| `label`         | The label text container          |
+| `helper-text`   | The helper text                   |
+| `error-message` | The error message                 |
 
 ## Design Tokens Used
 

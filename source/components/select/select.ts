@@ -1,9 +1,14 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { selectStyles } from './select.style.js';
+import {
+  fieldMessageState,
+  renderFieldMessage,
+  fieldMessageStyles,
+} from '../../utilities/field-message.js';
 import { FormControlMixin } from '../../utilities/form-control.js';
 
 export type SelectSize = 'sm' | 'md' | 'lg';
@@ -18,6 +23,15 @@ export class BpSelect extends FormControlMixin(LitElement) {
 
   /** Visible label text displayed above the select */
   @property({ type: String, reflect: true }) declare label: string;
+
+  /** Helper text displayed below the select */
+  @property({ type: String }) declare helperText: string;
+
+  /**
+   * Error text. When set, the select is invalid: the message replaces the
+   * helper text, is announced, and the border turns to the error color.
+   */
+  @property({ type: String }) declare errorMessage: string;
 
   /** Placeholder text when no value is selected */
   @property({ type: String }) declare placeholder: string;
@@ -40,13 +54,15 @@ export class BpSelect extends FormControlMixin(LitElement) {
   /** Index of the focused option for keyboard navigation */
   @state() private focusedIndex = -1;
 
-  static styles = [selectStyles];
+  static styles = [fieldMessageStyles, selectStyles];
 
   constructor() {
     super();
     this.value = '';
     this.name = '';
     this.label = '';
+    this.helperText = '';
+    this.errorMessage = '';
     this.placeholder = 'Select an option';
     this.disabled = false;
     this.required = false;
@@ -306,11 +322,18 @@ export class BpSelect extends FormControlMixin(LitElement) {
   };
 
   render() {
+    const message = {
+      helperText: this.helperText,
+      errorMessage: this.errorMessage,
+      invalid: false,
+    };
+    const { invalid, describedBy } = fieldMessageState(message);
     const selectClasses = {
       select: true,
       [`select--${this.size}`]: true,
       'select--disabled': this.disabled,
       'select--open': this.isOpen,
+      'select--invalid': invalid,
     };
 
     const displayLabel = this.selectedLabel || this.placeholder;
@@ -356,6 +379,8 @@ export class BpSelect extends FormControlMixin(LitElement) {
           aria-labelledby="${ifDefined(labelId)}"
           aria-disabled="${this.disabled ? 'true' : 'false'}"
           aria-required="${this.required ? 'true' : 'false'}"
+          aria-invalid=${invalid ? 'true' : nothing}
+          aria-describedby=${describedBy ?? nothing}
           tabindex="${this.disabled ? '-1' : '0'}"
           @click=${this.handleToggle}
           @keydown=${this.handleKeyDown}
@@ -394,6 +419,7 @@ export class BpSelect extends FormControlMixin(LitElement) {
             : null
         }
       </div>
+      ${renderFieldMessage(message)}
     `;
   }
 }

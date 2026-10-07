@@ -57,9 +57,13 @@ const meta: Meta = {
       options: ['default', 'success', 'error', 'warning'],
       description: 'Visual variant for validation states',
     },
-    message: {
+    helperText: {
       control: 'text',
-      description: 'Helper or error message text',
+      description: 'Helper text below the control',
+    },
+    errorMessage: {
+      control: 'text',
+      description: 'Error text; marks the control invalid',
     },
     precision: {
       control: 'number',
@@ -161,19 +165,19 @@ export const Variants: Story = {
       <bp-number-input
         variant="success"
         label="Success"
-        message="Value is valid"
+        helperText="Value is valid"
         .value=${50}
       ></bp-number-input>
       <bp-number-input
         variant="error"
         label="Error"
-        message="Value must be positive"
+        errorMessage="Value must be positive"
         .value=${-5}
       ></bp-number-input>
       <bp-number-input
         variant="warning"
         label="Warning"
-        message="Value is close to limit"
+        helperText="Value is close to limit"
         .value=${95}
       ></bp-number-input>
     </div>

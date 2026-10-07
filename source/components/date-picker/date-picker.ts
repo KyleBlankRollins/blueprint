@@ -1,7 +1,12 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { datePickerStyles } from './date-picker.style.js';
+import {
+  fieldMessageState,
+  renderFieldMessage,
+  fieldMessageStyles,
+} from '../../utilities/field-message.js';
 import {
   FormControlMixin,
   type FormValidity,
@@ -32,6 +37,15 @@ export class BpDatePicker extends FormControlMixin(LitElement) {
   @property({ type: String, reflect: true }) declare value: string;
   @property({ type: String }) declare name: string;
   @property({ type: String }) declare label: string;
+
+  /** Helper text displayed below the date picker */
+  @property({ type: String }) declare helperText: string;
+
+  /**
+   * Error text. When set, the date picker is invalid: the message replaces the
+   * helper text, is announced, and the border turns to the error color.
+   */
+  @property({ type: String }) declare errorMessage: string;
   @property({ type: String }) declare placeholder: string;
   @property({ type: Boolean, reflect: true }) declare disabled: boolean;
   @property({ type: Boolean, reflect: true }) declare required: boolean;
@@ -46,13 +60,15 @@ export class BpDatePicker extends FormControlMixin(LitElement) {
   @state() private displayYear = new Date().getFullYear();
   @state() private focusedDate: Date | null = null;
 
-  static styles = [datePickerStyles];
+  static styles = [fieldMessageStyles, datePickerStyles];
 
   constructor() {
     super();
     this.value = '';
     this.name = '';
     this.label = '';
+    this.helperText = '';
+    this.errorMessage = '';
     this.placeholder = 'Select date...';
     this.disabled = false;
     this.required = false;
@@ -382,6 +398,12 @@ export class BpDatePicker extends FormControlMixin(LitElement) {
   }
 
   render() {
+    const message = {
+      helperText: this.helperText,
+      errorMessage: this.errorMessage,
+      invalid: false,
+    };
+    const { invalid, describedBy } = fieldMessageState(message);
     const selectedDate = this.getSelectedDate();
     const today = this.getTodayDate();
     const calendarDays = this.getCalendarDays();
@@ -393,12 +415,28 @@ export class BpDatePicker extends FormControlMixin(LitElement) {
       'date-picker--open': this.isOpen,
       'date-picker--disabled': this.disabled,
       [`date-picker--${this.size}`]: true,
+      'date-picker--invalid': invalid,
     };
 
     return html`
       <div class=${classMap(datePickerClasses)} part="control">
+        ${
+          this.label
+            ? html`
+                <label class="date-picker__label" part="label" for="input">
+                  ${this.label}
+                  ${
+                    this.required
+                      ? html`<span class="date-picker__required">*</span>`
+                      : ''
+                  }
+                </label>
+              `
+            : ''
+        }
         <div class="date-picker__input-wrapper">
           <input
+            id="input"
             type="text"
             class="date-picker__input"
             part="input"
@@ -413,7 +451,11 @@ export class BpDatePicker extends FormControlMixin(LitElement) {
             aria-haspopup="grid"
             aria-expanded=${this.isOpen}
             aria-disabled=${this.disabled}
-            aria-label=${this.label || this.placeholder || 'Date picker'}
+            aria-label=${
+              this.label ? nothing : this.placeholder || 'Date picker'
+            }
+            aria-invalid=${invalid ? 'true' : nothing}
+            aria-describedby=${describedBy ?? nothing}
           />
           ${
             hasValue && !this.disabled
@@ -546,6 +588,7 @@ export class BpDatePicker extends FormControlMixin(LitElement) {
             : ''
         }
       </div>
+      ${renderFieldMessage(message)}
     `;
   }
 }

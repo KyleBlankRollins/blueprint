@@ -82,17 +82,19 @@ combobox.addEventListener('bp-change', (e) => {
 
 ### Properties
 
-| Property           | Type                   | Default                 | Description                                                                       |
-| ------------------ | ---------------------- | ----------------------- | --------------------------------------------------------------------------------- |
-| `value`            | `string`               | `''`                    | The current value of the combobox                                                 |
-| `name`             | `string`               | `''`                    | Name attribute for form submission                                                |
-| `label`            | `string`               | `''`                    | Visible label above the combobox, associated with its input                       |
-| `placeholder`      | `string`               | `'Search or select...'` | Placeholder text when no value is selected                                        |
-| `disabled`         | `boolean`              | `false`                 | Whether the combobox is disabled                                                  |
-| `required`         | `boolean`              | `false`                 | Whether the combobox is required                                                  |
-| `size`             | `'sm' \| 'md' \| 'lg'` | `'md'`                  | Size variant of the combobox                                                      |
-| `variant`          | `ComboboxVariant`      | `'default'`             | Validation variant: `'default'`, `'success'`, `'error'`, `'warning'`, or `'info'` |
-| `allowCustomValue` | `boolean`              | `false`                 | Whether to allow free-form input (not just from the options list)                 |
+| Property           | Type                   | Default                 | Description                                                                                                                                                 |
+| ------------------ | ---------------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`            | `string`               | `''`                    | The current value of the combobox                                                                                                                           |
+| `name`             | `string`               | `''`                    | Name attribute for form submission                                                                                                                          |
+| `label`            | `string`               | `''`                    | Visible label above the combobox, associated with its input                                                                                                 |
+| `helperText`       | `string`               | `''`                    | Helper text below the combobox, linked with `aria-describedby`                                                                                              |
+| `errorMessage`     | `string`               | `''`                    | Error text. When set, the combobox is invalid: the message replaces the helper text, is announced (`role="alert"`), and the border turns to the error color |
+| `placeholder`      | `string`               | `'Search or select...'` | Placeholder text when no value is selected                                                                                                                  |
+| `disabled`         | `boolean`              | `false`                 | Whether the combobox is disabled                                                                                                                            |
+| `required`         | `boolean`              | `false`                 | Whether the combobox is required                                                                                                                            |
+| `size`             | `'sm' \| 'md' \| 'lg'` | `'md'`                  | Size variant of the combobox                                                                                                                                |
+| `variant`          | `ComboboxVariant`      | `'default'`             | Validation variant: `'default'`, `'success'`, `'error'`, `'warning'`, or `'info'`                                                                           |
+| `allowCustomValue` | `boolean`              | `false`                 | Whether to allow free-form input (not just from the options list)                                                                                           |
 
 ### Events
 
@@ -108,15 +110,17 @@ combobox.addEventListener('bp-change', (e) => {
 
 ### CSS Parts
 
-| Part           | Description                          |
-| -------------- | ------------------------------------ |
-| `control`      | The outer container                  |
-| `input`        | The text input field                 |
-| `dropdown`     | The dropdown container               |
-| `options`      | The options list container           |
-| `option`       | Individual option element            |
-| `clear-button` | The clear button (when value exists) |
-| `indicator`    | The dropdown indicator icon          |
+| Part            | Description                          |
+| --------------- | ------------------------------------ |
+| `control`       | The outer container                  |
+| `input`         | The text input field                 |
+| `dropdown`      | The dropdown container               |
+| `options`       | The options list container           |
+| `option`        | Individual option element            |
+| `clear-button`  | The clear button (when value exists) |
+| `indicator`     | The dropdown indicator icon          |
+| `helper-text`   | The helper text                      |
+| `error-message` | The error message                    |
 
 ### Keyboard Shortcuts
 

@@ -173,6 +173,14 @@ export const timePickerStyles = css`
     box-shadow: 0 0 0 var(--bp-focus-width) var(--bp-color-focus);
   }
 
+  /* Invalid: error border, also while hovered, open or focused */
+  .time-picker--invalid .input,
+  .time-picker--invalid .input:hover:not(:disabled),
+  .time-picker--invalid .input[aria-expanded='true'],
+  .time-picker--invalid .input:focus {
+    border-color: var(--bp-color-error);
+  }
+
   .input:disabled {
     opacity: 0.5;
     cursor: not-allowed;

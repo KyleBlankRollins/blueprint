@@ -114,7 +114,7 @@ describe('bp-file-upload', () => {
   it('should set property: message', async () => {
     element.message = 'Please select a file';
     await element.updateComplete;
-    const message = element.shadowRoot?.querySelector('.file-upload__message');
+    const message = element.shadowRoot?.querySelector('#helper-text');
     expect(message?.textContent?.trim()).toBe('Please select a file');
   });
 
@@ -159,14 +159,13 @@ describe('bp-file-upload', () => {
     );
   });
 
-  it('should apply message variant color for error', async () => {
+  it('should show the deprecated message as the error when variant is error', async () => {
     element.variant = 'error';
     element.message = 'Error message';
     await element.updateComplete;
-    const message = element.shadowRoot?.querySelector('.file-upload__message');
-    expect(message?.classList.contains('file-upload__message--error')).toBe(
-      true
-    );
+    const message = element.shadowRoot?.querySelector('#error-message');
+    expect(message?.classList.contains('field-message--error')).toBe(true);
+    expect(message?.getAttribute('role')).toBe('alert');
   });
 
   // Size tests

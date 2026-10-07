@@ -294,7 +294,7 @@ describe('bp-input', () => {
   it('should render helper text', async () => {
     element.helperText = 'Enter your email address';
     await element.updateComplete;
-    const helper = element.shadowRoot?.querySelector('.input-message');
+    const helper = element.shadowRoot?.querySelector('.field-message');
     expect(helper?.textContent?.trim()).toBe('Enter your email address');
   });
 
@@ -302,7 +302,7 @@ describe('bp-input', () => {
     element.variant = 'error';
     element.errorMessage = 'Invalid email';
     await element.updateComplete;
-    const error = element.shadowRoot?.querySelector('.input-message--error');
+    const error = element.shadowRoot?.querySelector('.field-message--error');
     expect(error?.textContent?.trim()).toBe('Invalid email');
   });
 
@@ -311,7 +311,7 @@ describe('bp-input', () => {
     element.errorMessage = 'Error!';
     element.helperText = 'Helper';
     await element.updateComplete;
-    const error = element.shadowRoot?.querySelector('.input-message--error');
+    const error = element.shadowRoot?.querySelector('.field-message--error');
     const helper = element.shadowRoot?.querySelector('#helper-text');
     expect(error).toBeTruthy();
     expect(helper).toBeFalsy();
@@ -367,7 +367,7 @@ describe('bp-input', () => {
     element.variant = 'error';
     element.errorMessage = 'Error!';
     await element.updateComplete;
-    const error = element.shadowRoot?.querySelector('.input-message--error');
+    const error = element.shadowRoot?.querySelector('.field-message--error');
     expect(error?.getAttribute('role')).toBe('alert');
   });
 

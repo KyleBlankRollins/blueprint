@@ -6,6 +6,11 @@ import { textareaStyles } from './textarea.style.js';
 import { debounce } from '../../utilities/debounce.js';
 import { booleanConverter } from '../../utilities/boolean-converter.js';
 import { FormControlMixin } from '../../utilities/form-control.js';
+import {
+  fieldMessageState,
+  renderFieldMessage,
+  fieldMessageStyles,
+} from '../../utilities/field-message.js';
 
 /**
  * Visual variant that affects the textarea border color and validation state
@@ -76,7 +81,10 @@ export class BpTextarea extends FormControlMixin(LitElement) {
   @property({ type: String, reflect: true }) declare helperText:
     string | undefined;
 
-  /** Error message displayed when variant is 'error' */
+  /**
+   * Error text. When set, the textarea is invalid: the message replaces the
+   * helper text, is announced, and the border turns to the error color.
+   */
   @property({ type: String, reflect: true }) declare errorMessage:
     string | undefined;
 
@@ -141,7 +149,7 @@ export class BpTextarea extends FormControlMixin(LitElement) {
     150
   );
 
-  static styles = [textareaStyles];
+  static styles = [fieldMessageStyles, textareaStyles];
 
   constructor() {
     super();
@@ -221,17 +229,14 @@ export class BpTextarea extends FormControlMixin(LitElement) {
     this.textareaElement?.select();
   }
 
-  private get messageId(): string {
-    const showError = this.variant === 'error' && this.errorMessage;
-    const showHelper = this.helperText && !showError;
-    if (showError) return 'error-message';
-    if (showHelper) return 'helper-text';
-    return '';
-  }
-
   render() {
-    const showError = this.variant === 'error' && this.errorMessage;
-    const showHelper = this.helperText && !showError;
+    const message = {
+      helperText: this.helperText,
+      errorMessage: this.errorMessage,
+      invalid: this.variant === 'error',
+    };
+    const { invalid, describedBy } = fieldMessageState(message);
+    const variant = invalid ? 'error' : this.variant;
 
     return html`
       <div class="textarea-wrapper">
@@ -253,7 +258,7 @@ export class BpTextarea extends FormControlMixin(LitElement) {
         <textarea
           part="textarea"
           id="textarea"
-          class="textarea textarea--${this.variant} textarea--${
+          class="textarea textarea--${variant} textarea--${
             this.size
           } textarea--resize-${this.resize}"
           .value=${live(this.value)}
@@ -269,34 +274,15 @@ export class BpTextarea extends FormControlMixin(LitElement) {
           autocomplete=${ifDefined(this.autocomplete)}
           ?spellcheck=${this.spellcheck}
           wrap=${ifDefined(this.wrap)}
-          aria-invalid=${this.variant === 'error' ? 'true' : 'false'}
-          aria-describedby=${this.messageId || nothing}
+          aria-invalid=${invalid ? 'true' : 'false'}
+          aria-describedby=${describedBy ?? nothing}
           @input=${this.handleInput}
           @change=${this.handleChange}
           @focus=${this.handleFocus}
           @blur=${this.handleBlur}
         ></textarea>
 
-        ${
-          showError
-            ? html`
-                <div
-                  id="error-message"
-                  class="textarea-message textarea-message--error"
-                  role="alert"
-                >
-                  ${this.errorMessage}
-                </div>
-              `
-            : ''
-        }
-        ${
-          showHelper
-            ? html`<div id="helper-text" class="textarea-message">
-                ${this.helperText}
-              </div>`
-            : ''
-        }
+        ${renderFieldMessage(message)}
       </div>
     `;
   }

@@ -41,26 +41,28 @@ describe('bp-radio-group', () => {
     expect(element.radios).toHaveLength(3);
   });
 
-  it('should set property: label, description, name, required', async () => {
+  it('should set property: label, helperText, name, required', async () => {
     element.label = 'Speed';
-    element.description = 'Pick one';
+    element.helperText = 'Pick one';
     element.name = 'speed';
     element.required = true;
     await element.updateComplete;
     expect(q('#label')?.textContent).toContain('Speed');
-    expect(q('#description')?.textContent).toContain('Pick one');
+    expect(q('#helper-text')?.textContent).toContain('Pick one');
     expect(element.getAttribute('name')).toBe('speed');
     expect(q('.radio-group__required')).toBeTruthy();
   });
 
   it('should expose CSS parts', async () => {
     element.label = 'Speed';
-    element.description = 'Pick one';
-    element.errorMessage = 'Error';
+    element.helperText = 'Pick one';
     await element.updateComplete;
-    for (const part of ['group', 'label', 'description', 'options', 'error']) {
+    for (const part of ['group', 'label', 'options', 'helper-text']) {
       expect(q(`[part~="${part}"]`)).toBeTruthy();
     }
+    element.errorMessage = 'Error';
+    await element.updateComplete;
+    expect(q('[part~="error-message"]')).toBeTruthy();
   });
 
   it('should have correct default property values', () => {
@@ -82,16 +84,23 @@ describe('bp-radio-group', () => {
     expect(group?.getAttribute('aria-required')).toBe('true');
   });
 
-  it('links description and error to the group', async () => {
-    element.description = 'Arrives in 2-5 days.';
-    element.errorMessage = 'Choose a delivery option.';
+  it('links helper text, then the error that replaces it, to the group', async () => {
+    element.helperText = 'Arrives in 2-5 days.';
     await element.updateComplete;
     const group = q('[role="radiogroup"]');
-    expect(group?.getAttribute('aria-describedby')).toBe(
-      'description error-message'
-    );
+    expect(group?.getAttribute('aria-describedby')).toBe('helper-text');
+    element.errorMessage = 'Choose a delivery option.';
+    await element.updateComplete;
+    expect(group?.getAttribute('aria-describedby')).toBe('error-message');
+    expect(q('#helper-text')).toBeNull();
     expect(group?.getAttribute('aria-invalid')).toBe('true');
     expect(q('#error-message')?.getAttribute('role')).toBe('alert');
+  });
+
+  it('still shows the deprecated description as helper text', async () => {
+    element.description = 'Arrives in 2-5 days.';
+    await element.updateComplete;
+    expect(q('#helper-text')?.textContent).toContain('Arrives in 2-5 days.');
   });
 
   it('checks the radio matching value', async () => {

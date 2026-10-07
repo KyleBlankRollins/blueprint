@@ -72,15 +72,17 @@ A custom dropdown select component that provides an accessible and styleable alt
 
 ### Properties
 
-| Property      | Type         | Default              | Description                                   |
-| ------------- | ------------ | -------------------- | --------------------------------------------- |
-| `value`       | `string`     | `''`                 | The current value of the select               |
-| `name`        | `string`     | `''`                 | Name attribute for form submission            |
-| `label`       | `string`     | `''`                 | Visible label text displayed above the select |
-| `placeholder` | `string`     | `'Select an option'` | Placeholder text when no value is selected    |
-| `disabled`    | `boolean`    | `false`              | Whether the select is disabled                |
-| `required`    | `boolean`    | `false`              | Whether the select is required                |
-| `size`        | `SelectSize` | `'md'`               | Size variant of the select                    |
+| Property       | Type         | Default              | Description                                                                                                                                               |
+| -------------- | ------------ | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`        | `string`     | `''`                 | The current value of the select                                                                                                                           |
+| `name`         | `string`     | `''`                 | Name attribute for form submission                                                                                                                        |
+| `label`        | `string`     | `''`                 | Visible label text displayed above the select                                                                                                             |
+| `helperText`   | `string`     | `''`                 | Helper text below the select, linked with `aria-describedby`                                                                                              |
+| `errorMessage` | `string`     | `''`                 | Error text. When set, the select is invalid: the message replaces the helper text, is announced (`role="alert"`), and the border turns to the error color |
+| `placeholder`  | `string`     | `'Select an option'` | Placeholder text when no value is selected                                                                                                                |
+| `disabled`     | `boolean`    | `false`              | Whether the select is disabled                                                                                                                            |
+| `required`     | `boolean`    | `false`              | Whether the select is required                                                                                                                            |
+| `size`         | `SelectSize` | `'md'`               | Size variant of the select                                                                                                                                |
 
 **SelectSize:** `'sm' | 'md' | 'lg'`
 
@@ -98,15 +100,17 @@ A custom dropdown select component that provides an accessible and styleable alt
 
 ### CSS Parts
 
-| Part       | Description                   |
-| ---------- | ----------------------------- |
-| `label`    | The label element             |
-| `select`   | The select container          |
-| `trigger`  | The clickable trigger element |
-| `value`    | The displayed value text      |
-| `icon`     | The dropdown chevron icon     |
-| `dropdown` | The dropdown menu container   |
-| `option`   | Individual option elements    |
+| Part            | Description                   |
+| --------------- | ----------------------------- |
+| `label`         | The label element             |
+| `select`        | The select container          |
+| `trigger`       | The clickable trigger element |
+| `value`         | The displayed value text      |
+| `icon`          | The dropdown chevron icon     |
+| `dropdown`      | The dropdown menu container   |
+| `option`        | Individual option elements    |
+| `helper-text`   | The helper text               |
+| `error-message` | The error message             |
 
 ## Design Tokens Used
 

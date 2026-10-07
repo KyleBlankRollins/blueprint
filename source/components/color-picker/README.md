@@ -81,19 +81,21 @@ A feature-rich color picker component that provides an accessible and intuitive 
 
 ### Properties
 
-| Property      | Type              | Default     | Description                              |
-| ------------- | ----------------- | ----------- | ---------------------------------------- |
-| `value`       | `string`          | `'#000000'` | Current color value in specified format  |
-| `format`      | `ColorFormat`     | `'hex'`     | Output format: `'hex'`, `'rgb'`, `'hsl'` |
-| `alpha`       | `boolean`         | `true`      | Enable alpha channel                     |
-| `swatches`    | `string[]`        | `[]`        | Predefined swatch colors                 |
-| `inline`      | `boolean`         | `false`     | Render inline instead of popover         |
-| `disabled`    | `boolean`         | `false`     | Disable all interactions                 |
-| `readonly`    | `boolean`         | `false`     | Show value but prevent editing           |
-| `size`        | `ColorPickerSize` | `'md'`      | Size: `'sm'`, `'md'`, `'lg'`             |
-| `label`       | `string`          | `''`        | Accessible label shown in trigger        |
-| `name`        | `string`          | `''`        | Form field name for submission           |
-| `placeholder` | `string`          | `''`        | Placeholder text for trigger             |
+| Property       | Type              | Default     | Description                                                                                                                                                     |
+| -------------- | ----------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`        | `string`          | `'#000000'` | Current color value in specified format                                                                                                                         |
+| `format`       | `ColorFormat`     | `'hex'`     | Output format: `'hex'`, `'rgb'`, `'hsl'`                                                                                                                        |
+| `alpha`        | `boolean`         | `true`      | Enable alpha channel                                                                                                                                            |
+| `swatches`     | `string[]`        | `[]`        | Predefined swatch colors                                                                                                                                        |
+| `inline`       | `boolean`         | `false`     | Render inline instead of popover                                                                                                                                |
+| `disabled`     | `boolean`         | `false`     | Disable all interactions                                                                                                                                        |
+| `readonly`     | `boolean`         | `false`     | Show value but prevent editing                                                                                                                                  |
+| `size`         | `ColorPickerSize` | `'md'`      | Size: `'sm'`, `'md'`, `'lg'`                                                                                                                                    |
+| `label`        | `string`          | `''`        | Accessible label shown in trigger                                                                                                                               |
+| `helperText`   | `string`          | `''`        | Helper text below the color picker, linked with `aria-describedby`                                                                                              |
+| `errorMessage` | `string`          | `''`        | Error text. When set, the color picker is invalid: the message replaces the helper text, is announced (`role="alert"`), and the border turns to the error color |
+| `name`         | `string`          | `''`        | Form field name for submission                                                                                                                                  |
+| `placeholder`  | `string`          | `''`        | Placeholder text for trigger                                                                                                                                    |
 
 ### Events
 
@@ -114,17 +116,19 @@ A feature-rich color picker component that provides an accessible and intuitive 
 
 ### CSS Parts
 
-| Part           | Description                  |
-| -------------- | ---------------------------- |
-| `trigger`      | The trigger button           |
-| `popover`      | The popover container        |
-| `color-area`   | The 2D saturation/value area |
-| `hue-slider`   | The vertical hue slider      |
-| `alpha-slider` | The horizontal alpha slider  |
-| `preview`      | The color preview swatch     |
-| `input`        | Input fields (hex, rgb, hsl) |
-| `swatches`     | The swatches container       |
-| `swatch`       | Individual swatch buttons    |
+| Part            | Description                  |
+| --------------- | ---------------------------- |
+| `trigger`       | The trigger button           |
+| `popover`       | The popover container        |
+| `color-area`    | The 2D saturation/value area |
+| `hue-slider`    | The vertical hue slider      |
+| `alpha-slider`  | The horizontal alpha slider  |
+| `preview`       | The color preview swatch     |
+| `input`         | Input fields (hex, rgb, hsl) |
+| `swatches`      | The swatches container       |
+| `swatch`        | Individual swatch buttons    |
+| `helper-text`   | The helper text              |
+| `error-message` | The error message            |
 
 ## Design Tokens Used
 

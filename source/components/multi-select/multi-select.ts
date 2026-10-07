@@ -7,6 +7,11 @@ import { multiSelectStyles } from './multi-select.style.js';
 import { memoizeOne } from '../../utilities/memoize.js';
 import { booleanConverter } from '../../utilities/boolean-converter.js';
 import { FormControlMixin } from '../../utilities/form-control.js';
+import {
+  fieldMessageState,
+  renderFieldMessage,
+  fieldMessageStyles,
+} from '../../utilities/field-message.js';
 
 export type MultiSelectSize = 'sm' | 'md' | 'lg';
 export type MultiSelectVariant =
@@ -27,6 +32,15 @@ export class BpMultiSelect extends FormControlMixin(LitElement) {
 
   /** Visible label text displayed above the multi-select */
   @property({ type: String, reflect: true }) declare label: string;
+
+  /** Helper text displayed below the multi-select */
+  @property({ type: String }) declare helperText: string;
+
+  /**
+   * Error text. When set, the multi-select is invalid: the message replaces the
+   * helper text, is announced, and the border turns to the error color.
+   */
+  @property({ type: String }) declare errorMessage: string;
 
   /** Placeholder text when no values are selected */
   @property({ type: String }) declare placeholder: string;
@@ -74,13 +88,15 @@ export class BpMultiSelect extends FormControlMixin(LitElement) {
     }
   );
 
-  static styles = [multiSelectStyles];
+  static styles = [fieldMessageStyles, multiSelectStyles];
 
   constructor() {
     super();
     this.value = [];
     this.name = '';
     this.label = '';
+    this.helperText = '';
+    this.errorMessage = '';
     this.placeholder = 'Select options';
     this.disabled = false;
     this.required = false;
@@ -340,6 +356,12 @@ export class BpMultiSelect extends FormControlMixin(LitElement) {
   }
 
   render() {
+    const message = {
+      helperText: this.helperText,
+      errorMessage: this.errorMessage,
+      invalid: this.variant === 'error',
+    };
+    const { invalid, describedBy } = fieldMessageState(message);
     const hasSelection = this.value.length > 0;
 
     return html`
@@ -349,7 +371,7 @@ export class BpMultiSelect extends FormControlMixin(LitElement) {
           'multi-select--open': this.isOpen,
           'multi-select--disabled': this.disabled,
           [`multi-select--${this.size}`]: true,
-          [`multi-select--${this.variant}`]: true,
+          [`multi-select--${invalid ? 'error' : this.variant}`]: true,
         })}
       >
         ${
@@ -386,6 +408,8 @@ export class BpMultiSelect extends FormControlMixin(LitElement) {
           aria-haspopup="listbox"
           aria-expanded=${this.isOpen}
           aria-disabled=${this.disabled}
+          aria-invalid=${invalid ? 'true' : nothing}
+          aria-describedby=${describedBy ?? nothing}
           part="control"
         >
           <div class="multi-select__value-container">
@@ -458,6 +482,7 @@ export class BpMultiSelect extends FormControlMixin(LitElement) {
           `
         )}
       </div>
+      ${renderFieldMessage(message)}
     `;
   }
 }

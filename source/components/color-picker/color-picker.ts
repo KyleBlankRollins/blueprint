@@ -11,6 +11,11 @@ import {
   formatColorOutput,
 } from './color-picker.utils.js';
 import { FormControlMixin } from '../../utilities/form-control.js';
+import {
+  fieldMessageState,
+  renderFieldMessage,
+  fieldMessageStyles,
+} from '../../utilities/field-message.js';
 
 // Browser globals: PointerEvent and EyeDropper are available in modern browsers
 
@@ -46,7 +51,7 @@ export type ColorPickerSize = 'sm' | 'md' | 'lg';
  */
 @customElement('bp-color-picker')
 export class BpColorPicker extends FormControlMixin(LitElement) {
-  static styles = [colorPickerStyles];
+  static styles = [fieldMessageStyles, colorPickerStyles];
 
   /** Current color value */
   @property({ type: String }) declare value: string;
@@ -75,6 +80,15 @@ export class BpColorPicker extends FormControlMixin(LitElement) {
 
   /** Accessible label */
   @property({ type: String }) declare label: string;
+
+  /** Helper text displayed below the color picker */
+  @property({ type: String }) declare helperText: string;
+
+  /**
+   * Error text. When set, the color picker is invalid: the message replaces the
+   * helper text, is announced, and the border turns to the error color.
+   */
+  @property({ type: String }) declare errorMessage: string;
 
   /** Form field name */
   @property({ type: String }) declare name: string;
@@ -122,6 +136,8 @@ export class BpColorPicker extends FormControlMixin(LitElement) {
     this.readonly = false;
     this.size = 'md';
     this.label = '';
+    this.helperText = '';
+    this.errorMessage = '';
     this.name = '';
     this.placeholder = '';
   }
@@ -1245,7 +1261,7 @@ export class BpColorPicker extends FormControlMixin(LitElement) {
    * Shows current color swatch and optional label
    * @returns TemplateResult for trigger button
    */
-  private _renderTrigger() {
+  private _renderTrigger(invalid = false, describedBy?: string) {
     const rgb = hsvToRgb(this._hsv);
     const currentColor = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${this._hsv.a})`;
     const hasLabel = this.label || this.placeholder;
@@ -1259,6 +1275,8 @@ export class BpColorPicker extends FormControlMixin(LitElement) {
         aria-haspopup="dialog"
         aria-expanded="${this._open}"
         aria-disabled="${this.disabled}"
+        aria-invalid=${invalid ? 'true' : nothing}
+        aria-describedby=${describedBy ?? nothing}
         tabindex="${this.disabled ? -1 : 0}"
         ?disabled=${this.disabled}
         @click=${this._handleTriggerClick}
@@ -1282,13 +1300,23 @@ export class BpColorPicker extends FormControlMixin(LitElement) {
   }
 
   render() {
+    const message = {
+      helperText: this.helperText,
+      errorMessage: this.errorMessage,
+      invalid: false,
+    };
+    const { invalid, describedBy } = fieldMessageState(message);
     if (this.inline) {
-      return this._renderPicker();
+      return html`${this._renderPicker()}${renderFieldMessage(message)}`;
     }
 
     return html`
-      <div class="color-picker color-picker--${this.size}">
-        ${this._renderTrigger()}
+      <div
+        class="color-picker color-picker--${this.size} ${
+          invalid ? 'color-picker--invalid' : ''
+        }"
+      >
+        ${this._renderTrigger(invalid, describedBy)}
         ${
           this._open
             ? html`
@@ -1300,6 +1328,7 @@ export class BpColorPicker extends FormControlMixin(LitElement) {
             : nothing
         }
       </div>
+      ${renderFieldMessage(message)}
       ${
         this.name
           ? html`<input

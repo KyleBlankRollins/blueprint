@@ -49,9 +49,13 @@ const meta: Meta = {
       options: ['default', 'success', 'error', 'warning'],
       description: 'Visual variant for validation states',
     },
-    message: {
+    helperText: {
       control: 'text',
-      description: 'Helper or error message text',
+      description: 'Helper text below the control',
+    },
+    errorMessage: {
+      control: 'text',
+      description: 'Error text; marks the control invalid',
     },
     size: {
       control: 'select',
@@ -153,17 +157,17 @@ export const Variants: Story = {
       <bp-file-upload
         variant="success"
         label="Success variant"
-        message="File uploaded successfully"
+        helperText="File uploaded successfully"
       ></bp-file-upload>
       <bp-file-upload
         variant="error"
         label="Error variant"
-        message="Please upload a valid file"
+        errorMessage="Please upload a valid file"
       ></bp-file-upload>
       <bp-file-upload
         variant="warning"
         label="Warning variant"
-        message="File size is close to the limit"
+        helperText="File size is close to the limit"
       ></bp-file-upload>
     </div>
   `,

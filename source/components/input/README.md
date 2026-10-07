@@ -46,21 +46,21 @@ A form input component with validation states, sizes, and comprehensive accessib
 
 ### Properties
 
-| Property       | Type                                                          | Default     | Description                                   |
-| -------------- | ------------------------------------------------------------- | ----------- | --------------------------------------------- |
-| `variant`      | `'default' \| 'success' \| 'error' \| 'warning' \| 'info'`    | `'default'` | Visual variant (affects border color)         |
-| `size`         | `'sm' \| 'md' \| 'lg'`                                        | `'md'`      | Input size                                    |
-| `type`         | `'text' \| 'email' \| 'password' \| 'number' \| 'tel' \| ...` | `'text'`    | Native input type                             |
-| `value`        | `string`                                                      | `''`        | Input value                                   |
-| `placeholder`  | `string`                                                      | `''`        | Placeholder text                              |
-| `label`        | `string`                                                      | `''`        | Label text (optional)                         |
-| `helperText`   | `string`                                                      | `''`        | Helper text below input                       |
-| `errorMessage` | `string`                                                      | `''`        | Error message (shown when variant is 'error') |
-| `disabled`     | `boolean`                                                     | `false`     | Whether input is disabled                     |
-| `required`     | `boolean`                                                     | `false`     | Whether input is required (shows asterisk)    |
-| `readonly`     | `boolean`                                                     | `false`     | Whether input is readonly                     |
-| `name`         | `string`                                                      | `''`        | Form input name                               |
-| `autocomplete` | `string`                                                      | `''`        | Autocomplete attribute                        |
+| Property       | Type                                                          | Default     | Description                                                                                                                                              |
+| -------------- | ------------------------------------------------------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `variant`      | `'default' \| 'success' \| 'error' \| 'warning' \| 'info'`    | `'default'` | Visual variant (affects border color)                                                                                                                    |
+| `size`         | `'sm' \| 'md' \| 'lg'`                                        | `'md'`      | Input size                                                                                                                                               |
+| `type`         | `'text' \| 'email' \| 'password' \| 'number' \| 'tel' \| ...` | `'text'`    | Native input type                                                                                                                                        |
+| `value`        | `string`                                                      | `''`        | Input value                                                                                                                                              |
+| `placeholder`  | `string`                                                      | `''`        | Placeholder text                                                                                                                                         |
+| `label`        | `string`                                                      | `''`        | Label text (optional)                                                                                                                                    |
+| `helperText`   | `string`                                                      | `''`        | Helper text below the input, linked with `aria-describedby`                                                                                              |
+| `errorMessage` | `string`                                                      | `''`        | Error text. When set, the input is invalid: the message replaces the helper text, is announced (`role="alert"`), and the border turns to the error color |
+| `disabled`     | `boolean`                                                     | `false`     | Whether input is disabled                                                                                                                                |
+| `required`     | `boolean`                                                     | `false`     | Whether input is required (shows asterisk)                                                                                                               |
+| `readonly`     | `boolean`                                                     | `false`     | Whether input is readonly                                                                                                                                |
+| `name`         | `string`                                                      | `''`        | Form input name                                                                                                                                          |
+| `autocomplete` | `string`                                                      | `''`        | Autocomplete attribute                                                                                                                                   |
 
 ### Events
 
@@ -81,9 +81,11 @@ A form input component with validation states, sizes, and comprehensive accessib
 
 ### CSS Parts
 
-| Part    | Description              |
-| ------- | ------------------------ |
-| `input` | The native input element |
+| Part            | Description              |
+| --------------- | ------------------------ |
+| `input`         | The native input element |
+| `helper-text`   | The helper text          |
+| `error-message` | The error message        |
 
 ## Design Tokens Used
 

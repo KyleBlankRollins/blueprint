@@ -120,11 +120,19 @@ describe('bp-number-input', () => {
     expect(wrapper?.classList.contains('number-input--error')).toBe(true);
   });
 
-  it('should set property: message', async () => {
+  it('should still show the deprecated message as helper text', async () => {
     element.message = 'Enter a valid number';
     await element.updateComplete;
-    const message = element.shadowRoot?.querySelector('.number-input__message');
+    const message = element.shadowRoot?.querySelector('#helper-text');
     expect(message?.textContent?.trim()).toBe('Enter a valid number');
+  });
+
+  it('should show the deprecated message as the error when variant is error', async () => {
+    element.variant = 'error';
+    element.message = 'Too high';
+    await element.updateComplete;
+    const error = element.shadowRoot?.querySelector('#error-message');
+    expect(error?.textContent?.trim()).toBe('Too high');
   });
 
   it('should set property: precision', async () => {
@@ -521,7 +529,7 @@ describe('bp-number-input', () => {
   it('should expose message part for styling', async () => {
     element.message = 'Test message';
     await element.updateComplete;
-    const message = element.shadowRoot?.querySelector('[part="message"]');
+    const message = element.shadowRoot?.querySelector('[part~="message"]');
     expect(message).toBeTruthy();
   });
 

@@ -195,4 +195,13 @@ export const sliderStyles = css`
     color: var(--bp-color-text-muted);
     opacity: var(--bp-opacity-disabled);
   }
+
+  /* Invalid: error color on the thumb and fill */
+  .slider--invalid .slider__thumb {
+    border-color: var(--bp-color-error);
+  }
+
+  .slider--invalid .slider__fill {
+    background-color: var(--bp-color-error);
+  }
 `;

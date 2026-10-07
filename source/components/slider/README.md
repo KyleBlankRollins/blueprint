@@ -33,19 +33,21 @@ A slider component for selecting numeric values within a range. Supports keyboar
 
 ### Properties
 
-| Property      | Type                        | Default  | Description                                  |
-| ------------- | --------------------------- | -------- | -------------------------------------------- |
-| `value`       | `number`                    | `0`      | Current value of the slider                  |
-| `min`         | `number`                    | `0`      | Minimum value                                |
-| `max`         | `number`                    | `100`    | Maximum value                                |
-| `step`        | `number`                    | `1`      | Step increment                               |
-| `name`        | `string`                    | `''`     | Name attribute for form association          |
-| `label`       | `string`                    | `''`     | Label text for the slider                    |
-| `disabled`    | `boolean`                   | `false`  | Whether the slider is disabled               |
-| `size`        | `'sm' \| 'md' \| 'lg'`      | `'md'`   | Size variant                                 |
-| `showValue`   | `boolean`                   | `false`  | Whether to show the current value            |
-| `showTicks`   | `boolean`                   | `false`  | Whether to show tick marks at step intervals |
-| `formatValue` | `(value: number) => string` | `String` | Format function for displaying the value     |
+| Property       | Type                        | Default  | Description                                                                                                                                                      |
+| -------------- | --------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`        | `number`                    | `0`      | Current value of the slider                                                                                                                                      |
+| `min`          | `number`                    | `0`      | Minimum value                                                                                                                                                    |
+| `max`          | `number`                    | `100`    | Maximum value                                                                                                                                                    |
+| `step`         | `number`                    | `1`      | Step increment                                                                                                                                                   |
+| `name`         | `string`                    | `''`     | Name attribute for form association                                                                                                                              |
+| `label`        | `string`                    | `''`     | Label text for the slider                                                                                                                                        |
+| `helperText`   | `string`                    | `''`     | Helper text below the slider, linked with `aria-describedby`                                                                                                     |
+| `errorMessage` | `string`                    | `''`     | Error text. When set, the slider is invalid: the message replaces the helper text, is announced (`role="alert"`), and the thumb and fill turn to the error color |
+| `disabled`     | `boolean`                   | `false`  | Whether the slider is disabled                                                                                                                                   |
+| `size`         | `'sm' \| 'md' \| 'lg'`      | `'md'`   | Size variant                                                                                                                                                     |
+| `showValue`    | `boolean`                   | `false`  | Whether to show the current value                                                                                                                                |
+| `showTicks`    | `boolean`                   | `false`  | Whether to show tick marks at step intervals                                                                                                                     |
+| `formatValue`  | `(value: number) => string` | `String` | Format function for displaying the value                                                                                                                         |
 
 ### Events
 
@@ -63,6 +65,8 @@ A slider component for selecting numeric values within a range. Supports keyboar
 | `thumb`         | The draggable thumb element     |
 | `label`         | The label element               |
 | `value-display` | The current value display       |
+| `helper-text`   | The helper text                 |
+| `error-message` | The error message               |
 
 ### Keyboard Navigation
 

@@ -3,6 +3,11 @@ import { customElement, property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { fileUploadStyles } from './file-upload.style.js';
 import { booleanConverter } from '../../utilities/boolean-converter.js';
+import {
+  fieldMessageState,
+  renderFieldMessage,
+  fieldMessageStyles,
+} from '../../utilities/field-message.js';
 
 /**
  * File information object returned in events
@@ -82,7 +87,19 @@ export class BpFileUpload extends LitElement {
   @property({ type: String }) declare variant:
     'default' | 'success' | 'error' | 'warning';
 
-  /** Helper or error message text */
+  /** Helper text displayed below the upload */
+  @property({ type: String }) declare helperText: string;
+
+  /**
+   * Error text. When set, the upload is invalid: the message replaces the
+   * helper text, is announced, and the border turns to the error color.
+   */
+  @property({ type: String }) declare errorMessage: string;
+
+  /**
+   * @deprecated Use `helperText`, or `errorMessage` for errors. Still shown:
+   * as the error when `variant="error"`, otherwise as helper text.
+   */
   @property({ type: String }) declare message: string;
 
   /** Size variant */
@@ -101,7 +118,7 @@ export class BpFileUpload extends LitElement {
   /** Reference to the hidden file input */
   @query('input[type="file"]') private fileInput!: HTMLInputElement;
 
-  static styles = [fileUploadStyles];
+  static styles = [fieldMessageStyles, fileUploadStyles];
 
   constructor() {
     super();
@@ -116,6 +133,8 @@ export class BpFileUpload extends LitElement {
     this.required = false;
     this.variant = 'default';
     this.message = '';
+    this.helperText = '';
+    this.errorMessage = '';
     this.size = 'md';
     this.showPreviews = true;
   }
@@ -453,13 +472,27 @@ export class BpFileUpload extends LitElement {
     `;
   }
 
+  /** Help/error text, including the deprecated `message` */
+  private get fieldMessage() {
+    const legacyError = this.variant === 'error' ? this.message : '';
+    const legacyHelp = this.variant === 'error' ? '' : this.message;
+    return {
+      helperText: this.helperText || legacyHelp,
+      errorMessage: this.errorMessage || legacyError,
+      invalid: this.variant === 'error',
+    };
+  }
+
   render() {
+    const message = this.fieldMessage;
+    const { invalid, describedBy } = fieldMessageState(message);
+    const variant = invalid ? 'error' : this.variant;
     const dropzoneClasses = {
       'file-upload__dropzone': true,
       'file-upload__dropzone--drag-over': this.isDragOver,
       'file-upload__dropzone--disabled': this.disabled,
       'file-upload__dropzone--has-files': this.files.length > 0,
-      [`file-upload__dropzone--${this.variant}`]: this.variant !== 'default',
+      [`file-upload__dropzone--${variant}`]: variant !== 'default',
       [`file-upload__dropzone--${this.size}`]: true,
     };
 
@@ -472,14 +505,17 @@ export class BpFileUpload extends LitElement {
         : '';
 
     return html`
-      <div class="file-upload">
+      <div class="file-upload file-upload--${variant}">
         <div
           class=${classMap(dropzoneClasses)}
           part="dropzone"
           role="button"
           tabindex=${this.disabled ? -1 : 0}
           aria-disabled=${this.disabled}
-          aria-describedby="file-upload-description"
+          aria-describedby=${['file-upload-description', describedBy]
+            .filter(Boolean)
+            .join(' ')}
+          aria-invalid=${invalid ? 'true' : nothing}
           @click=${this.handleClick}
           @keydown=${this.handleKeyDown}
           @dragenter=${this.handleDragEnter}
@@ -517,17 +553,7 @@ export class BpFileUpload extends LitElement {
           ${acceptDescription} ${sizeDescription}
         </span>
 
-        ${this.renderFileList()}
-        ${
-          this.message
-            ? html`<div
-                class="file-upload__message file-upload__message--${this.variant}"
-                part="message"
-              >
-                ${this.message}
-              </div>`
-            : nothing
-        }
+        ${this.renderFileList()} ${renderFieldMessage(message, 'message')}
       </div>
     `;
   }

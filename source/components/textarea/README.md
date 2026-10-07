@@ -64,27 +64,27 @@ A multi-line text input component with validation states, resizing options, and 
 
 ### Properties
 
-| Property       | Type                                                       | Default      | Description                                   |
-| -------------- | ---------------------------------------------------------- | ------------ | --------------------------------------------- |
-| `variant`      | `'default' \| 'success' \| 'error' \| 'warning' \| 'info'` | `'default'`  | Visual variant (affects border color)         |
-| `size`         | `'sm' \| 'md' \| 'lg'`                                     | `'md'`       | Textarea size                                 |
-| `value`        | `string`                                                   | `''`         | Textarea value                                |
-| `placeholder`  | `string`                                                   | `undefined`  | Placeholder text                              |
-| `label`        | `string`                                                   | `undefined`  | Label text (optional)                         |
-| `helperText`   | `string`                                                   | `undefined`  | Helper text below textarea                    |
-| `errorMessage` | `string`                                                   | `undefined`  | Error message (shown when variant is 'error') |
-| `disabled`     | `boolean`                                                  | `false`      | Whether textarea is disabled                  |
-| `required`     | `boolean`                                                  | `false`      | Whether textarea is required (shows asterisk) |
-| `readonly`     | `boolean`                                                  | `false`      | Whether textarea is readonly                  |
-| `name`         | `string`                                                   | `undefined`  | Form textarea name                            |
-| `rows`         | `number`                                                   | `undefined`  | Number of visible text rows                   |
-| `cols`         | `number`                                                   | `undefined`  | Number of visible text columns                |
-| `maxlength`    | `number`                                                   | `undefined`  | Maximum number of characters                  |
-| `minlength`    | `number`                                                   | `undefined`  | Minimum number of characters                  |
-| `resize`       | `'none' \| 'both' \| 'horizontal' \| 'vertical'`           | `'vertical'` | How the textarea can be resized               |
-| `autocomplete` | `string`                                                   | `undefined`  | Autocomplete attribute                        |
-| `spellcheck`   | `boolean`                                                  | `true`       | Whether to enable spellcheck                  |
-| `wrap`         | `'soft' \| 'hard'`                                         | `undefined`  | Text wrapping behavior                        |
+| Property       | Type                                                       | Default      | Description                                                                                                                                                 |
+| -------------- | ---------------------------------------------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `variant`      | `'default' \| 'success' \| 'error' \| 'warning' \| 'info'` | `'default'`  | Visual variant (affects border color)                                                                                                                       |
+| `size`         | `'sm' \| 'md' \| 'lg'`                                     | `'md'`       | Textarea size                                                                                                                                               |
+| `value`        | `string`                                                   | `''`         | Textarea value                                                                                                                                              |
+| `placeholder`  | `string`                                                   | `undefined`  | Placeholder text                                                                                                                                            |
+| `label`        | `string`                                                   | `undefined`  | Label text (optional)                                                                                                                                       |
+| `helperText`   | `string`                                                   | `''`         | Helper text below the textarea, linked with `aria-describedby`                                                                                              |
+| `errorMessage` | `string`                                                   | `''`         | Error text. When set, the textarea is invalid: the message replaces the helper text, is announced (`role="alert"`), and the border turns to the error color |
+| `disabled`     | `boolean`                                                  | `false`      | Whether textarea is disabled                                                                                                                                |
+| `required`     | `boolean`                                                  | `false`      | Whether textarea is required (shows asterisk)                                                                                                               |
+| `readonly`     | `boolean`                                                  | `false`      | Whether textarea is readonly                                                                                                                                |
+| `name`         | `string`                                                   | `undefined`  | Form textarea name                                                                                                                                          |
+| `rows`         | `number`                                                   | `undefined`  | Number of visible text rows                                                                                                                                 |
+| `cols`         | `number`                                                   | `undefined`  | Number of visible text columns                                                                                                                              |
+| `maxlength`    | `number`                                                   | `undefined`  | Maximum number of characters                                                                                                                                |
+| `minlength`    | `number`                                                   | `undefined`  | Minimum number of characters                                                                                                                                |
+| `resize`       | `'none' \| 'both' \| 'horizontal' \| 'vertical'`           | `'vertical'` | How the textarea can be resized                                                                                                                             |
+| `autocomplete` | `string`                                                   | `undefined`  | Autocomplete attribute                                                                                                                                      |
+| `spellcheck`   | `boolean`                                                  | `true`       | Whether to enable spellcheck                                                                                                                                |
+| `wrap`         | `'soft' \| 'hard'`                                         | `undefined`  | Text wrapping behavior                                                                                                                                      |
 
 ### Events
 
@@ -105,9 +105,11 @@ A multi-line text input component with validation states, resizing options, and 
 
 ### CSS Parts
 
-| Part       | Description                 |
-| ---------- | --------------------------- |
-| `textarea` | The native textarea element |
+| Part            | Description                 |
+| --------------- | --------------------------- |
+| `textarea`      | The native textarea element |
+| `helper-text`   | The helper text             |
+| `error-message` | The error message           |
 
 ## Design Tokens Used
 

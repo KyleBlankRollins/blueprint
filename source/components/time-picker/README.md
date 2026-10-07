@@ -87,17 +87,19 @@ A time picker component with dropdown time selection supporting both 12-hour and
 
 ### Properties
 
-| Property      | Type                   | Default         | Description                                      |
-| ------------- | ---------------------- | --------------- | ------------------------------------------------ |
-| `value`       | `string`               | `''`            | Selected time (format: "HH:MM AM/PM" or "HH:MM") |
-| `name`        | `string`               | `''`            | Form field name for form submissions             |
-| `label`       | `string`               | `''`            | Accessible label for screen readers              |
-| `placeholder` | `string`               | `'Select time'` | Placeholder text shown when no time selected     |
-| `disabled`    | `boolean`              | `false`         | Disables the time picker                         |
-| `required`    | `boolean`              | `false`         | Marks the field as required for forms            |
-| `size`        | `'sm' \| 'md' \| 'lg'` | `'md'`          | Visual size of the time picker                   |
-| `format`      | `'12' \| '24'`         | `'12'`          | Time format (12-hour or 24-hour)                 |
-| `step`        | `number`               | `15`            | Time interval in minutes (e.g., 15, 30, 60)      |
+| Property       | Type                   | Default         | Description                                                                                                                                                    |
+| -------------- | ---------------------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`        | `string`               | `''`            | Selected time (format: "HH:MM AM/PM" or "HH:MM")                                                                                                               |
+| `name`         | `string`               | `''`            | Form field name for form submissions                                                                                                                           |
+| `label`        | `string`               | `''`            | Accessible label for screen readers                                                                                                                            |
+| `helperText`   | `string`               | `''`            | Helper text below the time picker, linked with `aria-describedby`                                                                                              |
+| `errorMessage` | `string`               | `''`            | Error text. When set, the time picker is invalid: the message replaces the helper text, is announced (`role="alert"`), and the border turns to the error color |
+| `placeholder`  | `string`               | `'Select time'` | Placeholder text shown when no time selected                                                                                                                   |
+| `disabled`     | `boolean`              | `false`         | Disables the time picker                                                                                                                                       |
+| `required`     | `boolean`              | `false`         | Marks the field as required for forms                                                                                                                          |
+| `size`         | `'sm' \| 'md' \| 'lg'` | `'md'`          | Visual size of the time picker                                                                                                                                 |
+| `format`       | `'12' \| '24'`         | `'12'`          | Time format (12-hour or 24-hour)                                                                                                                               |
+| `step`         | `number`               | `15`            | Time interval in minutes (e.g., 15, 30, 60)                                                                                                                    |
 
 ### Events
 

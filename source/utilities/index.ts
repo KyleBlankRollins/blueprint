@@ -8,3 +8,12 @@ export {
   type FormValue,
   type FormValidity,
 } from './form-control.js';
+export {
+  fieldMessageState,
+  renderFieldMessage,
+  fieldMessageStyles,
+  HELPER_TEXT_ID,
+  ERROR_MESSAGE_ID,
+  type FieldMessageOptions,
+  type FieldMessageState,
+} from './field-message.js';

@@ -158,16 +158,9 @@ export const textareaStyles = css`
     box-shadow: 0 0 0 var(--bp-focus-offset) var(--bp-color-info);
   }
 
-  /* Messages */
-  .textarea-message {
-    font-family: var(--bp-font-family);
-    font-size: var(--bp-font-size-sm);
-    line-height: var(--bp-line-height-normal);
-    color: var(--bp-color-text-muted);
-  }
-
-  .textarea-message--error {
-    color: var(--bp-color-error);
+  /* Help and error text: spaced by the wrapper's gap */
+  .field-message {
+    margin-top: 0;
   }
 
   /* iOS zoom prevention: ensure 16px minimum on touch devices */

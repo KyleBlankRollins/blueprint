@@ -212,6 +212,13 @@ export const selectStyles = css`
     color: var(--bp-color-primary);
   }
 
+  /* Invalid: error border, also while hovered, focused or open */
+  .select.select--invalid .select-trigger,
+  .select.select--invalid .select-trigger:hover,
+  .select.select--invalid .select-trigger:focus-visible {
+    border-color: var(--bp-color-error);
+  }
+
   .select--disabled .select-trigger {
     opacity: 0.5;
     cursor: not-allowed;

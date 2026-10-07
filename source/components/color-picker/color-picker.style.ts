@@ -612,4 +612,10 @@ export const colorPickerStyles = css`
       transition: none;
     }
   }
+
+  /* Invalid: error border on the trigger */
+  .color-picker--invalid .trigger,
+  .color-picker--invalid .trigger:hover {
+    border-color: var(--bp-color-error);
+  }
 `;

@@ -47,23 +47,25 @@ A number input component with increment/decrement buttons for precise numeric va
 
 ### Properties
 
-| Property      | Type                                             | Default     | Description                               |
-| ------------- | ------------------------------------------------ | ----------- | ----------------------------------------- |
-| `value`       | `number \| null`                                 | `null`      | Current value of the input                |
-| `min`         | `number \| undefined`                            | `undefined` | Minimum allowed value                     |
-| `max`         | `number \| undefined`                            | `undefined` | Maximum allowed value                     |
-| `step`        | `number`                                         | `1`         | Step increment for buttons and arrow keys |
-| `name`        | `string`                                         | `''`        | Name attribute for form association       |
-| `label`       | `string`                                         | `''`        | Label text for the input                  |
-| `placeholder` | `string`                                         | `''`        | Placeholder text when empty               |
-| `disabled`    | `boolean`                                        | `false`     | Whether the input is disabled             |
-| `required`    | `boolean`                                        | `false`     | Whether the input is required             |
-| `readonly`    | `boolean`                                        | `false`     | Whether the input is readonly             |
-| `size`        | `'sm' \| 'md' \| 'lg'`                           | `'md'`      | Size variant                              |
-| `variant`     | `'default' \| 'success' \| 'error' \| 'warning'` | `'default'` | Validation variant                        |
-| `message`     | `string`                                         | `''`        | Help or error message to display          |
-| `precision`   | `number \| undefined`                            | `undefined` | Number of decimal places to display       |
-| `hideButtons` | `boolean`                                        | `false`     | Hide the increment/decrement buttons      |
+| Property       | Type                                             | Default     | Description                                                                                                                                              |
+| -------------- | ------------------------------------------------ | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`        | `number \| null`                                 | `null`      | Current value of the input                                                                                                                               |
+| `min`          | `number \| undefined`                            | `undefined` | Minimum allowed value                                                                                                                                    |
+| `max`          | `number \| undefined`                            | `undefined` | Maximum allowed value                                                                                                                                    |
+| `step`         | `number`                                         | `1`         | Step increment for buttons and arrow keys                                                                                                                |
+| `name`         | `string`                                         | `''`        | Name attribute for form association                                                                                                                      |
+| `label`        | `string`                                         | `''`        | Label text for the input                                                                                                                                 |
+| `helperText`   | `string`                                         | `''`        | Helper text below the input, linked with `aria-describedby`                                                                                              |
+| `errorMessage` | `string`                                         | `''`        | Error text. When set, the input is invalid: the message replaces the helper text, is announced (`role="alert"`), and the border turns to the error color |
+| `placeholder`  | `string`                                         | `''`        | Placeholder text when empty                                                                                                                              |
+| `disabled`     | `boolean`                                        | `false`     | Whether the input is disabled                                                                                                                            |
+| `required`     | `boolean`                                        | `false`     | Whether the input is required                                                                                                                            |
+| `readonly`     | `boolean`                                        | `false`     | Whether the input is readonly                                                                                                                            |
+| `size`         | `'sm' \| 'md' \| 'lg'`                           | `'md'`      | Size variant                                                                                                                                             |
+| `variant`      | `'default' \| 'success' \| 'error' \| 'warning'` | `'default'` | Validation variant                                                                                                                                       |
+| `message`      | `string`                                         | `''`        | **Deprecated.** Use `helperText`, or `errorMessage` for errors. Still shown: as the error when `variant="error"`, otherwise as helper text               |
+| `precision`    | `number \| undefined`                            | `undefined` | Number of decimal places to display                                                                                                                      |
+| `hideButtons`  | `boolean`                                        | `false`     | Hide the increment/decrement buttons                                                                                                                     |
 
 ### Events
 
@@ -74,13 +76,15 @@ A number input component with increment/decrement buttons for precise numeric va
 
 ### CSS Parts
 
-| Part        | Description                    |
-| ----------- | ------------------------------ |
-| `input`     | The native input element       |
-| `increment` | The increment (+) button       |
-| `decrement` | The decrement (−) button       |
-| `label`     | The label element              |
-| `message`   | The help/error message element |
+| Part            | Description                                                        |
+| --------------- | ------------------------------------------------------------------ |
+| `input`         | The native input element                                           |
+| `increment`     | The increment (+) button                                           |
+| `decrement`     | The decrement (−) button                                           |
+| `label`         | The label element                                                  |
+| `message`       | **Deprecated** alias: also set on the helper text or error message |
+| `helper-text`   | The helper text                                                    |
+| `error-message` | The error message                                                  |
 
 ### Keyboard Navigation
 

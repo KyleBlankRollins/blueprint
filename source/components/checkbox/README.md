@@ -93,16 +93,18 @@ A form checkbox input component with label support, indeterminate state, and com
 
 ### Properties
 
-| Property        | Type                   | Default | Description                                       |
-| --------------- | ---------------------- | ------- | ------------------------------------------------- |
-| `checked`       | `boolean`              | `false` | Whether the checkbox is checked                   |
-| `indeterminate` | `boolean`              | `false` | Whether the checkbox is in an indeterminate state |
-| `disabled`      | `boolean`              | `false` | Whether the checkbox is disabled                  |
-| `required`      | `boolean`              | `false` | Whether the checkbox is required                  |
-| `name`          | `string`               | `''`    | The name for form submission                      |
-| `value`         | `string`               | `'on'`  | The value for form submission                     |
-| `size`          | `'sm' \| 'md' \| 'lg'` | `'md'`  | The size of the checkbox                          |
-| `error`         | `boolean`              | `false` | Whether the checkbox has an error state           |
+| Property        | Type                   | Default | Description                                                                                                                                              |
+| --------------- | ---------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `checked`       | `boolean`              | `false` | Whether the checkbox is checked                                                                                                                          |
+| `indeterminate` | `boolean`              | `false` | Whether the checkbox is in an indeterminate state                                                                                                        |
+| `disabled`      | `boolean`              | `false` | Whether the checkbox is disabled                                                                                                                         |
+| `required`      | `boolean`              | `false` | Whether the checkbox is required                                                                                                                         |
+| `name`          | `string`               | `''`    | The name for form submission                                                                                                                             |
+| `value`         | `string`               | `'on'`  | The value for form submission                                                                                                                            |
+| `size`          | `'sm' \| 'md' \| 'lg'` | `'md'`  | The size of the checkbox                                                                                                                                 |
+| `error`         | `boolean`              | `false` | Show the error state without a message. `errorMessage` also sets it                                                                                      |
+| `helperText`    | `string`               | `''`    | Helper text below the checkbox, linked with `aria-describedby`                                                                                           |
+| `errorMessage`  | `string`               | `''`    | Error text. When set, the checkbox is invalid: the message replaces the helper text, is announced (`role="alert"`), and the box turns to the error color |
 
 ### Events
 
@@ -127,12 +129,14 @@ A form checkbox input component with label support, indeterminate state, and com
 
 ### CSS Parts
 
-| Part        | Description                       |
-| ----------- | --------------------------------- |
-| `checkbox`  | The checkbox container (label)    |
-| `input`     | The native checkbox input element |
-| `checkmark` | The visual checkmark indicator    |
-| `label`     | The label text container          |
+| Part            | Description                       |
+| --------------- | --------------------------------- |
+| `checkbox`      | The checkbox container (label)    |
+| `input`         | The native checkbox input element |
+| `checkmark`     | The visual checkmark indicator    |
+| `label`         | The label text container          |
+| `helper-text`   | The helper text                   |
+| `error-message` | The error message                 |
 
 ## Design Tokens Used
 

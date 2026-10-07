@@ -49,21 +49,23 @@ A file upload component with drag-and-drop support, file type validation, size l
 
 ### Properties
 
-| Property       | Type                                             | Default                                | Description                                                    |
-| -------------- | ------------------------------------------------ | -------------------------------------- | -------------------------------------------------------------- |
-| `name`         | `string`                                         | `''`                                   | Name attribute for form submission                             |
-| `label`        | `string`                                         | `'Drop files here or click to upload'` | Label text displayed in the drop zone                          |
-| `description`  | `string`                                         | `''`                                   | Description text displayed below the label                     |
-| `accept`       | `string`                                         | `''`                                   | Accepted file types (comma-separated MIME types or extensions) |
-| `multiple`     | `boolean`                                        | `false`                                | Whether multiple files can be selected                         |
-| `maxSize`      | `number`                                         | `0`                                    | Maximum file size in bytes (0 = no limit)                      |
-| `maxFiles`     | `number`                                         | `0`                                    | Maximum number of files allowed (0 = no limit)                 |
-| `disabled`     | `boolean`                                        | `false`                                | Whether the component is disabled                              |
-| `required`     | `boolean`                                        | `false`                                | Whether a file is required                                     |
-| `variant`      | `'default' \| 'success' \| 'error' \| 'warning'` | `'default'`                            | Visual variant for validation states                           |
-| `message`      | `string`                                         | `''`                                   | Helper or error message text                                   |
-| `size`         | `'sm' \| 'md' \| 'lg'`                           | `'md'`                                 | Size variant                                                   |
-| `showPreviews` | `boolean`                                        | `true`                                 | Whether to show file previews for images                       |
+| Property       | Type                                             | Default                                | Description                                                                                                                                                  |
+| -------------- | ------------------------------------------------ | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `name`         | `string`                                         | `''`                                   | Name attribute for form submission                                                                                                                           |
+| `label`        | `string`                                         | `'Drop files here or click to upload'` | Label text displayed in the drop zone                                                                                                                        |
+| `helperText`   | `string`                                         | `''`                                   | Helper text below the drop zone, linked with `aria-describedby`                                                                                              |
+| `errorMessage` | `string`                                         | `''`                                   | Error text. When set, the drop zone is invalid: the message replaces the helper text, is announced (`role="alert"`), and the border turns to the error color |
+| `description`  | `string`                                         | `''`                                   | Description text displayed below the label                                                                                                                   |
+| `accept`       | `string`                                         | `''`                                   | Accepted file types (comma-separated MIME types or extensions)                                                                                               |
+| `multiple`     | `boolean`                                        | `false`                                | Whether multiple files can be selected                                                                                                                       |
+| `maxSize`      | `number`                                         | `0`                                    | Maximum file size in bytes (0 = no limit)                                                                                                                    |
+| `maxFiles`     | `number`                                         | `0`                                    | Maximum number of files allowed (0 = no limit)                                                                                                               |
+| `disabled`     | `boolean`                                        | `false`                                | Whether the component is disabled                                                                                                                            |
+| `required`     | `boolean`                                        | `false`                                | Whether a file is required                                                                                                                                   |
+| `variant`      | `'default' \| 'success' \| 'error' \| 'warning'` | `'default'`                            | Visual variant for validation states                                                                                                                         |
+| `message`      | `string`                                         | `''`                                   | **Deprecated.** Use `helperText`, or `errorMessage` for errors. Still shown: as the error when `variant="error"`, otherwise as helper text                   |
+| `size`         | `'sm' \| 'md' \| 'lg'`                           | `'md'`                                 | Size variant                                                                                                                                                 |
+| `showPreviews` | `boolean`                                        | `true`                                 | Whether to show file previews for images                                                                                                                     |
 
 ### Events
 
@@ -84,18 +86,20 @@ A file upload component with drag-and-drop support, file type validation, size l
 
 ### CSS Parts
 
-| Part          | Description             |
-| ------------- | ----------------------- |
-| `dropzone`    | The drop zone container |
-| `input`       | The hidden file input   |
-| `label`       | The label text          |
-| `description` | The description text    |
-| `icon`        | The upload icon         |
-| `file-list`   | The file list container |
-| `file-item`   | Individual file item    |
-| `file-name`   | File name text          |
-| `file-size`   | File size text          |
-| `file-remove` | Remove file button      |
+| Part            | Description             |
+| --------------- | ----------------------- |
+| `dropzone`      | The drop zone container |
+| `input`         | The hidden file input   |
+| `label`         | The label text          |
+| `description`   | The description text    |
+| `icon`          | The upload icon         |
+| `file-list`     | The file list container |
+| `file-item`     | Individual file item    |
+| `file-name`     | File name text          |
+| `file-size`     | File size text          |
+| `file-remove`   | Remove file button      |
+| `helper-text`   | The helper text         |
+| `error-message` | The error message       |
 
 ## Keyboard Navigation
 

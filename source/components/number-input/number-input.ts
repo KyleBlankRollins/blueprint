@@ -3,6 +3,11 @@ import { customElement, property, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { numberInputStyles } from './number-input.style.js';
 import { FormControlMixin } from '../../utilities/form-control.js';
+import {
+  fieldMessageState,
+  renderFieldMessage,
+  fieldMessageStyles,
+} from '../../utilities/field-message.js';
 
 /**
  * Size variants for the number input
@@ -90,8 +95,18 @@ export class BpNumberInput extends FormControlMixin(LitElement) {
    */
   @property({ type: String }) declare variant: NumberInputVariant;
 
+  /** Helper text displayed below the number input */
+  @property({ type: String }) declare helperText: string;
+
   /**
-   * Help or error message to display
+   * Error text. When set, the number input is invalid: the message replaces the
+   * helper text, is announced, and the border turns to the error color.
+   */
+  @property({ type: String }) declare errorMessage: string;
+
+  /**
+   * @deprecated Use `helperText`, or `errorMessage` for errors. Still shown:
+   * as the error when `variant="error"`, otherwise as helper text.
    */
   @property({ type: String }) declare message: string;
 
@@ -108,7 +123,7 @@ export class BpNumberInput extends FormControlMixin(LitElement) {
 
   @query('input') private inputElement!: HTMLInputElement;
 
-  static styles = [numberInputStyles];
+  static styles = [fieldMessageStyles, numberInputStyles];
 
   constructor() {
     super();
@@ -125,6 +140,8 @@ export class BpNumberInput extends FormControlMixin(LitElement) {
     this.size = 'md';
     this.variant = 'default';
     this.message = '';
+    this.helperText = '';
+    this.errorMessage = '';
     this.precision = undefined;
     this.hideButtons = false;
   }
@@ -336,11 +353,25 @@ export class BpNumberInput extends FormControlMixin(LitElement) {
     }
   }
 
+  /** Help/error text, including the deprecated `message` */
+  private get fieldMessage() {
+    const legacyError = this.variant === 'error' ? this.message : '';
+    const legacyHelp = this.variant === 'error' ? '' : this.message;
+    return {
+      helperText: this.helperText || legacyHelp,
+      errorMessage: this.errorMessage || legacyError,
+      invalid: this.variant === 'error',
+    };
+  }
+
   render() {
+    const message = this.fieldMessage;
+    const { invalid, describedBy } = fieldMessageState(message);
+    const variant = invalid ? 'error' : this.variant;
     const wrapperClasses = {
       'number-input': true,
       [`number-input--${this.size}`]: true,
-      [`number-input--${this.variant}`]: true,
+      [`number-input--${variant}`]: true,
       'number-input--disabled': this.disabled,
       'number-input--readonly': this.readonly,
       'number-input--hide-buttons': this.hideButtons,
@@ -348,7 +379,7 @@ export class BpNumberInput extends FormControlMixin(LitElement) {
 
     const inputClasses = {
       'number-input__input': true,
-      [`number-input__input--${this.variant}`]: true,
+      [`number-input__input--${variant}`]: true,
     };
 
     return html`
@@ -356,7 +387,7 @@ export class BpNumberInput extends FormControlMixin(LitElement) {
         ${
           this.label
             ? html`
-                <label class="number-input__label" part="label">
+                <label class="number-input__label" part="label" for="input">
                   ${this.label}
                   ${
                     this.required
@@ -390,6 +421,7 @@ export class BpNumberInput extends FormControlMixin(LitElement) {
           <input
             type="text"
             inputmode="decimal"
+            id="input"
             class=${classMap(inputClasses)}
             part="input"
             .value=${this.formatValue(this.value)}
@@ -401,7 +433,8 @@ export class BpNumberInput extends FormControlMixin(LitElement) {
             aria-valuemin=${this.min ?? nothing}
             aria-valuemax=${this.max ?? nothing}
             aria-valuenow=${this.value ?? nothing}
-            aria-invalid=${this.variant === 'error' ? 'true' : nothing}
+            aria-invalid=${invalid ? 'true' : nothing}
+            aria-describedby=${describedBy ?? nothing}
             @input=${this.handleInput}
             @blur=${this.handleBlur}
             @keydown=${this.handleKeyDown}
@@ -426,20 +459,7 @@ export class BpNumberInput extends FormControlMixin(LitElement) {
           }
         </div>
 
-        ${
-          this.message
-            ? html`
-                <div
-                  class="number-input__message number-input__message--${
-                    this.variant
-                  }"
-                  part="message"
-                >
-                  ${this.message}
-                </div>
-              `
-            : nothing
-        }
+        ${renderFieldMessage(message, 'message')}
       </div>
     `;
   }

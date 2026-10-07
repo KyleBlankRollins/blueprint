@@ -72,18 +72,20 @@ A dropdown component for selecting multiple options with tag-based display of se
 
 ### Properties
 
-| Property        | Type                 | Default            | Description                                                                       |
-| --------------- | -------------------- | ------------------ | --------------------------------------------------------------------------------- |
-| `value`         | `string[]`           | `[]`               | The current selected values as an array                                           |
-| `name`          | `string`             | `''`               | Name attribute for form submission                                                |
-| `label`         | `string`             | `''`               | Visible label above the control, referenced by `aria-labelledby`                  |
-| `placeholder`   | `string`             | `'Select options'` | Placeholder text when no values are selected                                      |
-| `disabled`      | `boolean`            | `false`            | Whether the multi-select is disabled                                              |
-| `required`      | `boolean`            | `false`            | Whether the multi-select is required                                              |
-| `size`          | `MultiSelectSize`    | `'md'`             | Size variant: `'sm'`, `'md'`, or `'lg'`                                           |
-| `variant`       | `MultiSelectVariant` | `'default'`        | Validation variant: `'default'`, `'success'`, `'error'`, `'warning'`, or `'info'` |
-| `maxSelections` | `number`             | `0`                | Maximum number of selections allowed (0 = unlimited)                              |
-| `clearable`     | `boolean`            | `true`             | Whether to show a clear all button                                                |
+| Property        | Type                 | Default            | Description                                                                                                                                                |
+| --------------- | -------------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`         | `string[]`           | `[]`               | The current selected values as an array                                                                                                                    |
+| `name`          | `string`             | `''`               | Name attribute for form submission                                                                                                                         |
+| `label`         | `string`             | `''`               | Visible label above the control, referenced by `aria-labelledby`                                                                                           |
+| `helperText`    | `string`             | `''`               | Helper text below the control, linked with `aria-describedby`                                                                                              |
+| `errorMessage`  | `string`             | `''`               | Error text. When set, the control is invalid: the message replaces the helper text, is announced (`role="alert"`), and the border turns to the error color |
+| `placeholder`   | `string`             | `'Select options'` | Placeholder text when no values are selected                                                                                                               |
+| `disabled`      | `boolean`            | `false`            | Whether the multi-select is disabled                                                                                                                       |
+| `required`      | `boolean`            | `false`            | Whether the multi-select is required                                                                                                                       |
+| `size`          | `MultiSelectSize`    | `'md'`             | Size variant: `'sm'`, `'md'`, or `'lg'`                                                                                                                    |
+| `variant`       | `MultiSelectVariant` | `'default'`        | Validation variant: `'default'`, `'success'`, `'error'`, `'warning'`, or `'info'`                                                                          |
+| `maxSelections` | `number`             | `0`                | Maximum number of selections allowed (0 = unlimited)                                                                                                       |
+| `clearable`     | `boolean`            | `true`             | Whether to show a clear all button                                                                                                                         |
 
 ### Events
 
@@ -108,6 +110,8 @@ A dropdown component for selecting multiple options with tag-based display of se
 | `indicator`       | The dropdown arrow indicator      |
 | `option`          | Individual option in the dropdown |
 | `option-selected` | Selected option state             |
+| `helper-text`     | The helper text                   |
+| `error-message`   | The error message                 |
 
 ## Design Tokens Used
 

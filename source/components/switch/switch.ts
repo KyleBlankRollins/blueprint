@@ -1,6 +1,11 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, nothing } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { switchStyles } from './switch.style.js';
+import {
+  fieldMessageState,
+  renderFieldMessage,
+  fieldMessageStyles,
+} from '../../utilities/field-message.js';
 import { live } from 'lit/directives/live.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
@@ -67,13 +72,22 @@ export class BpSwitch extends LitElement {
   @property({ type: Boolean, reflect: true })
   declare error: boolean;
 
+  /** Helper text displayed below the switch */
+  @property({ type: String }) declare helperText: string;
+
+  /**
+   * Error text. When set, the switch is invalid: the message replaces the
+   * helper text, is announced, and the control turns to the error color.
+   */
+  @property({ type: String }) declare errorMessage: string;
+
   @state()
   private hasFocus = false;
 
   @query('input[type="checkbox"]')
   private input!: HTMLInputElement;
 
-  static styles = [switchStyles];
+  static styles = [fieldMessageStyles, switchStyles];
 
   static formAssociated = true;
 
@@ -88,6 +102,8 @@ export class BpSwitch extends LitElement {
     this.value = 'on';
     this.size = 'md';
     this.error = false;
+    this.helperText = '';
+    this.errorMessage = '';
 
     // Attach internals for form integration (with safety check for tests)
     if (typeof this.attachInternals === 'function') {
@@ -178,12 +194,18 @@ export class BpSwitch extends LitElement {
   }
 
   render() {
+    const message = {
+      helperText: this.helperText,
+      errorMessage: this.errorMessage,
+      invalid: this.error,
+    };
+    const { invalid, describedBy } = fieldMessageState(message);
     return html`
       <label
         part="switch"
         class="switch switch--${this.size} ${
           this.disabled ? 'switch--disabled' : ''
-        } ${this.error ? 'switch--error' : ''} ${
+        } ${invalid ? 'switch--error' : ''} ${
           this.hasFocus ? 'switch--focus' : ''
         }"
         @click=${this.handleLabelClick}
@@ -198,6 +220,8 @@ export class BpSwitch extends LitElement {
           name=${ifDefined(this.name || undefined)}
           value=${this.value}
           aria-checked=${this.checked ? 'true' : 'false'}
+          aria-invalid=${invalid ? 'true' : nothing}
+          aria-describedby=${describedBy ?? nothing}
           @change=${this.handleChange}
           @focus=${this.handleFocus}
           @blur=${this.handleBlur}
@@ -209,6 +233,7 @@ export class BpSwitch extends LitElement {
           <slot></slot>
         </span>
       </label>
+      ${renderFieldMessage(message)}
     `;
   }
 }
