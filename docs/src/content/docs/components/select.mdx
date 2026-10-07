@@ -104,38 +104,75 @@ import '@krollins/blueprint/select';
 </bp-select>
 ```
 
+### Help and error text
+
+Use `helperText` for a hint under the control. Setting `errorMessage` marks it invalid: the message replaces the hint, is announced to screen readers, and the control gets the error color.
+
+<ComponentPreview>
+  <div class="component-preview-col">
+    <bp-select label="Country" helperText="Where you file taxes">
+      <option value="us">United States</option>
+      <option value="ca">Canada</option>
+    </bp-select>
+    <bp-select label="Plan" errorMessage="Choose a plan to continue">
+      <option value="free">Free</option>
+      <option value="team">Team</option>
+    </bp-select>
+  </div>
+</ComponentPreview>
+
+```html
+<bp-select label="Country" helperText="Where you file taxes">
+  <option value="us">United States</option>
+  <option value="ca">Canada</option>
+</bp-select>
+<bp-select label="Plan" errorMessage="Choose a plan to continue">
+  <option value="free">Free</option>
+  <option value="team">Team</option>
+</bp-select>
+```
+
 ## API Reference
 
 ### Properties
 
-| Property      | Type                             | Default    | Description         |
-| ------------- | -------------------------------- | ---------- | ------------------- |
-| `value`       | `string`                         | `''`       | Selected value      |
-| `placeholder` | `string`                         | `''`       | Placeholder text    |
-| `disabled`    | `boolean`                        | `false`    | Disables the select |
-| `required`    | `boolean`                        | `false`    | Marks as required   |
-| `size`        | `'sm' \| 'md' \| 'lg'`           | `'md'`.    | Select size         |
-| `name`        | `string`                         | `''`       | Form field name     |
+| Property       | Type                   | Default              | Description                                                                                                                                               |
+| -------------- | ---------------------- | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`        | `string`               | `''`                 | The current value of the select                                                                                                                           |
+| `name`         | `string`               | `''`                 | Name attribute for form submission                                                                                                                        |
+| `label`        | `string`               | `''`                 | Visible label text displayed above the select                                                                                                             |
+| `helperText`   | `string`               | `''`                 | Helper text below the select, linked with `aria-describedby`                                                                                              |
+| `errorMessage` | `string`               | `''`                 | Error text. When set, the select is invalid: the message replaces the helper text, is announced (`role="alert"`), and the border turns to the error color |
+| `placeholder`  | `string`               | `'Select an option'` | Placeholder text when no value is selected                                                                                                                |
+| `disabled`     | `boolean`              | `false`              | Whether the select is disabled                                                                                                                            |
+| `required`     | `boolean`              | `false`              | Whether the select is required                                                                                                                            |
+| `size`         | `'sm' \| 'md' \| 'lg'` | `'md'`               | Size variant of the select                                                                                                                                |
 
 ### Slots
 
-| Slot      | Description         |
-| --------- | ------------------- |
-| (default) | `<option>` elements |
+| Slot      | Description                        |
+| --------- | ---------------------------------- |
+| (default) | `<option>` elements for the select |
 
 ### Events
 
-| Event    | Detail      | Description                  |
-| -------- | ----------- | ---------------------------- |
-| `change` | `{ value }` | Fired when selection changes |
+| Event       | Detail                                                    | Description                  |
+| ----------- | --------------------------------------------------------- | ---------------------------- |
+| `bp-change` | `{ value: string, label: string, previousValue: string }` | Fired when selection changes |
 
 ### CSS Parts
 
-| Part       | Description            |
-| ---------- | ---------------------- |
-| `trigger`  | The select button      |
-| `dropdown` | The dropdown container |
-| `option`   | Individual options     |
+| Part            | Description                   |
+| --------------- | ----------------------------- |
+| `label`         | The label element             |
+| `container`     | The select container          |
+| `trigger`       | The clickable trigger element |
+| `display`       | The displayed value text      |
+| `icon`          | The dropdown chevron icon     |
+| `dropdown`      | The dropdown menu container   |
+| `option`        | Individual option elements    |
+| `helper-text`   | The helper text               |
+| `error-message` | The error message             |
 
 ## Accessibility
 
@@ -143,3 +180,4 @@ import '@krollins/blueprint/select';
 - Enter/Space to select
 - Escape to close dropdown
 - Proper ARIA attributes for combobox pattern
+- `helperText` and `errorMessage` are linked to the select with `aria-describedby`; an error message sets `aria-invalid="true"` and is announced with `role="alert"`

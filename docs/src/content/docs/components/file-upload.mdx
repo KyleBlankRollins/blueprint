@@ -115,6 +115,8 @@ import '@krollins/blueprint/file-upload';
 
 ### Validation States
 
+Use `helperText` for a hint and `errorMessage` for an error. Setting `errorMessage` marks the drop zone invalid, announces the message and turns the border to the error color. The older `message` property is deprecated: it is still shown, as the error when `variant="error"` and as helper text otherwise.
+
 <ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
     <bp-file-upload variant="success" label="Uploaded" helperText="File uploaded successfully"></bp-file-upload>
@@ -156,21 +158,23 @@ import '@krollins/blueprint/file-upload';
 
 ### Properties
 
-| Property       | Type                                             | Default                                | Description                               |
-| -------------- | ------------------------------------------------ | -------------------------------------- | ----------------------------------------- |
-| `name`         | `string`                                         | `''`                                   | Name for form submission                  |
-| `label`        | `string`                                         | `'Drop files here or click to upload'` | Drop zone label                           |
-| `description`  | `string`                                         | `''`                                   | Description text                          |
-| `accept`       | `string`                                         | `''`                                   | Accepted file types (MIME or extensions)  |
-| `multiple`     | `boolean`                                        | `false`                                | Allow multiple files                      |
-| `maxSize`      | `number`                                         | `0`                                    | Maximum file size in bytes (0 = no limit) |
-| `maxFiles`     | `number`                                         | `0`                                    | Maximum number of files (0 = no limit)    |
-| `disabled`     | `boolean`                                        | `false`                                | Whether upload is disabled                |
-| `required`     | `boolean`                                        | `false`                                | Whether a file is required                |
-| `variant`      | `'default' \| 'success' \| 'error' \| 'warning'` | `'default'`                            | Validation variant                        |
-| `message`      | `string`                                         | `''`                                   | Help or error message                     |
-| `size`         | `'sm' \| 'md' \| 'lg'`                 | `'md'`                             | Size variant                              |
-| `showPreviews` | `boolean`                                        | `true`                                 | Show image previews                       |
+| Property       | Type                                             | Default                                | Description                                                                                                                                                  |
+| -------------- | ------------------------------------------------ | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `name`         | `string`                                         | `''`                                   | Name attribute for form submission                                                                                                                           |
+| `label`        | `string`                                         | `'Drop files here or click to upload'` | Label text displayed in the drop zone                                                                                                                        |
+| `helperText`   | `string`                                         | `''`                                   | Helper text below the drop zone, linked with `aria-describedby`                                                                                              |
+| `errorMessage` | `string`                                         | `''`                                   | Error text. When set, the drop zone is invalid: the message replaces the helper text, is announced (`role="alert"`), and the border turns to the error color |
+| `description`  | `string`                                         | `''`                                   | Description text displayed below the label                                                                                                                   |
+| `accept`       | `string`                                         | `''`                                   | Accepted file types (comma-separated MIME types or extensions)                                                                                               |
+| `multiple`     | `boolean`                                        | `false`                                | Whether multiple files can be selected                                                                                                                       |
+| `maxSize`      | `number`                                         | `0`                                    | Maximum file size in bytes (0 = no limit)                                                                                                                    |
+| `maxFiles`     | `number`                                         | `0`                                    | Maximum number of files allowed (0 = no limit)                                                                                                               |
+| `disabled`     | `boolean`                                        | `false`                                | Whether the component is disabled                                                                                                                            |
+| `required`     | `boolean`                                        | `false`                                | Whether a file is required                                                                                                                                   |
+| `variant`      | `'default' \| 'success' \| 'error' \| 'warning'` | `'default'`                            | Visual variant for validation states                                                                                                                         |
+| `message`      | `string`                                         | `''`                                   | **Deprecated.** Use `helperText`, or `errorMessage` for errors. Still shown: as the error when `variant="error"`, otherwise as helper text                   |
+| `size`         | `'sm' \| 'md' \| 'lg'`                           | `'md'`                                 | Size variant                                                                                                                                                 |
+| `showPreviews` | `boolean`                                        | `true`                                 | Whether to show file previews for images                                                                                                                     |
 
 ### Methods
 
@@ -182,12 +186,12 @@ import '@krollins/blueprint/file-upload';
 
 ### Events
 
-| Event              | Detail                  | Description                        |
-| ------------------ | ----------------------- | ---------------------------------- |
-| `bp-change`        | `{ files: FileInfo[] }` | Fired when files are added/removed |
-| `bp-file-added`    | `{ file: FileInfo }`    | Fired when a file is added         |
-| `bp-file-removed`  | `{ file: FileInfo }`    | Fired when a file is removed       |
-| `bp-file-rejected` | `{ file, reason }`      | Fired when a file is rejected      |
+| Event              | Detail                  | Description                                       |
+| ------------------ | ----------------------- | ------------------------------------------------- |
+| `bp-change`        | `{ files: FileInfo[] }` | Fired when files are added or removed             |
+| `bp-file-added`    | `{ file: FileInfo }`    | Fired when a file is added                        |
+| `bp-file-removed`  | `{ file: FileInfo }`    | Fired when a file is removed                      |
+| `bp-file-rejected` | `{ file, reason }`      | Fired when a file is rejected (invalid type/size) |
 
 ### FileInfo Interface
 
@@ -207,21 +211,24 @@ interface FileInfo {
 
 ### CSS Parts
 
-| Part          | Description             |
-| ------------- | ----------------------- |
-| `dropzone`    | The drop zone container |
-| `input`       | The hidden file input   |
-| `label`       | The label text          |
-| `description` | The description text    |
-| `icon`        | The upload icon         |
-| `file-list`   | The file list container |
-| `file-item`   | Individual file item    |
-| `file-name`   | File name text          |
-| `file-size`   | File size text          |
-| `file-remove` | Remove file button      |
+| Part            | Description             |
+| --------------- | ----------------------- |
+| `dropzone`      | The drop zone container |
+| `input`         | The hidden file input   |
+| `label`         | The label text          |
+| `description`   | The description text    |
+| `icon`          | The upload icon         |
+| `file-list`     | The file list container |
+| `file-item`     | Individual file item    |
+| `file-name`     | File name text          |
+| `file-size`     | File size text          |
+| `file-remove`   | Remove file button      |
+| `helper-text`   | The helper text         |
+| `error-message` | The error message       |
 
 ### Accessibility
 
 - Keyboard accessible (Enter/Space to open file picker)
 - Drag and drop with visual feedback
 - Screen reader announcements for file operations
+- `helperText` and `errorMessage` are linked to the drop zone with `aria-describedby`; an error message sets `aria-invalid="true"` and is announced with `role="alert"`

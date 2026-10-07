@@ -78,6 +78,8 @@ import '@krollins/blueprint/number-input';
 
 ### Validation Variants
 
+Use `helperText` for a hint and `errorMessage` for an error. Setting `errorMessage` marks the input invalid, announces the message and turns the border to the error color. The older `message` property is deprecated: it is still shown, as the error when `variant="error"` and as helper text otherwise.
+
 <ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 1rem;">
     <bp-number-input variant="success" label="Success" value="100" helperText="Valid amount"></bp-number-input>
@@ -157,40 +159,44 @@ import '@krollins/blueprint/number-input';
 
 ### Properties
 
-| Property       | Type                                             | Default     | Description                      |
-| -------------- | ------------------------------------------------ | ----------- | -------------------------------- |
-| `value`        | `number \| null`                                 | `null`      | Current value                    |
-| `min`          | `number`                                         | -           | Minimum allowed value            |
-| `max`          | `number`                                         | -           | Maximum allowed value            |
-| `step`         | `number`                                         | `1`         | Step increment                   |
-| `precision`    | `number`                                         | -           | Number of decimal places         |
-| `label`        | `string`                                         | `''`        | Label text                       |
-| `placeholder`  | `string`                                         | `''`        | Placeholder text                 |
-| `name`         | `string`                                         | `''`        | Name for form submission         |
-| `message`      | `string`                                         | `''`        | Help or error message            |
-| `size`         | `'ms' \| 'md' \| 'lg'`                           | `'md'`      | Size of the input                |
-| `variant`      | `'default' \| 'success' \| 'error' \| 'warning'` | `'default'` | Validation variant               |
-| `disabled`     | `boolean`                                        | `false`     | Whether the input is disabled    |
-| `required`     | `boolean`                                        | `false`     | Whether the input is required    |
-| `readonly`     | `boolean`                                        | `false`     | Whether the input is readonly    |
-| `hide-buttons` | `boolean`                                        | `false`     | Hide increment/decrement buttons |
+| Property       | Type                                             | Default     | Description                                                                                                                                              |
+| -------------- | ------------------------------------------------ | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`        | `number \| null`                                 | `null`      | Current value of the input                                                                                                                               |
+| `min`          | `number \| undefined`                            | `undefined` | Minimum allowed value                                                                                                                                    |
+| `max`          | `number \| undefined`                            | `undefined` | Maximum allowed value                                                                                                                                    |
+| `step`         | `number`                                         | `1`         | Step increment for buttons and arrow keys                                                                                                                |
+| `name`         | `string`                                         | `''`        | Name attribute for form association                                                                                                                      |
+| `label`        | `string`                                         | `''`        | Label text for the input                                                                                                                                 |
+| `helperText`   | `string`                                         | `''`        | Helper text below the input, linked with `aria-describedby`                                                                                              |
+| `errorMessage` | `string`                                         | `''`        | Error text. When set, the input is invalid: the message replaces the helper text, is announced (`role="alert"`), and the border turns to the error color |
+| `placeholder`  | `string`                                         | `''`        | Placeholder text when empty                                                                                                                              |
+| `disabled`     | `boolean`                                        | `false`     | Whether the input is disabled                                                                                                                            |
+| `required`     | `boolean`                                        | `false`     | Whether the input is required                                                                                                                            |
+| `readonly`     | `boolean`                                        | `false`     | Whether the input is readonly                                                                                                                            |
+| `size`         | `'sm' \| 'md' \| 'lg'`                           | `'md'`      | Size variant                                                                                                                                             |
+| `variant`      | `'default' \| 'success' \| 'error' \| 'warning'` | `'default'` | Validation variant                                                                                                                                       |
+| `message`      | `string`                                         | `''`        | **Deprecated.** Use `helperText`, or `errorMessage` for errors. Still shown: as the error when `variant="error"`, otherwise as helper text               |
+| `precision`    | `number \| undefined`                            | `undefined` | Number of decimal places to display                                                                                                                      |
+| `hideButtons`  | `boolean`                                        | `false`     | Hide the increment/decrement buttons. Attribute: `hide-buttons`                                                                                          |
 
 ### Events
 
-| Event       | Detail      | Description                               |
-| ----------- | ----------- | ----------------------------------------- |
-| `bp-input`  | `{ value }` | Fired during input                        |
-| `bp-change` | `{ value }` | Fired when value changes (blur or button) |
+| Event       | Detail              | Description                                   |
+| ----------- | ------------------- | --------------------------------------------- |
+| `bp-input`  | `{ value: number }` | Fired when the value changes during input     |
+| `bp-change` | `{ value: number }` | Fired when the value changes (on blur/button) |
 
 ### CSS Parts
 
-| Part        | Description              |
-| ----------- | ------------------------ |
-| `input`     | The native input element |
-| `decrement` | The decrement button     |
-| `increment` | The increment button     |
-| `label`     | The label element        |
-| `message`   | The help/error message   |
+| Part            | Description                                                        |
+| --------------- | ------------------------------------------------------------------ |
+| `input`         | The native input element                                           |
+| `increment`     | The increment (+) button                                           |
+| `decrement`     | The decrement (−) button                                           |
+| `label`         | The label element                                                  |
+| `message`       | **Deprecated** alias: also set on the helper text or error message |
+| `helper-text`   | The helper text                                                    |
+| `error-message` | The error message                                                  |
 
 ### Keyboard Navigation
 
@@ -200,3 +206,8 @@ import '@krollins/blueprint/number-input';
 - **Page Down**: Decrement by step × 10
 - **Home**: Set to minimum (if defined)
 - **End**: Set to maximum (if defined)
+
+### Accessibility
+
+- The label is associated with the input
+- `helperText` and `errorMessage` are linked to the input with `aria-describedby`; an error message sets `aria-invalid="true"` and is announced with `role="alert"`

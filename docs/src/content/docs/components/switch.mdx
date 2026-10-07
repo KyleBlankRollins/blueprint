@@ -111,43 +111,70 @@ import '@krollins/blueprint/switch';
 </div>
 ```
 
+### Help and error text
+
+Use `helperText` for a hint under the control. Setting `errorMessage` marks it invalid: the message replaces the hint, is announced to screen readers, and the control gets the error color. When `errorMessage` is set, the track turns to the error color. Use `error` for the error styling without a message.
+
+<ComponentPreview>
+  <div class="component-preview-col">
+    <bp-switch helperText="Uses more battery">Background sync</bp-switch>
+    <bp-switch errorMessage="Unavailable while offline">Cloud backup</bp-switch>
+  </div>
+</ComponentPreview>
+
+```html
+<bp-switch helperText="Uses more battery">Background sync</bp-switch>
+<bp-switch errorMessage="Unavailable while offline">Cloud backup</bp-switch>
+```
+
 ## API Reference
 
 ### Properties
 
-| Property   | Type                   | Default | Description                            |
-| ---------- | ---------------------- | ------- | -------------------------------------- |
-| `checked`  | `boolean`              | `false` | Whether the switch is on               |
-| `disabled` | `boolean`              | `false` | Whether the switch is disabled         |
-| `required` | `boolean`              | `false` | Whether the switch is required         |
-| `name`     | `string`               | `''`    | Name for form submission               |
-| `value`    | `string`               | `'on'`  | Value for form submission when checked |
-| `size`     | `'sm' \| 'md' \| 'lg'` | `'md'`  | Size of the switch                     |
-| `error`    | `boolean`              | `false` | Whether the switch has an error state  |
+| Property       | Type                   | Default | Description                                                                                                                                              |
+| -------------- | ---------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `checked`      | `boolean`              | `false` | Whether the switch is in the on position                                                                                                                 |
+| `disabled`     | `boolean`              | `false` | Whether the switch is disabled                                                                                                                           |
+| `required`     | `boolean`              | `false` | Whether the switch is required                                                                                                                           |
+| `name`         | `string`               | `''`    | The name for form submission                                                                                                                             |
+| `value`        | `string`               | `'on'`  | The value for form submission                                                                                                                            |
+| `size`         | `'sm' \| 'md' \| 'lg'` | `'md'`  | The size of the switch                                                                                                                                   |
+| `error`        | `boolean`              | `false` | Show the error state without a message. `errorMessage` also sets it                                                                                      |
+| `helperText`   | `string`               | `''`    | Helper text below the switch, linked with `aria-describedby`                                                                                             |
+| `errorMessage` | `string`               | `''`    | Error text. When set, the switch is invalid: the message replaces the helper text, is announced (`role="alert"`), and the track turns to the error color |
 
 ### Slots
 
-| Slot      | Description    |
-| --------- | -------------- |
-| (default) | The label text |
+| Slot      | Description           |
+| --------- | --------------------- |
+| (default) | The switch label text |
 
 ### Events
 
-| Event       | Detail        | Description                          |
-| ----------- | ------------- | ------------------------------------ |
-| `bp-change` | `{ checked }` | Fired when the checked state changes |
-| `bp-focus`  | -             | Fired when the switch receives focus |
-| `bp-blur`   | -             | Fired when the switch loses focus    |
+| Event       | Detail                 | Description                          |
+| ----------- | ---------------------- | ------------------------------------ |
+| `bp-change` | `{ checked: boolean }` | Fired when the checked state changes |
+| `bp-focus`  | -                      | Fired when the switch receives focus |
+| `bp-blur`   | -                      | Fired when the switch loses focus    |
+
+### Methods
+
+| Method            | Parameters                  | Description                   |
+| ----------------- | --------------------------- | ----------------------------- |
+| `focus(options?)` | `FocusOptions \| undefined` | Sets focus on the switch      |
+| `blur()`          | -                           | Removes focus from the switch |
 
 ### CSS Parts
 
-| Part     | Description                       |
-| -------- | --------------------------------- |
-| `switch` | The switch container (label)      |
-| `input`  | The native checkbox input element |
-| `track`  | The switch track background       |
-| `thumb`  | The switch thumb/handle           |
-| `label`  | The label text container          |
+| Part            | Description                       |
+| --------------- | --------------------------------- |
+| `switch`        | The switch container (label)      |
+| `input`         | The native checkbox input element |
+| `track`         | The switch track background       |
+| `thumb`         | The switch thumb/handle           |
+| `label`         | The label text container          |
+| `helper-text`   | The helper text                   |
+| `error-message` | The error message                 |
 
 ### Form Integration
 
@@ -159,3 +186,4 @@ The component supports native form submission. When checked, the `value` propert
 - Keyboard accessible with Space/Enter to toggle
 - Proper focus indicators
 - Label is associated with the input
+- `helperText` and `errorMessage` are linked to the switch with `aria-describedby`; an error message sets `aria-invalid="true"` and is announced with `role="alert"`

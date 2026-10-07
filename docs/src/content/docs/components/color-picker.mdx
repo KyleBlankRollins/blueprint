@@ -138,54 +138,80 @@ import '@krollins/blueprint/color-picker';
 <bp-color-picker readonly value="#3b82f6"></bp-color-picker>
 ```
 
+### Help and error text
+
+Use `helperText` for a hint under the control. Setting `errorMessage` marks it invalid: the message replaces the hint, is announced to screen readers, and the control gets the error color.
+
+<ComponentPreview>
+  <div class="component-preview-col">
+    <bp-color-picker label="Brand color" helperText="Used for buttons and links"></bp-color-picker>
+    <bp-color-picker label="Text color" errorMessage="Not enough contrast with the background"></bp-color-picker>
+  </div>
+</ComponentPreview>
+
+```html
+<bp-color-picker
+  label="Brand color"
+  helperText="Used for buttons and links"
+></bp-color-picker>
+<bp-color-picker
+  label="Text color"
+  errorMessage="Not enough contrast with the background"
+></bp-color-picker>
+```
+
 ## API Reference
 
 ### Properties
 
-| Property      | Type                      | Default     | Description                      |
-| ------------- | ------------------------- | ----------- | -------------------------------- |
-| `value`       | `string`                  | `'#000000'` | Current color value              |
-| `format`      | `'hex' \| 'rgb' \| 'hsl'` | `'hex'`     | Output format for value          |
-| `alpha`       | `boolean`                 | `true`      | Enable alpha channel             |
-| `swatches`    | `string[]`                | `[]`        | Predefined swatch colors         |
-| `inline`      | `boolean`                 | `false`     | Render inline instead of popover |
-| `disabled`    | `boolean`                 | `false`     | Disable all interactions         |
-| `readonly`    | `boolean`                 | `false`     | Show value but prevent editing   |
-| `size`        | `'sm' \| 'md' \| 'lg'`    | `'md'`      | Component size                   |
-| `label`       | `string`                  | `''`        | Accessible label                 |
-| `name`        | `string`                  | `''`        | Form field name                  |
-| `placeholder` | `string`                  | `''`        | Placeholder for trigger          |
+| Property       | Type              | Default     | Description                                                                                                                                                     |
+| -------------- | ----------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`        | `string`          | `'#000000'` | Current color value in specified format                                                                                                                         |
+| `format`       | `ColorFormat`     | `'hex'`     | Output format: `'hex'`, `'rgb'`, `'hsl'`                                                                                                                        |
+| `alpha`        | `boolean`         | `true`      | Enable alpha channel                                                                                                                                            |
+| `swatches`     | `string[]`        | `[]`        | Predefined swatch colors                                                                                                                                        |
+| `inline`       | `boolean`         | `false`     | Render inline instead of popover                                                                                                                                |
+| `disabled`     | `boolean`         | `false`     | Disable all interactions                                                                                                                                        |
+| `readonly`     | `boolean`         | `false`     | Show value but prevent editing                                                                                                                                  |
+| `size`         | `ColorPickerSize` | `'md'`      | Size: `'sm'`, `'md'`, `'lg'`                                                                                                                                    |
+| `label`        | `string`          | `''`        | Accessible label shown in trigger                                                                                                                               |
+| `helperText`   | `string`          | `''`        | Helper text below the color picker, linked with `aria-describedby`                                                                                              |
+| `errorMessage` | `string`          | `''`        | Error text. When set, the color picker is invalid: the message replaces the helper text, is announced (`role="alert"`), and the border turns to the error color |
+| `name`         | `string`          | `''`        | Form field name for submission                                                                                                                                  |
+| `placeholder`  | `string`          | `''`        | Placeholder text for trigger                                                                                                                                    |
 
 ### Events
 
-| Event       | Detail      | Description                           |
-| ----------- | ----------- | ------------------------------------- |
-| `bp-change` | `{ value }` | Fired when value changes (on confirm) |
-| `bp-input`  | `{ value }` | Fired on every input (live updates)   |
-| `bp-open`   | -           | Popover opened                        |
-| `bp-close`  | -           | Popover closed                        |
+| Event       | Detail              | Description                     |
+| ----------- | ------------------- | ------------------------------- |
+| `bp-change` | `{ value: string }` | Fired when color value changes  |
+| `bp-input`  | `{ value: string }` | Fired on live input during drag |
+| `bp-open`   | `undefined`         | Fired when popover opens        |
+| `bp-close`  | `undefined`         | Fired when popover closes       |
 
 ### Slots
 
 | Slot       | Description                     |
 | ---------- | ------------------------------- |
-| `trigger`  | Custom trigger button content   |
-| `swatches` | Custom swatch elements          |
+| `trigger`  | Custom trigger element          |
+| `swatches` | Custom swatch content           |
 | `footer`   | Additional content below picker |
 
 ### CSS Parts
 
-| Part           | Description                      |
-| -------------- | -------------------------------- |
-| `trigger`      | The popover trigger button       |
-| `popover`      | The popover container            |
-| `color-area`   | The 2D saturation/value gradient |
-| `hue-slider`   | The hue selection slider         |
-| `alpha-slider` | The alpha selection slider       |
-| `preview`      | The color preview swatch         |
-| `input`        | Text input fields                |
-| `swatches`     | Swatches container               |
-| `swatch`       | Individual swatch items          |
+| Part            | Description                  |
+| --------------- | ---------------------------- |
+| `trigger`       | The trigger button           |
+| `popover`       | The popover container        |
+| `color-area`    | The 2D saturation/value area |
+| `hue-slider`    | The vertical hue slider      |
+| `alpha-slider`  | The horizontal alpha slider  |
+| `preview`       | The color preview swatch     |
+| `input`         | Input fields (hex, rgb, hsl) |
+| `swatches`      | The swatches container       |
+| `swatch`        | Individual swatch buttons    |
+| `helper-text`   | The helper text              |
+| `error-message` | The error message            |
 
 ### Features
 
@@ -199,3 +225,4 @@ import '@krollins/blueprint/color-picker';
 - Full keyboard navigation
 - ARIA labels for all controls
 - Screen reader announcements for color changes
+- `helperText` and `errorMessage` are linked to the trigger with `aria-describedby`; an error message sets `aria-invalid="true"` and is announced with `role="alert"`

@@ -27,6 +27,8 @@ import '@krollins/blueprint/date-picker';
 
 ### With Label
 
+The label is shown above the input and is associated with it.
+
 <ComponentPreview>
   <bp-date-picker label="Birth Date" placeholder="Select date..."></bp-date-picker>
 </ComponentPreview>
@@ -117,43 +119,70 @@ import '@krollins/blueprint/date-picker';
 <bp-date-picker required label="Required field"></bp-date-picker>
 ```
 
+### Help and error text
+
+Use `helperText` for a hint under the control. Setting `errorMessage` marks it invalid: the message replaces the hint, is announced to screen readers, and the control gets the error color.
+
+<ComponentPreview>
+  <div class="component-preview-col">
+    <bp-date-picker label="Start date" helperText="The first day of your trip"></bp-date-picker>
+    <bp-date-picker label="End date" errorMessage="The end date must be after the start date"></bp-date-picker>
+  </div>
+</ComponentPreview>
+
+```html
+<bp-date-picker
+  label="Start date"
+  helperText="The first day of your trip"
+></bp-date-picker>
+<bp-date-picker
+  label="End date"
+  errorMessage="The end date must be after the start date"
+></bp-date-picker>
+```
+
 ## API Reference
 
 ### Properties
 
-| Property            | Type                             | Default            | Description                            |
-| ------------------- | -------------------------------- | ------------------ | -------------------------------------- |
-| `value`             | `string`                         | `''`               | Selected date (ISO format: YYYY-MM-DD) |
-| `name`              | `string`                         | `''`               | Name for form submission               |
-| `label`             | `string`                         | `''`               | Label text                             |
-| `placeholder`       | `string`                         | `'Select date...'` | Placeholder text                       |
-| `disabled`          | `boolean`                        | `false`            | Whether the picker is disabled         |
-| `required`          | `boolean`                        | `false`            | Whether selection is required          |
-| `size`              | `'small' \| 'medium' \| 'large'` | `'medium'`         | Size of the picker                     |
-| `min`               | `string`                         | `''`               | Minimum selectable date (ISO format)   |
-| `max`               | `string`                         | `''`               | Maximum selectable date (ISO format)   |
-| `first-day-of-week` | `'0' \| '1'`                     | `'0'`              | First day of week (0=Sunday, 1=Monday) |
+| Property         | Type                   | Default           | Description                                                                                                                                                    |
+| ---------------- | ---------------------- | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`          | `string`               | `''`              | Selected date in YYYY-MM-DD format                                                                                                                             |
+| `name`           | `string`               | `''`              | Form field name for form submissions                                                                                                                           |
+| `label`          | `string`               | `''`              | Visible label above the input                                                                                                                                  |
+| `helperText`     | `string`               | `''`              | Helper text below the date picker, linked with `aria-describedby`                                                                                              |
+| `errorMessage`   | `string`               | `''`              | Error text. When set, the date picker is invalid: the message replaces the helper text, is announced (`role="alert"`), and the border turns to the error color |
+| `placeholder`    | `string`               | `'Select a date'` | Placeholder text shown when no date selected                                                                                                                   |
+| `disabled`       | `boolean`              | `false`           | Disables the date picker                                                                                                                                       |
+| `required`       | `boolean`              | `false`           | Marks the field as required for forms                                                                                                                          |
+| `size`           | `'sm' \| 'md' \| 'lg'` | `'md'`            | Visual size of the date picker                                                                                                                                 |
+| `min`            | `string`               | `''`              | Minimum selectable date in YYYY-MM-DD format                                                                                                                   |
+| `max`            | `string`               | `''`              | Maximum selectable date in YYYY-MM-DD format                                                                                                                   |
+| `firstDayOfWeek` | `'0' \| '1'`           | `'0'`             | First day of week (0 = Sunday, 1 = Monday). Attribute: `first-day-of-week`                                                                                     |
 
 ### Events
 
-| Event       | Detail                           | Description                       |
-| ----------- | -------------------------------- | --------------------------------- |
-| `bp-change` | `{ value, previousValue, date }` | Fired when date selection changes |
+| Event       | Detail                                                         | Description                                                                                                                 |
+| ----------- | -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `bp-change` | `{ value: string, previousValue: string, date: Date \| null }` | Fired when a date is selected or cleared. `value` is formatted as YYYY-MM-DD, `date` is a Date object (`null` when cleared) |
 
 ### CSS Parts
 
-| Part           | Description                     |
-| -------------- | ------------------------------- |
-| `control`      | The outer container             |
-| `input`        | The text input field            |
-| `indicator`    | The calendar icon               |
-| `clear-button` | The clear button                |
-| `calendar`     | The calendar dropdown           |
-| `header`       | Calendar header with navigation |
-| `nav-button`   | Month/year navigation buttons   |
-| `month-year`   | Month and year display          |
-| `weekday`      | Day of week header cell         |
-| `day`          | Individual day cell             |
+| Part            | Description                            |
+| --------------- | -------------------------------------- |
+| `control`       | The outer container                    |
+| `label`         | The visible label                      |
+| `input`         | The text input element                 |
+| `indicator`     | The calendar icon indicator            |
+| `clear-button`  | The clear button (when value exists)   |
+| `calendar`      | The calendar dropdown container        |
+| `header`        | Calendar header with navigation        |
+| `nav-button`    | Previous/next month navigation buttons |
+| `month-year`    | Month and year display text            |
+| `weekday`       | Individual weekday header cell         |
+| `day`           | Individual day cell button             |
+| `helper-text`   | The helper text                        |
+| `error-message` | The error message                      |
 
 ### Keyboard Navigation
 
@@ -173,3 +202,4 @@ Values are always in ISO format (`YYYY-MM-DD`). The displayed format may vary ba
 - Full keyboard navigation
 - Proper ARIA attributes for calendar grid
 - Screen reader announcements for date changes
+- `helperText` and `errorMessage` are linked to the input with `aria-describedby`; an error message sets `aria-invalid="true"` and is announced with `role="alert"`

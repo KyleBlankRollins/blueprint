@@ -153,44 +153,83 @@ import '@krollins/blueprint/multi-select';
 <bp-multi-select disabled>...</bp-multi-select>
 ```
 
+### Help and error text
+
+Use `helperText` for a hint under the control. Setting `errorMessage` marks it invalid: the message replaces the hint, is announced to screen readers, and the control gets the error color.
+
+<ComponentPreview>
+  <div class="component-preview-col">
+    <bp-multi-select label="Skills" helperText="Choose all that apply">
+      <option value="html">HTML</option>
+      <option value="css">CSS</option>
+      <option value="js">JavaScript</option>
+    </bp-multi-select>
+    <bp-multi-select label="Skills" errorMessage="Choose at least one skill">
+      <option value="html">HTML</option>
+      <option value="css">CSS</option>
+      <option value="js">JavaScript</option>
+    </bp-multi-select>
+  </div>
+</ComponentPreview>
+
+```html
+<bp-multi-select label="Skills" helperText="Choose all that apply">
+  <option value="html">HTML</option>
+  <option value="css">CSS</option>
+  <option value="js">JavaScript</option>
+</bp-multi-select>
+<bp-multi-select label="Skills" errorMessage="Choose at least one skill">
+  <option value="html">HTML</option>
+  <option value="css">CSS</option>
+  <option value="js">JavaScript</option>
+</bp-multi-select>
+```
+
 ## API Reference
 
 ### Properties
 
-| Property        | Type                                                       | Default            | Description                               |
-| --------------- | ---------------------------------------------------------- | ------------------ | ----------------------------------------- |
-| `value`         | `string[]`                                                 | `[]`               | Array of selected values                  |
-| `name`          | `string`                                                   | `''`               | Name for form submission                  |
-| `placeholder`   | `string`                                                   | `'Select options'` | Placeholder text                          |
-| `disabled`      | `boolean`                                                  | `false`            | Whether the component is disabled         |
-| `required`      | `boolean`                                                  | `false`            | Whether selection is required             |
-| `size`          | `'sm' \| 'md' \| 'lg'`                                    | `'md'`             | Size of the component                     |
-| `variant`       | `'default' \| 'success' \| 'error' \| 'warning' \| 'info'` | `'default'`        | Validation variant                        |
-| `maxSelections` | `number`                                                   | `0`                | Maximum selections allowed (0 = no limit) |
-| `clearable`     | `boolean`                                                  | `true`             | Allow clearing selections                 |
+| Property        | Type                 | Default            | Description                                                                                                                                                |
+| --------------- | -------------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`         | `string[]`           | `[]`               | The current selected values as an array                                                                                                                    |
+| `name`          | `string`             | `''`               | Name attribute for form submission                                                                                                                         |
+| `label`         | `string`             | `''`               | Visible label above the control, referenced by `aria-labelledby`                                                                                           |
+| `helperText`    | `string`             | `''`               | Helper text below the control, linked with `aria-describedby`                                                                                              |
+| `errorMessage`  | `string`             | `''`               | Error text. When set, the control is invalid: the message replaces the helper text, is announced (`role="alert"`), and the border turns to the error color |
+| `placeholder`   | `string`             | `'Select options'` | Placeholder text when no values are selected                                                                                                               |
+| `disabled`      | `boolean`            | `false`            | Whether the multi-select is disabled                                                                                                                       |
+| `required`      | `boolean`            | `false`            | Whether the multi-select is required                                                                                                                       |
+| `size`          | `MultiSelectSize`    | `'md'`             | Size variant: `'sm'`, `'md'`, or `'lg'`                                                                                                                    |
+| `variant`       | `MultiSelectVariant` | `'default'`        | Validation variant: `'default'`, `'success'`, `'error'`, `'warning'`, or `'info'`                                                                          |
+| `maxSelections` | `number`             | `0`                | Maximum number of selections allowed (0 = unlimited). Attribute: `max-selections`                                                                          |
+| `clearable`     | `boolean`            | `true`             | Whether to show a clear all button                                                                                                                         |
 
 ### Events
 
-| Event       | Detail                     | Description                  |
-| ----------- | -------------------------- | ---------------------------- |
-| `bp-change` | `{ value, previousValue }` | Fired when selection changes |
+| Event       | Detail                                         | Description                                           |
+| ----------- | ---------------------------------------------- | ----------------------------------------------------- |
+| `bp-change` | `{ value: string[], previousValue: string[] }` | Fired when the selection changes (select or deselect) |
 
 ### Slots
 
-| Slot      | Description                              |
-| --------- | ---------------------------------------- |
-| (default) | `<option>` elements for the options list |
+| Slot      | Description                                        |
+| --------- | -------------------------------------------------- |
+| (default) | `<option>` elements representing available choices |
 
 ### CSS Parts
 
-| Part       | Description             |
-| ---------- | ----------------------- |
-| `trigger`  | The trigger container   |
-| `tags`     | Container for tag chips |
-| `tag`      | Individual tag chip     |
-| `dropdown` | The dropdown container  |
-| `option`   | Individual option items |
-| `clear`    | The clear all button    |
+| Part              | Description                       |
+| ----------------- | --------------------------------- |
+| `label`           | The label element                 |
+| `control`         | The main control/trigger element  |
+| `dropdown`        | The dropdown container            |
+| `tag`             | Individual selected value tag     |
+| `clear-button`    | The clear all button              |
+| `indicator`       | The dropdown arrow indicator      |
+| `option`          | Individual option in the dropdown |
+| `option-selected` | Selected option state             |
+| `helper-text`     | The helper text                   |
+| `error-message`   | The error message                 |
 
 ### Keyboard Navigation
 
@@ -204,3 +243,4 @@ import '@krollins/blueprint/multi-select';
 - Uses ARIA listbox pattern with multi-select
 - Tags can be removed via keyboard
 - Screen reader announces selection changes
+- `helperText` and `errorMessage` are linked to the control with `aria-describedby`; an error message sets `aria-invalid="true"` and is announced with `role="alert"`
