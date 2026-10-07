@@ -344,11 +344,38 @@ describe('bp-notification', () => {
   });
 
   // Accessibility tests
-  it('should have role="alert" for screen readers', async () => {
+  it('should have role="status" for non-error variants', async () => {
+    element.open = true;
+    await element.updateComplete;
+    const notification = element.shadowRoot?.querySelector('.notification');
+    expect(notification?.getAttribute('role')).toBe('status');
+  });
+
+  it('should have role="alert" for the error variant', async () => {
+    element.variant = 'error';
     element.open = true;
     await element.updateComplete;
     const notification = element.shadowRoot?.querySelector('.notification');
     expect(notification?.getAttribute('role')).toBe('alert');
+  });
+
+  it('should not take focus when stacked', async () => {
+    element.stacked = true;
+    element.open = true;
+    await element.updateComplete;
+    await new Promise((resolve) => window.setTimeout(resolve, 50));
+    expect(element.shadowRoot?.activeElement).toBeNull();
+  });
+
+  it('should drop fixed positioning when stacked', async () => {
+    element.stacked = true;
+    element.open = true;
+    await element.updateComplete;
+    const notification = element.shadowRoot?.querySelector('.notification');
+    expect(notification?.classList.contains('notification--top-right')).toBe(
+      false
+    );
+    expect(element.hasAttribute('stacked')).toBe(true);
   });
 
   it('should have aria-live="polite"', async () => {
@@ -439,6 +466,27 @@ describe('bp-notification', () => {
     vi.advanceTimersByTime(3000);
     await element.updateComplete;
 
+    expect(element.open).toBe(false);
+    vi.useRealTimers();
+  });
+
+  it('should resume with the remaining time, not the full duration', async () => {
+    vi.useFakeTimers();
+    element.duration = 3000;
+    element.open = true;
+    await element.updateComplete;
+    const notification = element.shadowRoot?.querySelector(
+      '.notification'
+    ) as HTMLElement;
+
+    vi.advanceTimersByTime(2000);
+    notification.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+    vi.advanceTimersByTime(5000);
+    notification.dispatchEvent(new MouseEvent('mouseleave', { bubbles: true }));
+
+    // 1000ms were left when paused
+    vi.advanceTimersByTime(1100);
+    await element.updateComplete;
     expect(element.open).toBe(false);
     vi.useRealTimers();
   });

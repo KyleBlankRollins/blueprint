@@ -11,7 +11,6 @@
  * Run `npx bp generate jsx` to regenerate from component source files.
  */
 
-import type { AccordionVariant } from './components/accordion/accordion.js';
 import type { AlertVariant } from './components/alert/alert.js';
 import type {
   AvatarShape,
@@ -26,7 +25,6 @@ import type {
 import type { ButtonSize, ButtonVariant } from './components/button/button.js';
 import type { CardDirection, CardVariant } from './components/card/card.js';
 import type { CheckboxSize } from './components/checkbox/checkbox.js';
-import type { CodeBlockHighlightAdapter } from './components/code-block/code-block.js';
 import type { ColorPickerSize } from './components/color-picker/color-picker.js';
 import type {
   ComboboxSize,
@@ -69,6 +67,7 @@ import type {
   MultiSelectSize,
   MultiSelectVariant,
 } from './components/multi-select/multi-select.js';
+import type { NotificationStackPosition } from './components/notification-stack/notification-stack.js';
 import type {
   NumberInputSize,
   NumberInputVariant,
@@ -153,7 +152,6 @@ type BooleanAttr = boolean | 'true' | 'false' | '';
 type NumberAttr<T extends number = number> = T | `${number}`;
 
 interface BpAccordionProps extends BaseHTMLAttributes {
-  variant?: StringAttr<AccordionVariant>;
   multiple?: BooleanAttr;
   expandedItems?: string[];
   disabled?: BooleanAttr;
@@ -234,13 +232,13 @@ interface BpCheckboxProps extends BaseHTMLAttributes {
 interface BpCodeBlockProps extends BaseHTMLAttributes {
   code?: string;
   language?: string;
+  title?: string;
   showLineNumbers?: BooleanAttr;
   highlightLines?: number[];
   wrapLines?: BooleanAttr;
   showCopyButton?: BooleanAttr;
   maxLines?: NumberAttr;
   showHeader?: BooleanAttr;
-  highlightAdapter?: CodeBlockHighlightAdapter;
 }
 
 interface BpColorPickerProps extends BaseHTMLAttributes {
@@ -260,6 +258,7 @@ interface BpColorPickerProps extends BaseHTMLAttributes {
 interface BpComboboxProps extends BaseHTMLAttributes {
   value?: string;
   name?: string;
+  label?: string;
   placeholder?: string;
   disabled?: BooleanAttr;
   required?: BooleanAttr;
@@ -346,6 +345,7 @@ interface BpHeadingProps extends BaseHTMLAttributes {
 
 interface BpIconProps extends BaseHTMLAttributes {
   name?: StringAttr<IconName | ''>;
+  svg?: string;
   size?: StringAttr<IconSize>;
   color?: StringAttr<IconColor>;
   ariaLabel?: string;
@@ -409,6 +409,7 @@ interface BpModalProps extends BaseHTMLAttributes {
 interface BpMultiSelectProps extends BaseHTMLAttributes {
   value?: string[];
   name?: string;
+  label?: string;
   placeholder?: string;
   disabled?: BooleanAttr;
   required?: BooleanAttr;
@@ -433,6 +434,14 @@ interface BpNotificationProps extends BaseHTMLAttributes {
     | 'bottom-center'
     | 'bottom-right'
   >;
+  stacked?: BooleanAttr;
+}
+
+interface BpNotificationStackProps extends BaseHTMLAttributes {
+  position?: StringAttr<NotificationStackPosition>;
+  max?: NumberAttr;
+  duration?: NumberAttr;
+  label?: string;
 }
 
 interface BpNumberInputProps extends BaseHTMLAttributes {
@@ -692,6 +701,7 @@ export interface BlueprintElements {
   'bp-modal': BpModalProps;
   'bp-multi-select': BpMultiSelectProps;
   'bp-notification': BpNotificationProps;
+  'bp-notification-stack': BpNotificationStackProps;
   'bp-number-input': BpNumberInputProps;
   'bp-pagination': BpPaginationProps;
   'bp-popover': BpPopoverProps;
