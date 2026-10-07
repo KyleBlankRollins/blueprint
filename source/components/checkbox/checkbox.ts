@@ -8,6 +8,7 @@ import {
   renderFieldMessage,
   fieldMessageStyles,
 } from '../../utilities/field-message.js';
+import { syncCustomValidity } from '../../utilities/form-control.js';
 
 export type CheckboxSize = 'sm' | 'md' | 'lg';
 
@@ -132,6 +133,19 @@ export class BpCheckbox extends LitElement {
 
     if (changedProperties.has('indeterminate') && this.input) {
       this.input.indeterminate = this.indeterminate;
+    }
+
+    // errorMessage marks the checkbox invalid for its form until cleared
+    if (
+      changedProperties.has('errorMessage') ||
+      changedProperties.has('disabled')
+    ) {
+      syncCustomValidity(
+        this.internals,
+        this.errorMessage,
+        this.disabled,
+        this.input
+      );
     }
   }
 

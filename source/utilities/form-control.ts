@@ -31,6 +31,7 @@ interface FormControlHost extends LitElement {
   value?: unknown;
   required?: boolean;
   disabled?: boolean;
+  errorMessage?: string | null;
 }
 
 /**
@@ -69,6 +70,13 @@ export declare class FormControlInterface {
    * returns a native input, else to `valueMissing` when `required` and empty.
    */
   getFormValidity(): FormValidity;
+  /**
+   * App-set error that marks the control invalid for its form, like a
+   * native `setCustomValidity()`. Defaults to `errorMessage`. While it is
+   * non-empty the control reports `customError` with this message, taking
+   * precedence over `getFormValidity()`.
+   */
+  getCustomValidityMessage(): string;
   /** A native input/textarea whose constraint validation is mirrored. */
   getValidityTarget(): HTMLInputElement | HTMLTextAreaElement | null;
   /** The focusable element the browser's validation bubble points at. */
@@ -82,6 +90,33 @@ const isEmpty = (value: unknown): boolean =>
   value === undefined ||
   value === '' ||
   (Array.isArray(value) && value.length === 0);
+
+/** Validity for an app-set error message, like `setCustomValidity()`. */
+export const customErrorValidity = (message: string): FormValidity => ({
+  flags: { customError: true },
+  message,
+});
+
+/**
+ * Marks a form-associated element invalid while `message` is non-empty
+ * (and it is not disabled), else clears its validity. For controls that
+ * manage their own `ElementInternals` instead of using
+ * {@link FormControlMixin}.
+ */
+export const syncCustomValidity = (
+  internals: ElementInternals | null,
+  message: string | null | undefined,
+  disabled: boolean,
+  anchor?: HTMLElement | null
+): void => {
+  if (!internals) return;
+  if (message && !disabled) {
+    const { flags } = customErrorValidity(message);
+    internals.setValidity(flags, message, anchor ?? undefined);
+  } else {
+    internals.setValidity({});
+  }
+};
 
 const cloneValue = (value: unknown): unknown =>
   Array.isArray(value) ? [...value] : value;
@@ -211,6 +246,10 @@ export const FormControlMixin = <T extends Constructor<LitElement>>(
       return { flags: {}, message: '' };
     }
 
+    getCustomValidityMessage(): string {
+      return (this as unknown as FormControlHost).errorMessage ?? '';
+    }
+
     syncFormState(): void {
       const host = this as unknown as FormControlHost;
 
@@ -226,7 +265,10 @@ export const FormControlMixin = <T extends Constructor<LitElement>>(
 
       internals.setFormValue(host.disabled ? null : this.getFormValue());
 
-      const { flags, message } = this.getFormValidity();
+      const customMessage = this.getCustomValidityMessage();
+      const { flags, message } = customMessage
+        ? customErrorValidity(customMessage)
+        : this.getFormValidity();
       const invalid = Object.values(flags).some(Boolean);
       if (invalid && !host.disabled) {
         internals.setValidity(

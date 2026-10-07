@@ -6,6 +6,7 @@ import {
   renderFieldMessage,
   fieldMessageStyles,
 } from '../../utilities/field-message.js';
+import { syncCustomValidity } from '../../utilities/form-control.js';
 import { live } from 'lit/directives/live.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
@@ -190,6 +191,19 @@ export class BpSwitch extends LitElement {
   updated(changedProperties: Map<string, unknown>) {
     if (changedProperties.has('checked') && this.internals) {
       this.internals.setFormValue(this.checked ? this.value : null);
+    }
+
+    // errorMessage marks the switch invalid for its form until cleared
+    if (
+      changedProperties.has('errorMessage') ||
+      changedProperties.has('disabled')
+    ) {
+      syncCustomValidity(
+        this.internals,
+        this.errorMessage,
+        this.disabled,
+        this.input
+      );
     }
   }
 

@@ -144,6 +144,8 @@ A dropdown component for selecting multiple options with tag-based display of se
 
 A form-associated custom element: inside a `<form>` it submits its `value` under `name`, takes part in `checkValidity()`/`reportValidity()` (with `required` reporting a missing value), restores its initial value on reset, and is excluded from submission when `disabled`. Each selected value is submitted as its own entry under `name`, like a native `<select multiple>`.
 
+Setting `errorMessage` marks the control invalid for its form (like `setCustomValidity()`: `customError`, with the message as `validationMessage`), so the form won't submit until you clear it.
+
 ## Accessibility
 
 - Uses `role="combobox"` on the control, named by `label` through `aria-labelledby` (clicking the label focuses the control)

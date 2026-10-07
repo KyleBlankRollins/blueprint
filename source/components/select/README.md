@@ -126,6 +126,8 @@ A custom dropdown select component that provides an accessible and styleable alt
 
 A form-associated custom element: inside a `<form>` it submits its `value` under `name`, takes part in `checkValidity()`/`reportValidity()` (with `required` reporting a missing value), restores its initial value on reset, and is excluded from submission when `disabled`.
 
+Setting `errorMessage` marks the control invalid for its form (like `setCustomValidity()`: `customError`, with the message as `validationMessage`), so the form won't submit until you clear it.
+
 ## Accessibility
 
 - Uses `role="combobox"` on trigger for screen readers

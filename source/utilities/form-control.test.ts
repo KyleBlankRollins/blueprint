@@ -1,7 +1,11 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { FormControlMixin } from './form-control.js';
+import {
+  FormControlMixin,
+  customErrorValidity,
+  syncCustomValidity,
+} from './form-control.js';
 
 @customElement('test-form-control')
 class TestFormControl extends FormControlMixin(LitElement) {
@@ -9,9 +13,11 @@ class TestFormControl extends FormControlMixin(LitElement) {
   @property() declare value: string | string[] | null;
   @property({ type: Boolean }) declare required: boolean;
   @property({ type: Boolean }) declare disabled: boolean;
+  @property({ type: String }) declare errorMessage: string;
 
   constructor() {
     super();
+    this.errorMessage = '';
     this.name = '';
     this.value = '';
     this.required = false;
@@ -142,6 +148,83 @@ describe('FormControlMixin', () => {
   it('restores string state from the browser', () => {
     element.formStateRestoreCallback('saved');
     expect(element.value).toBe('saved');
+  });
+
+  describe('errorMessage', () => {
+    /** Records what syncFormState() passes to ElementInternals */
+    const fakeInternals = () => {
+      const calls: Array<{ flags: ValidityStateFlags; message?: string }> = [];
+      return {
+        calls,
+        setFormValue() {},
+        setValidity(flags: ValidityStateFlags, message?: string) {
+          calls.push({ flags, message });
+        },
+      };
+    };
+
+    const last = <T>(items: T[]): T | undefined => items[items.length - 1];
+
+    const sync = (el: TestFormControl) => {
+      const internals = fakeInternals();
+      (el as unknown as { _internals: unknown })._internals = internals;
+      el.syncFormState();
+      return last(internals.calls);
+    };
+
+    it('defaults the custom validity message to errorMessage', async () => {
+      expect(element.getCustomValidityMessage()).toBe('');
+      element.errorMessage = 'Taken';
+      await element.updateComplete;
+      expect(element.getCustomValidityMessage()).toBe('Taken');
+    });
+
+    it('reports customError with the message', async () => {
+      element.errorMessage = 'That username is taken.';
+      await element.updateComplete;
+      expect(sync(element)).toEqual({
+        flags: { customError: true },
+        message: 'That username is taken.',
+      });
+    });
+
+    it('takes precedence over valueMissing', async () => {
+      element.required = true;
+      element.errorMessage = 'Server error';
+      await element.updateComplete;
+      expect(sync(element)).toEqual({
+        flags: { customError: true },
+        message: 'Server error',
+      });
+    });
+
+    it('returns to the normal validity when cleared', async () => {
+      element.required = true;
+      element.errorMessage = 'Server error';
+      await element.updateComplete;
+      element.errorMessage = '';
+      await element.updateComplete;
+      expect(sync(element)?.flags).toEqual({ valueMissing: true });
+    });
+
+    it('does not apply to disabled controls', async () => {
+      element.disabled = true;
+      element.errorMessage = 'Server error';
+      await element.updateComplete;
+      expect(sync(element)).toEqual({ flags: {}, message: undefined });
+    });
+
+    it('syncCustomValidity sets and clears customError', () => {
+      const internals = fakeInternals();
+      const asInternals = internals as unknown as ElementInternals;
+      syncCustomValidity(asInternals, 'Bad', false);
+      expect(last(internals.calls)).toEqual(customErrorValidity('Bad'));
+      syncCustomValidity(asInternals, 'Bad', true);
+      expect(last(internals.calls)?.flags).toEqual({});
+      syncCustomValidity(asInternals, '', false);
+      expect(last(internals.calls)?.flags).toEqual({});
+      expect(() => syncCustomValidity(null, 'Bad', false)).not.toThrow();
+    });
   });
 
   it('falls back gracefully without ElementInternals', () => {

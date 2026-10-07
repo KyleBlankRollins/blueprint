@@ -4,6 +4,8 @@ export { memoizeOne } from './memoize.js';
 export { booleanConverter } from './boolean-converter.js';
 export {
   FormControlMixin,
+  customErrorValidity,
+  syncCustomValidity,
   type FormControlInterface,
   type FormValue,
   type FormValidity,

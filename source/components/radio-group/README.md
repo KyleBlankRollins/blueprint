@@ -9,6 +9,7 @@ Use it whenever radios answer one question. Put `name`, `value`, `required` and 
 - `role="radiogroup"` labelled by `label`, with description and error linked by `aria-describedby`
 - Roving tab stop: Tab enters at the selected radio (or the first enabled one), arrow keys move and select, wrapping and skipping disabled radios
 - Takes part in native forms: submits the selected value under `name`, blocks submission when `required` and empty, and resets with the form
+- Setting `errorMessage` marks the group invalid for its form (like `setCustomValidity()`), so the form won't submit until you clear it
 - One `bp-change` event per selection, from the group
 
 ## Usage

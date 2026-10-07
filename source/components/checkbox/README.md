@@ -70,6 +70,8 @@ A form checkbox input component with label support, indeterminate state, and com
 </form>
 ```
 
+Setting `errorMessage` marks the checkbox invalid for its form, so `form.checkValidity()` fails and the form won't submit until you clear it.
+
 ### Checkbox group
 
 ```html
