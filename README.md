@@ -1,3 +1,8 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="brand/blueprint-lockup-dark.svg">
+  <img src="brand/blueprint-lockup.svg" alt="Blueprint" height="48">
+</picture>
+
 # Blueprint Component Library
 
 Blueprint is a highly portable and customizable component library built on top of Lit.
