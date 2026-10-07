@@ -91,9 +91,11 @@ describe('bp-icon-button', () => {
   it('should render a square of the size token', async () => {
     element.style.setProperty('--bp-spacing-10', '40px');
     await element.updateComplete;
-    const rect = inner().getBoundingClientRect();
-    expect(rect.width).toBe(40);
-    expect(rect.height).toBe(40);
+    // happy-dom has no layout engine, so assert the computed size instead of
+    // getBoundingClientRect().
+    const style = getComputedStyle(inner());
+    expect(style.width).toBe('40px');
+    expect(style.height).toBe('40px');
   });
 
   it('should paint the icon in the button color, not bp-icon text color', async () => {

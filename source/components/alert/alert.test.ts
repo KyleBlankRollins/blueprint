@@ -245,32 +245,36 @@ describe('bp-alert', () => {
       warning: 'rgb(7, 8, 9)',
       error: 'rgb(10, 11, 12)',
     } as const;
+    // A fresh element per variant: happy-dom caches computed styles and does
+    // not invalidate them when a class changes on an ancestor.
     for (const [variant, rgb] of Object.entries(colors)) {
-      element.style.setProperty(`--bp-color-${variant}`, rgb);
-    }
-    element.style.setProperty('--bp-color-text', 'rgb(99, 99, 99)');
-    element.showIcon = true;
-    element.dismissible = true;
+      const alert = document.createElement('bp-alert');
+      for (const [name, value] of Object.entries(colors)) {
+        alert.style.setProperty(`--bp-color-${name}`, value);
+      }
+      alert.style.setProperty('--bp-color-text', 'rgb(99, 99, 99)');
+      alert.showIcon = true;
+      alert.dismissible = true;
+      alert.variant = variant as BpAlert['variant'];
+      document.body.appendChild(alert);
+      await alert.updateComplete;
 
-    for (const [variant, rgb] of Object.entries(colors)) {
-      element.variant = variant as BpAlert['variant'];
-      await element.updateComplete;
-
-      const iconContainer = element.shadowRoot?.querySelector(
+      const iconContainer = alert.shadowRoot?.querySelector(
         '.alert-icon'
       ) as HTMLElement;
       expect(getComputedStyle(iconContainer).color).toBe(rgb);
-      const icon = element.shadowRoot?.querySelector(
+      const icon = alert.shadowRoot?.querySelector(
         '.alert-icon bp-icon'
       ) as HTMLElement;
       expect(getComputedStyle(icon).color).toBe(rgb);
-    }
 
-    // The dismiss button keeps the body text color.
-    const closeButton = element.shadowRoot?.querySelector(
-      '.alert-close'
-    ) as HTMLElement;
-    expect(getComputedStyle(closeButton).color).toBe('rgb(99, 99, 99)');
+      // The dismiss button keeps the body text color.
+      const closeButton = alert.shadowRoot?.querySelector(
+        '.alert-close'
+      ) as HTMLElement;
+      expect(getComputedStyle(closeButton).color).toBe('rgb(99, 99, 99)');
+      alert.remove();
+    }
   });
 
   it('should not render icon when showIcon is false', async () => {
