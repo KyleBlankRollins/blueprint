@@ -84,9 +84,11 @@ export const tagStyles = css`
     color: var(--bp-color-text-inverse);
   }
 
+  /* Neutral fill: secondary carries text-inverse at 4.5:1 in every theme
+     (checked by the theme generator); border-strong did not (3.2:1 / 2.2:1). */
   .tag--solid.tag--neutral {
-    background-color: var(--bp-color-border-strong);
-    color: var(--bp-color-text);
+    background-color: var(--bp-color-secondary);
+    color: var(--bp-color-text-inverse);
   }
 
   /* Variants - Outlined */
