@@ -40,7 +40,7 @@ function generateMdxContent(
   const tagName = `bp-${componentName}`;
 
   // Build properties table
-  let propertiesTable = '';
+  let propertiesTable: string;
   if (api.properties.length > 0) {
     const headers = ['Property', 'Type', 'Default', 'Description'];
     const rows = api.properties.map((prop) => [

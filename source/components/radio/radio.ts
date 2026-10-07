@@ -188,8 +188,7 @@ export class BpRadio extends LitElement {
 
     // Find all radios with the same name in the document
     const root = this.getRootNode() as
-      | globalThis.Document
-      | globalThis.ShadowRoot;
+      globalThis.Document | globalThis.ShadowRoot;
     const radios = Array.from(
       root.querySelectorAll(`bp-radio[name="${this.name}"]`)
     ) as BpRadio[];

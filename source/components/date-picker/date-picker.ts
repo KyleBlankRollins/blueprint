@@ -394,20 +394,22 @@ export class BpDatePicker extends LitElement {
             aria-disabled=${this.disabled}
             aria-label=${this.label || this.placeholder || 'Date picker'}
           />
-          ${hasValue && !this.disabled
-            ? html`
-                <button
-                  type="button"
-                  class="date-picker__clear"
-                  part="clear-button"
-                  @click=${this.handleClear}
-                  aria-label="Clear date"
-                  tabindex="-1"
-                >
-                  ✕
-                </button>
-              `
-            : ''}
+          ${
+            hasValue && !this.disabled
+              ? html`
+                  <button
+                    type="button"
+                    class="date-picker__clear"
+                    part="clear-button"
+                    @click=${this.handleClear}
+                    aria-label="Clear date"
+                    tabindex="-1"
+                  >
+                    ✕
+                  </button>
+                `
+              : ''
+          }
           <div class="date-picker__indicator" part="indicator">
             <svg
               width="16"
@@ -427,96 +429,101 @@ export class BpDatePicker extends LitElement {
           </div>
         </div>
 
-        ${this.isOpen
-          ? html`
-              <div class="date-picker__calendar" part="calendar" role="grid">
-                <div class="date-picker__header" part="header">
-                  <button
-                    type="button"
-                    class="date-picker__nav-button"
-                    part="nav-button"
-                    @click=${this.handlePreviousMonth}
-                    aria-label="Previous month"
-                    tabindex="-1"
-                  >
-                    ‹
-                  </button>
-                  <div class="date-picker__month-year" part="month-year">
-                    ${this.getMonthName(this.displayMonth)} ${this.displayYear}
+        ${
+          this.isOpen
+            ? html`
+                <div class="date-picker__calendar" part="calendar" role="grid">
+                  <div class="date-picker__header" part="header">
+                    <button
+                      type="button"
+                      class="date-picker__nav-button"
+                      part="nav-button"
+                      @click=${this.handlePreviousMonth}
+                      aria-label="Previous month"
+                      tabindex="-1"
+                    >
+                      ‹
+                    </button>
+                    <div class="date-picker__month-year" part="month-year">
+                      ${this.getMonthName(this.displayMonth)}
+                      ${this.displayYear}
+                    </div>
+                    <button
+                      type="button"
+                      class="date-picker__nav-button"
+                      part="nav-button"
+                      @click=${this.handleNextMonth}
+                      aria-label="Next month"
+                      tabindex="-1"
+                    >
+                      ›
+                    </button>
                   </div>
-                  <button
-                    type="button"
-                    class="date-picker__nav-button"
-                    part="nav-button"
-                    @click=${this.handleNextMonth}
-                    aria-label="Next month"
-                    tabindex="-1"
-                  >
-                    ›
-                  </button>
+
+                  <div class="date-picker__weekdays">
+                    ${weekdays.map(
+                      (day) => html`
+                        <div
+                          class="date-picker__weekday"
+                          part="weekday"
+                          role="columnheader"
+                        >
+                          ${day}
+                        </div>
+                      `
+                    )}
+                  </div>
+
+                  <div class="date-picker__days">
+                    ${calendarDays.map((date) => {
+                      const isCurrentMonth =
+                        date.getMonth() === this.displayMonth;
+                      const isSelected =
+                        selectedDate && this.isSameDay(date, selectedDate);
+                      const isToday = this.isSameDay(date, today);
+                      const isFocused =
+                        this.focusedDate &&
+                        this.isSameDay(date, this.focusedDate);
+                      const isDisabled = this.isDateDisabled(date);
+
+                      const dayClasses = {
+                        'date-picker__day': true,
+                        'date-picker__day--other-month': !isCurrentMonth,
+                        'date-picker__day--selected': !!isSelected,
+                        'date-picker__day--today': isToday,
+                        'date-picker__day--focused': !!isFocused,
+                        'date-picker__day--disabled': isDisabled,
+                      };
+
+                      return html`
+                        <button
+                          type="button"
+                          class=${classMap(dayClasses)}
+                          part="day"
+                          @click=${() =>
+                            !isDisabled && this.handleDateSelect(date)}
+                          ?disabled=${isDisabled}
+                          tabindex="-1"
+                          role="gridcell"
+                          aria-selected=${!!isSelected}
+                          aria-label=${date.toLocaleDateString()}
+                        >
+                          ${date.getDate()}
+                        </button>
+                      `;
+                    })}
+                  </div>
                 </div>
-
-                <div class="date-picker__weekdays">
-                  ${weekdays.map(
-                    (day) => html`
-                      <div
-                        class="date-picker__weekday"
-                        part="weekday"
-                        role="columnheader"
-                      >
-                        ${day}
-                      </div>
-                    `
-                  )}
-                </div>
-
-                <div class="date-picker__days">
-                  ${calendarDays.map((date) => {
-                    const isCurrentMonth =
-                      date.getMonth() === this.displayMonth;
-                    const isSelected =
-                      selectedDate && this.isSameDay(date, selectedDate);
-                    const isToday = this.isSameDay(date, today);
-                    const isFocused =
-                      this.focusedDate &&
-                      this.isSameDay(date, this.focusedDate);
-                    const isDisabled = this.isDateDisabled(date);
-
-                    const dayClasses = {
-                      'date-picker__day': true,
-                      'date-picker__day--other-month': !isCurrentMonth,
-                      'date-picker__day--selected': !!isSelected,
-                      'date-picker__day--today': isToday,
-                      'date-picker__day--focused': !!isFocused,
-                      'date-picker__day--disabled': isDisabled,
-                    };
-
-                    return html`
-                      <button
-                        type="button"
-                        class=${classMap(dayClasses)}
-                        part="day"
-                        @click=${() =>
-                          !isDisabled && this.handleDateSelect(date)}
-                        ?disabled=${isDisabled}
-                        tabindex="-1"
-                        role="gridcell"
-                        aria-selected=${!!isSelected}
-                        aria-label=${date.toLocaleDateString()}
-                      >
-                        ${date.getDate()}
-                      </button>
-                    `;
-                  })}
-                </div>
-              </div>
-            `
-          : ''}
-        ${this.name
-          ? html`
-              <input type="hidden" name=${this.name} .value=${this.value} />
-            `
-          : ''}
+              `
+            : ''
+        }
+        ${
+          this.name
+            ? html`
+                <input type="hidden" name=${this.name} .value=${this.value} />
+              `
+            : ''
+        }
       </div>
     `;
   }

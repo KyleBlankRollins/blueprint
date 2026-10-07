@@ -90,32 +90,36 @@ export class BpAlert extends LitElement {
         aria-live="polite"
       >
         <div class="alert-content">
-          ${this.showIcon
-            ? html`
-                <div class="alert-icon" part="icon">
-                  <slot name="icon">
-                    <bp-icon .svg=${this.getVariantIconSvg()}></bp-icon>
-                  </slot>
-                </div>
-              `
-            : null}
+          ${
+            this.showIcon
+              ? html`
+                  <div class="alert-icon" part="icon">
+                    <slot name="icon">
+                      <bp-icon .svg=${this.getVariantIconSvg()}></bp-icon>
+                    </slot>
+                  </div>
+                `
+              : null
+          }
           <div class="alert-message" part="message">
             <slot name="title"></slot>
             <slot></slot>
           </div>
         </div>
-        ${this.dismissible
-          ? html`
-              <button
-                class="alert-close"
-                part="close-button"
-                @click=${this.handleClose}
-                aria-label="Close alert"
-              >
-                <bp-icon .svg=${crossSvg}></bp-icon>
-              </button>
-            `
-          : null}
+        ${
+          this.dismissible
+            ? html`
+                <button
+                  class="alert-close"
+                  part="close-button"
+                  @click=${this.handleClose}
+                  aria-label="Close alert"
+                >
+                  <bp-icon .svg=${crossSvg}></bp-icon>
+                </button>
+              `
+            : null
+        }
       </div>
     `;
   }

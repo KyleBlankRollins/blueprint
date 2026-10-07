@@ -468,8 +468,10 @@ describe('bp-select', () => {
     element.placeholder = 'Pick one';
     await element.updateComplete;
 
-    const displayValue = element.shadowRoot?.querySelector('.select-value');
-    expect(displayValue?.textContent).toBe('Pick one');
+    const displayValue = element.shadowRoot?.querySelector(
+      '.select-value__display'
+    );
+    expect(displayValue?.textContent?.trim()).toBe('Pick one');
   });
 
   it('should display selected option label', async () => {
@@ -490,7 +492,9 @@ describe('bp-select', () => {
     optionElement?.click();
     await element.updateComplete;
 
-    const displayValue = element.shadowRoot?.querySelector('.select-value');
-    expect(displayValue?.textContent).toBe('Test Label');
+    const displayValue = element.shadowRoot?.querySelector(
+      '.select-value__display'
+    );
+    expect(displayValue?.textContent?.trim()).toBe('Test Label');
   });
 });

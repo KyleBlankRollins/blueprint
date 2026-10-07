@@ -4,12 +4,7 @@ import { spinnerStyles } from './spinner.style.js';
 
 export type SpinnerSize = 'sm' | 'md' | 'lg';
 export type SpinnerVariant =
-  | 'primary'
-  | 'success'
-  | 'error'
-  | 'warning'
-  | 'inverse'
-  | 'neutral';
+  'primary' | 'success' | 'error' | 'warning' | 'inverse' | 'neutral';
 
 /**
  * A loading spinner component that indicates content is being loaded or processed.

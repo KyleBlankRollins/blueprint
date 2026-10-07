@@ -10,11 +10,7 @@ import { booleanConverter } from '../../utilities/boolean-converter.js';
  * Visual variant that affects the textarea border color and validation state
  */
 export type TextareaVariant =
-  | 'default'
-  | 'success'
-  | 'error'
-  | 'warning'
-  | 'info';
+  'default' | 'success' | 'error' | 'warning' | 'info';
 
 /**
  * Size of the textarea affecting padding, font size, and minimum height
@@ -70,21 +66,18 @@ export class BpTextarea extends LitElement {
 
   /** Placeholder text shown when textarea is empty */
   @property({ type: String, reflect: true }) declare placeholder:
-    | string
-    | undefined;
+    string | undefined;
 
   /** Label text displayed above the textarea */
   @property({ type: String, reflect: true }) declare label: string | undefined;
 
   /** Helper text displayed below the textarea */
   @property({ type: String, reflect: true }) declare helperText:
-    | string
-    | undefined;
+    string | undefined;
 
   /** Error message displayed when variant is 'error' */
   @property({ type: String, reflect: true }) declare errorMessage:
-    | string
-    | undefined;
+    string | undefined;
 
   /** Whether the textarea is disabled */
   @property({ type: Boolean, reflect: true }) declare disabled: boolean;
@@ -106,21 +99,18 @@ export class BpTextarea extends LitElement {
 
   /** Maximum number of characters allowed */
   @property({ type: Number, reflect: true }) declare maxlength:
-    | number
-    | undefined;
+    number | undefined;
 
   /** Minimum number of characters required */
   @property({ type: Number, reflect: true }) declare minlength:
-    | number
-    | undefined;
+    number | undefined;
 
   /** How the textarea can be resized by the user */
   @property({ type: String, reflect: true }) declare resize: TextareaResize;
 
   /** Autocomplete attribute for browser suggestions */
   @property({ type: String, reflect: true }) declare autocomplete:
-    | TextareaAutocomplete
-    | undefined;
+    TextareaAutocomplete | undefined;
 
   /** Whether to enable spellcheck */
   @property({ converter: booleanConverter, reflect: true })
@@ -128,9 +118,7 @@ export class BpTextarea extends LitElement {
 
   /** Wrap attribute for text wrapping behavior */
   @property({ type: String, reflect: true }) declare wrap:
-    | 'soft'
-    | 'hard'
-    | undefined;
+    'soft' | 'hard' | undefined;
 
   @query('textarea') private textareaElement?: HTMLTextAreaElement;
 
@@ -241,22 +229,27 @@ export class BpTextarea extends LitElement {
 
     return html`
       <div class="textarea-wrapper">
-        ${this.label
-          ? html`
-              <label class="textarea-label" for="textarea">
-                ${this.label}
-                ${this.required
-                  ? html`<span class="textarea-required">*</span>`
-                  : ''}
-              </label>
-            `
-          : ''}
+        ${
+          this.label
+            ? html`
+                <label class="textarea-label" for="textarea">
+                  ${this.label}
+                  ${
+                    this.required
+                      ? html`<span class="textarea-required">*</span>`
+                      : ''
+                  }
+                </label>
+              `
+            : ''
+        }
 
         <textarea
           part="textarea"
           id="textarea"
-          class="textarea textarea--${this.variant} textarea--${this
-            .size} textarea--resize-${this.resize}"
+          class="textarea textarea--${this.variant} textarea--${
+            this.size
+          } textarea--resize-${this.resize}"
           .value=${live(this.value)}
           placeholder=${ifDefined(this.placeholder)}
           ?disabled=${this.disabled}
@@ -278,22 +271,26 @@ export class BpTextarea extends LitElement {
           @blur=${this.handleBlur}
         ></textarea>
 
-        ${showError
-          ? html`
-              <div
-                id="error-message"
-                class="textarea-message textarea-message--error"
-                role="alert"
-              >
-                ${this.errorMessage}
-              </div>
-            `
-          : ''}
-        ${showHelper
-          ? html`<div id="helper-text" class="textarea-message">
-              ${this.helperText}
-            </div>`
-          : ''}
+        ${
+          showError
+            ? html`
+                <div
+                  id="error-message"
+                  class="textarea-message textarea-message--error"
+                  role="alert"
+                >
+                  ${this.errorMessage}
+                </div>
+              `
+            : ''
+        }
+        ${
+          showHelper
+            ? html`<div id="helper-text" class="textarea-message">
+                ${this.helperText}
+              </div>`
+            : ''
+        }
       </div>
     `;
   }

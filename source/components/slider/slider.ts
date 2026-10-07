@@ -279,7 +279,7 @@ export class BpSlider extends LitElement {
   private handleKeyDown(event: globalThis.KeyboardEvent): void {
     if (this.disabled) return;
 
-    let newValue = this.value;
+    let newValue: number;
     const largeStep = this.step * 10;
 
     switch (event.key) {
@@ -337,22 +337,28 @@ export class BpSlider extends LitElement {
 
     return html`
       <div class=${classMap(wrapperClasses)}>
-        ${this.label || this.showValue
-          ? html`
-              <div class="slider__header">
-                ${this.label
-                  ? html`<label class="slider__label" part="label"
-                      >${this.label}</label
-                    >`
-                  : nothing}
-                ${this.showValue
-                  ? html`<span class="slider__value" part="value-display"
-                      >${this.formatValue(this.value)}</span
-                    >`
-                  : nothing}
-              </div>
-            `
-          : nothing}
+        ${
+          this.label || this.showValue
+            ? html`
+                <div class="slider__header">
+                  ${
+                    this.label
+                      ? html`<label class="slider__label" part="label"
+                          >${this.label}</label
+                        >`
+                      : nothing
+                  }
+                  ${
+                    this.showValue
+                      ? html`<span class="slider__value" part="value-display"
+                          >${this.formatValue(this.value)}</span
+                        >`
+                      : nothing
+                  }
+                </div>
+              `
+            : nothing
+        }
         <div
           class="slider__container"
           @mousedown=${this.handleMouseDown}
@@ -364,21 +370,23 @@ export class BpSlider extends LitElement {
               part="fill"
               style="width: ${this.percentage}%"
             ></div>
-            ${this.showTicks
-              ? html`
-                  <div class="slider__ticks">
-                    ${repeat(
-                      this.tickPositions,
-                      (pos) => pos,
-                      (pos) =>
-                        html`<div
-                          class="slider__tick"
-                          style="left: ${pos}%"
-                        ></div>`
-                    )}
-                  </div>
-                `
-              : nothing}
+            ${
+              this.showTicks
+                ? html`
+                    <div class="slider__ticks">
+                      ${repeat(
+                        this.tickPositions,
+                        (pos) => pos,
+                        (pos) =>
+                          html`<div
+                            class="slider__tick"
+                            style="left: ${pos}%"
+                          ></div>`
+                      )}
+                    </div>
+                  `
+                : nothing
+            }
           </div>
           <div
             class="slider__thumb"
@@ -395,13 +403,15 @@ export class BpSlider extends LitElement {
             @keydown=${this.handleKeyDown}
           ></div>
         </div>
-        ${this.name
-          ? html`<input
-              type="hidden"
-              name=${this.name}
-              .value=${String(this.value)}
-            />`
-          : nothing}
+        ${
+          this.name
+            ? html`<input
+                type="hidden"
+                name=${this.name}
+                .value=${String(this.value)}
+              />`
+            : nothing
+        }
       </div>
     `;
   }

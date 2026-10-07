@@ -71,7 +71,8 @@ export async function generateTypes(
       await access(dir, constants.W_OK);
     } catch (err) {
       throw new Error(
-        `Cannot write to output path ${outputPath}: ${err instanceof Error ? err.message : String(err)}`
+        `Cannot write to output path ${outputPath}: ${err instanceof Error ? err.message : String(err)}`,
+        { cause: err }
       );
     }
 

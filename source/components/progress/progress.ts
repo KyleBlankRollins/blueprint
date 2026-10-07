@@ -3,11 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { progressStyles } from './progress.style.js';
 
 export type ProgressVariant =
-  | 'primary'
-  | 'success'
-  | 'warning'
-  | 'error'
-  | 'info';
+  'primary' | 'success' | 'warning' | 'error' | 'info';
 export type ProgressSize = 'sm' | 'md' | 'lg';
 
 /**
@@ -96,26 +92,32 @@ export class BpProgress extends LitElement {
   render() {
     return html`
       <div class="progress-container">
-        ${this.label || this.showValue
-          ? html`
-              <div class="progress-header" part="header">
-                ${this.label
-                  ? html`<span class="progress-label">${this.label}</span>`
-                  : null}
-                ${this.showValue && !this.indeterminate
-                  ? html`<span class="progress-value"
-                      >${Math.round(this.percentage)}%</span
-                    >`
-                  : null}
-              </div>
-            `
-          : null}
+        ${
+          this.label || this.showValue
+            ? html`
+                <div class="progress-header" part="header">
+                  ${
+                    this.label
+                      ? html`<span class="progress-label">${this.label}</span>`
+                      : null
+                  }
+                  ${
+                    this.showValue && !this.indeterminate
+                      ? html`<span class="progress-value"
+                          >${Math.round(this.percentage)}%</span
+                        >`
+                      : null
+                  }
+                </div>
+              `
+            : null
+        }
         <div
-          class="progress progress--${this.variant} progress--${this
-            .size} ${this.indeterminate ? 'progress--indeterminate' : ''} ${this
-            .complete
-            ? 'progress--complete'
-            : ''}"
+          class="progress progress--${this.variant} progress--${
+            this.size
+          } ${this.indeterminate ? 'progress--indeterminate' : ''} ${
+            this.complete ? 'progress--complete' : ''
+          }"
           part="track"
           role="progressbar"
           aria-valuemin="0"
@@ -128,9 +130,9 @@ export class BpProgress extends LitElement {
           <div
             class="progress-bar"
             part="bar"
-            style="width: ${this.indeterminate
-              ? '100%'
-              : this.percentage + '%'}"
+            style="width: ${
+              this.indeterminate ? '100%' : this.percentage + '%'
+            }"
           ></div>
         </div>
       </div>

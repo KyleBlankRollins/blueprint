@@ -286,9 +286,9 @@ export class BpSelect extends LitElement {
 
         return html`
           <div
-            class="select-option ${isSelected
-              ? 'select-option--selected'
-              : ''} ${isFocused ? 'select-option--focused' : ''}"
+            class="select-option ${
+              isSelected ? 'select-option--selected' : ''
+            } ${isFocused ? 'select-option--focused' : ''}"
             part="option"
             role="option"
             aria-selected="${isSelected ? 'true' : 'false'}"
@@ -318,16 +318,20 @@ export class BpSelect extends LitElement {
 
     return html`
       <div class=${classMap(selectClasses)} part="container">
-        ${this.label
-          ? html`
-              <label class="select-label" id="select-label" part="label">
-                ${this.label}
-                ${this.required
-                  ? html`<span class="select-required">*</span>`
-                  : ''}
-              </label>
-            `
-          : ''}
+        ${
+          this.label
+            ? html`
+                <label class="select-label" id="select-label" part="label">
+                  ${this.label}
+                  ${
+                    this.required
+                      ? html`<span class="select-required">*</span>`
+                      : ''
+                  }
+                </label>
+              `
+            : ''
+        }
         <!-- Hidden input for form integration (using input instead of select to avoid Firefox conflict) -->
         <input
           type="hidden"
@@ -379,13 +383,15 @@ export class BpSelect extends LitElement {
         </div>
 
         <!-- Dropdown menu -->
-        ${this.isOpen
-          ? html`
-              <div class="select-dropdown" part="dropdown" role="listbox">
-                ${this.getOptionElements()}
-              </div>
-            `
-          : null}
+        ${
+          this.isOpen
+            ? html`
+                <div class="select-dropdown" part="dropdown" role="listbox">
+                  ${this.getOptionElements()}
+                </div>
+              `
+            : null
+        }
       </div>
     `;
   }

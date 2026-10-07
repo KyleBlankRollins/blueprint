@@ -14,17 +14,7 @@ export type ColorName = 'black' | 'white';
  * Valid color scale steps
  */
 export type ColorScaleStep =
-  | 50
-  | 100
-  | 200
-  | 300
-  | 400
-  | 500
-  | 600
-  | 700
-  | 800
-  | 900
-  | 950;
+  50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950;
 
 /**
  * Color scale for white

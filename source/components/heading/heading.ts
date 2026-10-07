@@ -4,14 +4,7 @@ import { headingStyles } from './heading.style.js';
 
 export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 export type HeadingSize =
-  | 'xs'
-  | 'sm'
-  | 'md'
-  | 'lg'
-  | 'xl'
-  | '2xl'
-  | '3xl'
-  | '4xl';
+  'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
 export type HeadingWeight = 'light' | 'normal' | 'medium' | 'semibold' | 'bold';
 
 /**

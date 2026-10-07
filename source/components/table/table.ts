@@ -223,7 +223,7 @@ export class BpTable extends LitElement {
         if (aVal === null || aVal === undefined) return 1;
         if (bVal === null || bVal === undefined) return -1;
 
-        let comparison = 0;
+        let comparison: number;
         if (typeof aVal === 'string' && typeof bVal === 'string') {
           comparison = aVal.localeCompare(bVal);
         } else if (typeof aVal === 'number' && typeof bVal === 'number') {
@@ -438,31 +438,34 @@ export class BpTable extends LitElement {
     return html`
       <thead part="thead">
         <tr class="header-row" part="header-row">
-          ${this.selectable && this.multiSelect
-            ? html`
-                <th class="cell cell--checkbox" part="header-cell">
-                  <input
-                    type="checkbox"
-                    part="checkbox"
-                    .checked=${this.allSelected}
-                    .indeterminate=${this.selectedRows.length > 0 &&
-                    !this.allSelected}
-                    @click=${(e: Event) => this.handleCheckboxClick(e)}
-                    aria-label="Select all rows"
-                  />
-                </th>
-              `
-            : this.selectable
-              ? html`<th class="cell cell--checkbox" part="header-cell"></th>`
-              : nothing}
+          ${
+            this.selectable && this.multiSelect
+              ? html`
+                  <th class="cell cell--checkbox" part="header-cell">
+                    <input
+                      type="checkbox"
+                      part="checkbox"
+                      .checked=${this.allSelected}
+                      .indeterminate=${
+                        this.selectedRows.length > 0 && !this.allSelected
+                      }
+                      @click=${(e: Event) => this.handleCheckboxClick(e)}
+                      aria-label="Select all rows"
+                    />
+                  </th>
+                `
+              : this.selectable
+                ? html`<th class="cell cell--checkbox" part="header-cell"></th>`
+                : nothing
+          }
           ${repeat(
             this.columns,
             (column) => column.key,
             (column) => html`
               <th
-                class="cell header-cell ${column.sortable
-                  ? 'header-cell--sortable'
-                  : ''}"
+                class="cell header-cell ${
+                  column.sortable ? 'header-cell--sortable' : ''
+                }"
                 part="header-cell"
                 style=${column.width ? `width: ${column.width}` : ''}
                 @click=${(e: Event) => this.handleHeaderClick(column, e)}
@@ -473,21 +476,25 @@ export class BpTable extends LitElement {
                     this.handleHeaderClick(column, e);
                   }
                 }}
-                aria-sort=${this.sortState?.column === column.key
-                  ? this.sortState.direction === 'asc'
-                    ? 'ascending'
-                    : this.sortState.direction === 'desc'
-                      ? 'descending'
-                      : 'none'
-                  : 'none'}
+                aria-sort=${
+                  this.sortState?.column === column.key
+                    ? this.sortState.direction === 'asc'
+                      ? 'ascending'
+                      : this.sortState.direction === 'desc'
+                        ? 'descending'
+                        : 'none'
+                    : 'none'
+                }
               >
                 <span
                   class="header-cell__content"
-                  style="justify-content: ${column.align === 'center'
-                    ? 'center'
-                    : column.align === 'right'
-                      ? 'flex-end'
-                      : 'flex-start'}"
+                  style="justify-content: ${
+                    column.align === 'center'
+                      ? 'center'
+                      : column.align === 'right'
+                        ? 'flex-end'
+                        : 'flex-start'
+                  }"
                 >
                   <span class="header-cell__label">${column.label}</span>
                   ${this.renderSortIcon(column)}
@@ -567,20 +574,22 @@ export class BpTable extends LitElement {
                   this.selectable ? (isSelected ? 'true' : 'false') : undefined
                 )}
               >
-                ${this.selectable
-                  ? html`
-                      <td class="cell cell--checkbox" part="cell">
-                        <input
-                          type="checkbox"
-                          part="checkbox"
-                          .checked=${isSelected}
-                          @click=${(e: Event) =>
-                            this.handleCheckboxClick(e, row)}
-                          aria-label="Select row"
-                        />
-                      </td>
-                    `
-                  : nothing}
+                ${
+                  this.selectable
+                    ? html`
+                        <td class="cell cell--checkbox" part="cell">
+                          <input
+                            type="checkbox"
+                            part="checkbox"
+                            .checked=${isSelected}
+                            @click=${(e: Event) =>
+                              this.handleCheckboxClick(e, row)}
+                            aria-label="Select row"
+                          />
+                        </td>
+                      `
+                    : nothing
+                }
                 ${repeat(
                   this.columns,
                   (column) => column.key,

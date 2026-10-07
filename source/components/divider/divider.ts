@@ -80,8 +80,9 @@ export class BpDivider extends LitElement {
   render() {
     return html`
       <div
-        class="divider divider--${this.orientation} divider--spacing-${this
-          .spacing}"
+        class="divider divider--${this.orientation} divider--spacing-${
+          this.spacing
+        }"
         role="separator"
         aria-orientation="${this.orientation}"
         part="divider"
@@ -90,19 +91,23 @@ export class BpDivider extends LitElement {
           class="divider__line divider__line--${this.variant}"
           part="line"
         ></span>
-        ${this.orientation === 'horizontal'
-          ? html`
-              ${this.hasContent
-                ? html`<span class="divider__content" part="content">
-                      <slot @slotchange=${this.handleSlotChange}></slot>
-                    </span>
-                    <span
-                      class="divider__line divider__line--${this.variant}"
-                      part="line"
-                    ></span>`
-                : html`<slot @slotchange=${this.handleSlotChange}></slot>`}
-            `
-          : nothing}
+        ${
+          this.orientation === 'horizontal'
+            ? html`
+                ${
+                  this.hasContent
+                    ? html`<span class="divider__content" part="content">
+                          <slot @slotchange=${this.handleSlotChange}></slot>
+                        </span>
+                        <span
+                          class="divider__line divider__line--${this.variant}"
+                          part="line"
+                        ></span>`
+                    : html`<slot @slotchange=${this.handleSlotChange}></slot>`
+                }
+              `
+            : nothing
+        }
       </div>
     `;
   }

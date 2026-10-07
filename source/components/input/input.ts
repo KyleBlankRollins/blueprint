@@ -8,23 +8,10 @@ import { debounce } from '../../utilities/debounce.js';
 export type InputVariant = 'default' | 'success' | 'error' | 'warning' | 'info';
 export type InputSize = 'sm' | 'md' | 'lg';
 export type InputType =
-  | 'text'
-  | 'email'
-  | 'password'
-  | 'number'
-  | 'tel'
-  | 'url'
-  | 'search';
+  'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search';
 
 export type InputModeType =
-  | 'none'
-  | 'text'
-  | 'tel'
-  | 'url'
-  | 'email'
-  | 'numeric'
-  | 'decimal'
-  | 'search';
+  'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
 
 export type AutocompleteType =
   | 'on'
@@ -193,16 +180,20 @@ export class BpInput extends LitElement {
 
     return html`
       <div class="input-wrapper">
-        ${this.label
-          ? html`
-              <label class="input-label" for="input">
-                ${this.label}
-                ${this.required
-                  ? html`<span class="input-required">*</span>`
-                  : ''}
-              </label>
-            `
-          : ''}
+        ${
+          this.label
+            ? html`
+                <label class="input-label" for="input">
+                  ${this.label}
+                  ${
+                    this.required
+                      ? html`<span class="input-required">*</span>`
+                      : ''
+                  }
+                </label>
+              `
+            : ''
+        }
 
         <input
           part="input"
@@ -231,22 +222,26 @@ export class BpInput extends LitElement {
           @blur=${this.handleBlur}
         />
 
-        ${showError
-          ? html`
-              <div
-                id="error-message"
-                class="input-message input-message--error"
-                role="alert"
-              >
-                ${this.errorMessage}
-              </div>
-            `
-          : ''}
-        ${showHelper
-          ? html`<div id="helper-text" class="input-message">
-              ${this.helperText}
-            </div>`
-          : ''}
+        ${
+          showError
+            ? html`
+                <div
+                  id="error-message"
+                  class="input-message input-message--error"
+                  role="alert"
+                >
+                  ${this.errorMessage}
+                </div>
+              `
+            : ''
+        }
+        ${
+          showHelper
+            ? html`<div id="helper-text" class="input-message">
+                ${this.helperText}
+              </div>`
+            : ''
+        }
       </div>
     `;
   }

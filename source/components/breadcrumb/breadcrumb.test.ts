@@ -100,7 +100,7 @@ describe('bp-breadcrumb', () => {
     it('should have default separator class applied', async () => {
       await element.updateComplete;
       const nav = element.shadowRoot?.querySelector('nav');
-      expect(nav?.classList.contains('breadcrumb--slash')).toBe(true);
+      expect(nav?.classList.contains('breadcrumb--separator-slash')).toBe(true);
     });
   });
 
@@ -131,7 +131,9 @@ describe('bp-breadcrumb', () => {
       await element.updateComplete;
 
       const nav = element.shadowRoot?.querySelector('nav');
-      expect(nav?.classList.contains('breadcrumb--chevron')).toBe(true);
+      expect(nav?.classList.contains('breadcrumb--separator-chevron')).toBe(
+        true
+      );
     });
 
     it('should set property: ariaLabel', async () => {

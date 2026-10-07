@@ -88,7 +88,8 @@ export async function registerPlugin(pluginId: string): Promise<void> {
     console.log(`   ✓ Registered plugin in ThemeBuilder.withDefaults()`);
   } catch (error) {
     throw new Error(
-      `Failed to register plugin: ${error instanceof Error ? error.message : 'Unknown error'}`
+      `Failed to register plugin: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      { cause: error }
     );
   }
 }

@@ -352,33 +352,39 @@ export class BpNumberInput extends LitElement {
 
     return html`
       <div class=${classMap(wrapperClasses)}>
-        ${this.label
-          ? html`
-              <label class="number-input__label" part="label">
-                ${this.label}
-                ${this.required
-                  ? html`<span class="number-input__required">*</span>`
-                  : nothing}
-              </label>
-            `
-          : nothing}
+        ${
+          this.label
+            ? html`
+                <label class="number-input__label" part="label">
+                  ${this.label}
+                  ${
+                    this.required
+                      ? html`<span class="number-input__required">*</span>`
+                      : nothing
+                  }
+                </label>
+              `
+            : nothing
+        }
 
         <div class="number-input__container">
-          ${!this.hideButtons
-            ? html`
-                <button
-                  type="button"
-                  class="number-input__button number-input__button--decrement"
-                  part="decrement"
-                  tabindex="-1"
-                  ?disabled=${!this.canDecrement}
-                  aria-label="Decrease value"
-                  @click=${this.handleDecrement}
-                >
-                  <span class="number-input__button-icon">−</span>
-                </button>
-              `
-            : nothing}
+          ${
+            !this.hideButtons
+              ? html`
+                  <button
+                    type="button"
+                    class="number-input__button number-input__button--decrement"
+                    part="decrement"
+                    tabindex="-1"
+                    ?disabled=${!this.canDecrement}
+                    aria-label="Decrease value"
+                    @click=${this.handleDecrement}
+                  >
+                    <span class="number-input__button-icon">−</span>
+                  </button>
+                `
+              : nothing
+          }
 
           <input
             type="text"
@@ -400,34 +406,39 @@ export class BpNumberInput extends LitElement {
             @keydown=${this.handleKeyDown}
           />
 
-          ${!this.hideButtons
-            ? html`
-                <button
-                  type="button"
-                  class="number-input__button number-input__button--increment"
-                  part="increment"
-                  tabindex="-1"
-                  ?disabled=${!this.canIncrement}
-                  aria-label="Increase value"
-                  @click=${this.handleIncrement}
-                >
-                  <span class="number-input__button-icon">+</span>
-                </button>
-              `
-            : nothing}
+          ${
+            !this.hideButtons
+              ? html`
+                  <button
+                    type="button"
+                    class="number-input__button number-input__button--increment"
+                    part="increment"
+                    tabindex="-1"
+                    ?disabled=${!this.canIncrement}
+                    aria-label="Increase value"
+                    @click=${this.handleIncrement}
+                  >
+                    <span class="number-input__button-icon">+</span>
+                  </button>
+                `
+              : nothing
+          }
         </div>
 
-        ${this.message
-          ? html`
-              <div
-                class="number-input__message number-input__message--${this
-                  .variant}"
-                part="message"
-              >
-                ${this.message}
-              </div>
-            `
-          : nothing}
+        ${
+          this.message
+            ? html`
+                <div
+                  class="number-input__message number-input__message--${
+                    this.variant
+                  }"
+                  part="message"
+                >
+                  ${this.message}
+                </div>
+              `
+            : nothing
+        }
       </div>
     `;
   }

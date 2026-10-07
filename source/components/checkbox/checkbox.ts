@@ -204,35 +204,37 @@ export class BpCheckbox extends LitElement {
           @blur=${this.handleBlur}
         />
         <span part="checkmark" class="checkbox__checkmark">
-          ${this.indeterminate
-            ? html`<svg
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <line
-                  x1="4"
-                  y1="8"
-                  x2="12"
-                  y2="8"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                />
-              </svg>`
-            : html`<svg
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M13 4L6 11L3 8"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>`}
+          ${
+            this.indeterminate
+              ? html`<svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <line
+                    x1="4"
+                    y1="8"
+                    x2="12"
+                    y2="8"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>`
+              : html`<svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M13 4L6 11L3 8"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>`
+          }
         </span>
         <span part="label" class="checkbox__label">
           <slot></slot>

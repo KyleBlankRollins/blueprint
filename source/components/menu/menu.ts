@@ -193,9 +193,9 @@ export class BpMenuItem extends LitElement {
   render() {
     return html`
       <div
-        class="menu-item menu-item--${this.size} ${this.disabled
-          ? 'menu-item--disabled'
-          : ''} ${this.selected ? 'menu-item--selected' : ''}"
+        class="menu-item menu-item--${this.size} ${
+          this.disabled ? 'menu-item--disabled' : ''
+        } ${this.selected ? 'menu-item--selected' : ''}"
         part="base"
         role="menuitem"
         tabindex=${this.disabled ? -1 : 0}
@@ -211,13 +211,17 @@ export class BpMenuItem extends LitElement {
           <slot></slot>
         </span>
         <span class="menu-item__suffix" part="suffix">
-          ${this.shortcut
-            ? html`<span class="menu-item__shortcut">${this.shortcut}</span>`
-            : nothing}
+          ${
+            this.shortcut
+              ? html`<span class="menu-item__shortcut">${this.shortcut}</span>`
+              : nothing
+          }
           <slot name="suffix"></slot>
-          ${this.hasSubmenu
-            ? html`<span class="menu-item__arrow">›</span>`
-            : nothing}
+          ${
+            this.hasSubmenu
+              ? html`<span class="menu-item__arrow">›</span>`
+              : nothing
+          }
         </span>
       </div>
     `;

@@ -149,19 +149,21 @@ export class BpTooltip extends LitElement {
         <div class="tooltip-trigger" part="trigger">
           <slot></slot>
         </div>
-        ${this.isVisible && !this.disabled
-          ? html`
-              <div
-                id=${this.tooltipId}
-                class="tooltip-content tooltip-content--${this.placement}"
-                part="content"
-                role="tooltip"
-                aria-hidden="false"
-              >
-                ${this.content}
-              </div>
-            `
-          : null}
+        ${
+          this.isVisible && !this.disabled
+            ? html`
+                <div
+                  id=${this.tooltipId}
+                  class="tooltip-content tooltip-content--${this.placement}"
+                  part="content"
+                  role="tooltip"
+                  aria-hidden="false"
+                >
+                  ${this.content}
+                </div>
+              `
+            : null
+        }
       </div>
     `;
   }

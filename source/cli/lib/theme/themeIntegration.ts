@@ -123,7 +123,8 @@ export async function themeExists(themeName: string): Promise<boolean> {
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(
-        `Failed to check if theme "${themeName}" exists: ${error.message}`
+        `Failed to check if theme "${themeName}" exists: ${error.message}`,
+        { cause: error }
       );
     }
     throw error;

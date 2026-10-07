@@ -8,11 +8,7 @@ import { booleanConverter } from '../../utilities/boolean-converter.js';
 
 export type MultiSelectSize = 'sm' | 'md' | 'lg';
 export type MultiSelectVariant =
-  | 'default'
-  | 'success'
-  | 'error'
-  | 'warning'
-  | 'info';
+  'default' | 'success' | 'error' | 'warning' | 'info';
 
 export interface MultiSelectOption {
   value: string;
@@ -288,38 +284,42 @@ export class BpMultiSelect extends LitElement {
           role="listbox"
           aria-multiselectable="true"
         >
-          ${options.length === 0
-            ? html`<li class="multi-select__option multi-select__option--empty">
-                No options available
-              </li>`
-            : repeat(
-                options,
-                (opt) => opt.value,
-                (opt, index) => {
-                  const selected = this.isSelected(opt.value);
-                  const focused = index === this.focusedIndex;
-                  return html`
-                    <li
-                      class=${classMap({
-                        'multi-select__option': true,
-                        'multi-select__option--selected': selected,
-                        'multi-select__option--focused': focused,
-                      })}
-                      role="option"
-                      aria-selected=${selected}
-                      @click=${() => this.handleOptionClick(opt)}
-                      part="option ${selected ? 'option-selected' : ''}"
-                    >
-                      <span class="multi-select__checkbox">
-                        ${selected ? '\u2713' : ''}
-                      </span>
-                      <span class="multi-select__option-label"
-                        >${opt.label}</span
+          ${
+            options.length === 0
+              ? html`<li
+                  class="multi-select__option multi-select__option--empty"
+                >
+                  No options available
+                </li>`
+              : repeat(
+                  options,
+                  (opt) => opt.value,
+                  (opt, index) => {
+                    const selected = this.isSelected(opt.value);
+                    const focused = index === this.focusedIndex;
+                    return html`
+                      <li
+                        class=${classMap({
+                          'multi-select__option': true,
+                          'multi-select__option--selected': selected,
+                          'multi-select__option--focused': focused,
+                        })}
+                        role="option"
+                        aria-selected=${selected}
+                        @click=${() => this.handleOptionClick(opt)}
+                        part="option ${selected ? 'option-selected' : ''}"
                       >
-                    </li>
-                  `;
-                }
-              )}
+                        <span class="multi-select__checkbox">
+                          ${selected ? '\u2713' : ''}
+                        </span>
+                        <span class="multi-select__option-label"
+                          >${opt.label}</span
+                        >
+                      </li>
+                    `;
+                  }
+                )
+          }
         </ul>
       </div>
     `;
@@ -350,51 +350,57 @@ export class BpMultiSelect extends LitElement {
           part="control"
         >
           <div class="multi-select__value-container">
-            ${hasSelection
-              ? repeat(
-                  this.value,
-                  (v) => v,
-                  (v) => html`
-                    <span class="multi-select__tag" part="tag">
-                      <span class="multi-select__tag-label">
-                        ${this.getLabelForValue(v)}
+            ${
+              hasSelection
+                ? repeat(
+                    this.value,
+                    (v) => v,
+                    (v) => html`
+                      <span class="multi-select__tag" part="tag">
+                        <span class="multi-select__tag-label">
+                          ${this.getLabelForValue(v)}
+                        </span>
+                        ${
+                          this.clearable
+                            ? html`<button
+                                type="button"
+                                class="multi-select__tag-remove"
+                                @click=${(e: Event) => this.handleRemoveTag(v, e)}
+                                aria-label="Remove ${this.getLabelForValue(v)}"
+                                tabindex="-1"
+                                ?disabled=${this.disabled}
+                              >
+                                ×
+                              </button>`
+                            : nothing
+                        }
                       </span>
-                      ${this.clearable
-                        ? html`<button
-                            type="button"
-                            class="multi-select__tag-remove"
-                            @click=${(e: Event) => this.handleRemoveTag(v, e)}
-                            aria-label="Remove ${this.getLabelForValue(v)}"
-                            tabindex="-1"
-                            ?disabled=${this.disabled}
-                          >
-                            ×
-                          </button>`
-                        : nothing}
-                    </span>
-                  `
-                )
-              : html`<span class="multi-select__placeholder"
-                  >${this.placeholder}</span
-                >`}
+                    `
+                  )
+                : html`<span class="multi-select__placeholder"
+                    >${this.placeholder}</span
+                  >`
+            }
           </div>
 
           <div class="multi-select__indicators">
-            ${this.clearable && hasSelection
-              ? html`
-                  <button
-                    type="button"
-                    class="multi-select__clear"
-                    @click=${this.handleClearAll}
-                    aria-label="Clear all selections"
-                    tabindex="-1"
-                    ?disabled=${this.disabled}
-                    part="clear-button"
-                  >
-                    ×
-                  </button>
-                `
-              : ''}
+            ${
+              this.clearable && hasSelection
+                ? html`
+                    <button
+                      type="button"
+                      class="multi-select__clear"
+                      @click=${this.handleClearAll}
+                      aria-label="Clear all selections"
+                      tabindex="-1"
+                      ?disabled=${this.disabled}
+                      part="clear-button"
+                    >
+                      ×
+                    </button>
+                  `
+                : ''
+            }
             <span class="multi-select__dropdown-indicator" part="indicator">
               ▼
             </span>

@@ -268,10 +268,11 @@ export class BpNotification extends LitElement {
 
     return html`
       <div
-        class="notification notification--${this.variant} notification--${this
-          .position} ${this.isExiting
-          ? 'notification--exiting'
-          : 'notification--entering'}"
+        class="notification notification--${this.variant} notification--${
+          this.position
+        } ${
+          this.isExiting ? 'notification--exiting' : 'notification--entering'
+        }"
         part="base"
         role="alert"
         aria-live=${this.variant === 'error' ? 'assertive' : 'polite'}
@@ -286,9 +287,11 @@ export class BpNotification extends LitElement {
         </div>
 
         <div class="notification__content" part="content">
-          ${this.title
-            ? html`<div class="notification__title">${this.title}</div>`
-            : nothing}
+          ${
+            this.title
+              ? html`<div class="notification__title">${this.title}</div>`
+              : nothing
+          }
           <div class="notification__message" part="message">
             ${this.message || html`<slot></slot>`}
           </div>
@@ -298,26 +301,28 @@ export class BpNotification extends LitElement {
           <slot name="action"></slot>
         </div>
 
-        ${this.closable
-          ? html`
-              <button
-                type="button"
-                class="notification__close"
-                part="close-button"
-                aria-label="Close notification"
-                @click=${this.handleCloseClick}
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
+        ${
+          this.closable
+            ? html`
+                <button
+                  type="button"
+                  class="notification__close"
+                  part="close-button"
+                  aria-label="Close notification"
+                  @click=${this.handleCloseClick}
                 >
-                  <path d="M18 6L6 18M6 6l12 12" />
-                </svg>
-              </button>
-            `
-          : nothing}
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M18 6L6 18M6 6l12 12" />
+                  </svg>
+                </button>
+              `
+            : nothing
+        }
       </div>
     `;
   }
