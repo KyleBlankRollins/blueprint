@@ -18,7 +18,9 @@ import '@krollins/blueprint/radio';
 ### Default
 
 <ComponentPreview>
-  <bp-radio name="demo" value="option1">Option 1</bp-radio>
+  <bp-radio name="demo" value="option1">
+    Option 1
+  </bp-radio>
 </ComponentPreview>
 
 ```html
@@ -31,9 +33,15 @@ Radios with the same `name` form a group. To give the group a visible label, hel
 
 <ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-    <bp-radio name="colors" value="red">Red</bp-radio>
-    <bp-radio name="colors" value="green">Green</bp-radio>
-    <bp-radio name="colors" value="blue" checked>Blue</bp-radio>
+    <bp-radio name="colors" value="red">
+      Red
+    </bp-radio>
+    <bp-radio name="colors" value="green">
+      Green
+    </bp-radio>
+    <bp-radio name="colors" value="blue" checked>
+      Blue
+    </bp-radio>
   </div>
 </ComponentPreview>
 
@@ -47,9 +55,15 @@ Radios with the same `name` form a group. To give the group a visible label, hel
 
 <ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-    <bp-radio name="size-demo" value="sm" size="sm">Small</bp-radio>
-    <bp-radio name="size-demo" value="md" size="md">Medium</bp-radio>
-    <bp-radio name="size-demo" value="lg" size="lg">Large</bp-radio>
+    <bp-radio name="size-demo" value="sm" size="sm">
+      Small
+    </bp-radio>
+    <bp-radio name="size-demo" value="md" size="md">
+      Medium
+    </bp-radio>
+    <bp-radio name="size-demo" value="lg" size="lg">
+      Large
+    </bp-radio>
   </div>
 </ComponentPreview>
 
@@ -63,9 +77,15 @@ Radios with the same `name` form a group. To give the group a visible label, hel
 
 <ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-    <bp-radio name="disabled-demo" value="enabled">Enabled option</bp-radio>
-    <bp-radio name="disabled-demo" value="disabled" disabled>Disabled option</bp-radio>
-    <bp-radio name="disabled-demo" value="checked-disabled" checked disabled>Disabled checked</bp-radio>
+    <bp-radio name="disabled-demo" value="enabled">
+      Enabled option
+    </bp-radio>
+    <bp-radio name="disabled-demo" value="disabled" disabled>
+      Disabled option
+    </bp-radio>
+    <bp-radio name="disabled-demo" value="checked-disabled" checked disabled>
+      Disabled checked
+    </bp-radio>
   </div>
 </ComponentPreview>
 
@@ -78,8 +98,12 @@ Radios with the same `name` form a group. To give the group a visible label, hel
 
 <ComponentPreview>
   <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-    <bp-radio name="error-demo" value="1" error>Option with error</bp-radio>
-    <bp-radio name="error-demo" value="2" error>Another option with error</bp-radio>
+    <bp-radio name="error-demo" value="1" error>
+      Option with error
+    </bp-radio>
+    <bp-radio name="error-demo" value="2" error>
+      Another option with error
+    </bp-radio>
   </div>
 </ComponentPreview>
 
@@ -90,7 +114,9 @@ Radios with the same `name` form a group. To give the group a visible label, hel
 ### Required
 
 <ComponentPreview>
-  <bp-radio name="required-demo" value="agree" required>I agree to the terms</bp-radio>
+  <bp-radio name="required-demo" value="agree" required>
+    I agree to the terms
+  </bp-radio>
 </ComponentPreview>
 
 ```html
@@ -119,11 +145,11 @@ Radios with the same `name` form a group. To give the group a visible label, hel
 
 ### Events
 
-| Event       | Detail        | Description                          |
-| ----------- | ------------- | ------------------------------------ |
+| Event       | Detail               | Description                          |
+| ----------- | -------------------- | ------------------------------------ |
 | `bp-change` | `{ checked, value }` | Fired when the checked state changes |
-| `bp-focus`  | -             | Fired when the radio receives focus  |
-| `bp-blur`   | -             | Fired when the radio loses focus     |
+| `bp-focus`  | -                    | Fired when the radio receives focus  |
+| `bp-blur`   | -                    | Fired when the radio loses focus     |
 
 ### CSS Parts
 
@@ -136,7 +162,9 @@ Radios with the same `name` form a group. To give the group a visible label, hel
 
 ### Form Integration
 
-The component supports native form submission via `ElementInternals`. Use the `name` and `value` properties to include the selected radio in form data.
+Put radios in a [`bp-radio-group`](/components/radio-group), which owns `name`, `value`, `required` and `disabled` and submits the selected value with the form. See [Forms](/getting-started/forms).
+
+A standalone radio is a tab stop and Space selects it. Inside a group, the group manages the tab stop and the arrow keys move between radios.
 
 ### Accessibility
 

@@ -18,8 +18,14 @@ import '@krollins/blueprint/notification';
 ### Default
 
 <ComponentPreview>
-  <bp-button onclick="document.querySelector('#notif-demo').show()">Show Notification</bp-button>
-  <bp-notification id="notif-demo" title="Hello!" message="This is a notification message."></bp-notification>
+  <bp-button onclick="document.querySelector('#notif-demo').show()">
+    Show Notification
+  </bp-button>
+  <bp-notification
+    id="notif-demo"
+    title="Hello!"
+    message="This is a notification message."
+  ></bp-notification>
 </ComponentPreview>
 
 ```html
@@ -39,15 +45,43 @@ import '@krollins/blueprint/notification';
 
 <ComponentPreview>
   <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-    <bp-button onclick="document.querySelector('#notif-info').show()">Info</bp-button>
-    <bp-button onclick="document.querySelector('#notif-success').show()">Success</bp-button>
-    <bp-button onclick="document.querySelector('#notif-warning').show()">Warning</bp-button>
-    <bp-button onclick="document.querySelector('#notif-error').show()">Error</bp-button>
+    <bp-button onclick="document.querySelector('#notif-info').show()">
+      Info
+    </bp-button>
+    <bp-button onclick="document.querySelector('#notif-success').show()">
+      Success
+    </bp-button>
+    <bp-button onclick="document.querySelector('#notif-warning').show()">
+      Warning
+    </bp-button>
+    <bp-button onclick="document.querySelector('#notif-error').show()">
+      Error
+    </bp-button>
   </div>
-  <bp-notification id="notif-info" variant="info" title="Information" message="Here's some helpful info."></bp-notification>
-  <bp-notification id="notif-success" variant="success" title="Success!" message="Your action was completed."></bp-notification>
-  <bp-notification id="notif-warning" variant="warning" title="Warning" message="Please review before continuing."></bp-notification>
-  <bp-notification id="notif-error" variant="error" title="Error" message="Something went wrong."></bp-notification>
+  <bp-notification
+    id="notif-info"
+    variant="info"
+    title="Information"
+    message="Here's some helpful info."
+  ></bp-notification>
+  <bp-notification
+    id="notif-success"
+    variant="success"
+    title="Success!"
+    message="Your action was completed."
+  ></bp-notification>
+  <bp-notification
+    id="notif-warning"
+    variant="warning"
+    title="Warning"
+    message="Please review before continuing."
+  ></bp-notification>
+  <bp-notification
+    id="notif-error"
+    variant="error"
+    title="Error"
+    message="Something went wrong."
+  ></bp-notification>
 </ComponentPreview>
 
 ```html
@@ -68,8 +102,16 @@ import '@krollins/blueprint/notification';
 ### Auto-Close
 
 <ComponentPreview>
-  <bp-button onclick="document.querySelector('#notif-auto').show()">Show (3s auto-close)</bp-button>
-  <bp-notification id="notif-auto" variant="success" title="Saved!" message="Auto-closes in 3 seconds." duration="3000"></bp-notification>
+  <bp-button onclick="document.querySelector('#notif-auto').show()">
+    Show (3s auto-close)
+  </bp-button>
+  <bp-notification
+    id="notif-auto"
+    variant="success"
+    title="Saved!"
+    message="Auto-closes in 3 seconds."
+    duration="3000"
+  ></bp-notification>
 </ComponentPreview>
 
 ```html
@@ -85,21 +127,69 @@ import '@krollins/blueprint/notification';
 
 <ComponentPreview>
   <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-    <bp-button onclick="document.querySelector('#notif-tl').show()">Top Left</bp-button>
-    <bp-button onclick="document.querySelector('#notif-tc').show()">Top Center</bp-button>
-    <bp-button onclick="document.querySelector('#notif-tr').show()">Top Right</bp-button>
+    <bp-button onclick="document.querySelector('#notif-tl').show()">
+      Top Left
+    </bp-button>
+    <bp-button onclick="document.querySelector('#notif-tc').show()">
+      Top Center
+    </bp-button>
+    <bp-button onclick="document.querySelector('#notif-tr').show()">
+      Top Right
+    </bp-button>
   </div>
   <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
-    <bp-button onclick="document.querySelector('#notif-bl').show()">Bottom Left</bp-button>
-    <bp-button onclick="document.querySelector('#notif-bc').show()">Bottom Center</bp-button>
-    <bp-button onclick="document.querySelector('#notif-br').show()">Bottom Right</bp-button>
+    <bp-button onclick="document.querySelector('#notif-bl').show()">
+      Bottom Left
+    </bp-button>
+    <bp-button onclick="document.querySelector('#notif-bc').show()">
+      Bottom Center
+    </bp-button>
+    <bp-button onclick="document.querySelector('#notif-br').show()">
+      Bottom Right
+    </bp-button>
   </div>
-  <bp-notification id="notif-tl" position="top-left" title="Top Left" message="Notification position" duration="2000"></bp-notification>
-  <bp-notification id="notif-tc" position="top-center" title="Top Center" message="Notification position" duration="2000"></bp-notification>
-  <bp-notification id="notif-tr" position="top-right" title="Top Right" message="Notification position" duration="2000"></bp-notification>
-  <bp-notification id="notif-bl" position="bottom-left" title="Bottom Left" message="Notification position" duration="2000"></bp-notification>
-  <bp-notification id="notif-bc" position="bottom-center" title="Bottom Center" message="Notification position" duration="2000"></bp-notification>
-  <bp-notification id="notif-br" position="bottom-right" title="Bottom Right" message="Notification position" duration="2000"></bp-notification>
+  <bp-notification
+    id="notif-tl"
+    position="top-left"
+    title="Top Left"
+    message="Notification position"
+    duration="2000"
+  ></bp-notification>
+  <bp-notification
+    id="notif-tc"
+    position="top-center"
+    title="Top Center"
+    message="Notification position"
+    duration="2000"
+  ></bp-notification>
+  <bp-notification
+    id="notif-tr"
+    position="top-right"
+    title="Top Right"
+    message="Notification position"
+    duration="2000"
+  ></bp-notification>
+  <bp-notification
+    id="notif-bl"
+    position="bottom-left"
+    title="Bottom Left"
+    message="Notification position"
+    duration="2000"
+  ></bp-notification>
+  <bp-notification
+    id="notif-bc"
+    position="bottom-center"
+    title="Bottom Center"
+    message="Notification position"
+    duration="2000"
+  ></bp-notification>
+  <bp-notification
+    id="notif-br"
+    position="bottom-right"
+    title="Bottom Right"
+    message="Notification position"
+    duration="2000"
+  ></bp-notification>
 </ComponentPreview>
 
 ```html
@@ -114,8 +204,16 @@ import '@krollins/blueprint/notification';
 ### Non-Closable
 
 <ComponentPreview>
-  <bp-button onclick="document.querySelector('#notif-noclose').show()">Show (not closable)</bp-button>
-  <bp-notification id="notif-noclose" closable="false" title="Processing..." message="Please wait while we complete your request." duration="3000"></bp-notification>
+  <bp-button onclick="document.querySelector('#notif-noclose').show()">
+    Show (not closable)
+  </bp-button>
+  <bp-notification
+    id="notif-noclose"
+    closable="false"
+    title="Processing..."
+    message="Please wait while we complete your request."
+    duration="3000"
+  ></bp-notification>
 </ComponentPreview>
 
 ```html
@@ -126,11 +224,17 @@ import '@krollins/blueprint/notification';
 ### With Custom Content
 
 <ComponentPreview>
-  <bp-button onclick="document.querySelector('#notif-custom').show()">Show Custom</bp-button>
+  <bp-button onclick="document.querySelector('#notif-custom').show()">
+    Show Custom
+  </bp-button>
   <bp-notification id="notif-custom" variant="info" title="New Message">
-    <p>You have a new message from <strong>Jane Doe</strong>.</p>
+    <p>
+      You have a new message from <strong>Jane Doe</strong>.
+    </p>
     <div slot="action">
-      <bp-button size="sm" variant="secondary">Dismiss</bp-button>
+      <bp-button size="sm" variant="secondary">
+        Dismiss
+      </bp-button>
       <bp-button size="sm">View</bp-button>
     </div>
   </bp-notification>
@@ -149,8 +253,14 @@ import '@krollins/blueprint/notification';
 ### With Custom Icon
 
 <ComponentPreview>
-  <bp-button onclick="document.querySelector('#notif-icon').show()">Custom Icon</bp-button>
-  <bp-notification id="notif-icon" title="Download Complete" message="Your file has been downloaded.">
+  <bp-button onclick="document.querySelector('#notif-icon').show()">
+    Custom Icon
+  </bp-button>
+  <bp-notification
+    id="notif-icon"
+    title="Download Complete"
+    message="Your file has been downloaded."
+  >
     <bp-icon slot="icon" name="download"></bp-icon>
   </bp-notification>
 </ComponentPreview>
@@ -192,15 +302,16 @@ notification.addEventListener('bp-close', () => {
 
 ### Properties
 
-| Property   | Type                                                                                              | Default       | Description                                |
-| ---------- | ------------------------------------------------------------------------------------------------- | ------------- | ------------------------------------------ |
-| `variant`  | `'info' \| 'success' \| 'warning' \| 'error'`                                                     | `'info'`      | Notification style variant                 |
-| `open`     | `boolean`                                                                                         | `false`       | Whether notification is visible            |
-| `closable` | `boolean`                                                                                         | `true`        | Show close button                          |
-| `duration` | `number`                                                                                          | `0`           | Auto-close delay in ms (0 = no auto-close) |
-| `title`    | `string`                                                                                          | `''`          | Notification title                         |
-| `message`  | `string`                                                                                          | `''`          | Notification message                       |
-| `position` | `'top-left' \| 'top-center' \| 'top-right' \| 'bottom-left' \| 'bottom-center' \| 'bottom-right'` | `'top-right'` | Screen position                            |
+| Property   | Type                                                                                              | Default       | Description                                                                                                                                                  |
+| ---------- | ------------------------------------------------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `variant`  | `'info' \| 'success' \| 'warning' \| 'error'`                                                     | `'info'`      | Notification style variant                                                                                                                                   |
+| `open`     | `boolean`                                                                                         | `false`       | Whether notification is visible                                                                                                                              |
+| `closable` | `boolean`                                                                                         | `true`        | Show close button                                                                                                                                            |
+| `duration` | `number`                                                                                          | `0`           | Auto-close delay in ms (0 = no auto-close)                                                                                                                   |
+| `title`    | `string`                                                                                          | `''`          | Notification title                                                                                                                                           |
+| `message`  | `string`                                                                                          | `''`          | Notification message                                                                                                                                         |
+| `position` | `'top-left' \| 'top-center' \| 'top-right' \| 'bottom-left' \| 'bottom-center' \| 'bottom-right'` | `'top-right'` | Screen position                                                                                                                                              |
+| `stacked`  | `boolean`                                                                                         | `false`       | Set by a [`bp-notification-stack`](/components/notification-stack); the notification flows in the stack instead of using `position`, and does not take focus |
 
 ### Methods
 

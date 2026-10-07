@@ -1,0 +1,117 @@
+---
+title: Forms
+description: Submit, validate and reset Blueprint form controls with a native form
+---
+
+Blueprint's form controls are form-associated custom elements. Put them in a `<form>` and they submit, validate and reset like native inputs, with no glue code.
+
+## Supported controls
+
+These controls take part in the form they sit in: Input, Textarea, Select, Combobox, Multi-select, Number Input, Date Picker, Time Picker, Slider, Color Picker, Checkbox, Switch and Radio Group.
+
+[File Upload](/components/file-upload) is not form-associated. Read its files from the `bp-change` event.
+
+## Submitting
+
+Each control submits its `value` under its `name`. A control with no `name`, or a `disabled` control, is left out. A Multi-select submits one entry per selected item.
+
+```html
+<form id="signup">
+  <bp-input name="email" label="Email" type="email" required></bp-input>
+  <bp-radio-group name="plan" label="Plan" required>
+    <bp-radio value="free">Free</bp-radio>
+    <bp-radio value="pro">Pro</bp-radio>
+  </bp-radio-group>
+  <bp-button type="submit">Create account</bp-button>
+</form>
+
+<script type="module">
+  document.querySelector('#signup').addEventListener('submit', (event) => {
+    event.preventDefault();
+    console.log(Object.fromEntries(new FormData(event.target)));
+  });
+</script>
+```
+
+For radios, set `name`, `value`, `required` and `disabled` on the [Radio Group](/components/radio-group), not on the individual radios.
+
+## Validation
+
+Controls report validity the way native controls do:
+
+- `required` makes an empty control invalid (`valueMissing`).
+- Input and Textarea mirror their native element's constraints: `pattern`, `minlength`, `maxlength`, `min`, `max` and `type`.
+- `form.checkValidity()` and `form.reportValidity()` include Blueprint controls, and a form with an invalid control does not submit.
+- Every control has `checkValidity()`, `reportValidity()`, `validity` and `validationMessage`.
+
+## Help and error text
+
+Every control takes `helperText` and `errorMessage`. Help text sits under the control. An error message replaces it, is announced with `role="alert"`, sets `aria-invalid="true"` and turns the control to the error color.
+
+```html
+<bp-input
+  name="username"
+  label="Username"
+  helperText="3 to 20 letters or numbers"
+></bp-input>
+```
+
+### `errorMessage` blocks submission
+
+Setting `errorMessage` also works like a native `setCustomValidity()`. While it is non-empty the control reports `customError`, `validationMessage` is the message, and the form will not submit. It takes precedence over the control's own validation.
+
+Use this to show a server-side error:
+
+```javascript
+const email = document.querySelector('bp-input[name="email"]');
+
+email.errorMessage = 'That email is already registered';
+
+// Clear it once the user changes the field, or the form stays blocked.
+email.addEventListener('bp-input', () => {
+  email.errorMessage = '';
+});
+```
+
+Disabled controls are excluded from validation, and File Upload's `errorMessage` is visual only.
+
+## Reset
+
+`form.reset()` restores each control to the value it had when it first rendered. The browser's back/forward navigation and autofill can also restore saved values.
+
+## Grouping with Fieldset
+
+Wrap related controls in [`bp-fieldset`](/components/fieldset) to give them a legend, a description and a group-level error. Setting `disabled` on the fieldset disables the controls inside it and restores only the ones it disabled.
+
+## Building your own control
+
+`FormControlMixin` makes any Lit element form-associated. The host must expose `name`, `value`, `required` and `disabled`.
+
+```typescript
+import { LitElement, html } from 'lit';
+import { property } from 'lit/decorators.js';
+import { FormControlMixin } from '@krollins/blueprint';
+
+export class MyRating extends FormControlMixin(LitElement) {
+  @property() name = '';
+  @property() value = '';
+  @property({ type: Boolean }) required = false;
+  @property({ type: Boolean }) disabled = false;
+
+  render() {
+    return html`<slot></slot>`;
+  }
+}
+```
+
+Override these to customize behavior:
+
+| Method                       | Purpose                                                               |
+| ---------------------------- | --------------------------------------------------------------------- |
+| `getFormValue()`             | The value submitted with the form. Defaults to `value`.               |
+| `getFormValidity()`          | The validity to report. Defaults to mirroring a native input.         |
+| `getCustomValidityMessage()` | The app-set error that blocks submission. Defaults to `errorMessage`. |
+| `getValidityTarget()`        | A native input or textarea whose constraints are mirrored.            |
+| `getValidityAnchor()`        | The element the browser's validation bubble points at.                |
+
+Components that override `updated()` must call `super.updated()`. For a control that manages its own `ElementInternals`, `syncCustomValidity()` and `customErrorValidity()` are exported from the package as well.
