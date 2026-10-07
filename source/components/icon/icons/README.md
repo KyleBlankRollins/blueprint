@@ -40,6 +40,7 @@ Used by the `<bp-icon>` lazy loader. When a consumer writes `<bp-icon name="chec
 1. Add `.svg` files to `source/assets/icons/`
 2. Run `npm run generate:icons`
 3. New entry modules, the `IconName` type, and `all.ts` barrel are regenerated automatically
+
 - **Tree-shaking works** - Unused icons are not bundled
 - **Fast** - No HTTP requests or file system reads at runtime
 - **Type-safe** - Import errors caught at build time
