@@ -128,3 +128,9 @@ export type {
   NotificationStackPosition,
   NotificationVariant,
 } from './notification-stack/notification-stack.js';
+export { BpIconButton } from './icon-button/icon-button.js';
+export type {
+  IconButtonVariant,
+  IconButtonSize,
+  IconButtonShape,
+} from './icon-button/icon-button.js';
