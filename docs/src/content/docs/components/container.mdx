@@ -1,0 +1,111 @@
+---
+title: Container
+description: Center page content and cap its width at a breakpoint
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+The `bp-container` component centers page content and caps its width at a breakpoint, with an inline gutter so content never touches the edge of the viewport.
+
+## Import
+
+```javascript
+import '@krollins/blueprint/container';
+```
+
+## Examples
+
+### Default
+
+By default the container is at most 1024px wide (`lg`) with a 16px gutter (`md`).
+
+<ComponentPreview>
+  <bp-container>
+    <bp-card>Content is centered and at most 1024px wide.</bp-card>
+  </bp-container>
+</ComponentPreview>
+
+```html
+<bp-container>
+  <bp-heading level="1">Settings</bp-heading>
+</bp-container>
+```
+
+### Sizes
+
+<ComponentPreview>
+  <div class="component-preview-col">
+    <bp-container size="sm">
+      <bp-card>sm: 640px</bp-card>
+    </bp-container>
+    <bp-container size="md">
+      <bp-card>md: 768px</bp-card>
+    </bp-container>
+    <bp-container size="full">
+      <bp-card>full: no maximum</bp-card>
+    </bp-container>
+  </div>
+</ComponentPreview>
+
+```html
+<bp-container size="sm">...</bp-container>
+<bp-container size="md">...</bp-container>
+<bp-container size="full">...</bp-container>
+```
+
+| Size   | Max width |
+| ------ | --------- |
+| `sm`   | 640px     |
+| `md`   | 768px     |
+| `lg`   | 1024px    |
+| `xl`   | 1280px    |
+| `2xl`  | 1536px    |
+| `full` | none      |
+
+### Reading Column
+
+A narrow container with a larger gutter suits long-form text.
+
+<ComponentPreview>
+  <bp-container size="md" gutter="lg">
+    <bp-text>
+      Long-form copy reads best at around 70 characters per line.
+    </bp-text>
+  </bp-container>
+</ComponentPreview>
+
+```html
+<bp-container size="md" gutter="lg">
+  <bp-text>Long-form copy reads best at around 70 characters per line.</bp-text>
+</bp-container>
+```
+
+## API Reference
+
+### Properties
+
+| Property | Type                                                               | Default | Description                                                     |
+| -------- | ------------------------------------------------------------------ | ------- | --------------------------------------------------------------- |
+| `size`   | `'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl' \| 'full'`                  | `'lg'`  | Maximum width, from `--bp-breakpoint-*`. `full` removes the cap |
+| `gutter` | `'none' \| '2xs' \| 'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl'` | `'md'`  | Inline padding, from `--bp-spacing-*`                           |
+
+The gutter sits inside the maximum width (`box-sizing: border-box`).
+
+### Events
+
+This component does not emit any events.
+
+### Slots
+
+| Slot      | Description      |
+| --------- | ---------------- |
+| (default) | The page content |
+
+### CSS Parts
+
+None. Style the host directly.
+
+## Accessibility
+
+- Container adds no role
+- Put landmarks (`<main>`, `<nav>`) inside or around it as the page needs

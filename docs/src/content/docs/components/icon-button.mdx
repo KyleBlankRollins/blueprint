@@ -1,0 +1,257 @@
+---
+title: Icon Button
+description: A square button that shows only an icon, for compact actions
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+The `bp-icon-button` component is a square button that shows only an icon, for compact actions like close, edit, delete or settings. Because there is no visible text, `label` is required: it becomes the button's accessible name.
+
+## Import
+
+```javascript
+import '@krollins/blueprint/icon-button';
+```
+
+## Examples
+
+### Default
+
+Icon buttons are `ghost` by default: no fill until hovered.
+
+<ComponentPreview>
+  <bp-icon-button icon="cross" label="Close"></bp-icon-button>
+</ComponentPreview>
+
+```html
+<bp-icon-button icon="cross" label="Close"></bp-icon-button>
+```
+
+### Variants
+
+<ComponentPreview>
+  <div class="component-preview-row">
+    <bp-icon-button
+      icon="settings"
+      label="Settings"
+      variant="ghost"
+    ></bp-icon-button>
+    <bp-icon-button
+      icon="trash"
+      label="Delete row"
+      variant="secondary"
+    ></bp-icon-button>
+    <bp-icon-button
+      icon="plus"
+      label="Add item"
+      variant="primary"
+    ></bp-icon-button>
+    <bp-icon-button
+      icon="plus"
+      label="Approve"
+      variant="success"
+    ></bp-icon-button>
+    <bp-icon-button
+      icon="trash"
+      label="Delete"
+      variant="error"
+    ></bp-icon-button>
+    <bp-icon-button
+      icon="settings"
+      label="Review settings"
+      variant="warning"
+    ></bp-icon-button>
+    <bp-icon-button
+      icon="link"
+      label="Copy link"
+      variant="info"
+    ></bp-icon-button>
+  </div>
+</ComponentPreview>
+
+```html
+<bp-icon-button icon="settings" label="Settings"></bp-icon-button>
+<bp-icon-button
+  icon="trash"
+  label="Delete row"
+  variant="secondary"
+></bp-icon-button>
+<bp-icon-button icon="plus" label="Add item" variant="primary"></bp-icon-button>
+<bp-icon-button icon="plus" label="Approve" variant="success"></bp-icon-button>
+<bp-icon-button icon="trash" label="Delete" variant="error"></bp-icon-button>
+<bp-icon-button
+  icon="settings"
+  label="Review settings"
+  variant="warning"
+></bp-icon-button>
+<bp-icon-button icon="link" label="Copy link" variant="info"></bp-icon-button>
+```
+
+### Sizes
+
+Sizes are squares of 32, 40 and 48px, with 16, 20 and 24px icons.
+
+<ComponentPreview>
+  <div class="component-preview-row">
+    <bp-icon-button
+      icon="heart"
+      label="Like"
+      size="sm"
+      variant="secondary"
+    ></bp-icon-button>
+    <bp-icon-button
+      icon="heart"
+      label="Like"
+      size="md"
+      variant="secondary"
+    ></bp-icon-button>
+    <bp-icon-button
+      icon="heart"
+      label="Like"
+      size="lg"
+      variant="secondary"
+    ></bp-icon-button>
+  </div>
+</ComponentPreview>
+
+```html
+<bp-icon-button icon="heart" label="Like" size="sm"></bp-icon-button>
+<bp-icon-button icon="heart" label="Like" size="md"></bp-icon-button>
+<bp-icon-button icon="heart" label="Like" size="lg"></bp-icon-button>
+```
+
+### Shapes
+
+<ComponentPreview>
+  <div class="component-preview-row">
+    <bp-icon-button
+      icon="plus"
+      label="Add item"
+      variant="primary"
+    ></bp-icon-button>
+    <bp-icon-button
+      icon="plus"
+      label="Add item"
+      variant="primary"
+      shape="circle"
+    ></bp-icon-button>
+  </div>
+</ComponentPreview>
+
+```html
+<bp-icon-button icon="plus" label="Add item" variant="primary"></bp-icon-button>
+<bp-icon-button
+  icon="plus"
+  label="Add item"
+  variant="primary"
+  shape="circle"
+></bp-icon-button>
+```
+
+### Disabled
+
+<ComponentPreview>
+  <bp-icon-button
+    icon="trash"
+    label="Delete"
+    variant="secondary"
+    disabled
+  ></bp-icon-button>
+</ComponentPreview>
+
+```html
+<bp-icon-button
+  icon="trash"
+  label="Delete"
+  variant="secondary"
+  disabled
+></bp-icon-button>
+```
+
+### Custom Icon
+
+When `icon` is empty, the default slot is used. Slotted content is sized to the button's icon size.
+
+<ComponentPreview>
+  <bp-icon-button label="Blueprint" variant="secondary">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+      <path d="M3 9h18M9 21V9"></path>
+    </svg>
+  </bp-icon-button>
+</ComponentPreview>
+
+```html
+<bp-icon-button label="Blueprint">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">…</svg>
+</bp-icon-button>
+```
+
+### With a Tooltip
+
+When the icon's meaning isn't obvious, wrap the button in [`bp-tooltip`](/components/tooltip) with the same words as the label, so sighted users see it too.
+
+<ComponentPreview>
+  <bp-tooltip content="Copy link">
+    <bp-icon-button icon="link" label="Copy link"></bp-icon-button>
+  </bp-tooltip>
+</ComponentPreview>
+
+```html
+<bp-tooltip content="Copy link">
+  <bp-icon-button icon="link" label="Copy link"></bp-icon-button>
+</bp-tooltip>
+```
+
+## When to Use
+
+- Use an icon button only for actions whose icon is widely understood (close, delete, edit, settings, more) or that repeat in a dense layout like a table row or toolbar.
+- When the meaning isn't obvious, use [`bp-button`](/components/button) with text, or add a tooltip.
+- Write the label as the action, not the icon: "Delete row", not "Trash can".
+
+## API Reference
+
+### Properties
+
+| Property   | Type                                                                                 | Default    | Description                                                      |
+| ---------- | ------------------------------------------------------------------------------------ | ---------- | ---------------------------------------------------------------- |
+| `icon`     | `IconName`                                                                           | `''`       | Name of a built-in icon. When empty, the default slot is used    |
+| `label`    | `string`                                                                             | `''`       | **Required.** Accessible name. Warns in the console when missing |
+| `variant`  | `'ghost' \| 'secondary' \| 'primary' \| 'success' \| 'error' \| 'warning' \| 'info'` | `'ghost'`  | Visual style                                                     |
+| `size`     | `'sm' \| 'md' \| 'lg'`                                                               | `'md'`     | Square of 32, 40 or 48px, with a 16, 20 or 24px icon             |
+| `shape`    | `'square' \| 'circle'`                                                               | `'square'` | Corner shape                                                     |
+| `disabled` | `boolean`                                                                            | `false`    | Disables the button. A disabled button never fires `bp-click`    |
+| `type`     | `'button' \| 'submit' \| 'reset'`                                                    | `'button'` | Native button type                                               |
+
+### Methods
+
+| Method    | Description                   |
+| --------- | ----------------------------- |
+| `focus()` | Moves focus to the button     |
+| `blur()`  | Removes focus from the button |
+
+### Events
+
+| Event      | Detail                          | Description                                        |
+| ---------- | ------------------------------- | -------------------------------------------------- |
+| `bp-click` | `{ originalEvent: MouseEvent }` | The button was activated. Not fired while disabled |
+
+### Slots
+
+| Slot      | Description                                                                                        |
+| --------- | -------------------------------------------------------------------------------------------------- |
+| (default) | A custom icon (`<svg>` or `<bp-icon>`), used when `icon` is empty. Sized to the button's icon size |
+
+### CSS Parts
+
+| Part     | Description       |
+| -------- | ----------------- |
+| `button` | The native button |
+| `icon`   | The icon          |
+
+## Accessibility
+
+- `label` is set as `aria-label` on the native button, and the icon is hidden from assistive technology, so screen readers announce only the label
+- The component logs a console warning once if `label` is empty
+- Sizes are 32px and up. Prefer `md` (40px) or larger for touch, or keep at least 8px between `sm` buttons
+- The ghost icon uses `--bp-color-text-muted`, which meets 3:1 against every background

@@ -1,0 +1,178 @@
+---
+title: Radio Group
+description: Group radios into a single choice with one value, a label and keyboard navigation
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+The `bp-radio-group` component groups [`bp-radio`](/components/radio) elements into a single choice with one value, one form field, a visible label, and the keyboard model of a native radio group. Use it whenever radios answer one question. Put `name`, `value`, `required` and `disabled` on the group, not on the radios.
+
+## Import
+
+```javascript
+import '@krollins/blueprint/radio-group';
+import '@krollins/blueprint/radio';
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview>
+  <bp-radio-group label="Delivery speed" name="delivery" value="standard">
+    <bp-radio value="standard">Standard (3-5 days)</bp-radio>
+    <bp-radio value="express">Express (1-2 days)</bp-radio>
+    <bp-radio value="overnight">Overnight</bp-radio>
+  </bp-radio-group>
+</ComponentPreview>
+
+```html
+<bp-radio-group label="Delivery speed" name="delivery" value="standard">
+  <bp-radio value="standard">Standard (3-5 days)</bp-radio>
+  <bp-radio value="express">Express (1-2 days)</bp-radio>
+  <bp-radio value="overnight">Overnight</bp-radio>
+</bp-radio-group>
+```
+
+### Horizontal
+
+<ComponentPreview>
+  <bp-radio-group label="Plan" name="plan-horizontal" orientation="horizontal">
+    <bp-radio value="free">Free</bp-radio>
+    <bp-radio value="team">Team</bp-radio>
+    <bp-radio value="business">Business</bp-radio>
+  </bp-radio-group>
+</ComponentPreview>
+
+```html
+<bp-radio-group label="Plan" name="plan" orientation="horizontal">
+  <bp-radio value="free">Free</bp-radio>
+  <bp-radio value="team">Team</bp-radio>
+  <bp-radio value="business">Business</bp-radio>
+</bp-radio-group>
+```
+
+### Help and error text
+
+Use `helperText` for a hint under the group. Setting `errorMessage` marks the group invalid: the message replaces the hint, is announced to screen readers, and the group gets `aria-invalid="true"`.
+
+<ComponentPreview>
+  <div class="component-preview-col">
+    <bp-radio-group
+      label="Contact method"
+      name="contact"
+      helperText="We only use this for order updates"
+    >
+      <bp-radio value="email">Email</bp-radio>
+      <bp-radio value="phone">Phone</bp-radio>
+    </bp-radio-group>
+    <bp-radio-group
+      label="Plan"
+      name="plan-error"
+      required
+      errorMessage="Choose a plan to continue."
+    >
+      <bp-radio value="free">Free</bp-radio>
+      <bp-radio value="team">Team</bp-radio>
+    </bp-radio-group>
+  </div>
+</ComponentPreview>
+
+```html
+<bp-radio-group
+  label="Contact method"
+  name="contact"
+  helperText="We only use this for order updates"
+>
+  <bp-radio value="email">Email</bp-radio>
+  <bp-radio value="phone">Phone</bp-radio>
+</bp-radio-group>
+<bp-radio-group
+  label="Plan"
+  name="plan"
+  required
+  errorMessage="Choose a plan to continue."
+>
+  <bp-radio value="free">Free</bp-radio>
+  <bp-radio value="team">Team</bp-radio>
+</bp-radio-group>
+```
+
+### Disabled
+
+`disabled` disables every radio. Radios that were already disabled stay disabled when the group is re-enabled.
+
+<ComponentPreview>
+  <bp-radio-group label="Size" name="size-disabled" value="md" disabled>
+    <bp-radio value="sm">Small</bp-radio>
+    <bp-radio value="md">Medium</bp-radio>
+    <bp-radio value="lg">Large</bp-radio>
+  </bp-radio-group>
+</ComponentPreview>
+
+```html
+<bp-radio-group label="Size" name="size" value="md" disabled>
+  <bp-radio value="sm">Small</bp-radio>
+  <bp-radio value="md">Medium</bp-radio>
+  <bp-radio value="lg">Large</bp-radio>
+</bp-radio-group>
+```
+
+### Listening for Changes
+
+The group fires one `bp-change` event per selection. The radios' own `bp-change` events stop at the group.
+
+```javascript
+document.querySelector('bp-radio-group').addEventListener('bp-change', (e) => {
+  console.log('Selected:', e.detail.value);
+});
+```
+
+## API Reference
+
+### Properties
+
+| Property       | Type                         | Default      | Description                                                                                                                                        |
+| -------------- | ---------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `label`        | `string`                     | `''`         | Visible group label                                                                                                                                |
+| `helperText`   | `string`                     | `''`         | Helper text below the group, linked with `aria-describedby`                                                                                        |
+| `errorMessage` | `string`                     | `''`         | Error text. When set, the group is invalid: the message replaces the helper text, is announced (`role="alert"`), and the group gets `aria-invalid` |
+| `description`  | `string`                     | `''`         | **Deprecated.** Use `helperText`. Still shown as helper text                                                                                       |
+| `name`         | `string`                     | `''`         | Name submitted with the form                                                                                                                       |
+| `value`        | `string`                     | `''`         | Value of the selected radio (`''` when none)                                                                                                       |
+| `required`     | `boolean`                    | `false`      | Requires a selection before the form can submit                                                                                                    |
+| `disabled`     | `boolean`                    | `false`      | Disables every radio; ones already disabled stay disabled when re-enabled                                                                          |
+| `orientation`  | `'vertical' \| 'horizontal'` | `'vertical'` | Stack the radios, or lay them out in a wrapping row                                                                                                |
+
+### Events
+
+| Event       | Detail              | Description                      |
+| ----------- | ------------------- | -------------------------------- |
+| `bp-change` | `{ value: string }` | Fired when the selection changes |
+
+### Slots
+
+| Slot      | Description            |
+| --------- | ---------------------- |
+| (default) | The `bp-radio` options |
+
+### CSS Parts
+
+| Part            | Description                          |
+| --------------- | ------------------------------------ |
+| `group`         | The element with `role="radiogroup"` |
+| `label`         | The group label                      |
+| `helper-text`   | The helper text                      |
+| `options`       | The wrapper around the radios        |
+| `error-message` | The error message                    |
+
+### Form Integration
+
+The group takes part in native forms: it submits the selected value under `name`, blocks submission when `required` and empty, and resets with the form. It clears `name` on its radios so the value is submitted once, by the group.
+
+## Accessibility
+
+- Follows the WAI-ARIA radio group pattern: `role="radiogroup"` labelled by `label`, with one tab stop
+- Tab enters at the selected radio (or the first enabled one); arrow keys move and select, wrapping and skipping disabled radios; Space selects
+- `helperText` and `errorMessage` are linked with `aria-describedby`; an error sets `aria-invalid="true"` and is announced with `role="alert"`
+- `required` sets `aria-required="true"`; the asterisk itself is hidden from assistive technology
