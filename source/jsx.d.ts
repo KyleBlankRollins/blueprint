@@ -30,6 +30,7 @@ import type {
   ComboboxSize,
   ComboboxVariant,
 } from './components/combobox/combobox.js';
+import type { ContainerSize } from './components/container/container.js';
 import type { DatePickerSize } from './components/date-picker/date-picker.js';
 import type {
   DividerColor,
@@ -42,6 +43,7 @@ import type {
   DrawerPlacement,
   DrawerSize,
 } from './components/drawer/drawer.js';
+import type { GridAlign } from './components/grid/grid.js';
 import type {
   HeadingLevel,
   HeadingSize,
@@ -92,6 +94,12 @@ import type {
   SpinnerSize,
   SpinnerVariant,
 } from './components/spinner/spinner.js';
+import type {
+  LayoutGap,
+  StackAlign,
+  StackDirection,
+  StackJustify,
+} from './components/stack/stack.js';
 import type {
   Step,
   StepperOrientation,
@@ -272,6 +280,11 @@ interface BpComboboxProps extends BaseHTMLAttributes {
   allowCustomValue?: BooleanAttr;
 }
 
+interface BpContainerProps extends BaseHTMLAttributes {
+  size?: StringAttr<ContainerSize>;
+  gutter?: string;
+}
+
 interface BpDatePickerProps extends BaseHTMLAttributes {
   value?: string;
   name?: string;
@@ -340,6 +353,13 @@ interface BpFileUploadProps extends BaseHTMLAttributes {
   message?: string;
   size?: StringAttr<'sm' | 'md' | 'lg'>;
   showPreviews?: BooleanAttr;
+}
+
+interface BpGridProps extends BaseHTMLAttributes {
+  columns?: NumberAttr;
+  minColumnWidth?: string;
+  gap?: string;
+  align?: StringAttr<GridAlign>;
 }
 
 interface BpHeadingProps extends BaseHTMLAttributes {
@@ -562,6 +582,14 @@ interface BpSpinnerProps extends BaseHTMLAttributes {
   label?: string;
 }
 
+interface BpStackProps extends BaseHTMLAttributes {
+  direction?: StringAttr<StackDirection>;
+  gap?: StringAttr<LayoutGap>;
+  align?: StringAttr<StackAlign>;
+  justify?: StringAttr<StackJustify>;
+  wrap?: BooleanAttr;
+}
+
 interface BpStepperProps extends BaseHTMLAttributes {
   steps?: Step[];
   currentStep?: NumberAttr;
@@ -701,11 +729,13 @@ export interface BlueprintElements {
   'bp-code-block': BpCodeBlockProps;
   'bp-color-picker': BpColorPickerProps;
   'bp-combobox': BpComboboxProps;
+  'bp-container': BpContainerProps;
   'bp-date-picker': BpDatePickerProps;
   'bp-divider': BpDividerProps;
   'bp-drawer': BpDrawerProps;
   'bp-dropdown': BpDropdownProps;
   'bp-file-upload': BpFileUploadProps;
+  'bp-grid': BpGridProps;
   'bp-heading': BpHeadingProps;
   'bp-icon': BpIconProps;
   'bp-icon-button': BpIconButtonProps;
@@ -727,6 +757,7 @@ export interface BlueprintElements {
   'bp-skeleton': BpSkeletonProps;
   'bp-slider': BpSliderProps;
   'bp-spinner': BpSpinnerProps;
+  'bp-stack': BpStackProps;
   'bp-stepper': BpStepperProps;
   'bp-switch': BpSwitchProps;
   'bp-tab-panel': BpTabPanelProps;
