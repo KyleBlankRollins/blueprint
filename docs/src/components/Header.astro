@@ -9,6 +9,14 @@
   <div class="header-content">
     <div class="header-left">
       <a href="/" class="logo-link">
+        <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
+          <path
+            class="logo-sheet"
+            d="M10 0h24l14 14v24a10 10 0 0 1-10 10H10A10 10 0 0 1 0 38V10A10 10 0 0 1 10 0z"
+          ></path>
+          <path class="logo-fold" d="M34 0v10a4 4 0 0 0 4 4h10z"></path>
+          <path class="logo-b" d="M16 10v28h10a8 8 0 0 0 0-16H16"></path>
+        </svg>
         <bp-heading level="1" size="lg" weight="bold">Blueprint</bp-heading>
       </a>
     </div>
@@ -99,7 +107,31 @@
   .logo-link {
     display: flex;
     align-items: center;
+    gap: var(--bp-spacing-xs);
     text-decoration: none;
+  }
+
+  /* Drawn inline so the mark follows the active theme */
+  .logo-mark {
+    width: var(--bp-spacing-8);
+    height: var(--bp-spacing-8);
+    flex-shrink: 0;
+  }
+
+  .logo-sheet {
+    fill: var(--bp-color-primary);
+  }
+
+  .logo-fold {
+    fill: color-mix(in oklch, var(--bp-color-primary) 70%, white);
+  }
+
+  .logo-b {
+    fill: none;
+    stroke: var(--bp-color-text-inverse);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
   .header-nav {

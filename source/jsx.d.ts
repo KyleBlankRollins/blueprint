@@ -49,6 +49,11 @@ import type {
   HeadingSize,
   HeadingWeight,
 } from './components/heading/heading.js';
+import type {
+  IconButtonShape,
+  IconButtonSize,
+  IconButtonVariant,
+} from './components/icon-button/icon-button.js';
 import type { IconColor, IconSize } from './components/icon/icon.js';
 import type { IconName } from './components/icon/icons/icon-name.generated.js';
 import type {
@@ -368,6 +373,16 @@ interface BpIconProps extends BaseHTMLAttributes {
   size?: StringAttr<IconSize>;
   color?: StringAttr<IconColor>;
   ariaLabel?: string;
+}
+
+interface BpIconButtonProps extends BaseHTMLAttributes {
+  icon?: StringAttr<IconName | ''>;
+  label?: string;
+  variant?: StringAttr<IconButtonVariant>;
+  size?: StringAttr<IconButtonSize>;
+  shape?: StringAttr<IconButtonShape>;
+  disabled?: BooleanAttr;
+  type?: StringAttr<'button' | 'submit' | 'reset'>;
 }
 
 interface BpInputProps extends BaseHTMLAttributes {
@@ -714,6 +729,7 @@ export interface BlueprintElements {
   'bp-grid': BpGridProps;
   'bp-heading': BpHeadingProps;
   'bp-icon': BpIconProps;
+  'bp-icon-button': BpIconButtonProps;
   'bp-input': BpInputProps;
   'bp-link': BpLinkProps;
   'bp-menu': BpMenuProps;
