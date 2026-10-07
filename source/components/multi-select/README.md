@@ -18,7 +18,7 @@ A dropdown component for selecting multiple options with tag-based display of se
 
 ```html
 <!-- Basic multi-select -->
-<bp-multi-select placeholder="Select items">
+<bp-multi-select label="Items" placeholder="Select items">
   <option value="1">Option 1</option>
   <option value="2">Option 2</option>
   <option value="3">Option 3</option>
@@ -76,6 +76,7 @@ A dropdown component for selecting multiple options with tag-based display of se
 | --------------- | -------------------- | ------------------ | --------------------------------------------------------------------------------- |
 | `value`         | `string[]`           | `[]`               | The current selected values as an array                                           |
 | `name`          | `string`             | `''`               | Name attribute for form submission                                                |
+| `label`         | `string`             | `''`               | Visible label above the control, referenced by `aria-labelledby`                  |
 | `placeholder`   | `string`             | `'Select options'` | Placeholder text when no values are selected                                      |
 | `disabled`      | `boolean`            | `false`            | Whether the multi-select is disabled                                              |
 | `required`      | `boolean`            | `false`            | Whether the multi-select is required                                              |
@@ -137,7 +138,7 @@ A dropdown component for selecting multiple options with tag-based display of se
 
 ## Accessibility
 
-- Uses `role="combobox"` on the control
+- Uses `role="combobox"` on the control, named by `label` through `aria-labelledby` (clicking the label focuses the control)
 - Uses `role="listbox"` with `aria-multiselectable="true"` on options container
 - Manages `aria-expanded` state for dropdown visibility
 - Sets `aria-disabled` when disabled

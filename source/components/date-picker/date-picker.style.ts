@@ -21,7 +21,7 @@ export const datePickerStyles = css`
     font-size: var(--bp-font-size-base);
     color: var(--bp-color-text);
     background-color: var(--bp-color-surface);
-    border: var(--bp-border-width) solid var(--bp-color-border);
+    border: var(--bp-border-width) solid var(--bp-color-input-border);
     border-radius: var(--bp-border-radius-md);
     cursor: pointer;
     transition:

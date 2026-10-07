@@ -63,7 +63,7 @@ export const colorPickerStyles = css`
     gap: var(--bp-spacing-sm);
     padding: var(--bp-spacing-sm) var(--bp-spacing-md);
     background-color: var(--bp-color-surface);
-    border: var(--bp-border-width) solid var(--bp-color-border);
+    border: var(--bp-border-width) solid var(--bp-color-input-border);
     border-radius: var(--bp-border-radius-md);
     cursor: pointer;
     font-family: inherit;
@@ -425,7 +425,7 @@ export const colorPickerStyles = css`
     font-family: var(--bp-font-family-mono);
     font-size: var(--bp-font-size-sm);
     background-color: var(--bp-color-surface);
-    border: var(--bp-border-width) solid var(--bp-color-border);
+    border: var(--bp-border-width) solid var(--bp-color-input-border);
     border-radius: var(--bp-border-radius-sm);
     color: var(--bp-color-text);
     text-align: center;

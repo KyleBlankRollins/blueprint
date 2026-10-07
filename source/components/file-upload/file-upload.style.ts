@@ -47,7 +47,7 @@ export const fileUploadStyles = css`
     justify-content: center;
     gap: var(--bp-spacing-sm);
     padding: var(--bp-spacing-xl);
-    border: var(--bp-focus-width) dashed var(--bp-color-border);
+    border: var(--bp-focus-width) dashed var(--bp-color-input-border);
     border-radius: var(--bp-border-radius-lg);
     background-color: var(--bp-color-surface);
     cursor: pointer;

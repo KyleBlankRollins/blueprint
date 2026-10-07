@@ -23,6 +23,9 @@ export class BpCombobox extends LitElement {
   /** Name attribute for form submission */
   @property({ type: String }) declare name: string;
 
+  /** Visible label text displayed above the combobox */
+  @property({ type: String, reflect: true }) declare label: string;
+
   /** Placeholder text when no value is selected */
   @property({ type: String }) declare placeholder: string;
 
@@ -90,6 +93,7 @@ export class BpCombobox extends LitElement {
     super();
     this.value = '';
     this.name = '';
+    this.label = '';
     this.placeholder = 'Search or select...';
     this.disabled = false;
     this.required = false;
@@ -396,8 +400,29 @@ export class BpCombobox extends LitElement {
           [`combobox--${this.variant}`]: true,
         })}
       >
+        ${
+          this.label
+            ? html`
+                <label
+                  class="combobox__label"
+                  for="combobox-input"
+                  part="label"
+                >
+                  ${this.label}
+                  ${
+                    this.required
+                      ? html`<span class="combobox__required" aria-hidden="true"
+                          >*</span
+                        >`
+                      : nothing
+                  }
+                </label>
+              `
+            : nothing
+        }
         <div class="combobox__control" part="control">
           <input
+            id="combobox-input"
             type="text"
             class="combobox__input"
             .value=${this.searchText}

@@ -31,7 +31,7 @@ export const textareaStyles = css`
     line-height: var(--bp-line-height-normal);
     color: var(--bp-color-text);
     background-color: var(--bp-color-background);
-    border: var(--bp-border-width) solid var(--bp-color-border);
+    border: var(--bp-border-width) solid var(--bp-color-input-border);
     border-radius: var(--bp-border-radius-md);
     padding: var(--bp-spacing-sm) var(--bp-spacing-md);
     box-shadow: inset 0 1px 2px oklch(0 0 0 / 0.05);
@@ -50,7 +50,7 @@ export const textareaStyles = css`
 
   /* Variants */
   .textarea--default {
-    border-color: var(--bp-color-border);
+    border-color: var(--bp-color-input-border);
   }
 
   .textarea--success {

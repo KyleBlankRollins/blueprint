@@ -202,8 +202,8 @@ menu.addEventListener('bp-menu-select', (e) => {
 
 ### Typography
 
-- `--bp-font-sans` - Font family
-- `--bp-font-mono` - Shortcut font family
+- `--bp-font-family` - Font family
+- `--bp-font-family-mono` - Shortcut font family
 - `--bp-font-size-sm` - Small size, shortcut text
 - `--bp-font-size-base` - Medium size
 - `--bp-font-size-lg` - Large size, arrow icon

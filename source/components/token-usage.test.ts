@@ -41,4 +41,12 @@ describe('component token usage', () => {
     const missing = [...new Set(used)].filter((t) => !declared.has(t));
     expect(missing).toEqual([]);
   });
+
+  it.each(styleFiles)('%s sets font-family from the theme stacks', (file) => {
+    // --bp-font-sans / --bp-font-mono are fixed system stacks from utilities.css;
+    // components must use the themed --bp-font-family* tokens (Figtree in
+    // blueprint-core) so a theme plugin can change the typeface.
+    const css = readFileSync(join(here, file), 'utf8');
+    expect(css).not.toMatch(/var\(\s*--bp-font-(sans|mono)\b/);
+  });
 });

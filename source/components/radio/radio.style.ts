@@ -32,7 +32,7 @@ export const radioStyles = css`
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    border: var(--bp-border-width) solid var(--bp-color-border-strong);
+    border: var(--bp-border-width) solid var(--bp-color-input-border);
     border-radius: 50%;
     background-color: var(--bp-color-surface);
     transition: all var(--bp-transition-fast);

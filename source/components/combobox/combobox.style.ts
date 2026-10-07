@@ -7,6 +7,21 @@ export const comboboxStyles = css`
     font-family: var(--bp-font-family);
   }
 
+  .combobox__label {
+    display: block;
+    font-family: var(--bp-font-family);
+    font-size: var(--bp-font-size-sm);
+    font-weight: var(--bp-font-weight-medium);
+    color: var(--bp-color-text);
+    line-height: var(--bp-line-height-normal);
+    margin-bottom: var(--bp-spacing-xs);
+  }
+
+  .combobox__required {
+    color: var(--bp-color-error);
+    margin-left: var(--bp-spacing-xs);
+  }
+
   .combobox {
     position: relative;
     width: 100%;
@@ -17,7 +32,7 @@ export const comboboxStyles = css`
     align-items: center;
     position: relative;
     background-color: var(--bp-color-surface);
-    border: var(--bp-border-width) solid var(--bp-color-border);
+    border: var(--bp-border-width) solid var(--bp-color-input-border);
     border-radius: var(--bp-border-radius-md);
     transition: border-color var(--bp-transition-fast);
   }
@@ -215,7 +230,7 @@ export const comboboxStyles = css`
 
   /* Variants */
   .combobox--default .combobox__control {
-    border-color: var(--bp-color-border);
+    border-color: var(--bp-color-input-border);
   }
 
   .combobox--success .combobox__control {

@@ -38,7 +38,7 @@ export const numberInputStyles = css`
     line-height: var(--bp-line-height-normal);
     color: var(--bp-color-text);
     background-color: var(--bp-color-background);
-    border: var(--bp-border-width) solid var(--bp-color-border);
+    border: var(--bp-border-width) solid var(--bp-color-input-border);
     padding: var(--bp-spacing-sm) var(--bp-spacing-md);
     text-align: center;
     font-variant-numeric: tabular-nums;
@@ -74,7 +74,7 @@ export const numberInputStyles = css`
     align-items: center;
     justify-content: center;
     background-color: var(--bp-color-surface);
-    border: var(--bp-border-width) solid var(--bp-color-border);
+    border: var(--bp-border-width) solid var(--bp-color-input-border);
     color: var(--bp-color-text);
     cursor: pointer;
     transition:
@@ -171,7 +171,7 @@ export const numberInputStyles = css`
 
   /* Variant styles */
   .number-input__input--default {
-    border-color: var(--bp-color-border);
+    border-color: var(--bp-color-input-border);
   }
 
   .number-input__input--success {

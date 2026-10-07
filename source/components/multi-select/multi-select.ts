@@ -1,6 +1,7 @@
 import { LitElement, html, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { multiSelectStyles } from './multi-select.style.js';
 import { memoizeOne } from '../../utilities/memoize.js';
@@ -22,6 +23,9 @@ export class BpMultiSelect extends LitElement {
 
   /** Name attribute for form submission */
   @property({ type: String }) declare name: string;
+
+  /** Visible label text displayed above the multi-select */
+  @property({ type: String, reflect: true }) declare label: string;
 
   /** Placeholder text when no values are selected */
   @property({ type: String }) declare placeholder: string;
@@ -75,6 +79,7 @@ export class BpMultiSelect extends LitElement {
     super();
     this.value = [];
     this.name = '';
+    this.label = '';
     this.placeholder = 'Select options';
     this.disabled = false;
     this.required = false;
@@ -325,6 +330,14 @@ export class BpMultiSelect extends LitElement {
     `;
   }
 
+  /** Clicking the label focuses the control, like a native <label>. */
+  private focusControl() {
+    if (this.disabled) return;
+    this.shadowRoot
+      ?.querySelector<HTMLElement>('.multi-select__control')
+      ?.focus();
+  }
+
   render() {
     const hasSelection = this.value.length > 0;
 
@@ -338,8 +351,33 @@ export class BpMultiSelect extends LitElement {
           [`multi-select--${this.variant}`]: true,
         })}
       >
+        ${
+          this.label
+            ? html`
+                <label
+                  class="multi-select__label"
+                  id="multi-select-label"
+                  part="label"
+                  @click=${this.focusControl}
+                >
+                  ${this.label}
+                  ${
+                    this.required
+                      ? html`<span
+                          class="multi-select__required"
+                          aria-hidden="true"
+                          >*</span
+                        >`
+                      : nothing
+                  }
+                </label>
+              `
+            : nothing
+        }
         <div
           class="multi-select__control"
+          aria-labelledby=${ifDefined(this.label ? 'multi-select-label' : undefined)}
+          aria-required=${this.required ? 'true' : 'false'}
           @click=${this.handleToggle}
           @keydown=${this.handleKeyDown}
           tabindex=${this.disabled ? '-1' : '0'}

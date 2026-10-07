@@ -131,7 +131,7 @@ This component does not use slots.
 
 ### Typography
 
-- `--bp-font-sans` - Font family
+- `--bp-font-family` - Font family
 - `--bp-font-size-xs` - Small info text
 - `--bp-font-size-sm` - Small buttons and info text
 - `--bp-font-size-base` - Medium buttons

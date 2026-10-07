@@ -599,4 +599,51 @@ describe('bp-multi-select', () => {
     const tags = element.shadowRoot?.querySelectorAll('.multi-select__tag');
     expect(tags?.length).toBe(0);
   });
+
+  // Label
+  describe('label', () => {
+    it('renders no label and no aria-labelledby by default', async () => {
+      await element.updateComplete;
+      expect(element.label).toBe('');
+      expect(element.shadowRoot?.querySelector('label')).toBeNull();
+      const control = element.shadowRoot?.querySelector(
+        '.multi-select__control'
+      );
+      expect(control?.hasAttribute('aria-labelledby')).toBe(false);
+    });
+
+    it('labels the combobox control through aria-labelledby', async () => {
+      element.label = 'Toppings';
+      await element.updateComplete;
+      const label = element.shadowRoot?.querySelector('label');
+      const control = element.shadowRoot?.querySelector(
+        '.multi-select__control'
+      );
+      expect(label?.textContent?.trim()).toBe('Toppings');
+      expect(label?.id).toBeTruthy();
+      expect(control?.getAttribute('aria-labelledby')).toBe(label?.id);
+    });
+
+    it('focuses the control when the label is clicked', async () => {
+      element.label = 'Toppings';
+      await element.updateComplete;
+      const label = element.shadowRoot?.querySelector('label') as HTMLElement;
+      label.click();
+      expect(element.shadowRoot?.activeElement).toBe(
+        element.shadowRoot?.querySelector('.multi-select__control')
+      );
+    });
+
+    it('sets aria-required and a decorative asterisk when required', async () => {
+      element.label = 'Toppings';
+      element.required = true;
+      await element.updateComplete;
+      const control = element.shadowRoot?.querySelector(
+        '.multi-select__control'
+      );
+      const mark = element.shadowRoot?.querySelector('.multi-select__required');
+      expect(control?.getAttribute('aria-required')).toBe('true');
+      expect(mark?.getAttribute('aria-hidden')).toBe('true');
+    });
+  });
 });

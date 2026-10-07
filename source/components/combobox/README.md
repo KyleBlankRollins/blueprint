@@ -18,7 +18,7 @@ A searchable dropdown with autocomplete functionality, allowing users to filter 
 ### Basic Combobox
 
 ```html
-<bp-combobox placeholder="Select a fruit">
+<bp-combobox label="Fruit" placeholder="Select a fruit">
   <option value="apple">Apple</option>
   <option value="banana">Banana</option>
   <option value="orange">Orange</option>
@@ -86,6 +86,7 @@ combobox.addEventListener('bp-change', (e) => {
 | ------------------ | ---------------------- | ----------------------- | --------------------------------------------------------------------------------- |
 | `value`            | `string`               | `''`                    | The current value of the combobox                                                 |
 | `name`             | `string`               | `''`                    | Name attribute for form submission                                                |
+| `label`            | `string`               | `''`                    | Visible label above the combobox, associated with its input                       |
 | `placeholder`      | `string`               | `'Search or select...'` | Placeholder text when no value is selected                                        |
 | `disabled`         | `boolean`              | `false`                 | Whether the combobox is disabled                                                  |
 | `required`         | `boolean`              | `false`                 | Whether the combobox is required                                                  |
@@ -168,6 +169,7 @@ combobox.addEventListener('bp-change', (e) => {
 ## Accessibility
 
 - Uses `role="combobox"` and `aria-haspopup="listbox"` for proper semantics
+- `label` renders a native `<label>` tied to the input; without it, give the element an accessible name another way
 - `aria-expanded` reflects dropdown state
 - `aria-autocomplete="list"` indicates filtering behavior
 - `aria-disabled` when disabled

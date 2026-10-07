@@ -555,4 +555,38 @@ describe('bp-combobox', () => {
     const clearBtn = element.shadowRoot?.querySelector('.combobox__clear');
     expect(clearBtn?.getAttribute('aria-label')).toBe('Clear selection');
   });
+
+  // Label
+  describe('label', () => {
+    it('renders no label by default', async () => {
+      await element.updateComplete;
+      expect(element.label).toBe('');
+      expect(element.shadowRoot?.querySelector('label')).toBeNull();
+    });
+
+    it('renders a label associated with the input', async () => {
+      element.label = 'Fruit';
+      await element.updateComplete;
+      const label = element.shadowRoot?.querySelector('label');
+      const input = element.shadowRoot?.querySelector('input[role="combobox"]');
+      expect(label?.textContent?.trim()).toBe('Fruit');
+      expect(input?.id).toBeTruthy();
+      expect(label?.getAttribute('for')).toBe(input?.id);
+    });
+
+    it('marks required labels with a decorative asterisk', async () => {
+      element.label = 'Fruit';
+      element.required = true;
+      await element.updateComplete;
+      const mark = element.shadowRoot?.querySelector('.combobox__required');
+      expect(mark?.textContent?.trim()).toBe('*');
+      expect(mark?.getAttribute('aria-hidden')).toBe('true');
+    });
+
+    it('reflects the label attribute', async () => {
+      element.setAttribute('label', 'Country');
+      await element.updateComplete;
+      expect(element.label).toBe('Country');
+    });
+  });
 });

@@ -62,9 +62,11 @@ export class BlueprintCoreTheme extends ThemeBase {
       {
         type: 'font',
         path: 'fonts/Figtree-Italic-VariableFont_wght.ttf',
-        family: 'Figtree-Italic',
+        // Same family, italic style: `font-style: italic` on Figtree text
+        // then uses the real italic instead of a synthesized slant.
+        family: 'Figtree',
         weight: '300 900', // Variable font weight range
-        style: 'normal',
+        style: 'italic',
         display: 'swap',
       },
       {
@@ -127,11 +129,13 @@ export class BlueprintCoreTheme extends ThemeBase {
       // Input-specific tokens
       placeholder: 'oklch(0.48 0.02 240.0)', // Same as textMuted
       inputBg: 'oklch(0.89 0.01 91.4)', // Same as background
-      inputBorder: 'oklch(0.75 0.02 91.4)', // Same as border
+      // Field and checkbox/radio boundaries: >= 3:1 on background, surface
+      // and surfaceElevated (WCAG 1.4.11). `border` stays decorative.
+      inputBorder: 'oklch(0.58 0.02 91.4)',
 
       // UI Elements
       border: 'oklch(0.75 0.02 91.4)',
-      borderStrong: 'oklch(0.65 0.02 91.4)',
+      borderStrong: 'oklch(0.54 0.02 91.4)', // Darker than inputBorder (hover)
       borderWidth: '1px',
       focus: 'oklch(0.40 0.08 233.4)',
       backdrop: 'oklch(0 0 0 / 0.6)',
@@ -213,11 +217,12 @@ export class BlueprintCoreTheme extends ThemeBase {
       // Input-specific tokens
       placeholder: 'oklch(0.75 0.02 91.4)', // Same as textMuted
       inputBg: 'oklch(0.15 0.01 240.0)', // Same as background
-      inputBorder: 'oklch(0.35 0.02 240.0)', // Same as border
+      // >= 3:1 on background, surface and surfaceElevated (WCAG 1.4.11)
+      inputBorder: 'oklch(0.62 0.02 240.0)',
 
       // UI Elements
       border: 'oklch(0.35 0.02 240.0)',
-      borderStrong: 'oklch(0.45 0.02 240.0)',
+      borderStrong: 'oklch(0.66 0.02 240.0)', // Stronger than inputBorder (hover)
       borderWidth: '1px',
       focus: 'oklch(0.55 0.15 233.4)', // Brighter for visibility
       backdrop: 'oklch(0 0 0 / 0.6)',

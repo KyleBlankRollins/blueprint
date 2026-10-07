@@ -10,7 +10,7 @@ export const paginationStyles = css`
     display: flex;
     align-items: center;
     gap: var(--bp-spacing-sm);
-    font-family: var(--bp-font-sans);
+    font-family: var(--bp-font-family);
   }
 
   .pagination__button {
@@ -24,7 +24,7 @@ export const paginationStyles = css`
     border-radius: var(--bp-border-radius-md);
     background-color: var(--bp-color-background);
     color: var(--bp-color-text);
-    font-family: var(--bp-font-sans);
+    font-family: var(--bp-font-family);
     font-size: var(--bp-font-size-base);
     font-weight: var(--bp-font-weight-medium);
     line-height: var(--bp-line-height-tight);

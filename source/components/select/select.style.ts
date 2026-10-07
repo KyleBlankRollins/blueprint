@@ -41,7 +41,7 @@ export const selectStyles = css`
     width: 100%;
     padding: var(--bp-spacing-sm) var(--bp-spacing-md);
     background-color: var(--bp-color-background);
-    border: var(--bp-border-width) solid var(--bp-color-border);
+    border: var(--bp-border-width) solid var(--bp-color-input-border);
     border-radius: var(--bp-border-radius-md);
     font-size: var(--bp-font-size-base);
     line-height: var(--bp-line-height-normal);

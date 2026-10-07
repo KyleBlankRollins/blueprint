@@ -15,7 +15,7 @@ export const notificationStyles = css`
     border: var(--bp-border-width) solid var(--bp-color-border);
     border-radius: var(--bp-border-radius-lg);
     box-shadow: var(--bp-shadow-lg);
-    font-family: var(--bp-font-sans);
+    font-family: var(--bp-font-family);
     font-size: var(--bp-font-size-sm);
     line-height: var(--bp-line-height-normal);
     color: var(--bp-color-text);

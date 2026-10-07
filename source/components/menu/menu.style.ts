@@ -16,7 +16,7 @@ export const menuStyles = css`
     border: var(--bp-border-width) solid var(--bp-color-border);
     border-radius: var(--bp-border-radius-md);
     box-shadow: var(--bp-shadow-lg);
-    font-family: var(--bp-font-sans);
+    font-family: var(--bp-font-family);
     list-style: none;
     outline: none;
   }
@@ -42,7 +42,7 @@ export const menuStyles = css`
     border-radius: var(--bp-border-radius-sm);
     background-color: transparent;
     color: var(--bp-color-text);
-    font-family: var(--bp-font-sans);
+    font-family: var(--bp-font-family);
     font-size: var(--bp-font-size-base);
     font-weight: var(--bp-font-weight-normal);
     line-height: var(--bp-line-height-normal);
@@ -139,7 +139,7 @@ export const menuStyles = css`
   .menu-item__shortcut {
     color: var(--bp-color-text-muted);
     font-size: var(--bp-font-size-sm);
-    font-family: var(--bp-font-mono);
+    font-family: var(--bp-font-family-mono);
     padding: 2px var(--bp-spacing-xs);
     background-color: var(--bp-color-surface);
     border-radius: var(--bp-border-radius-sm);

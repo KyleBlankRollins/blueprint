@@ -38,7 +38,7 @@ export const timePickerStyles = css`
     width: 100%;
     padding: var(--bp-spacing-sm) var(--bp-spacing-md);
     padding-right: var(--bp-spacing-2xl);
-    border: var(--bp-border-width) solid var(--bp-color-border);
+    border: var(--bp-border-width) solid var(--bp-color-input-border);
     border-radius: var(--bp-border-radius-md);
     font-size: var(--bp-font-size-base);
     font-family: var(--bp-font-family);

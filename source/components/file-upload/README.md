@@ -124,7 +124,7 @@ A file upload component with drag-and-drop support, file type validation, size l
 ### Universal Tokens (Infrastructure)
 
 - `--bp-spacing-*` - Padding and margins
-- `--bp-font-sans` - Font family
+- `--bp-font-family` - Font family
 - `--bp-font-size-*` - Text sizes
 - `--bp-font-weight-medium` - Font weight
 - `--bp-line-height-normal` - Line spacing

@@ -150,10 +150,16 @@ export function validateThemeContrast(
     );
 
     // UI component contrast checks
-    // `border` / `borderStrong` are not checked: they draw decorative
-    // dividers and container edges, which WCAG 1.4.11 does not require to
-    // meet 3:1.
+    // `border` is not checked: it draws decorative dividers and container
+    // edges, which WCAG 1.4.11 does not require to meet 3:1.
     const uiPairs = [
+      // Form-control boundaries identify the control, so they must meet 3:1
+      // on every ground a field sits on (WCAG 1.4.11).
+      ['inputBorder', 'inputBg', contrast.ui],
+      ['inputBorder', 'background', contrast.ui],
+      ['inputBorder', 'surface', contrast.ui],
+      ['inputBorder', 'surfaceElevated', contrast.ui],
+      ['borderStrong', 'background', contrast.ui],
       ['primary', 'background', contrast.ui],
       ['success', 'background', contrast.ui],
       ['error', 'background', contrast.ui],

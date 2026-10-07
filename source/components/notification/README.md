@@ -145,7 +145,7 @@ notification.hide();
 - `--bp-color-warning` - Warning variant accent color
 - `--bp-color-error` - Error variant accent color
 - `--bp-shadow-lg` - Notification shadow
-- `--bp-font-sans` - Typography
+- `--bp-font-family` - Typography
 
 ### Universal Tokens (Infrastructure)
 

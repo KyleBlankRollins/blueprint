@@ -68,6 +68,20 @@ describe('generated themes', () => {
     }
   });
 
+  it('registers the Figtree italic as an italic style of Figtree', () => {
+    const css = readFileSync(
+      join(generatedDir, 'blueprint-core', 'fonts.css'),
+      'utf8'
+    );
+    const faces = [...css.matchAll(/@font-face\s*\{([^}]*)\}/g)].map(
+      (m) => m[1]
+    );
+    const figtree = faces.filter((f) => /font-family:\s*'Figtree'/.test(f));
+    expect(figtree.some((f) => /font-style:\s*normal/.test(f))).toBe(true);
+    expect(figtree.some((f) => /font-style:\s*italic/.test(f))).toBe(true);
+    expect(css).not.toContain("Figtree-Italic'");
+  });
+
   it('blueprint-core meets the WCAG AA pairs checked by validateThemeContrast', () => {
     const theme = ThemeBuilder.withDefaults().build();
     expect(theme.accessibility?.enforceWCAG).toBe(true);

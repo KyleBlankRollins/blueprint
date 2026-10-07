@@ -7,6 +7,21 @@ export const multiSelectStyles = css`
     font-family: var(--bp-font-family);
   }
 
+  .multi-select__label {
+    display: block;
+    font-family: var(--bp-font-family);
+    font-size: var(--bp-font-size-sm);
+    font-weight: var(--bp-font-weight-medium);
+    color: var(--bp-color-text);
+    line-height: var(--bp-line-height-normal);
+    margin-bottom: var(--bp-spacing-xs);
+  }
+
+  .multi-select__required {
+    color: var(--bp-color-error);
+    margin-left: var(--bp-spacing-xs);
+  }
+
   .multi-select {
     position: relative;
     width: 100%;
@@ -20,7 +35,7 @@ export const multiSelectStyles = css`
     min-height: var(--bp-spacing-10);
     padding: var(--bp-spacing-xs) var(--bp-spacing-sm);
     background-color: var(--bp-color-surface);
-    border: var(--bp-border-width) solid var(--bp-color-border);
+    border: var(--bp-border-width) solid var(--bp-color-input-border);
     border-radius: var(--bp-border-radius-md);
     cursor: pointer;
     transition: border-color var(--bp-transition-fast);
@@ -236,7 +251,7 @@ export const multiSelectStyles = css`
     justify-content: center;
     width: var(--bp-spacing-4);
     height: var(--bp-spacing-4);
-    border: var(--bp-border-width) solid var(--bp-color-border);
+    border: var(--bp-border-width) solid var(--bp-color-input-border);
     border-radius: var(--bp-border-radius-sm);
     font-size: var(--bp-font-size-xs);
     flex-shrink: 0;
@@ -281,7 +296,7 @@ export const multiSelectStyles = css`
 
   /* Variants */
   .multi-select--default .multi-select__control {
-    border-color: var(--bp-color-border);
+    border-color: var(--bp-color-input-border);
   }
 
   .multi-select--success .multi-select__control {
