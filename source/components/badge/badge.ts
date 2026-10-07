@@ -27,12 +27,7 @@ export class BpBadge extends LitElement {
    * @default 'primary'
    */
   @property({ type: String, reflect: true }) declare variant:
-    | 'primary'
-    | 'success'
-    | 'error'
-    | 'warning'
-    | 'info'
-    | 'neutral';
+    'primary' | 'success' | 'error' | 'warning' | 'info' | 'neutral';
 
   /**
    * Size of the badge

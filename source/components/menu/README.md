@@ -112,9 +112,9 @@ menu.addEventListener('bp-menu-select', (e) => {
 
 ### bp-menu Properties
 
-| Property | Type  | Default | Description |
-| -------- | ----- | ------- | ----------- | ------ | ------------------------------- |
-| `size`   | `'sm' | 'md'    | 'lg'`       | `'md'` | Size variant for all menu items |
+| Property | Type                   | Default | Description                     |
+| -------- | ---------------------- | ------- | ------------------------------- |
+| `size`   | `'sm' \| 'md' \| 'lg'` | `'md'`  | Size variant for all menu items |
 
 ### bp-menu Events
 
@@ -124,14 +124,14 @@ menu.addEventListener('bp-menu-select', (e) => {
 
 ### bp-menu-item Properties
 
-| Property     | Type      | Default | Description                                  |
-| ------------ | --------- | ------- | -------------------------------------------- | ------ | ------------------------------------ |
-| `value`      | `string`  | `''`    | Value associated with this menu item         |
-| `disabled`   | `boolean` | `false` | Whether the item is disabled                 |
-| `selected`   | `boolean` | `false` | Whether the item is selected/active          |
-| `hasSubmenu` | `boolean` | `false` | Whether the item has a submenu (shows arrow) |
-| `shortcut`   | `string`  | `''`    | Keyboard shortcut hint to display            |
-| `size`       | `'sm'     | 'md'    | 'lg'`                                        | `'md'` | Size variant (inherited from parent) |
+| Property     | Type                   | Default | Description                                  |
+| ------------ | ---------------------- | ------- | -------------------------------------------- |
+| `value`      | `string`               | `''`    | Value associated with this menu item         |
+| `disabled`   | `boolean`              | `false` | Whether the item is disabled                 |
+| `selected`   | `boolean`              | `false` | Whether the item is selected/active          |
+| `hasSubmenu` | `boolean`              | `false` | Whether the item has a submenu (shows arrow) |
+| `shortcut`   | `string`               | `''`    | Keyboard shortcut hint to display            |
+| `size`       | `'sm' \| 'md' \| 'lg'` | `'md'`  | Size variant (inherited from parent)         |
 
 ### bp-menu-item Events
 

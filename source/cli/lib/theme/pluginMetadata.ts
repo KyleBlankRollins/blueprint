@@ -100,7 +100,9 @@ export async function readPluginMetadata(
     await access(pluginDir);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
-    throw new Error(`Plugin not found: ${pluginId} - ${message}`);
+    throw new Error(`Plugin not found: ${pluginId} - ${message}`, {
+      cause: error,
+    });
   }
 
   const pluginFile = join(pluginDir, 'index.ts');
@@ -110,7 +112,9 @@ export async function readPluginMetadata(
     await access(pluginFile);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
-    throw new Error(`Plugin file not found: ${pluginFile} - ${message}`);
+    throw new Error(`Plugin file not found: ${pluginFile} - ${message}`, {
+      cause: error,
+    });
   }
 
   // Read plugin file

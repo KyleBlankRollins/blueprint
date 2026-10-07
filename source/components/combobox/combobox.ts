@@ -8,11 +8,7 @@ import { memoizeOne } from '../../utilities/memoize.js';
 
 export type ComboboxSize = 'sm' | 'md' | 'lg';
 export type ComboboxVariant =
-  | 'default'
-  | 'success'
-  | 'error'
-  | 'warning'
-  | 'info';
+  'default' | 'success' | 'error' | 'warning' | 'info';
 
 export interface ComboboxOption {
   value: string;
@@ -350,36 +346,38 @@ export class BpCombobox extends LitElement {
     return html`
       <div class="combobox__dropdown" id="listbox" part="dropdown">
         <ul class="combobox__options" role="listbox">
-          ${filteredOptions.length === 0
-            ? html`<li
-                class="combobox__option combobox__option--empty"
-                role="option"
-              >
-                No results found
-              </li>`
-            : repeat(
-                filteredOptions,
-                (opt) => opt.value,
-                (opt, index) => {
-                  const isSelected = opt.value === this.value;
-                  const isFocused = index === this.focusedIndex;
-                  return html`
-                    <li
-                      class=${classMap({
-                        combobox__option: true,
-                        'combobox__option--selected': isSelected,
-                        'combobox__option--focused': isFocused,
-                      })}
-                      role="option"
-                      aria-selected=${isSelected}
-                      @click=${() => this.handleOptionClick(opt)}
-                      part="option ${isSelected ? 'option-selected' : ''}"
-                    >
-                      ${opt.label}
-                    </li>
-                  `;
-                }
-              )}
+          ${
+            filteredOptions.length === 0
+              ? html`<li
+                  class="combobox__option combobox__option--empty"
+                  role="option"
+                >
+                  No results found
+                </li>`
+              : repeat(
+                  filteredOptions,
+                  (opt) => opt.value,
+                  (opt, index) => {
+                    const isSelected = opt.value === this.value;
+                    const isFocused = index === this.focusedIndex;
+                    return html`
+                      <li
+                        class=${classMap({
+                          combobox__option: true,
+                          'combobox__option--selected': isSelected,
+                          'combobox__option--focused': isFocused,
+                        })}
+                        role="option"
+                        aria-selected=${isSelected}
+                        @click=${() => this.handleOptionClick(opt)}
+                        part="option ${isSelected ? 'option-selected' : ''}"
+                      >
+                        ${opt.label}
+                      </li>
+                    `;
+                  }
+                )
+          }
         </ul>
       </div>
     `;
@@ -420,21 +418,23 @@ export class BpCombobox extends LitElement {
           />
 
           <div class="combobox__indicators">
-            ${hasValue
-              ? html`
-                  <button
-                    type="button"
-                    class="combobox__clear"
-                    @click=${this.handleClear}
-                    aria-label="Clear selection"
-                    tabindex="-1"
-                    ?disabled=${this.disabled}
-                    part="clear-button"
-                  >
-                    ×
-                  </button>
-                `
-              : ''}
+            ${
+              hasValue
+                ? html`
+                    <button
+                      type="button"
+                      class="combobox__clear"
+                      @click=${this.handleClear}
+                      aria-label="Clear selection"
+                      tabindex="-1"
+                      ?disabled=${this.disabled}
+                      part="clear-button"
+                    >
+                      ×
+                    </button>
+                  `
+                : ''
+            }
             <span class="combobox__dropdown-indicator" part="indicator">
               ▼
             </span>
@@ -447,13 +447,15 @@ export class BpCombobox extends LitElement {
         <slot @slotchange=${this.handleSlotChange}></slot>
 
         <!-- Hidden input for form submission -->
-        ${this.name
-          ? html`<input
-              type="hidden"
-              name="${this.name}"
-              .value=${this.value}
-            />`
-          : ''}
+        ${
+          this.name
+            ? html`<input
+                type="hidden"
+                name="${this.name}"
+                .value=${this.value}
+              />`
+            : ''
+        }
       </div>
     `;
   }

@@ -997,26 +997,28 @@ export class BpColorPicker extends LitElement {
           />
           <span class="input-label">B</span>
         </div>
-        ${this.alpha
-          ? html`
-              <div class="input-group">
-                <input
-                  type="number"
-                  class="color-input"
-                  part="input"
-                  min="0"
-                  max="100"
-                  .value=${String(Math.round(this._hsv.a * 100))}
-                  ?disabled=${this.disabled}
-                  ?readonly=${this.readonly}
-                  @input=${this._handleAlphaInput}
-                  @change=${this._handleAlphaInputChange}
-                  aria-label="Alpha"
-                />
-                <span class="input-label">A</span>
-              </div>
-            `
-          : nothing}
+        ${
+          this.alpha
+            ? html`
+                <div class="input-group">
+                  <input
+                    type="number"
+                    class="color-input"
+                    part="input"
+                    min="0"
+                    max="100"
+                    .value=${String(Math.round(this._hsv.a * 100))}
+                    ?disabled=${this.disabled}
+                    ?readonly=${this.readonly}
+                    @input=${this._handleAlphaInput}
+                    @change=${this._handleAlphaInputChange}
+                    aria-label="Alpha"
+                  />
+                  <span class="input-label">A</span>
+                </div>
+              `
+            : nothing
+        }
       </div>
     `;
   }
@@ -1078,26 +1080,28 @@ export class BpColorPicker extends LitElement {
           />
           <span class="input-label">L</span>
         </div>
-        ${this.alpha
-          ? html`
-              <div class="input-group">
-                <input
-                  type="number"
-                  class="color-input"
-                  part="input"
-                  min="0"
-                  max="100"
-                  .value=${String(Math.round(this._hsv.a * 100))}
-                  ?disabled=${this.disabled}
-                  ?readonly=${this.readonly}
-                  @input=${this._handleAlphaInput}
-                  @change=${this._handleAlphaInputChange}
-                  aria-label="Alpha"
-                />
-                <span class="input-label">A</span>
-              </div>
-            `
-          : nothing}
+        ${
+          this.alpha
+            ? html`
+                <div class="input-group">
+                  <input
+                    type="number"
+                    class="color-input"
+                    part="input"
+                    min="0"
+                    max="100"
+                    .value=${String(Math.round(this._hsv.a * 100))}
+                    ?disabled=${this.disabled}
+                    ?readonly=${this.readonly}
+                    @input=${this._handleAlphaInput}
+                    @change=${this._handleAlphaInputChange}
+                    aria-label="Alpha"
+                  />
+                  <span class="input-label">A</span>
+                </div>
+              `
+            : nothing
+        }
       </div>
     `;
   }
@@ -1264,11 +1268,13 @@ export class BpColorPicker extends LitElement {
             class="trigger-swatch"
             style="background: ${currentColor}"
           ></span>
-          ${hasLabel
-            ? html`<span class="trigger-label"
-                >${this.label || this.placeholder}</span
-              >`
-            : nothing}
+          ${
+            hasLabel
+              ? html`<span class="trigger-label"
+                  >${this.label || this.placeholder}</span
+                >`
+              : nothing
+          }
         </slot>
       </button>
     `;
@@ -1282,22 +1288,26 @@ export class BpColorPicker extends LitElement {
     return html`
       <div class="color-picker color-picker--${this.size}">
         ${this._renderTrigger()}
-        ${this._open
-          ? html`
-              <div aria-live="polite" aria-atomic="true" class="sr-only">
-                Current color: ${this._formatOutput()}
-              </div>
-              ${this._renderPicker()}
-            `
-          : nothing}
+        ${
+          this._open
+            ? html`
+                <div aria-live="polite" aria-atomic="true" class="sr-only">
+                  Current color: ${this._formatOutput()}
+                </div>
+                ${this._renderPicker()}
+              `
+            : nothing
+        }
       </div>
-      ${this.name
-        ? html`<input
-            type="hidden"
-            name="${this.name}"
-            .value=${this._formatOutput()}
-          />`
-        : nothing}
+      ${
+        this.name
+          ? html`<input
+              type="hidden"
+              name="${this.name}"
+              .value=${this._formatOutput()}
+            />`
+          : nothing
+      }
     `;
   }
 }

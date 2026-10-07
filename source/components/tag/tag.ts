@@ -38,8 +38,7 @@ export class BpTag extends LitElement {
    * @default 'solid'
    */
   @property({ type: String, reflect: true }) declare variant:
-    | 'solid'
-    | 'outlined';
+    'solid' | 'outlined';
 
   /**
    * Size of the tag
@@ -54,12 +53,7 @@ export class BpTag extends LitElement {
    * @default 'neutral'
    */
   @property({ type: String, reflect: true }) declare color:
-    | 'primary'
-    | 'success'
-    | 'error'
-    | 'warning'
-    | 'info'
-    | 'neutral';
+    'primary' | 'success' | 'error' | 'warning' | 'info' | 'neutral';
 
   /**
    * Whether the tag can be removed
@@ -157,21 +151,23 @@ export class BpTag extends LitElement {
         <span class="tag__content">
           <slot></slot>
         </span>
-        ${this.removable
-          ? html`
-              <button
-                type="button"
-                class="tag__close"
-                part="close-button"
-                aria-label="Remove"
-                ?disabled=${this.disabled}
-                @click=${this.handleRemove}
-                tabindex="-1"
-              >
-                <bp-icon .svg=${crossSvg} size=${iconSize}></bp-icon>
-              </button>
-            `
-          : ''}
+        ${
+          this.removable
+            ? html`
+                <button
+                  type="button"
+                  class="tag__close"
+                  part="close-button"
+                  aria-label="Remove"
+                  ?disabled=${this.disabled}
+                  @click=${this.handleRemove}
+                  tabindex="-1"
+                >
+                  <bp-icon .svg=${crossSvg} size=${iconSize}></bp-icon>
+                </button>
+              `
+            : ''
+        }
       </div>
     `;
   }

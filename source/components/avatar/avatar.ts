@@ -111,42 +111,48 @@ export class BpAvatar extends LitElement {
         part="avatar"
         title="${titleText}"
       >
-        ${hasImage
-          ? html`
-              <img
-                class="avatar__image"
-                src="${this.src}"
-                alt="${this.alt}"
-                @error="${this.handleImageError}"
-                part="image"
-              />
-            `
-          : hasInitials
+        ${
+          hasImage
+            ? html`
+                <img
+                  class="avatar__image"
+                  src="${this.src}"
+                  alt="${this.alt}"
+                  @error="${this.handleImageError}"
+                  part="image"
+                />
+              `
+            : hasInitials
+              ? html`<span
+                  class="avatar__initials"
+                  part="initials"
+                  role="img"
+                  aria-label="${this.alt || 'User avatar'}"
+                  >${this.initials}</span
+                >`
+              : html`<bp-icon
+                  class="avatar__fallback"
+                  .svg=${usersSvg}
+                  size="${
+                    this.size === 'xs'
+                      ? 'xs'
+                      : this.size === 'xl'
+                        ? 'lg'
+                        : this.size
+                  }"
+                  part="fallback"
+                  aria-label="User avatar"
+                ></bp-icon>`
+        }
+        ${
+          this.status
             ? html`<span
-                class="avatar__initials"
-                part="initials"
-                role="img"
-                aria-label="${this.alt || 'User avatar'}"
-                >${this.initials}</span
-              >`
-            : html`<bp-icon
-                class="avatar__fallback"
-                .svg=${usersSvg}
-                size="${this.size === 'xs'
-                  ? 'xs'
-                  : this.size === 'xl'
-                    ? 'lg'
-                    : this.size}"
-                part="fallback"
-                aria-label="User avatar"
-              ></bp-icon>`}
-        ${this.status
-          ? html`<span
-              class="avatar__status avatar__status--${this.status}"
-              part="status"
-              aria-label="${this.status}"
-            ></span>`
-          : ''}
+                class="avatar__status avatar__status--${this.status}"
+                part="status"
+                aria-label="${this.status}"
+              ></span>`
+            : ''
+        }
       </div>
     `;
   }

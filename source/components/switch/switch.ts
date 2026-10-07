@@ -181,11 +181,11 @@ export class BpSwitch extends LitElement {
     return html`
       <label
         part="switch"
-        class="switch switch--${this.size} ${this.disabled
-          ? 'switch--disabled'
-          : ''} ${this.error ? 'switch--error' : ''} ${this.hasFocus
-          ? 'switch--focus'
-          : ''}"
+        class="switch switch--${this.size} ${
+          this.disabled ? 'switch--disabled' : ''
+        } ${this.error ? 'switch--error' : ''} ${
+          this.hasFocus ? 'switch--focus' : ''
+        }"
         @click=${this.handleLabelClick}
       >
         <input

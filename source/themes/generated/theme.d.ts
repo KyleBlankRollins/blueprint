@@ -8,14 +8,13 @@ import type { ColorRef } from '../core/types.js';
 /**
  * Available color names in the theme
  */
-export type ColorName =
-  | 'black'
-  | 'white';
+export type ColorName = 'black' | 'white';
 
 /**
  * Valid color scale steps
  */
-export type ColorScaleStep = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950;
+export type ColorScaleStep =
+  50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950;
 
 /**
  * Color scale for white
@@ -79,9 +78,7 @@ export interface BlackColorScale {
  * Complete registry of all available colors and their steps
  * Access via builder.colors.colorNameStep (e.g., builder.colors.gray50)
  */
-export interface ColorRegistry
-  extends BlackColorScale,
-    WhiteColorScale {}
+export interface ColorRegistry extends BlackColorScale, WhiteColorScale {}
 
 /**
  * String representation of color references
@@ -111,6 +108,4 @@ declare module '../builder/ThemeBuilder.js' {
 /**
  * Available theme variant names
  */
-export type ThemeVariantName =
-  | 'light'
-  | 'dark';
+export type ThemeVariantName = 'light' | 'dark';

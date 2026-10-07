@@ -246,16 +246,20 @@ export class BpTimePicker extends LitElement {
 
     return html`
       <div class="time-picker time-picker--${this.size}">
-        ${this.label
-          ? html`
-              <label class="label" part="label" @click=${this.toggleDropdown}>
-                ${this.label}
-                ${this.required
-                  ? html`<span class="label-required">*</span>`
-                  : ''}
-              </label>
-            `
-          : ''}
+        ${
+          this.label
+            ? html`
+                <label class="label" part="label" @click=${this.toggleDropdown}>
+                  ${this.label}
+                  ${
+                    this.required
+                      ? html`<span class="label-required">*</span>`
+                      : ''
+                  }
+                </label>
+              `
+            : ''
+        }
         <div
           class="input-wrapper"
           part="input-wrapper"
@@ -277,20 +281,22 @@ export class BpTimePicker extends LitElement {
             aria-label=${this.label || this.placeholder || 'Time picker'}
             @click=${this.toggleDropdown}
           />
-          ${this.value && !this.disabled
-            ? html`
-                <button
-                  type="button"
-                  class="clear-button"
-                  part="clear-button"
-                  @click=${this.handleClear}
-                  aria-label="Clear time"
-                  tabindex="-1"
-                >
-                  ✕
-                </button>
-              `
-            : ''}
+          ${
+            this.value && !this.disabled
+              ? html`
+                  <button
+                    type="button"
+                    class="clear-button"
+                    part="clear-button"
+                    @click=${this.handleClear}
+                    aria-label="Clear time"
+                    tabindex="-1"
+                  >
+                    ✕
+                  </button>
+                `
+              : ''
+          }
           <div class="icon" part="icon">
             <svg
               width="16"
@@ -310,35 +316,37 @@ export class BpTimePicker extends LitElement {
           </div>
         </div>
 
-        ${this.isOpen
-          ? html`
-              <div class="dropdown" part="dropdown" role="listbox">
-                ${timeOptions.map(
-                  (option) => html`
-                    <div
-                      class=${classMap({
-                        'time-option': true,
-                        'time-option--selected': this.isSelected(
+        ${
+          this.isOpen
+            ? html`
+                <div class="dropdown" part="dropdown" role="listbox">
+                  ${timeOptions.map(
+                    (option) => html`
+                      <div
+                        class=${classMap({
+                          'time-option': true,
+                          'time-option--selected': this.isSelected(
+                            option.hours,
+                            option.minutes
+                          ),
+                        })}
+                        part="time-option"
+                        role="option"
+                        aria-selected=${this.isSelected(
                           option.hours,
                           option.minutes
-                        ),
-                      })}
-                      part="time-option"
-                      role="option"
-                      aria-selected=${this.isSelected(
-                        option.hours,
-                        option.minutes
-                      )}
-                      @click=${() =>
-                        this.handleTimeSelect(option.hours, option.minutes)}
-                    >
-                      ${option.display}
-                    </div>
-                  `
-                )}
-              </div>
-            `
-          : ''}
+                        )}
+                        @click=${() =>
+                          this.handleTimeSelect(option.hours, option.minutes)}
+                      >
+                        ${option.display}
+                      </div>
+                    `
+                  )}
+                </div>
+              `
+            : ''
+        }
       </div>
     `;
   }

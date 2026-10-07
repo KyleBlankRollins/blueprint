@@ -4,9 +4,10 @@
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { generateTypes, generateTypesCommand } from '../generate-types.js';
+import { ThemeBuilder } from '../../../themes/builder/ThemeBuilder.js';
 import * as logger from '../../utils/logger.js';
 import { mkdir, access } from 'node:fs/promises';
-import { join } from 'node:path';
+import { join, sep } from 'node:path';
 import { tmpdir } from 'node:os';
 import { rm } from 'node:fs/promises';
 
@@ -39,9 +40,24 @@ describe('generate-types command', () => {
 
   describe('generateTypes', () => {
     it('should generate types with default options', async () => {
-      // This test requires a valid theme config to be present
-      // Since we're testing the CLI integration, we'll verify it doesn't throw
-      await expect(generateTypes()).resolves.toBeUndefined();
+      // Spy on the writer so the default output path is resolved and passed
+      // through without overwriting the committed source/themes/generated file.
+      const writeSpy = vi
+        .spyOn(ThemeBuilder.prototype, 'generateTypes')
+        .mockResolvedValue(undefined);
+
+      try {
+        await expect(generateTypes()).resolves.toBeUndefined();
+
+        expect(writeSpy).toHaveBeenCalledTimes(1);
+        const config = writeSpy.mock.calls[0][0];
+        expect(config.outputPath.split(sep).join('/')).toMatch(
+          /source\/themes\/generated\/theme\.d\.ts$/
+        );
+        expect(config.includeJSDoc).toBe(true);
+      } finally {
+        writeSpy.mockRestore();
+      }
       expect(logger.info).toHaveBeenCalledWith(
         expect.stringContaining('Generating TypeScript theme declarations')
       );
@@ -98,7 +114,7 @@ describe('generate-types command', () => {
     });
 
     it('should display color and variant counts after generation', async () => {
-      await generateTypes();
+      await generateTypes({ outputPath: join(tempDir, 'counts.d.ts') });
       expect(logger.info).toHaveBeenCalledWith(
         expect.stringMatching(/Colors:/)
       );
@@ -164,7 +180,9 @@ describe('generate-types command', () => {
 
   describe('generateTypesCommand', () => {
     it('should call generateTypes and not throw on success', async () => {
-      await expect(generateTypesCommand()).resolves.toBeUndefined();
+      await expect(
+        generateTypesCommand({ outputPath: join(tempDir, 'cmd-default.d.ts') })
+      ).resolves.toBeUndefined();
       expect(logger.success).toHaveBeenCalled();
     });
 

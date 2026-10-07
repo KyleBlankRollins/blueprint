@@ -425,22 +425,26 @@ export class BpTree extends LitElement {
         part="node-icon"
         @click=${(e: Event) => this.handleToggleClick(e, node)}
       >
-        ${hasChildren
+        ${
+          hasChildren
+            ? html`<bp-icon
+                class="toggle-icon ${isExpanded ? 'toggle-icon--expanded' : ''}"
+                .svg=${chevronRightSvg}
+                size="sm"
+              ></bp-icon>`
+            : nothing
+        }
+      </span>
+      ${
+        node.icon
           ? html`<bp-icon
-              class="toggle-icon ${isExpanded ? 'toggle-icon--expanded' : ''}"
-              .svg=${chevronRightSvg}
+              class="node-icon"
+              part="node-custom-icon"
+              name=${node.icon}
               size="sm"
             ></bp-icon>`
-          : nothing}
-      </span>
-      ${node.icon
-        ? html`<bp-icon
-            class="node-icon"
-            part="node-custom-icon"
-            name=${node.icon}
-            size="sm"
-          ></bp-icon>`
-        : nothing}
+          : nothing
+      }
       <span class="node-label" part="node-label">${node.label}</span>
     `;
 
@@ -471,10 +475,9 @@ export class BpTree extends LitElement {
 
     return html`
       <div
-        class="node ${node.disabled ? 'node--disabled' : ''} ${hasChildren &&
-        isExpanded
-          ? 'node--expanded'
-          : ''}"
+        class="node ${node.disabled ? 'node--disabled' : ''} ${
+          hasChildren && isExpanded ? 'node--expanded' : ''
+        }"
         part="node"
         role="treeitem"
         aria-expanded=${ifDefined(
@@ -487,17 +490,19 @@ export class BpTree extends LitElement {
         style="--node-level: ${level}"
       >
         ${nodeContent}
-        ${hasChildren && isExpanded
-          ? html`
-              <div class="node-children" part="node-children" role="group">
-                ${repeat(
-                  node.children!,
-                  (child) => child.id,
-                  (child) => this.renderNode(child, level + 1)
-                )}
-              </div>
-            `
-          : nothing}
+        ${
+          hasChildren && isExpanded
+            ? html`
+                <div class="node-children" part="node-children" role="group">
+                  ${repeat(
+                    node.children!,
+                    (child) => child.id,
+                    (child) => this.renderNode(child, level + 1)
+                  )}
+                </div>
+              `
+            : nothing
+        }
       </div>
     `;
   }
@@ -512,13 +517,15 @@ export class BpTree extends LitElement {
         role="tree"
         aria-multiselectable=${ifDefined(this.multiSelect ? 'true' : undefined)}
       >
-        ${hasNodes
-          ? repeat(
-              this.nodes,
-              (node) => node.id,
-              (node) => this.renderNode(node, 0)
-            )
-          : html`<slot></slot>`}
+        ${
+          hasNodes
+            ? repeat(
+                this.nodes,
+                (node) => node.id,
+                (node) => this.renderNode(node, 0)
+              )
+            : html`<slot></slot>`
+        }
       </div>
     `;
   }

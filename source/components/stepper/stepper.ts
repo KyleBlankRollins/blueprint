@@ -174,8 +174,7 @@ export class BpStepper extends LitElement {
     // Auto-mark previous steps as complete when advancing
     if (changedProperties.has('currentStep')) {
       const prevStep = changedProperties.get('currentStep') as
-        | number
-        | undefined;
+        number | undefined;
       if (prevStep !== undefined && this.currentStep > prevStep) {
         // Mark all steps before current as complete
         const updated = new Set(this.completedSteps);
@@ -470,30 +469,32 @@ export class BpStepper extends LitElement {
         })}
         part="step-indicator"
       >
-        ${showCheckmark
-          ? html`<svg
-              class="step-icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-              aria-hidden="true"
-            >
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>`
-          : showError
+        ${
+          showCheckmark
             ? html`<svg
                 class="step-icon"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
+                stroke-width="3"
                 aria-hidden="true"
               >
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
+                <polyline points="20 6 9 17 4 12"></polyline>
               </svg>`
-            : html`<span class="step-number">${index + 1}</span>`}
+            : showError
+              ? html`<svg
+                  class="step-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>`
+              : html`<span class="step-number">${index + 1}</span>`
+        }
       </div>
     `;
     /* stylelint-enable blueprint/no-hardcoded-values */
@@ -529,26 +530,36 @@ export class BpStepper extends LitElement {
           this._handleStepKeydown(e, index, step)}
       >
         ${this._renderStepIndicator(index, status)}
-        ${!this.hideLabels
-          ? html`
-              <div class="step-content" part="step-content">
-                <span class="step-label" part="step-label" title=${step.label}
-                  >${step.label}</span
-                >
-                ${step.description
-                  ? html`<span class="step-description" part="step-description"
-                      >${step.description}</span
-                    >`
-                  : nothing}
-                ${status === 'error' && step.error
-                  ? html`<span class="step-error">${step.error}</span>`
-                  : nothing}
-              </div>
-            `
-          : nothing}
-        ${!isLast
-          ? html`<div class="connector" part="connector"></div>`
-          : nothing}
+        ${
+          !this.hideLabels
+            ? html`
+                <div class="step-content" part="step-content">
+                  <span class="step-label" part="step-label" title=${step.label}
+                    >${step.label}</span
+                  >
+                  ${
+                    step.description
+                      ? html`<span
+                          class="step-description"
+                          part="step-description"
+                          >${step.description}</span
+                        >`
+                      : nothing
+                  }
+                  ${
+                    status === 'error' && step.error
+                      ? html`<span class="step-error">${step.error}</span>`
+                      : nothing
+                  }
+                </div>
+              `
+            : nothing
+        }
+        ${
+          !isLast
+            ? html`<div class="connector" part="connector"></div>`
+            : nothing
+        }
       </div>
     `;
   }

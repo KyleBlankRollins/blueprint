@@ -5,17 +5,7 @@
 
 /** Standard color scale steps (50-950) */
 export type ColorStep =
-  | 50
-  | 100
-  | 200
-  | 300
-  | 400
-  | 500
-  | 600
-  | 700
-  | 800
-  | 900
-  | 950;
+  50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950;
 
 /**
  * Opaque type for color references
@@ -421,8 +411,7 @@ export interface GenericAssetDefinition {
  * Union type for all asset definitions
  */
 export type PluginAssetDefinition =
-  | FontAssetDefinition
-  | GenericAssetDefinition;
+  FontAssetDefinition | GenericAssetDefinition;
 
 /**
  * Resolved asset with full paths (internal use during build)

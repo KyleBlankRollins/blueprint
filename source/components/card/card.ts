@@ -106,30 +106,32 @@ export class BpCard extends LitElement {
   render() {
     return html`
       <div
-        class="card card--${this.variant} ${this.hoverable || this.clickable
-          ? 'card--hoverable'
-          : ''} ${this.clickable ? 'card--clickable' : ''}"
+        class="card card--${this.variant} ${
+          this.hoverable || this.clickable ? 'card--hoverable' : ''
+        } ${this.clickable ? 'card--clickable' : ''}"
         part="card"
         @click=${this.handleClick}
         role=${this.clickable ? 'button' : 'article'}
         tabindex=${ifDefined(this.clickable ? '0' : undefined)}
         @keydown=${this.clickable ? this.handleKeydown : undefined}
       >
-        ${this.hasHeader
-          ? html`<div class="card-header" part="header">
-              <slot
+        ${
+          this.hasHeader
+            ? html`<div class="card-header" part="header">
+                <slot
+                  name="header"
+                  @slotchange=${this.handleHeaderSlotChange}
+                ></slot>
+              </div>`
+            : html`<slot
                 name="header"
                 @slotchange=${this.handleHeaderSlotChange}
-              ></slot>
-            </div>`
-          : html`<slot
-              name="header"
-              @slotchange=${this.handleHeaderSlotChange}
-            ></slot>`}
+              ></slot>`
+        }
         <div
-          class="card-content ${this.direction === 'horizontal'
-            ? 'card-content--horizontal'
-            : ''}"
+          class="card-content ${
+            this.direction === 'horizontal' ? 'card-content--horizontal' : ''
+          }"
           part="content"
         >
           <slot name="media" part="media"></slot>
@@ -140,17 +142,19 @@ export class BpCard extends LitElement {
             <slot></slot>
           </div>
         </div>
-        ${this.hasFooter
-          ? html`<div class="card-footer" part="footer">
-              <slot
+        ${
+          this.hasFooter
+            ? html`<div class="card-footer" part="footer">
+                <slot
+                  name="footer"
+                  @slotchange=${this.handleFooterSlotChange}
+                ></slot>
+              </div>`
+            : html`<slot
                 name="footer"
                 @slotchange=${this.handleFooterSlotChange}
-              ></slot>
-            </div>`
-          : html`<slot
-              name="footer"
-              @slotchange=${this.handleFooterSlotChange}
-            ></slot>`}
+              ></slot>`
+        }
       </div>
     `;
   }

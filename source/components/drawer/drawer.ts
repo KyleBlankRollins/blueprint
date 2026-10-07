@@ -316,30 +316,113 @@ export class BpDrawer extends LitElement {
     if (this.inline) {
       return html`
         <aside
-          class="drawer drawer--inline drawer--${this.placement} drawer--${this
-            .size} ${isHorizontal ? 'drawer--horizontal' : 'drawer--vertical'}"
+          class="drawer drawer--inline drawer--${this.placement} drawer--${
+            this.size
+          } ${isHorizontal ? 'drawer--horizontal' : 'drawer--vertical'}"
           part="drawer"
           role="complementary"
           aria-label=${this.label || nothing}
         >
           <div class="panel" part="panel">
-            ${this.hasHeader || this.showClose
-              ? html`
-                  <header class="header" part="header">
-                    <slot
-                      name="header"
-                      @slotchange=${this.handleHeaderSlotChange}
-                    ></slot>
-                  </header>
-                `
-              : html`<slot
-                  name="header"
-                  @slotchange=${this.handleHeaderSlotChange}
-                ></slot>`}
+            ${
+              this.hasHeader || this.showClose
+                ? html`
+                    <header class="header" part="header">
+                      <slot
+                        name="header"
+                        @slotchange=${this.handleHeaderSlotChange}
+                      ></slot>
+                    </header>
+                  `
+                : html`<slot
+                    name="header"
+                    @slotchange=${this.handleHeaderSlotChange}
+                  ></slot>`
+            }
             <div class="body" part="body">
               <slot></slot>
             </div>
-            ${this.hasFooter
+            ${
+              this.hasFooter
+                ? html`
+                    <footer class="footer" part="footer">
+                      <slot
+                        name="footer"
+                        @slotchange=${this.handleFooterSlotChange}
+                      ></slot>
+                    </footer>
+                  `
+                : html`<slot
+                    name="footer"
+                    @slotchange=${this.handleFooterSlotChange}
+                  ></slot>`
+            }
+          </div>
+        </aside>
+      `;
+    }
+
+    // Overlay mode: slide-in panel with backdrop
+    return html`
+      <div
+        class="drawer drawer--overlay drawer--${this.placement} drawer--${
+          this.size
+        } ${
+          isHorizontal ? 'drawer--horizontal' : 'drawer--vertical'
+        } ${this.open ? 'drawer--open' : ''}"
+        part="drawer"
+      >
+        ${
+          this.showBackdrop
+            ? html`
+                <div
+                  class="backdrop ${this.open ? 'backdrop--visible' : ''}"
+                  part="backdrop"
+                  @click=${this.handleBackdropClick}
+                  aria-hidden="true"
+                ></div>
+              `
+            : nothing
+        }
+        <aside
+          class="panel ${this.open ? 'panel--open' : ''}"
+          part="panel"
+          role="dialog"
+          aria-modal="true"
+          aria-label=${this.label || nothing}
+          tabindex="-1"
+        >
+          <header
+            class="header ${
+              this.hasHeader || this.showClose ? '' : 'header--empty'
+            }"
+            part="header"
+          >
+            <slot
+              name="header"
+              @slotchange=${this.handleHeaderSlotChange}
+            ></slot>
+            ${
+              this.showClose
+                ? html`
+                    <button
+                      class="close-button"
+                      part="close-button"
+                      type="button"
+                      aria-label="Close drawer"
+                      @click=${this.handleCloseClick}
+                    >
+                      <bp-icon .svg=${closeSvg} size="sm"></bp-icon>
+                    </button>
+                  `
+                : nothing
+            }
+          </header>
+          <div class="body" part="body">
+            <slot></slot>
+          </div>
+          ${
+            this.hasFooter
               ? html`
                   <footer class="footer" part="footer">
                     <slot
@@ -351,79 +434,8 @@ export class BpDrawer extends LitElement {
               : html`<slot
                   name="footer"
                   @slotchange=${this.handleFooterSlotChange}
-                ></slot>`}
-          </div>
-        </aside>
-      `;
-    }
-
-    // Overlay mode: slide-in panel with backdrop
-    return html`
-      <div
-        class="drawer drawer--overlay drawer--${this.placement} drawer--${this
-          .size} ${isHorizontal
-          ? 'drawer--horizontal'
-          : 'drawer--vertical'} ${this.open ? 'drawer--open' : ''}"
-        part="drawer"
-      >
-        ${this.showBackdrop
-          ? html`
-              <div
-                class="backdrop ${this.open ? 'backdrop--visible' : ''}"
-                part="backdrop"
-                @click=${this.handleBackdropClick}
-                aria-hidden="true"
-              ></div>
-            `
-          : nothing}
-        <aside
-          class="panel ${this.open ? 'panel--open' : ''}"
-          part="panel"
-          role="dialog"
-          aria-modal="true"
-          aria-label=${this.label || nothing}
-          tabindex="-1"
-        >
-          <header
-            class="header ${this.hasHeader || this.showClose
-              ? ''
-              : 'header--empty'}"
-            part="header"
-          >
-            <slot
-              name="header"
-              @slotchange=${this.handleHeaderSlotChange}
-            ></slot>
-            ${this.showClose
-              ? html`
-                  <button
-                    class="close-button"
-                    part="close-button"
-                    type="button"
-                    aria-label="Close drawer"
-                    @click=${this.handleCloseClick}
-                  >
-                    <bp-icon .svg=${closeSvg} size="sm"></bp-icon>
-                  </button>
-                `
-              : nothing}
-          </header>
-          <div class="body" part="body">
-            <slot></slot>
-          </div>
-          ${this.hasFooter
-            ? html`
-                <footer class="footer" part="footer">
-                  <slot
-                    name="footer"
-                    @slotchange=${this.handleFooterSlotChange}
-                  ></slot>
-                </footer>
-              `
-            : html`<slot
-                name="footer"
-                @slotchange=${this.handleFooterSlotChange}
-              ></slot>`}
+                ></slot>`
+          }
         </aside>
       </div>
     `;

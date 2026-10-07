@@ -6,22 +6,12 @@ export type TextElement = 'p' | 'span' | 'div';
 export type TextSize = 'xs' | 'sm' | 'base' | 'lg' | 'xl';
 export type TextWeight = 'light' | 'normal' | 'medium' | 'semibold' | 'bold';
 export type TextVariant =
-  | 'default'
-  | 'muted'
-  | 'primary'
-  | 'success'
-  | 'warning'
-  | 'error';
+  'default' | 'muted' | 'primary' | 'success' | 'warning' | 'error';
 export type TextAlign = 'left' | 'center' | 'right' | 'justify';
 export type TextTransform = 'none' | 'uppercase' | 'lowercase' | 'capitalize';
 export type TextTracking = 'tighter' | 'tight' | 'normal' | 'wide' | 'wider';
 export type TextLineHeight =
-  | 'none'
-  | 'tight'
-  | 'snug'
-  | 'normal'
-  | 'relaxed'
-  | 'loose';
+  'none' | 'tight' | 'snug' | 'normal' | 'relaxed' | 'loose';
 
 /**
  * A typography component for body text with flexible styling options.

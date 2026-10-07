@@ -321,9 +321,9 @@ export class BpTabs extends LitElement {
     return html`
       <button
         class=${classMap(tabClasses)}
-        part="tab ${isActive ? 'tab-active' : ''} ${isDisabled
-          ? 'tab-disabled'
-          : ''}"
+        part="tab ${isActive ? 'tab-active' : ''} ${
+          isDisabled ? 'tab-disabled' : ''
+        }"
         role="tab"
         data-tab-id=${tab.id}
         id="tab-${tab.id}"
@@ -337,30 +337,34 @@ export class BpTabs extends LitElement {
         @focus=${() => this.handleTabFocus(tab.id)}
         @blur=${this.handleTabBlur}
       >
-        ${tab.icon
-          ? html`<bp-icon name=${tab.icon} class="tab__icon"></bp-icon>`
-          : nothing}
+        ${
+          tab.icon
+            ? html`<bp-icon name=${tab.icon} class="tab__icon"></bp-icon>`
+            : nothing
+        }
         <span class="tab__label">${tab.label}</span>
-        ${tab.closable
-          ? html`
-              <button
-                class="tab__close"
-                part="tab-close"
-                aria-label="Close ${tab.label}"
-                @click=${(e: Event) => this.handleTabClose(e, tab.id)}
-                @keydown=${(e: KeyboardEvent) => e.stopPropagation()}
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
+        ${
+          tab.closable
+            ? html`
+                <button
+                  class="tab__close"
+                  part="tab-close"
+                  aria-label="Close ${tab.label}"
+                  @click=${(e: Event) => this.handleTabClose(e, tab.id)}
+                  @keydown=${(e: KeyboardEvent) => e.stopPropagation()}
                 >
-                  <path d="M18 6L6 18M6 6l12 12" />
-                </svg>
-              </button>
-            `
-          : nothing}
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M18 6L6 18M6 6l12 12" />
+                  </svg>
+                </button>
+              `
+            : nothing
+        }
       </button>
     `;
   }

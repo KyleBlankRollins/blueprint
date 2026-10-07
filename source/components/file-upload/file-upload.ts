@@ -80,10 +80,7 @@ export class BpFileUpload extends LitElement {
 
   /** Visual variant for validation states */
   @property({ type: String }) declare variant:
-    | 'default'
-    | 'success'
-    | 'error'
-    | 'warning';
+    'default' | 'success' | 'error' | 'warning';
 
   /** Helper or error message text */
   @property({ type: String }) declare message: string;
@@ -398,29 +395,31 @@ export class BpFileUpload extends LitElement {
               part="file-item"
               role="listitem"
             >
-              ${fileInfo.previewUrl
-                ? html`
-                    <img
-                      class="file-upload__preview"
-                      src="${fileInfo.previewUrl}"
-                      alt="Preview of ${fileInfo.name}"
-                    />
-                  `
-                : html`
-                    <div class="file-upload__file-icon" aria-hidden="true">
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <path
-                          d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-                        />
-                        <polyline points="14 2 14 8 20 8" />
-                      </svg>
-                    </div>
-                  `}
+              ${
+                fileInfo.previewUrl
+                  ? html`
+                      <img
+                        class="file-upload__preview"
+                        src="${fileInfo.previewUrl}"
+                        alt="Preview of ${fileInfo.name}"
+                      />
+                    `
+                  : html`
+                      <div class="file-upload__file-icon" aria-hidden="true">
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <path
+                            d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                          />
+                          <polyline points="14 2 14 8 20 8" />
+                        </svg>
+                      </div>
+                    `
+              }
               <div class="file-upload__file-info">
                 <span class="file-upload__file-name" part="file-name"
                   >${fileInfo.name}</span
@@ -505,11 +504,13 @@ export class BpFileUpload extends LitElement {
 
           <span class="file-upload__label" part="label">${this.label}</span>
 
-          ${this.description
-            ? html`<span class="file-upload__description" part="description"
-                >${this.description}</span
-              >`
-            : nothing}
+          ${
+            this.description
+              ? html`<span class="file-upload__description" part="description"
+                  >${this.description}</span
+                >`
+              : nothing
+          }
         </div>
 
         <span id="file-upload-description" class="visually-hidden">
@@ -517,14 +518,16 @@ export class BpFileUpload extends LitElement {
         </span>
 
         ${this.renderFileList()}
-        ${this.message
-          ? html`<div
-              class="file-upload__message file-upload__message--${this.variant}"
-              part="message"
-            >
-              ${this.message}
-            </div>`
-          : nothing}
+        ${
+          this.message
+            ? html`<div
+                class="file-upload__message file-upload__message--${this.variant}"
+                part="message"
+              >
+                ${this.message}
+              </div>`
+            : nothing
+        }
       </div>
     `;
   }

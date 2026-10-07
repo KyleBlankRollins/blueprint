@@ -183,41 +183,47 @@ export class BpBreadcrumb extends LitElement {
         class=${classMap(itemClasses)}
         part="item ${isCurrent ? 'item-current' : ''}"
       >
-        ${item.href && !isCurrent
-          ? html`
-              <a
-                class="link"
-                part="link"
-                href=${item.href}
-                @click=${(e: MouseEvent) =>
-                  this.handleItemClick(e, item, index)}
-                @keydown=${(e: KeyboardEvent) =>
-                  this.handleKeyDown(e, item, index)}
-              >
-                ${item.icon
-                  ? html`<bp-icon
-                      name=${item.icon}
-                      class="item__icon"
-                    ></bp-icon>`
-                  : nothing}
-                <span class="item__label">${item.label}</span>
-              </a>
-            `
-          : html`
-              <span
-                class="text"
-                part="text"
-                aria-current=${ifDefined(isCurrent ? 'page' : undefined)}
-              >
-                ${item.icon
-                  ? html`<bp-icon
-                      name=${item.icon}
-                      class="item__icon"
-                    ></bp-icon>`
-                  : nothing}
-                <span class="item__label">${item.label}</span>
-              </span>
-            `}
+        ${
+          item.href && !isCurrent
+            ? html`
+                <a
+                  class="link"
+                  part="link"
+                  href=${item.href}
+                  @click=${(e: MouseEvent) =>
+                    this.handleItemClick(e, item, index)}
+                  @keydown=${(e: KeyboardEvent) =>
+                    this.handleKeyDown(e, item, index)}
+                >
+                  ${
+                    item.icon
+                      ? html`<bp-icon
+                          name=${item.icon}
+                          class="item__icon"
+                        ></bp-icon>`
+                      : nothing
+                  }
+                  <span class="item__label">${item.label}</span>
+                </a>
+              `
+            : html`
+                <span
+                  class="text"
+                  part="text"
+                  aria-current=${ifDefined(isCurrent ? 'page' : undefined)}
+                >
+                  ${
+                    item.icon
+                      ? html`<bp-icon
+                          name=${item.icon}
+                          class="item__icon"
+                        ></bp-icon>`
+                      : nothing
+                  }
+                  <span class="item__label">${item.label}</span>
+                </span>
+              `
+        }
         ${!isLast ? this.renderSeparator() : nothing}
       </li>
     `;
@@ -283,31 +289,33 @@ export class BpBreadcrumb extends LitElement {
           aria-label=${this.ariaLabel}
         >
           <ol class="list" part="list">
-            ${showEllipsis
-              ? html`
-                  ${this.renderItem(visibleItems[0], 0, false)}
-                  ${this.renderEllipsis(hiddenCount)}
-                  ${repeat(
-                    visibleItems.slice(1),
+            ${
+              showEllipsis
+                ? html`
+                    ${this.renderItem(visibleItems[0], 0, false)}
+                    ${this.renderEllipsis(hiddenCount)}
+                    ${repeat(
+                      visibleItems.slice(1),
+                      (_item, index) => index,
+                      (item, index) =>
+                        this.renderItem(
+                          item,
+                          this.items.length - visibleItems.length + 1 + index,
+                          index === visibleItems.length - 2
+                        )
+                    )}
+                  `
+                : repeat(
+                    visibleItems,
                     (_item, index) => index,
                     (item, index) =>
                       this.renderItem(
                         item,
-                        this.items.length - visibleItems.length + 1 + index,
-                        index === visibleItems.length - 2
+                        index,
+                        index === visibleItems.length - 1
                       )
-                  )}
-                `
-              : repeat(
-                  visibleItems,
-                  (_item, index) => index,
-                  (item, index) =>
-                    this.renderItem(
-                      item,
-                      index,
-                      index === visibleItems.length - 1
-                    )
-                )}
+                  )
+            }
           </ol>
         </nav>
       `;
@@ -372,21 +380,23 @@ export class BpBreadcrumbItem extends LitElement {
         class=${classMap(itemClasses)}
         part="item ${this.current ? 'item-current' : ''}"
       >
-        ${this.href && !this.current
-          ? html`
-              <a class="link" part="link" href=${this.href}>
-                <slot></slot>
-              </a>
-            `
-          : html`
-              <span
-                class="text"
-                part="text"
-                aria-current=${ifDefined(this.current ? 'page' : undefined)}
-              >
-                <slot></slot>
-              </span>
-            `}
+        ${
+          this.href && !this.current
+            ? html`
+                <a class="link" part="link" href=${this.href}>
+                  <slot></slot>
+                </a>
+              `
+            : html`
+                <span
+                  class="text"
+                  part="text"
+                  aria-current=${ifDefined(this.current ? 'page' : undefined)}
+                >
+                  <slot></slot>
+                </span>
+              `
+        }
         <span class="separator" part="separator" aria-hidden="true"></span>
       </li>
     `;

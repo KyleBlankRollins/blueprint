@@ -236,6 +236,6 @@ export function buildTheme(
     return files;
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
-    throw new Error(`Failed to build theme: ${message}`);
+    throw new Error(`Failed to build theme: ${message}`, { cause: error });
   }
 }

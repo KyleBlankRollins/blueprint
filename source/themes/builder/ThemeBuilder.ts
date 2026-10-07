@@ -237,7 +237,8 @@ export class ThemeBuilder implements ThemeBuilderInterface {
       // Clear plugin context before re-throwing
       this.currentPluginId = undefined;
       throw new Error(
-        `Failed to register plugin "${plugin.id}": ${error instanceof Error ? error.message : 'Unknown error'}`
+        `Failed to register plugin "${plugin.id}": ${error instanceof Error ? error.message : 'Unknown error'}`,
+        { cause: error }
       );
     }
 
@@ -300,7 +301,8 @@ export class ThemeBuilder implements ThemeBuilderInterface {
       // Clear plugin context before re-throwing
       this.currentPluginId = undefined;
       throw new Error(
-        `Failed to register plugin "${plugin.id}": ${error instanceof Error ? error.message : 'Unknown error'}`
+        `Failed to register plugin "${plugin.id}": ${error instanceof Error ? error.message : 'Unknown error'}`,
+        { cause: error }
       );
     }
 

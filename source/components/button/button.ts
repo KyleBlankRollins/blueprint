@@ -3,12 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { buttonStyles } from './button.style.js';
 
 export type ButtonVariant =
-  | 'primary'
-  | 'success'
-  | 'error'
-  | 'warning'
-  | 'info'
-  | 'secondary';
+  'primary' | 'success' | 'error' | 'warning' | 'info' | 'secondary';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 @customElement('bp-button')
@@ -17,9 +12,7 @@ export class BpButton extends LitElement {
   @property({ type: String, reflect: true }) declare size: ButtonSize;
   @property({ type: Boolean, reflect: true }) declare disabled: boolean;
   @property({ type: String, reflect: true }) declare type:
-    | 'button'
-    | 'submit'
-    | 'reset';
+    'button' | 'submit' | 'reset';
 
   static styles = [buttonStyles];
 

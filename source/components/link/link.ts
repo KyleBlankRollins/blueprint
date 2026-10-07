@@ -88,8 +88,9 @@ export class BpLink extends LitElement {
 
     return html`
       <a
-        class="link link--${this.variant} link--underline-${this
-          .underline} link--size-${this.size}"
+        class="link link--${this.variant} link--underline-${
+          this.underline
+        } link--size-${this.size}"
         href=${ifDefined(this.disabled ? undefined : this.href || undefined)}
         target=${ifDefined(this.target || undefined)}
         rel=${ifDefined(computedRel)}

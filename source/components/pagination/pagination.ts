@@ -159,32 +159,36 @@ export class BpPagination extends LitElement {
         part="container"
         aria-label="Pagination"
       >
-        ${this.showFirstLast
-          ? html`
-              <button
-                class="pagination__button pagination__button--first"
-                part="button button-first"
-                ?disabled=${this.disabled || isFirstPage}
-                @click=${() => this.handlePageChange(1)}
-                aria-label="First page"
-              >
-                «
-              </button>
-            `
-          : ''}
-        ${this.showPrevNext
-          ? html`
-              <button
-                class="pagination__button pagination__button--prev"
-                part="button button-prev"
-                ?disabled=${this.disabled || isFirstPage}
-                @click=${() => this.handlePageChange(this.currentPage - 1)}
-                aria-label="Previous page"
-              >
-                ‹
-              </button>
-            `
-          : ''}
+        ${
+          this.showFirstLast
+            ? html`
+                <button
+                  class="pagination__button pagination__button--first"
+                  part="button button-first"
+                  ?disabled=${this.disabled || isFirstPage}
+                  @click=${() => this.handlePageChange(1)}
+                  aria-label="First page"
+                >
+                  «
+                </button>
+              `
+            : ''
+        }
+        ${
+          this.showPrevNext
+            ? html`
+                <button
+                  class="pagination__button pagination__button--prev"
+                  part="button button-prev"
+                  ?disabled=${this.disabled || isFirstPage}
+                  @click=${() => this.handlePageChange(this.currentPage - 1)}
+                  aria-label="Previous page"
+                >
+                  ‹
+                </button>
+              `
+            : ''
+        }
         ${repeat(
           pageNumbers,
           (page, index) => (page === 'ellipsis' ? `ellipsis-${index}` : page),
@@ -200,10 +204,11 @@ export class BpPagination extends LitElement {
                 `
               : html`
                   <button
-                    class="pagination__button pagination__button--page ${page ===
-                    this.currentPage
-                      ? 'pagination__button--active'
-                      : ''}"
+                    class="pagination__button pagination__button--page ${
+                      page === this.currentPage
+                        ? 'pagination__button--active'
+                        : ''
+                    }"
                     part="button button-page"
                     ?disabled=${this.disabled}
                     @click=${() => this.handlePageChange(page)}
@@ -214,39 +219,45 @@ export class BpPagination extends LitElement {
                   </button>
                 `
         )}
-        ${this.showPrevNext
-          ? html`
-              <button
-                class="pagination__button pagination__button--next"
-                part="button button-next"
-                ?disabled=${this.disabled || isLastPage}
-                @click=${() => this.handlePageChange(this.currentPage + 1)}
-                aria-label="Next page"
-              >
-                ›
-              </button>
-            `
-          : ''}
-        ${this.showFirstLast
-          ? html`
-              <button
-                class="pagination__button pagination__button--last"
-                part="button button-last"
-                ?disabled=${this.disabled || isLastPage}
-                @click=${() => this.handlePageChange(this.totalPages)}
-                aria-label="Last page"
-              >
-                »
-              </button>
-            `
-          : ''}
-        ${this.showInfo
-          ? html`
-              <span class="pagination__info" part="info" aria-live="polite">
-                Page ${this.currentPage} of ${this.totalPages}
-              </span>
-            `
-          : ''}
+        ${
+          this.showPrevNext
+            ? html`
+                <button
+                  class="pagination__button pagination__button--next"
+                  part="button button-next"
+                  ?disabled=${this.disabled || isLastPage}
+                  @click=${() => this.handlePageChange(this.currentPage + 1)}
+                  aria-label="Next page"
+                >
+                  ›
+                </button>
+              `
+            : ''
+        }
+        ${
+          this.showFirstLast
+            ? html`
+                <button
+                  class="pagination__button pagination__button--last"
+                  part="button button-last"
+                  ?disabled=${this.disabled || isLastPage}
+                  @click=${() => this.handlePageChange(this.totalPages)}
+                  aria-label="Last page"
+                >
+                  »
+                </button>
+              `
+            : ''
+        }
+        ${
+          this.showInfo
+            ? html`
+                <span class="pagination__info" part="info" aria-live="polite">
+                  Page ${this.currentPage} of ${this.totalPages}
+                </span>
+              `
+            : ''
+        }
       </nav>
     `;
   }

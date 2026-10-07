@@ -148,8 +148,7 @@ describe('bp-time-picker', () => {
 
   it('should emit bp-change event with time details', async () => {
     let eventDetail:
-      | { hours?: number; minutes?: number; value?: string }
-      | undefined;
+      { hours?: number; minutes?: number; value?: string } | undefined;
 
     element.addEventListener('bp-change', (e) => {
       eventDetail = (e as CustomEvent).detail;

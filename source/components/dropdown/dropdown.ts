@@ -214,9 +214,9 @@ export class BpDropdown extends LitElement {
   render() {
     return html`
       <div
-        class="dropdown ${this.open ? 'dropdown--open' : ''} ${this.disabled
-          ? 'dropdown--disabled'
-          : ''}"
+        class="dropdown ${this.open ? 'dropdown--open' : ''} ${
+          this.disabled ? 'dropdown--disabled' : ''
+        }"
       >
         <div
           class="dropdown__trigger"
@@ -231,25 +231,28 @@ export class BpDropdown extends LitElement {
         >
           <slot></slot>
         </div>
-        ${this.open
-          ? html`
-              <div
-                class="dropdown__panel dropdown__panel--${this.placement} ${this
-                  .open
-                  ? 'dropdown__panel--open'
-                  : ''}"
-                part="panel"
-                role=${this.panelRole}
-                style="--dropdown-distance: ${this.distance}px;"
-                @click=${this.handlePanelClick}
-              >
-                ${this.arrow
-                  ? html`<div class="dropdown__arrow"></div>`
-                  : nothing}
-                <slot name="content"></slot>
-              </div>
-            `
-          : nothing}
+        ${
+          this.open
+            ? html`
+                <div
+                  class="dropdown__panel dropdown__panel--${this.placement} ${
+                    this.open ? 'dropdown__panel--open' : ''
+                  }"
+                  part="panel"
+                  role=${this.panelRole}
+                  style="--dropdown-distance: ${this.distance}px;"
+                  @click=${this.handlePanelClick}
+                >
+                  ${
+                    this.arrow
+                      ? html`<div class="dropdown__arrow"></div>`
+                      : nothing
+                  }
+                  <slot name="content"></slot>
+                </div>
+              `
+            : nothing
+        }
       </div>
     `;
   }

@@ -431,17 +431,17 @@ export class BpCodeBlock extends LitElement {
             >${lineNumber}</span
           ><span
             part="line"
-            class="code-block__line ${isHighlighted
-              ? 'code-block__line--highlighted'
-              : ''}"
+            class="code-block__line ${
+              isHighlighted ? 'code-block__line--highlighted' : ''
+            }"
             aria-current=${ifDefined(isHighlighted ? 'true' : undefined)}
             >${unsafeHTML(lineHtml)}</span
           >`
       : html`<span
           part="line"
-          class="code-block__line ${isHighlighted
-            ? 'code-block__line--highlighted'
-            : ''}"
+          class="code-block__line ${
+            isHighlighted ? 'code-block__line--highlighted' : ''
+          }"
           aria-current=${ifDefined(isHighlighted ? 'true' : undefined)}
           >${unsafeHTML(lineHtml)}</span
         >`;
@@ -497,12 +497,14 @@ export class BpCodeBlock extends LitElement {
         part="base"
         class="code-block"
         role="region"
-        aria-label=${this.title
-          ? `Code example: ${this.title}`
-          : 'Code example'}
-        style=${this._isCollapsed && this.maxLines
-          ? `--_max-lines: ${this.maxLines}`
-          : ''}
+        aria-label=${
+          this.title ? `Code example: ${this.title}` : 'Code example'
+        }
+        style=${
+          this._isCollapsed && this.maxLines
+            ? `--_max-lines: ${this.maxLines}`
+            : ''
+        }
       >
         ${this._renderHeader()}
         <div part="body" class=${bodyClasses}>
@@ -511,9 +513,11 @@ export class BpCodeBlock extends LitElement {
             part="pre"
             class="code-block__pre"
           ><code part="code" class="code-block__code">${this._renderCodeLines()}</code></pre>
-          ${this._isCollapsed
-            ? html`<div class="code-block__gradient"></div>`
-            : nothing}
+          ${
+            this._isCollapsed
+              ? html`<div class="code-block__gradient"></div>`
+              : nothing
+          }
         </div>
         ${this._renderExpandButton()}
         <div class="code-block__status" role="status" aria-live="polite">

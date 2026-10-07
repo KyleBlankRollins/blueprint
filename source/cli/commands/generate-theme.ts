@@ -179,7 +179,9 @@ export async function generateTheme(
     console.log(`   Output: ${outputDir}\n`);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
-    throw new Error(`Failed to write theme files: ${message}`);
+    throw new Error(`Failed to write theme files: ${message}`, {
+      cause: error,
+    });
   }
 }
 
