@@ -5,6 +5,7 @@ import { live } from 'lit/directives/live.js';
 import { textareaStyles } from './textarea.style.js';
 import { debounce } from '../../utilities/debounce.js';
 import { booleanConverter } from '../../utilities/boolean-converter.js';
+import { FormControlMixin } from '../../utilities/form-control.js';
 
 /**
  * Visual variant that affects the textarea border color and validation state
@@ -54,7 +55,7 @@ export type TextareaAutocomplete =
  * @fires bp-blur - Dispatched when the textarea loses focus
  */
 @customElement('bp-textarea')
-export class BpTextarea extends LitElement {
+export class BpTextarea extends FormControlMixin(LitElement) {
   /** Visual variant of the textarea */
   @property({ type: String, reflect: true }) declare variant: TextareaVariant;
 
@@ -121,6 +122,11 @@ export class BpTextarea extends LitElement {
     'soft' | 'hard' | undefined;
 
   @query('textarea') private textareaElement?: HTMLTextAreaElement;
+
+  /** Mirror the native textarea's constraint validation (required, minlength...). */
+  getValidityTarget(): HTMLTextAreaElement | null {
+    return this.textareaElement ?? null;
+  }
 
   private debouncedDispatchInput = debounce(
     (value: string, originalEvent: InputEvent) => {

@@ -90,12 +90,52 @@ export class BpRadio extends LitElement {
     if ('attachInternals' in this) {
       this.internals = (this as HTMLElement).attachInternals();
     }
+
+    // The host carries role="radio", so the host is what takes focus.
+    this.addEventListener('focus', this.handleFocus);
+    this.addEventListener('blur', this.handleBlur);
+    this.addEventListener('keydown', this.handleKeyDown);
   }
 
   connectedCallback(): void {
     super.connectedCallback();
     this.setAttribute('role', 'radio');
     this.updateAriaAttributes();
+    this.updateTabIndex();
+  }
+
+  /**
+   * Standalone radios are each in the tab order. Inside a
+   * <bp-radio-group> the group manages a roving tabindex instead.
+   */
+  private updateTabIndex(): void {
+    if (this.closest('bp-radio-group')) return;
+    this.tabIndex = this.disabled ? -1 : 0;
+  }
+
+  private handleKeyDown = (event: KeyboardEvent): void => {
+    if (event.key === ' ' || event.key === 'Spacebar') {
+      event.preventDefault();
+      this.select();
+    }
+  };
+
+  /**
+   * Checks this radio (unchecking others with the same name) and fires
+   * bp-change, as a user selection would. Does nothing when disabled or
+   * already checked.
+   */
+  select(): void {
+    if (this.disabled || this.checked) return;
+    this.checked = true;
+    if (this.name) this.uncheckOtherRadios();
+    this.dispatchEvent(
+      new CustomEvent('bp-change', {
+        detail: { checked: this.checked, value: this.value },
+        bubbles: true,
+        composed: true,
+      })
+    );
   }
 
   updated(changedProperties: Map<string, unknown>): void {
@@ -109,6 +149,10 @@ export class BpRadio extends LitElement {
     ) {
       this.updateAriaAttributes();
       this.updateFormValue();
+    }
+
+    if (changedProperties.has('disabled')) {
+      this.updateTabIndex();
     }
   }
 
@@ -157,7 +201,7 @@ export class BpRadio extends LitElement {
     );
   }
 
-  private handleFocus(): void {
+  private handleFocus = (): void => {
     this.hasFocus = true;
     this.dispatchEvent(
       new CustomEvent('bp-focus', {
@@ -165,9 +209,9 @@ export class BpRadio extends LitElement {
         composed: true,
       })
     );
-  }
+  };
 
-  private handleBlur(): void {
+  private handleBlur = (): void => {
     this.hasFocus = false;
     this.dispatchEvent(
       new CustomEvent('bp-blur', {
@@ -175,11 +219,11 @@ export class BpRadio extends LitElement {
         composed: true,
       })
     );
-  }
+  };
 
   private handleClick(): void {
     if (!this.disabled) {
-      this.input?.focus();
+      this.focus();
     }
   }
 
@@ -204,14 +248,14 @@ export class BpRadio extends LitElement {
    * Sets focus on the radio.
    */
   focus(options?: globalThis.FocusOptions): void {
-    this.input?.focus(options);
+    HTMLElement.prototype.focus.call(this, options);
   }
 
   /**
    * Removes focus from the radio.
    */
   blur(): void {
-    this.input?.blur();
+    HTMLElement.prototype.blur.call(this);
   }
 
   /**

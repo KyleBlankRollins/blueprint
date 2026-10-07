@@ -5,6 +5,7 @@ import { repeat } from 'lit/directives/repeat.js';
 import { comboboxStyles } from './combobox.style.js';
 import { debounce } from '../../utilities/debounce.js';
 import { memoizeOne } from '../../utilities/memoize.js';
+import { FormControlMixin } from '../../utilities/form-control.js';
 
 export type ComboboxSize = 'sm' | 'md' | 'lg';
 export type ComboboxVariant =
@@ -16,7 +17,7 @@ export interface ComboboxOption {
 }
 
 @customElement('bp-combobox')
-export class BpCombobox extends LitElement {
+export class BpCombobox extends FormControlMixin(LitElement) {
   /** The current value of the combobox */
   @property({ type: String, reflect: true }) declare value: string;
 

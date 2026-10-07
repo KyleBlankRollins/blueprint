@@ -2,6 +2,7 @@ import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { timePickerStyles } from './time-picker.style.js';
+import { FormControlMixin } from '../../utilities/form-control.js';
 
 export type TimePickerSize = 'sm' | 'md' | 'lg';
 export type TimeFormat = '12' | '24';
@@ -21,7 +22,7 @@ export type TimeFormat = '12' | '24';
  * @csspart time-option - Individual time option in dropdown
  */
 @customElement('bp-time-picker')
-export class BpTimePicker extends LitElement {
+export class BpTimePicker extends FormControlMixin(LitElement) {
   @property({ type: String }) declare value: string;
   @property({ type: String }) declare name: string;
   @property({ type: String }) declare label: string;

@@ -4,11 +4,12 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { selectStyles } from './select.style.js';
+import { FormControlMixin } from '../../utilities/form-control.js';
 
 export type SelectSize = 'sm' | 'md' | 'lg';
 
 @customElement('bp-select')
-export class BpSelect extends LitElement {
+export class BpSelect extends FormControlMixin(LitElement) {
   /** The current value of the select */
   @property({ type: String, reflect: true }) declare value: string;
 

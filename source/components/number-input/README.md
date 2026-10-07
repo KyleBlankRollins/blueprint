@@ -126,6 +126,10 @@ A number input component with increment/decrement buttons for precise numeric va
 
 > **Note:** Use semantic tokens for visual style (colors, fonts, shadows) and universal tokens for structure (spacing, sizing). See [Best Practices](../../docs/best-practices.md#design-token-strategy) for guidance.
 
+## Form integration
+
+A form-associated custom element: inside a `<form>` it submits its `value` under `name`, takes part in `checkValidity()`/`reportValidity()` (with `required` reporting a missing value), restores its initial value on reset, and is excluded from submission when `disabled`.
+
 ## Accessibility
 
 - **ARIA attributes** - `aria-valuemin`, `aria-valuemax`, `aria-valuenow`, `aria-invalid`

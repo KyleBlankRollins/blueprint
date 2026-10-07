@@ -128,6 +128,10 @@ A form input component with validation states, sizes, and comprehensive accessib
 - `--bp-opacity-disabled` - Disabled opacity
 - `--bp-opacity-subtle` - Placeholder opacity
 
+## Form integration
+
+A form-associated custom element: inside a `<form>` it submits its `value` under `name`, takes part in `checkValidity()`/`reportValidity()` (with `required` reporting a missing value), restores its initial value on reset, and is excluded from submission when `disabled`. Constraint validation (`required`, `pattern`, `minlength`, `min`/`max`, `type`) is mirrored from the inner input, so the form shows the browser's message.
+
 ## Accessibility
 
 - **ARIA attributes**: `aria-invalid`, `aria-describedby` link error/helper messages

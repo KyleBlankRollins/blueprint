@@ -119,3 +119,5 @@ export type {
   HighlightResult,
 } from './code-block/code-block.js';
 export { plainTextAdapter } from './code-block/code-block.js';
+export { BpFieldset } from './fieldset/fieldset.js';
+export { BpRadioGroup } from './radio-group/radio-group.js';

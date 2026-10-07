@@ -11,7 +11,6 @@
  * Run `npx bp generate jsx` to regenerate from component source files.
  */
 
-import type { AccordionVariant } from './components/accordion/accordion.js';
 import type { AlertVariant } from './components/alert/alert.js';
 import type {
   AvatarShape,
@@ -26,7 +25,6 @@ import type {
 import type { ButtonSize, ButtonVariant } from './components/button/button.js';
 import type { CardDirection, CardVariant } from './components/card/card.js';
 import type { CheckboxSize } from './components/checkbox/checkbox.js';
-import type { CodeBlockHighlightAdapter } from './components/code-block/code-block.js';
 import type { ColorPickerSize } from './components/color-picker/color-picker.js';
 import type {
   ComboboxSize,
@@ -44,6 +42,7 @@ import type {
   DrawerPlacement,
   DrawerSize,
 } from './components/drawer/drawer.js';
+import type { FieldsetOrientation } from './components/fieldset/fieldset.js';
 import type {
   HeadingLevel,
   HeadingSize,
@@ -81,6 +80,7 @@ import type {
   ProgressSize,
   ProgressVariant,
 } from './components/progress/progress.js';
+import type { RadioGroupOrientation } from './components/radio-group/radio-group.js';
 import type { RadioSize } from './components/radio/radio.js';
 import type { SelectSize } from './components/select/select.js';
 import type { SliderSize } from './components/slider/slider.js';
@@ -153,7 +153,6 @@ type BooleanAttr = boolean | 'true' | 'false' | '';
 type NumberAttr<T extends number = number> = T | `${number}`;
 
 interface BpAccordionProps extends BaseHTMLAttributes {
-  variant?: StringAttr<AccordionVariant>;
   multiple?: BooleanAttr;
   expandedItems?: string[];
   disabled?: BooleanAttr;
@@ -234,13 +233,13 @@ interface BpCheckboxProps extends BaseHTMLAttributes {
 interface BpCodeBlockProps extends BaseHTMLAttributes {
   code?: string;
   language?: string;
+  title?: string;
   showLineNumbers?: BooleanAttr;
   highlightLines?: number[];
   wrapLines?: BooleanAttr;
   showCopyButton?: BooleanAttr;
   maxLines?: NumberAttr;
   showHeader?: BooleanAttr;
-  highlightAdapter?: CodeBlockHighlightAdapter;
 }
 
 interface BpColorPickerProps extends BaseHTMLAttributes {
@@ -260,6 +259,7 @@ interface BpColorPickerProps extends BaseHTMLAttributes {
 interface BpComboboxProps extends BaseHTMLAttributes {
   value?: string;
   name?: string;
+  label?: string;
   placeholder?: string;
   disabled?: BooleanAttr;
   required?: BooleanAttr;
@@ -322,6 +322,15 @@ interface BpDropdownProps extends BaseHTMLAttributes {
   panelRole?: StringAttr<'menu' | 'dialog' | 'listbox'>;
 }
 
+interface BpFieldsetProps extends BaseHTMLAttributes {
+  legend?: string;
+  description?: string;
+  errorMessage?: string;
+  required?: BooleanAttr;
+  disabled?: BooleanAttr;
+  orientation?: StringAttr<FieldsetOrientation>;
+}
+
 interface BpFileUploadProps extends BaseHTMLAttributes {
   name?: string;
   label?: string;
@@ -346,6 +355,7 @@ interface BpHeadingProps extends BaseHTMLAttributes {
 
 interface BpIconProps extends BaseHTMLAttributes {
   name?: StringAttr<IconName | ''>;
+  svg?: string;
   size?: StringAttr<IconSize>;
   color?: StringAttr<IconColor>;
   ariaLabel?: string;
@@ -409,6 +419,7 @@ interface BpModalProps extends BaseHTMLAttributes {
 interface BpMultiSelectProps extends BaseHTMLAttributes {
   value?: string[];
   name?: string;
+  label?: string;
   placeholder?: string;
   disabled?: BooleanAttr;
   required?: BooleanAttr;
@@ -498,6 +509,17 @@ interface BpRadioProps extends BaseHTMLAttributes {
   value?: string;
   size?: StringAttr<RadioSize>;
   error?: BooleanAttr;
+}
+
+interface BpRadioGroupProps extends BaseHTMLAttributes {
+  label?: string;
+  description?: string;
+  errorMessage?: string;
+  name?: string;
+  value?: string;
+  required?: BooleanAttr;
+  disabled?: BooleanAttr;
+  orientation?: StringAttr<RadioGroupOrientation>;
 }
 
 interface BpSelectProps extends BaseHTMLAttributes {
@@ -681,6 +703,7 @@ export interface BlueprintElements {
   'bp-divider': BpDividerProps;
   'bp-drawer': BpDrawerProps;
   'bp-dropdown': BpDropdownProps;
+  'bp-fieldset': BpFieldsetProps;
   'bp-file-upload': BpFileUploadProps;
   'bp-heading': BpHeadingProps;
   'bp-icon': BpIconProps;
@@ -697,6 +720,7 @@ export interface BlueprintElements {
   'bp-popover': BpPopoverProps;
   'bp-progress': BpProgressProps;
   'bp-radio': BpRadioProps;
+  'bp-radio-group': BpRadioGroupProps;
   'bp-select': BpSelectProps;
   'bp-skeleton': BpSkeletonProps;
   'bp-slider': BpSliderProps;

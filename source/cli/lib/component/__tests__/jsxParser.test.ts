@@ -55,6 +55,15 @@ describe('parseComponentFile', () => {
     expect(bv?.kind).toBe('type');
   });
 
+  it('parses components that extend a mixin of LitElement', () => {
+    // input.ts declares `class BpInput extends FormControlMixin(LitElement)`
+    const infos = parseComponentFile(ROOT, 'input');
+    expect(infos).toHaveLength(1);
+    expect(infos[0].tagName).toBe('bp-input');
+    expect(infos[0].className).toBe('BpInput');
+    expect(infos[0].properties.map((p) => p.name)).toContain('value');
+  });
+
   it('parses tabs.ts into 2 ComponentInfos (bp-tabs, bp-tab-panel)', () => {
     const infos = parseComponentFile(ROOT, 'tabs');
     expect(infos).toHaveLength(2);

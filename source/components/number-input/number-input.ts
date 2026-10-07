@@ -2,6 +2,7 @@ import { LitElement, html, nothing } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { numberInputStyles } from './number-input.style.js';
+import { FormControlMixin } from '../../utilities/form-control.js';
 
 /**
  * Size variants for the number input
@@ -28,7 +29,7 @@ export type NumberInputVariant = 'default' | 'success' | 'error' | 'warning';
  * @csspart message - The help/error message element
  */
 @customElement('bp-number-input')
-export class BpNumberInput extends LitElement {
+export class BpNumberInput extends FormControlMixin(LitElement) {
   /**
    * Current value of the input
    */

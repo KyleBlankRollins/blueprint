@@ -10,6 +10,7 @@ import {
   hsvToHsl,
   formatColorOutput,
 } from './color-picker.utils.js';
+import { FormControlMixin } from '../../utilities/form-control.js';
 
 // Browser globals: PointerEvent and EyeDropper are available in modern browsers
 
@@ -44,7 +45,7 @@ export type ColorPickerSize = 'sm' | 'md' | 'lg';
  * @fires bp-close - Popover closed
  */
 @customElement('bp-color-picker')
-export class BpColorPicker extends LitElement {
+export class BpColorPicker extends FormControlMixin(LitElement) {
   static styles = [colorPickerStyles];
 
   /** Current color value */

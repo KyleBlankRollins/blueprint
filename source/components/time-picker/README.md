@@ -196,6 +196,10 @@ This component uses the following design tokens for styling:
 - `--bp-transition-fast` - Transition duration
 - `--bp-z-dropdown` - Dropdown z-index
 
+## Form integration
+
+A form-associated custom element: inside a `<form>` it submits its `value` under `name`, takes part in `checkValidity()`/`reportValidity()` (with `required` reporting a missing value), restores its initial value on reset, and is excluded from submission when `disabled`.
+
 ## Accessibility
 
 - **ARIA Roles**: Input has `aria-haspopup="listbox"`, dropdown has `role="listbox"`, options have `role="option"`

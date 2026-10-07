@@ -4,6 +4,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
 import { inputStyles } from './input.style.js';
 import { debounce } from '../../utilities/debounce.js';
+import { FormControlMixin } from '../../utilities/form-control.js';
 
 export type InputVariant = 'default' | 'success' | 'error' | 'warning' | 'info';
 export type InputSize = 'sm' | 'md' | 'lg';
@@ -61,7 +62,7 @@ export type AutocompleteType =
   | 'organization-title';
 
 @customElement('bp-input')
-export class BpInput extends LitElement {
+export class BpInput extends FormControlMixin(LitElement) {
   @property({ type: String, reflect: true }) variant: InputVariant = 'default';
   @property({ type: String, reflect: true }) size: InputSize = 'md';
   @property({ type: String, reflect: true }) type: InputType = 'text';
@@ -84,6 +85,11 @@ export class BpInput extends LitElement {
   @property({ type: String, reflect: true }) inputmode?: InputModeType;
 
   @query('input') private inputElement?: HTMLInputElement;
+
+  /** Mirror the native input's constraint validation (required, pattern, min/max...). */
+  getValidityTarget(): HTMLInputElement | null {
+    return this.inputElement ?? null;
+  }
 
   private debouncedDispatchInput = debounce(
     (value: string, originalEvent: InputEvent) => {

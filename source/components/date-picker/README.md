@@ -203,6 +203,10 @@ This component uses the following design tokens for styling:
 - `--bp-transition-fast` - Transition duration
 - `--bp-z-dropdown` - Dropdown z-index
 
+## Form integration
+
+A form-associated custom element: inside a `<form>` it submits its `value` under `name`, takes part in `checkValidity()`/`reportValidity()` (with `required` reporting a missing value), restores its initial value on reset, and is excluded from submission when `disabled`. Submits the ISO date string. `required` blocks submission when empty, and a date outside `min`/`max` reports as invalid.
+
 ## Accessibility
 
 The date picker implements the [ARIA grid pattern](https://www.w3.org/WAI/ARIA/apg/patterns/grid/) for accessibility:
